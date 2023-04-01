@@ -91,7 +91,7 @@ function Home(props) {
 
     return (
         <>
-            <NewPrint/>
+            {/* <NewPrint/> */}
             <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start", flexGrow: 1, gap: "20px" }}>
 
                 <div style={{ width: "50%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "20px" }}>
