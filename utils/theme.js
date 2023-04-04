@@ -12,5 +12,5 @@ export const theme = createTheme({
     },
     typography: {
         fontFamily: 'rubik, serif',
-    }
+    },
 });

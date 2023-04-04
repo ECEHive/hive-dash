@@ -1,0 +1,44 @@
+[
+    {
+        "materials": [
+            "PLA"
+        ],
+        "printer_type": "Ultimaker",
+        "unit": {
+            "symbol": "g",
+            "type": "Mass"
+        }
+    },
+    {
+        "materials": [
+            "ABS",
+            "PLA"
+        ],
+        "printer_type": "Stratasys",
+        "unit": {
+            "symbol": "in^3",
+            "type": "Volume"
+        }
+    },
+    {
+        "materials": [
+            "Resin"
+        ],
+        "printer_type": "Formlabs",
+        "unit": {
+            "symbol": "mL",
+            "type": "Volume"
+        }
+    },
+    {
+        "materials": [
+            "Fiberglass",
+            "Carbon fiber"
+        ],
+        "printer_type": "Markforged",
+        "unit": {
+            "symbol": "in^3",
+            "type": "Volume"
+        }
+    }
+]

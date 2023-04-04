@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "../utils/theme";
 
 import '@fontsource/rubik/300.css';
@@ -8,8 +8,11 @@ import '@fontsource/rubik/700.css';
 
 export default function App({ Component, pageProps }) {
     return (
-        <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
-        </ThemeProvider>
+        <>
+            <CssBaseline />
+            <ThemeProvider theme={theme}>
+                <Component {...pageProps} />
+            </ThemeProvider>
+        </>
     )
 }

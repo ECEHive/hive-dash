@@ -1,0 +1,112 @@
+[
+    {
+        "name": "Ultimaker 1",
+        "type": "Ultimaker",
+        "status": "idle",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "Ultimaker 2",
+        "type": "Ultimaker",
+        "status": "idle",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "Ultimaker 3",
+        "type": "Ultimaker",
+        "status": "idle",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "Ultimaker 4",
+        "type": "Ultimaker",
+        "status": "idle",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "CloudyPytilia",
+        "type": "Formlabs",
+        "status": "idle",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "WealthyAcouchi",
+        "type": "Formlabs",
+        "status": "idle",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "Left Stratasys",
+        "status": "idle",
+        "type": "Stratasys",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "Center Stratasys",
+        "status": "idle",
+        "type": "Stratasys",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "Right Stratasys",
+        "status": "idle",
+        "type": "Stratasys",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    },
+    {
+        "name": "Mark Two",
+        "status": "idle",
+        "type": "Markforged",
+        "states": {
+            "current_tray_id": "",
+            "last_tray_id": "",
+            "down_note": "",
+            "down_date": ""
+        }
+    }
+]
