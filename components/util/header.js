@@ -4,6 +4,9 @@ import logo from '../../assets/square_logo.png';
 import { Button, Tab, Tabs, Typography } from '@mui/material';
 
 function Header(props) {
+    const page = props.page;
+    const setPage = props.setPage;
+
     return (
         <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "60px", marginLeft: "15px", background: "#fff", zIndex: 99, display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "15px" }}>
             
@@ -13,7 +16,7 @@ function Header(props) {
             </div>
             
             <div style={{ width: "auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                <Tabs value={0} onChange={null}>
+                <Tabs value={page} onChange={(e, newValue) => {setPage(newValue)}}>
                     <Tab label="Dashboard" />
                     <Tab label="Maintainance" />
                     <Tab label="Logs" />
