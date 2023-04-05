@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
     const { printer, printId } = req.query;
 
-    const printerResult = await mongoClient.db().collection("printer-status").updateOne({ name: printer },
+    const printerResult = await mongoClient.db("hive-prints").collection("printer-status").updateOne({ name: printer },
         {
             $set: {
                 "states.current_tray_id": "",
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
             } 
         })
     
-    const logResult = await mongoClient.db().collection("print-log").updateOne({ _id: new ObjectId(printId) },
+    const logResult = await mongoClient.db("hive-prints").collection("print-log").updateOne({ _id: new ObjectId(printId) },
         {
             $set: {
                 "done": true,

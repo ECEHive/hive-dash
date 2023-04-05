@@ -7,7 +7,7 @@ export default function Index() {
 
     const [page, setPage] = useState(0)
 
-    const pages = [<Home key="home"/>, <Logs key="logs"/>]
+    const pages = [<Home key="home"/>, null, <Logs key="logs"/>]
 
     return (
         <div style={{ width: "100vw", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start" }}>

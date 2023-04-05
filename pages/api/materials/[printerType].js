@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
     const { printerType } = req.query;
 
-    const data = await mongoClient.db().collection("printer-materials").find({ printer_type: printerType }).toArray();
+    const data = await mongoClient.db("hive-prints").collection("printer-materials").find({ printer_type: printerType }).toArray();
 
     res.status(200).json({ materials: data[0].materials, units: data[0].units });
 }

@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const body = req.body
     delete body._id
 
-    const result = await mongoClient.db().collection("print-log").findOneAndUpdate({ _id: new ObjectId(printId) },
+    const result = await mongoClient.db("hive-prints").collection("print-log").findOneAndUpdate({ _id: new ObjectId(printId) },
         {
             $set: {
                 ...body

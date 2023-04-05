@@ -4,7 +4,7 @@ import clientPromise from '../../lib/mongodb'
 export default async function handler(req, res) {
     const mongoClient = await clientPromise;
 
-    const data = await mongoClient.db().collection("print-log").find().toArray();
+    const data = await mongoClient.db("hive-prints").collection("print-log").find().toArray();
 
     res.status(200).json(data);
 }

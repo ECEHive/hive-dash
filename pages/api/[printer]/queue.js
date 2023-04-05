@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
     const { printer } = req.query;
 
-    const fullQueue = await mongoClient.db().collection("print-log").find({ printer_name: printer, done: false }).sort({queue_date: 1}).toArray();
+    const fullQueue = await mongoClient.db("hive-prints").collection("print-log").find({ printer_name: printer, done: false }).sort({queue_date: 1}).toArray();
     const cleanQueue = fullQueue.filter((entry) => {
         return entry.failed === false;
     })

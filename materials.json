@@ -4,7 +4,7 @@
             "PLA"
         ],
         "printer_type": "Ultimaker",
-        "unit": {
+        "units": {
             "symbol": "g",
             "type": "Mass"
         }
@@ -15,7 +15,7 @@
             "PLA"
         ],
         "printer_type": "Stratasys",
-        "unit": {
+        "units": {
             "symbol": "in^3",
             "type": "Volume"
         }
@@ -25,7 +25,7 @@
             "Resin"
         ],
         "printer_type": "Formlabs",
-        "unit": {
+        "units": {
             "symbol": "mL",
             "type": "Volume"
         }
@@ -36,7 +36,7 @@
             "Carbon fiber"
         ],
         "printer_type": "Markforged",
-        "unit": {
+        "units": {
             "symbol": "in^3",
             "type": "Volume"
         }

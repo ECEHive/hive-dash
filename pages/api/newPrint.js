@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
     const body = req.body
 
-    const data = await mongoClient.db().collection("print-log").insertOne({
+    const data = await mongoClient.db("hive-prints").collection("print-log").insertOne({
         ...body
     })
 
