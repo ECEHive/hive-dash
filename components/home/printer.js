@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
-import { Button, Chip, Divider, Paper, Tooltip, Typography } from "@mui/material";
+import { Button, Chip, Divider, Paper, Skeleton, Tooltip, Typography } from "@mui/material";
 import { ThumbUp, ThumbDown, Folder, History } from '@mui/icons-material'
 
 function State(props) {
     const header = props.header
-    const text = props.text
+    const component = props.component
 
     return (
 
         <div style={{ width: "auto", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}>
+            { }
             <Typography variant="body1">{header}</Typography>
-            <Typography variant="subtitle2">{text}</Typography>
+            {component}
         </div>
     )
 }
@@ -19,28 +20,41 @@ function Printer(props) {
     const name = props.name //name of the printer
     const status = props.status //is machine up or down
     const states = props.states //details about the status
+
     const createJob = props.createJob //function to create a job
+    const markComplete = props.markComplete
+    const markFailed = props.markFailed
 
     const [printsInQueue, setPrintsInQueue] = useState(0)
     const [printData, setPrintData] = useState({})
+    const [lastPrintData, setLastPrintData] = useState({})
 
     useEffect(() => {
         console.log(states)
-        fetch(`/api/printsInQueue/${name}`)
+        fetch(`/api/${name}/queue`)
             .then(res => res.json())
             .then((res) => {
                 setPrintsInQueue(res.printsInQueue)
             })
 
         if (states.current_tray_id !== "") {
-            fetch(`/api/print/${states.current_tray_id}`)
+            fetch(`/api/printFromId/${states.current_tray_id}`)
                 .then(res => res.json())
                 .then((res) => {
                     console.log(res)
                     setPrintData(res.print)
                 })
         }
-    }, [])
+
+        if (states.last_tray_id !== "") {
+            fetch(`/api/printFromId/${states.last_tray_id}`)
+                .then(res => res.json())
+                .then((res) => {
+                    console.log(res)
+                    setLastPrintData(res.print)
+                })
+        }
+    }, [props.printers])
 
     const statuses = {
         "idle": "warning",
@@ -57,12 +71,12 @@ function Printer(props) {
         "mark_complete": {
             "text": "Mark as complete",
             "icon": <ThumbUp />,
-            "task": () => { console.log("Mark as complete") },
+            "task": () => { markComplete(name, states.current_tray_id) },
         },
         "mark_failed": {
             "text": "Mark as failed",
             "icon": <ThumbDown />,
-            "task": () => { console.log("Mark as failed") },
+            "task": () => { markFailed(name, states.current_tray_id) },
         },
         "history": {
             "text": "History",
@@ -78,12 +92,57 @@ function Printer(props) {
     }
 
     const fieldDefs = {
-        "last_tray": states.last_tray_id,
-        "tray_name": printData?.tray_name,
-        "queued_date": `${printData?.queue_date} ${printData?.queue_time}`,
-        "queued_by": printData?.PI_name,
-        "down_note": states.down_note,
-        "down_date": states.down_date,
+        "last_tray": {
+            "name": "Last tray",
+            "component": <>
+                <Typography variant="subtitle2">{(lastPrintData?.tray_name !== undefined ? lastPrintData.tray_name : "N/A") + (lastPrintData?.failed ? " (failed)" : "")}</Typography>
+            </>
+        },
+        "tray_name": {
+            "name": "Tray name",
+            "component": <>
+                {printData.tray_name !== undefined ?
+                    <Typography variant="subtitle2">{printData?.tray_name}</Typography>
+                    : <Skeleton variant="rectangular" width={210} height={20} />
+                }
+            </>
+        },
+        "queued_date": {
+            "name": "Queued on",
+            "component": <>
+                {printData.queue_date !== undefined ?
+                    <Typography variant="subtitle2">{printData?.queue_date} {printData?.queue_time}</Typography>
+                    : <Skeleton variant="rectangular" width={210} height={20} />
+                }
+            </>
+        },
+        "queued_by": {
+            "name": "Queued by",
+            "component": <>
+                {printData.PI_name !== undefined ?
+                    <Typography variant="subtitle2">{printData?.PI_name}</Typography>
+                    : <Skeleton variant="rectangular" width={210} height={20} />
+                }
+            </>
+        },
+        "down_note": {
+            "name": "Down note",
+            "component": <>
+                {states.down_note !== undefined ?
+                    <Typography variant="subtitle2">{states.down_note}</Typography>
+                    : <Skeleton variant="rectangular" width={210} height={20} />
+                }
+            </>
+        },
+        "down_date": {
+            "name": "Down since",
+            "component": <>
+                {states.down_date !== undefined ?
+                    <Typography variant="subtitle2">{states.down_date}</Typography>
+                    : <Skeleton variant="rectangular" width={210} height={20} />
+                }
+            </>
+        }
     }
 
     const fields = {
@@ -95,9 +154,9 @@ function Printer(props) {
     return (
         <>
             {printData !== null ?
-                <Paper variant="outlined" sx={{ width: "245px", height: "100%", display: "flex", flexDirection: "column", padding: "10px" }}>
+                <Paper variant="outlined" sx={{ width: "255px", height: "100%", display: "flex", flexDirection: "column" }}>
 
-                    <div style={{ width: "auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "5px" }}>
+                    <div style={{ width: "auto", height: "100%", margin: "10px", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "5px" }}>
 
                         <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}>
                             <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px", }}>
@@ -112,12 +171,13 @@ function Printer(props) {
                         {/* <Divider sx={{ width: "80%", alignSelf: "center", margin: "3px 0px" }} /> */}
 
                         {fields[status].map((field) => {
+                            var data = fieldDefs[field]
                             return (
-                                <State key={field} header={field} text={fieldDefs[field]} />
+                                <State key={field} header={data.name} component={data.component} />
                             )
                         })}
 
-                        <div style={{ width: "100%", height: "auto", marginTop: "5px", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "flex-end", flexGrow: 1, gap: "5px" }}>
+                        <div style={{ width: "100%", height: "auto", marginTop: "5px", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "flex-end", flexGrow: 1, gap: "10px" }}>
                             {buttons[status].map((button) => {
                                 var action = actions[button]
                                 return (
@@ -130,7 +190,8 @@ function Printer(props) {
 
                     </div>
                 </Paper >
-                : null}
+                : null
+            }
         </>
     )
 }

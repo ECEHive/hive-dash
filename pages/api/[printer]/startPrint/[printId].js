@@ -1,13 +1,11 @@
-import clientPromise from '../../../lib/mongodb'
+import clientPromise from '../../../../lib/mongodb'
 
 export default async function handler(req, res) {
     const mongoClient = await clientPromise;
 
-    const { slug } = req.query;
-    const printerName = slug[0];
-    const printId = slug[1];
+    const { printer, printId } = req.query;
 
-    const result = await mongoClient.db().collection("printer-status").updateOne({ name: printerName },
+    const result = await mongoClient.db().collection("printer-status").updateOne({ name: printer },
         {
             $set: {
                 "states.current_tray_id": printId,

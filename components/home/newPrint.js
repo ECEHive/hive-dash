@@ -164,7 +164,7 @@ function NewPrint(props) {
                 setMaterials(data.materials)
                 setUnits(data.units)
             })
-    })
+    }, [])
 
     function updateResponses(response) {
         var newResponses = { ...responses, ...response }
@@ -208,10 +208,17 @@ function NewPrint(props) {
     }
 
     function save() {
+        var localTime = new Date()
+        var utc = localTime.getTime() + (localTime.getTimezoneOffset() * 60000)
+        var edt = new Date(utc + (3600000 * -4))
+        // split edt into separate date and time
+        var date = edt.toLocaleDateString("en-US").replaceAll("/","-")
+        var time = edt.toLocaleTimeString("en-US", { hour12: false })
+
         var payload = {
             ...responses,
-            "queue_date": new Date().toISOString().slice(0, 10),
-            "queue_time": new Date().toISOString().slice(11, 19),
+            "queue_date": date,
+            "queue_time": time,
             "done": false,
             "failed": false
         }

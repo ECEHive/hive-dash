@@ -38,7 +38,7 @@ function JobItem(props) {
                         </div>
 
                         <div style={{ width: "auto", height: "100%", flexGrow: 1, display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end", alignSelf: "flex-end", gap: "5px" }}>
-                            <Button variant="outlined" size="small" color="primary" onClick={callback} startIcon={<Send/>}>Select</Button>
+                            <Button variant="outlined" size="small" color="primary" onClick={callback} startIcon={<Send />}>Select</Button>
                         </div>
                     </div>
 
@@ -51,55 +51,78 @@ function JobItem(props) {
 
 function SelectJob(props) {
     const printerName = props.printerName
+    const closeCallback = props.close
+
+    const [open, setOpen] = useState(true)
 
     const [failedJobs, setFailedJobs] = useState(null)
     const [nextJobs, setNextJobs] = useState(null)
 
     useEffect(() => {
-        fetch(`/api/failedPrints/${printerName}`)
+        fetch(`/api/${printerName}/failedPrints`)
             .then(res => res.json())
             .then(data => {
                 setFailedJobs(data.failedPrints)
             })
 
-        fetch(`/api/queue/${printerName}`)
+        fetch(`/api/${printerName}/queue`)
             .then(res => res.json())
             .then(data => {
                 setNextJobs(data.queue)
             })
     }, [])
 
-    function selectPrint(printId){
-        fetch(`/api/startPrint/${printerName}/${printId}`,{
+    function selectPrint(printId) {
+        fetch(`/api/${printerName}/startPrint/${printId}`, {
             method: "POST"
         })
+            .then(res => res.json())
+            .then(data => {
+                close()
+            })
+    }
+
+    function close() {
+        setOpen(false)
+        setTimeout(() => {
+            closeCallback()
+        }, 500)
     }
 
     return (
         <>
             {nextJobs !== null && failedJobs !== null ?
-                <Dialog open fullWidth maxWidth="sm">
+                <Dialog open={open} fullWidth maxWidth="sm">
                     <DialogTitle>Select a job for {printerName}</DialogTitle>
                     <DialogContent sx={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}>
                         <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px" }}>
+
+                            {failedJobs.length === 0 && nextJobs.length === 0 ?
+                                <div style={{ width: "100%", height: "100%", marginTop: "10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "3px" }}>
+                                    <Typography variant="body1">Queue is empty :)</Typography>
+                                </div>
+                                : null}
 
                             {failedJobs !== null && failedJobs.length !== 0 ?
                                 <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "3px" }}>
                                     <Typography variant="body1"><strong>Recently failed prints</strong></Typography>
                                     <div style={{ width: "100%", height: "auto", maxHeight: "325px", padding: "10px 5px 10px 0px", overflowY: "auto", overflowX: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "5px" }}>
                                         {failedJobs.map((job, index) => {
-                                            return <JobItem key={job.tray_name} data={job} callback={() => selectPrint(job._id)}/>
+                                            return <JobItem key={job.tray_name} data={job} callback={() => selectPrint(job._id)} />
                                         })}
                                     </div>
                                 </div>
                                 : null}
 
-                            <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "3px" }}>
-                                <Typography variant="body1"><strong>Next in queue</strong></Typography>
-                                <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", padding: "10px 5px 10px 0px", justifyContent: "flex-start", alignItems: "flex-start", gap: "5px" }}>
-                                    <JobItem data={nextJobs[0]} index={1} callback={() => selectPrint(nextJobs[0]._id)}/>
+                            {nextJobs.length !== 0 ?
+                                <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "3px" }}>
+                                    <Typography variant="body1"><strong>Next in queue</strong></Typography>
+                                    <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", padding: "10px 5px 10px 0px", justifyContent: "flex-start", alignItems: "flex-start", gap: "5px" }}>
+                                        <JobItem data={nextJobs[0]} index={1} callback={() => selectPrint(nextJobs[0]._id)} />
+                                    </div>
                                 </div>
-                            </div>
+                                :
+                                null}
 
                             {nextJobs.length > 1 ?
                                 <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "3px" }}>
@@ -107,7 +130,7 @@ function SelectJob(props) {
                                     <div style={{ width: "100%", height: "auto", maxHeight: "325px", padding: "10px 5px 10px 0px", overflowY: "auto", overflowX: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "5px" }}>
                                         {nextJobs.map((job, index) => {
                                             if (index > 0) {
-                                                return <JobItem key={job.tray_name} index={index + 1} data={job} callback={() => selectPrint(job._id)}/>
+                                                return <JobItem key={job.tray_name} index={index + 1} data={job} callback={() => selectPrint(job._id)} />
                                             }
                                         })}
                                     </div>
@@ -117,7 +140,7 @@ function SelectJob(props) {
                         </div>
                     </DialogContent>
                     <DialogActions>
-                        <Button>Cancel</Button>
+                        <Button onClick={close}>Cancel</Button>
                     </DialogActions>
                 </Dialog>
                 : null}
