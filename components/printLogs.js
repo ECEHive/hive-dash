@@ -14,6 +14,21 @@ function Logs(props) {
             width: 70
         },
         {
+            field: "queue_date",
+            headerName: "Queue date",
+            type: "date",
+            valueGetter: (params) => {
+                return new Date(params.row.queue_date)
+            },
+            width: 100
+        },
+        {
+            field: "queue_time",
+            headerName: "Queue time",
+            type: "string",
+            width: 100
+        },
+        {
             field: "first_name",
             headerName: "First name",
             type: "string",
@@ -30,12 +45,6 @@ function Logs(props) {
             headerName: "GT email",
             type: "string",
             width: 220
-        },
-        {
-            field: "PI_name",
-            headerName: "PI name",
-            type: "string",
-            width: 150
         },
         {
             field: "tray_name",
@@ -73,19 +82,17 @@ function Logs(props) {
             width: 100
         },
         {
-            field: "queue_date",
-            headerName: "Queue date",
-            type: "date",
-            valueGetter: (params) => {
-                return new Date(params.row.queue_date)
-            },
-            width: 100
+            field: "PI_name",
+            headerName: "PI name",
+            type: "string",
+            width: 150
         },
         {
-            field: "queue_time",
-            headerName: "Queue time",
+            field: "comments",
+            headerName: "Comments",
             type: "string",
-            width: 100
+            editable: true,
+            width: 300
         },
         {
             field: "done",

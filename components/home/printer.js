@@ -86,14 +86,14 @@ function Printer(props) {
     }
 
     const buttons = {
-        "idle": ["select_job", "history"],
+        "idle": ["select_job"],
         "printing": ["mark_complete", "mark_failed"],
-        "down": ["history"]
+        "down": []
     }
 
     const fieldDefs = {
         "last_tray": {
-            "name": "Last tray",
+            "name": "Last print",
             "component":
                 <>
                     <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>

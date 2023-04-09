@@ -1,13 +1,15 @@
 import { useState } from 'react'
+
 import Home from '../components/home'
 import Header from '../components/util/header'
 import Logs from '../components/printLogs'
+import Maintenance from '../components/maintenance'
 
 export default function Index() {
 
     const [page, setPage] = useState(0)
 
-    const pages = [<Home key="home"/>, null, <Logs key="logs"/>]
+    const pages = [<Home key="home"/>, <Maintenance key="maintenance"/>, <Logs key="logs"/>]
 
     return (
         <div style={{ width: "100vw", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start" }}>

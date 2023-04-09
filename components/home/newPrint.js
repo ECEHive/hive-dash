@@ -102,6 +102,13 @@ function PrintInfo(props) {
                     <TextField label="Print time" helperText="Format: HH:MM" required variant="outlined" size="small" sx={{ width: "100%" }} onChange={(e) => { callback({ "est_time": e.target.value }) }} />
                 </div>
             </div>
+
+            <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "8px" }}>
+                <Typography variant="body1">Print comments</Typography>
+                <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
+                    <TextField label="Comments" multiline variant="outlined" placeholder="Got permission from a MPI for >8 hours" size="small" sx={{ width: "100%" }} onChange={(e) => { callback({ "comments": e.target.value }) }} />
+                </div>
+            </div>
         </div>
     )
 }
@@ -141,7 +148,7 @@ function NewPrint(props) {
     const [materials, setMaterials] = useState([])
     const [units, setUnits] = useState("g")
 
-    const [responses, setResponses] = useState({})
+    const [responses, setResponses] = useState({"comments": ""})
     const [canContinue, setCanContinue] = useState(false)
     const [saved, setSaved] = useState(false)
     const [printId, setPrintId] = useState("")
@@ -154,8 +161,6 @@ function NewPrint(props) {
         ["first_name", "last_name", "gt_email", "PI_name"],
         ["tray_name", "printer_name", "est_time", "est_material", "est_time"]
     ]
-
-    //TODO: ADD DATE AND TIME OF QUEUE, DONE = FALSE, FAILED = FALSE
 
     useEffect(() => {
         fetch(`/api/materials/${printerType}`)

@@ -18,7 +18,7 @@ function Header(props) {
             <div style={{ width: "auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                 <Tabs value={page} onChange={(e, newValue) => {setPage(newValue)}}>
                     <Tab label="Dashboard" />
-                    <Tab label="Maintainance" />
+                    <Tab label="Maintenance" />
                     <Tab label="Logs" />
                 </Tabs>
             </div>
