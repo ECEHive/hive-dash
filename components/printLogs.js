@@ -6,6 +6,7 @@ import { Settings } from '@mui/icons-material';
 function Logs(props) {
 
     const [logs, setLogs] = useState([])
+    const [printers, setPrinters] = useState([])
 
     const columnDefs = [
         {
@@ -56,13 +57,14 @@ function Logs(props) {
         {
             field: "printer_name",
             headerName: "Printer name",
-            type: "string",
+            type: "singleSelect",
+            valueOptions: printers,
             editable: true,
             width: 150
         },
         {
-            field: "material_type"
-            , headerName: "Material type",
+            field: "material_type",
+            headerName: "Material type",
             type: "string",
             editable: true,
             width: 100
@@ -130,6 +132,18 @@ function Logs(props) {
             refresh();
         }, 5000)
         return () => clearInterval(interval);
+    }, [])
+
+    useEffect(() => {
+        fetch("/api/printers")
+            .then(res => res.json())
+            .then((res) => {
+                var out = []
+                res.forEach((printer) => {
+                    out.push(printer.name)
+                })
+                setPrinters(out);
+            })
     }, [])
 
     function refresh() {
