@@ -73,7 +73,7 @@ function Home(props) {
             {jobSelectDialog}
             <div style={{ width: "100%", height: "auto", marginBottom: "20px", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start", gap: "20px" }}>
 
-                <div style={{ width: "50%", height: "100%", padding: "10px 0px", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "20px" }}>
+                <div style={{ width: "100%", height: "100%", padding: "10px 0px", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "20px" }}>
                     {Object.keys(printers).map((printerType) => {
                         return (
                             <div key={printerType} style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", marginBottom: "10px" }}>
@@ -82,7 +82,7 @@ function Home(props) {
                                     <Button variant="outlined" size="small" startIcon={<Add />} onClick={() => { createNewPrint(printerType) }}>New print</Button>
                                 </div>
 
-                                <div style={{ width: "auto", height: "100%", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start", gap: "15px", flexGrow: 1 }}>
+                                <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start", gap: "15px", flexGrow: 1, overflowX: "auto" }}>
                                     {printers[printerType].map((printer) => {
                                         return (
                                             <Printer key={printer.name} printers={printers} name={printer.name} status={printer.status} states={printer.states} createJob={createJobSelect} markComplete={markComplete} markFailed={markFailed}/>

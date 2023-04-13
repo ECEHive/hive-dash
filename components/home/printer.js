@@ -115,7 +115,7 @@ function Printer(props) {
             "name": "Queued on",
             "component": <>
                 {printData.queue_date !== undefined ?
-                    <Typography variant="subtitle2">{printData?.queue_date} {printData?.queue_time}</Typography>
+                    <Typography variant="subtitle2">{printData?.queue_date} @ {printData?.queue_time}</Typography>
                     : <Skeleton variant="rectangular" width={210} height={20} />
                 }
             </>
@@ -158,7 +158,7 @@ function Printer(props) {
     return (
         <>
             {printData !== null ?
-                <Paper variant="outlined" sx={{ width: "255px", height: "100%", display: "flex", flexDirection: "column" }}>
+                <Paper variant="outlined" sx={{ minWidth: "255px", height: "100%", display: "flex", flexDirection: "column" }}>
 
                     <div style={{ width: "auto", height: "100%", margin: "10px", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "5px" }}>
 
