@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Button, Chip, Divider, Paper, Skeleton, Tooltip, Typography } from "@mui/material";
 import { ThumbUp, ThumbDown, Folder, History } from '@mui/icons-material'
 
+import Snackbar from '../util/snackbar.js'
+
 function State(props) {
     const header = props.header
     const component = props.component
@@ -157,6 +159,7 @@ function Printer(props) {
 
     return (
         <>
+            <Snackbar trigger={true} />
             {printData !== null ?
                 <Paper variant="outlined" sx={{ minWidth: "255px", height: "100%", display: "flex", flexDirection: "column" }}>
 
