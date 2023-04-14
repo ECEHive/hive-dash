@@ -29,7 +29,7 @@ function SnackbarFeedback(props) {
             <Alert severity={"info"} sx={{ width: '100%' }} action={<Button size="small">
                 Report
             </Button>}>
-                Would you like to record an issue with the printer?
+                Would you like to log the the printer's performance?
             </Alert>
         </Snackbar>
     )

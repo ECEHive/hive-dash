@@ -159,7 +159,7 @@ function Printer(props) {
 
     return (
         <>
-            <Snackbar trigger={true} />
+            {/* <Snackbar trigger={true} /> */}
             {printData !== null ?
                 <Paper variant="outlined" sx={{ minWidth: "255px", height: "100%", display: "flex", flexDirection: "column" }}>
 
