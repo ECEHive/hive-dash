@@ -1,6 +1,6 @@
 import { Paper, Typography, Chip } from "@mui/material";
 
-function LogItem(props) {
+function MaintenanceItem(props) {
 
     return (
         <>
@@ -26,4 +26,4 @@ function LogItem(props) {
     )
 }
 
-export default LogItem;
+export default MaintenanceItem;

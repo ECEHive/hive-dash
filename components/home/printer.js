@@ -40,7 +40,7 @@ function Printer(props) {
             })
 
         if (states.current_tray_id !== "") {
-            fetch(`/api/printFromId/${states.current_tray_id}`)
+            fetch(`/api/getPrintFromId/${states.current_tray_id}`)
                 .then(res => res.json())
                 .then((res) => {
                     console.log(res)
@@ -49,7 +49,7 @@ function Printer(props) {
         }
 
         if (states.last_tray_id !== "") {
-            fetch(`/api/printFromId/${states.last_tray_id}`)
+            fetch(`/api/getPrintFromId/${states.last_tray_id}`)
                 .then(res => res.json())
                 .then((res) => {
                     console.log(res)
