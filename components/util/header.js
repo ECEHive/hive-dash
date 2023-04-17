@@ -19,6 +19,7 @@ function Header(props) {
                 <Tabs value={page} onChange={(e, newValue) => {setPage(newValue)}}>
                     <Tab label="Dashboard" />
                     <Tab label="Maintenance" />
+                    <Tab label="Find a print" />
                     <Tab label="Logs" />
                 </Tabs>
             </div>

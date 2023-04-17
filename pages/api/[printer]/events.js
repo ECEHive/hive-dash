@@ -12,34 +12,21 @@ export default async function handler(req, res) {
     history.map((entry) => {
         entry.events.map((event) => {
             var date = new Date(event.date + "T" + event.time)
-            console.log(date)
             events.push({
                 "type": event.type,
-                "bruh": event.date + " " + event.time,
-                "date": date,
+                "dateobj": date,
+                "date": event.date + " @ " + event.time,
                 "comment": event.comment,
                 "tray_name": entry.tray_name,
             })
         })
     })
 
-    // sort events by date and time
-
+    // sort events by date
     events.sort((a, b) => {
-        if (a.date < b.date) {
-            return 1;
-        }
-        if (a.date > b.date) {
-            return -1;
-        }
-        if (a.time < b.time) {
-            return 1;
-        }
-        if (a.time > b.time) {
-            return -1;
-        }
-        return 0;
+        return b.dateobj - a.dateobj
     })
+
 
     res.status(200).json(events);
 }

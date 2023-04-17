@@ -4,7 +4,20 @@ function LogItem(props) {
 
     const data = props.data
 
-    
+    const events = {
+        "print_start": {
+            "color": "info",
+            "label": "print started"
+        },
+        "print_success": {
+            "color": "success",
+            "label": "print success"
+        },
+        "print_fail": {
+            "color": "error",
+            "label": "print failed"
+        }
+    }
 
     return (
         <>
@@ -12,16 +25,19 @@ function LogItem(props) {
                 <div style={{ width: "auto", height: "100%", margin: "10px", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "5px" }}>
 
                     <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
-                        <Typography variant="subtitle2">PI_Colin_Hartigan_printname</Typography>
-                        <Chip label="success" color="success" variant="outlined" size="small" />
+                        <Typography variant="subtitle2">{data.tray_name}</Typography>
+                        <Chip label={events[data.type].label} color={events[data.type].color} variant="outlined" size="small" />
                     </div>
 
-                    {/* <div style={{ width: "100%", height: "auto", flexGrow: 1, display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start" }}>
-                        <Typography variant="body1"></Typography>
-                    </div> */}
+                    {data.comment !== "" ?
+                        <div style={{ width: "100%", height: "auto", flexGrow: 1, display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start" }}>
+                            <Typography variant="body1">{data.comment}</Typography>
+                        </div>
+                        : null
+                    }
 
                     <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex" }}>
-                        <Typography variant="caption">04-15-2023 @ 08:00</Typography>
+                        <Typography variant="caption">{data.date}</Typography>
                     </div>
 
                 </div>

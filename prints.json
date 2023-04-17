@@ -1,31 +1,147 @@
 [
     {
-        "first_name": "Bob",
-        "last_name": "Smith",
-        "gt_email": "bobsmith@gatech.edu",
-        "PI_name": "Dr. Jane Lee",
-        "tray_name": "bob_smith_widget",
-        "printer_name": "Ultimaker 3",
+        "first_name": "John",
+        "last_name": "Doe",
+        "gt_email": "johndoe@gatech.edu",
+        "PI_name": "Dr. Sarah Lee",
+        "tray_name": "johndoe_partdescription",
+        "printer_name": "Ultimaker 4",
         "material_type": "PLA",
         "est_material": "20",
-        "est_time": "00:45",
-        "queue_date": "2023-05-15",
-        "queue_time": "13:30",
+        "est_time": "01:00",
+        "queue_date": "2023-06-15",
+        "queue_time": "12:00",
         "events": [
-        {
-        "type": "print_start",
-        "time": "13:30",
-        "date": "2023-05-15",
-        "comment": ""
-        },
-        {
-        "type": "print_success",
-        "time": "14:15",
-        "date": "2023-05-15",
-        "comment": ""
-        }
+            {
+                "type": "print_start",
+                "time": "12:00",
+                "date": "2023-06-15",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "12:30",
+                "date": "2023-06-15",
+                "comment": ""
+            }
         ],
         "done": true,
         "failed": false
-        }
+    },
+    {
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "gt_email": "janesmith@gatech.edu",
+        "PI_name": "Dr. Robert Chen",
+        "tray_name": "janesmith_partdescription",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": "50",
+        "est_time": "03:00",
+        "queue_date": "2023-07-01",
+        "queue_time": "09:00",
+        "events": [
+            {
+                "type": "print_start",
+                "time": "09:00",
+                "date": "2023-07-01",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "09:30",
+                "date": "2023-07-01",
+                "comment": "Power outage"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Bob",
+        "last_name": "Johnson",
+        "gt_email": "bobjohnson@gatech.edu",
+        "PI_name": "Dr. Sarah Lee",
+        "tray_name": "bobjohnson_partdescription",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": "40",
+        "est_time": "02:30",
+        "queue_date": "2023-08-20",
+        "queue_time": "14:00",
+        "events": [
+            {
+                "type": "print_start",
+                "time": "14:00",
+                "date": "2023-08-20",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "16:30",
+                "date": "2023-08-20",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "John",
+        "last_name": "Doe",
+        "gt_email": "johndoe@gatech.edu",
+        "PI_name": "Dr. Jane Smith",
+        "tray_name": "john_doe_partdescription",
+        "printer_name": "Ultimaker 2",
+        "material_type": "PLA",
+        "est_material": "50",
+        "est_time": "02:00",
+        "queue_date": "2023-05-01",
+        "queue_time": "08:30",
+        "events": [
+            {
+                "type": "print_start",
+                "time": "08:30",
+                "date": "2023-05-01",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "10:30",
+                "date": "2023-05-01",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "gt_email": "janesmith@gatech.edu",
+        "PI_name": "Dr. Sarah Lee",
+        "tray_name": "jane_smith_partdescription",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": "80",
+        "est_time": "03:30",
+        "queue_date": "2023-06-15",
+        "queue_time": "13:45",
+        "events": [
+            {
+                "type": "print_start",
+                "time": "13:45",
+                "date": "2023-06-15",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "14:00",
+                "date": "2023-06-15",
+                "comment": "Filament jammed"
+            }
+        ],
+        "done": false,
+        "failed": true
+    }
 ]

@@ -16,7 +16,7 @@ function JobItem(props) {
 
                     <div style={{ width: "auto", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "2px" }}>
                         {index !== undefined ?
-                            <Typography variant="subtitle2">{index}. </Typography>
+                            <Typography variant="body1">{index}.</Typography>
                             : null}
                         <Typography variant="body1">{data.tray_name}</Typography>
                         {/* <Typography variant="subtitle2">{data._id}</Typography> */}

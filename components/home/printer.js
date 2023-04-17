@@ -98,7 +98,7 @@ function Printer(props) {
             "name": "Last print",
             "component":
                 <>
-                    <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
+                    <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "5px" }}>
                         <Typography variant="subtitle2">{lastPrintData?.tray_name !== undefined ? lastPrintData.tray_name : "N/A"}</Typography>
                         {lastPrintData?.failed ? <Chip size="small" color="error" variant="outlined" label="failed" /> : null}
                     </div>

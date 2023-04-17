@@ -26,8 +26,8 @@ function UserInfo(props) {
             <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "8px" }}>
                 <Typography variant="body1">End user&apos;s name</Typography>
                 <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
-                    <TextField label="First name" required variant="outlined" size="small" sx={{ width: "100%" }} onChange={(e) => { callback({ "first_name": e.target.value }) }} />
-                    <TextField label="Last name" required variant="outlined" size="small" sx={{ width: "100%" }} onChange={(e) => { callback({ "last_name": e.target.value }) }} />
+                    <TextField label="First name" required placeholder="George" variant="outlined" size="small" sx={{ width: "100%" }} onChange={(e) => { callback({ "first_name": e.target.value }) }} />
+                    <TextField label="Last name" required placeholder="Brudell" variant="outlined" size="small" sx={{ width: "100%" }} onChange={(e) => { callback({ "last_name": e.target.value }) }} />
                 </div>
             </div>
 
@@ -59,7 +59,7 @@ function PrintInfo(props) {
             <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "8px" }}>
                 <Typography variant="body1">Tray name</Typography>
                 <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
-                    <TextField label="Tray name" required variant="outlined" size="small" helperText="Format: (M/PI_)Firstname_Lastname_Partdescription" sx={{ width: "100%" }} onChange={(e) => { callback({ "tray_name": e.target.value }) }} />
+                    <TextField label="Tray name" required placeholder="George_Brudell_Buzz" variant="outlined" size="small" helperText="Format: (M/PI_)Firstname_Lastname_Partdescription" sx={{ width: "100%" }} onChange={(e) => { callback({ "tray_name": e.target.value }) }} />
                 </div>
             </div>
 
@@ -106,7 +106,7 @@ function PrintInfo(props) {
             <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "8px" }}>
                 <Typography variant="body1">Print comments</Typography>
                 <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
-                    <TextField label="Comments" multiline variant="outlined" placeholder="Got permission from a MPI for >8 hours" size="small" sx={{ width: "100%" }} onChange={(e) => { callback({ "comments": e.target.value }) }} />
+                    <TextField label="Comments" multiline variant="outlined" placeholder="Got permission from an MPI for >8 hours" size="small" sx={{ width: "100%" }} onChange={(e) => { callback({ "comments": e.target.value }) }} />
                 </div>
             </div>
         </div>

@@ -4,12 +4,13 @@ import Home from '../components/home'
 import Header from '../components/util/header'
 import Logs from '../components/printLogs'
 import Maintenance from '../components/maintenance'
+import FindPrint from '../components/findPrint'
 
 export default function Index() {
 
     const [page, setPage] = useState(1)
 
-    const pages = [<Home key="home"/>, <Maintenance key="maintenance"/>, <Logs key="logs"/>]
+    const pages = [<Home key="home"/>, <Maintenance key="maintenance"/>, <FindPrint key="find"/>, <Logs key="logs"/>]
 
     return (
         <div style={{ width: "100vw", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start" }}>
