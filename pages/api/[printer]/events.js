@@ -27,6 +27,8 @@ export default async function handler(req, res) {
         return b.dateobj - a.dateobj
     })
 
+    // return first 15 events
+    events = events.slice(0, 15)
 
     res.status(200).json(events);
 }

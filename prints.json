@@ -1,27 +1,33 @@
 [
     {
-        "first_name": "John",
-        "last_name": "Doe",
-        "gt_email": "johndoe@gatech.edu",
-        "PI_name": "Dr. Sarah Lee",
-        "tray_name": "johndoe_partdescription",
-        "printer_name": "Ultimaker 4",
-        "material_type": "PLA",
-        "est_material": "20",
-        "est_time": "01:00",
-        "queue_date": "2023-06-15",
-        "queue_time": "12:00",
+        "first_name": "Pablo",
+        "last_name": "Jeanette",
+        "gt_email": "pjeanette12@gatech.edu",
+        "PI_name": "Stephen Coble",
+        "tray_name": "Pablo_Jeanette_biggies",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 16,
+        "est_time": "06:16",
+        "queue_date": "2021-09-08",
+        "queue_time": "02:12",
         "events": [
             {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
                 "type": "print_start",
-                "time": "12:00",
-                "date": "2023-06-15",
+                "time": "10:17",
+                "date": "2021-09-10",
                 "comment": ""
             },
             {
                 "type": "print_success",
-                "time": "12:30",
-                "date": "2023-06-15",
+                "time": "16:45",
+                "date": "2021-09-10",
                 "comment": ""
             }
         ],
@@ -29,57 +35,104 @@
         "failed": false
     },
     {
-        "first_name": "Jane",
-        "last_name": "Smith",
-        "gt_email": "janesmith@gatech.edu",
-        "PI_name": "Dr. Robert Chen",
-        "tray_name": "janesmith_partdescription",
-        "printer_name": "CloudyPytilia",
-        "material_type": "Resin",
-        "est_material": "50",
-        "est_time": "03:00",
-        "queue_date": "2023-07-01",
-        "queue_time": "09:00",
+        "first_name": "Amanda",
+        "last_name": "Beachy",
+        "gt_email": "abeachy7@gatech.edu",
+        "PI_name": "Forest Mark",
+        "tray_name": "Amanda_Beachy_cycadlike",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 92,
+        "est_time": "05:21",
+        "queue_date": "2022-09-22",
+        "queue_time": "12:20",
         "events": [
             {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
                 "type": "print_start",
-                "time": "09:00",
-                "date": "2023-07-01",
+                "time": "16:52",
+                "date": "2022-09-23",
                 "comment": ""
             },
             {
                 "type": "print_fail",
-                "time": "09:30",
-                "date": "2023-07-01",
-                "comment": "Power outage"
+                "time": "13:03",
+                "date": "2022-09-25",
+                "comment": "Failed to print"
             }
         ],
         "done": false,
         "failed": true
     },
     {
-        "first_name": "Bob",
-        "last_name": "Johnson",
-        "gt_email": "bobjohnson@gatech.edu",
-        "PI_name": "Dr. Sarah Lee",
-        "tray_name": "bobjohnson_partdescription",
-        "printer_name": "Left Stratasys",
-        "material_type": "ABS",
-        "est_material": "40",
-        "est_time": "02:30",
-        "queue_date": "2023-08-20",
-        "queue_time": "14:00",
+        "first_name": "Gerald",
+        "last_name": "Morgan",
+        "gt_email": "gmorgan13@gatech.edu",
+        "PI_name": "Jonathon Roos",
+        "tray_name": "Gerald_Morgan_leath",
+        "printer_name": "Ultimaker 4",
+        "material_type": "PLA",
+        "est_material": 5,
+        "est_time": "04:38",
+        "queue_date": "2020-05-21",
+        "queue_time": "14:16",
         "events": [
             {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
                 "type": "print_start",
-                "time": "14:00",
-                "date": "2023-08-20",
+                "time": "22:06",
+                "date": "2020-05-21",
                 "comment": ""
             },
             {
                 "type": "print_success",
-                "time": "16:30",
-                "date": "2023-08-20",
+                "time": "09:39",
+                "date": "2020-05-23",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Anthony",
+        "last_name": "Proctor",
+        "gt_email": "aproctor13@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Anthony_Proctor_legibility",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 2,
+        "est_time": "03:56",
+        "queue_date": "2022-10-20",
+        "queue_time": "21:11",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "05:10",
+                "date": "2022-10-23",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "09:03",
+                "date": "2022-10-23",
                 "comment": ""
             }
         ],
@@ -88,27 +141,33 @@
     },
     {
         "first_name": "John",
-        "last_name": "Doe",
-        "gt_email": "johndoe@gatech.edu",
-        "PI_name": "Dr. Jane Smith",
-        "tray_name": "john_doe_partdescription",
-        "printer_name": "Ultimaker 2",
-        "material_type": "PLA",
-        "est_material": "50",
-        "est_time": "02:00",
-        "queue_date": "2023-05-01",
-        "queue_time": "08:30",
+        "last_name": "Graves",
+        "gt_email": "jgraves3@gatech.edu",
+        "PI_name": "Forest Mark",
+        "tray_name": "John_Graves_autogram",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 51,
+        "est_time": "02:04",
+        "queue_date": "2021-08-10",
+        "queue_time": "12:30",
         "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
             {
                 "type": "print_start",
                 "time": "08:30",
-                "date": "2023-05-01",
+                "date": "2021-08-11",
                 "comment": ""
             },
             {
                 "type": "print_success",
-                "time": "10:30",
-                "date": "2023-05-01",
+                "time": "08:32",
+                "date": "2021-08-13",
                 "comment": ""
             }
         ],
@@ -116,32 +175,3112 @@
         "failed": false
     },
     {
-        "first_name": "Jane",
-        "last_name": "Smith",
-        "gt_email": "janesmith@gatech.edu",
-        "PI_name": "Dr. Sarah Lee",
-        "tray_name": "jane_smith_partdescription",
-        "printer_name": "Center Stratasys",
+        "first_name": "Felisha",
+        "last_name": "Talbert",
+        "gt_email": "ftalbert8@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Felisha_Talbert_arylamino",
+        "printer_name": "Right Stratasys",
         "material_type": "ABS",
-        "est_material": "80",
-        "est_time": "03:30",
-        "queue_date": "2023-06-15",
-        "queue_time": "13:45",
+        "est_material": 13,
+        "est_time": "07:28",
+        "queue_date": "2021-10-14",
+        "queue_time": "12:33",
         "events": [
             {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
                 "type": "print_start",
-                "time": "13:45",
-                "date": "2023-06-15",
+                "time": "21:14",
+                "date": "2021-10-16",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "12:34",
+                "date": "2021-10-17",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "George",
+        "last_name": "Belknap",
+        "gt_email": "gbelknap10@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "George_Belknap_horopter",
+        "printer_name": "Ultimaker 3",
+        "material_type": "PLA",
+        "est_material": 85,
+        "est_time": "03:48",
+        "queue_date": "2023-01-11",
+        "queue_time": "18:34",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "13:27",
+                "date": "2023-01-13",
                 "comment": ""
             },
             {
                 "type": "print_fail",
-                "time": "14:00",
-                "date": "2023-06-15",
-                "comment": "Filament jammed"
+                "time": "02:21",
+                "date": "2023-01-14",
+                "comment": "Failed to print"
             }
         ],
         "done": false,
         "failed": true
+    },
+    {
+        "first_name": "Steve",
+        "last_name": "Leak",
+        "gt_email": "sleak6@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Steve_Leak_frighten",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 23,
+        "est_time": "02:13",
+        "queue_date": "2021-04-05",
+        "queue_time": "14:19",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "15:01",
+                "date": "2021-04-05",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "16:35",
+                "date": "2021-04-07",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Herbert",
+        "last_name": "Berrios",
+        "gt_email": "hberrios13@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Herbert_Berrios_efoliolate",
+        "printer_name": "Ultimaker 2",
+        "material_type": "PLA",
+        "est_material": 98,
+        "est_time": "05:12",
+        "queue_date": "2020-09-29",
+        "queue_time": "16:38",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "12:43",
+                "date": "2020-10-01",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "15:17",
+                "date": "2020-10-02",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Sandra",
+        "last_name": "Smathers",
+        "gt_email": "ssmathers0@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Sandra_Smathers_allis",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 87,
+        "est_time": "07:36",
+        "queue_date": "2021-02-03",
+        "queue_time": "16:13",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "04:48",
+                "date": "2021-02-05",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "10:22",
+                "date": "2021-02-05",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Norma",
+        "last_name": "White",
+        "gt_email": "nwhite14@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Norma_White_overniceness",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 60,
+        "est_time": "05:42",
+        "queue_date": "2022-06-18",
+        "queue_time": "22:45",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "00:28",
+                "date": "2022-06-20",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "04:49",
+                "date": "2022-06-22",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Kathryn",
+        "last_name": "Guerrero",
+        "gt_email": "kguerrero3@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Kathryn_Guerrero_pedalion",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 16,
+        "est_time": "07:54",
+        "queue_date": "2023-01-01",
+        "queue_time": "08:48",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "18:58",
+                "date": "2023-01-01",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "17:14",
+                "date": "2023-01-02",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Gary",
+        "last_name": "Counter",
+        "gt_email": "gcounter3@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Gary_Counter_differentiative",
+        "printer_name": "Ultimaker 3",
+        "material_type": "PLA",
+        "est_material": 55,
+        "est_time": "07:02",
+        "queue_date": "2021-06-06",
+        "queue_time": "18:37",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "13:17",
+                "date": "2021-06-07",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "11:48",
+                "date": "2021-06-08",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "James",
+        "last_name": "Hubbard",
+        "gt_email": "jhubbard4@gatech.edu",
+        "PI_name": "Forest Mark",
+        "tray_name": "James_Hubbard_totally",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 73,
+        "est_time": "03:00",
+        "queue_date": "2022-01-25",
+        "queue_time": "00:49",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "20:07",
+                "date": "2022-01-26",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "19:42",
+                "date": "2022-01-28",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Mary",
+        "last_name": "Samson",
+        "gt_email": "msamson3@gatech.edu",
+        "PI_name": "Phyllis Carlton",
+        "tray_name": "Mary_Samson_bajree",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 13,
+        "est_time": "00:17",
+        "queue_date": "2022-06-03",
+        "queue_time": "13:28",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "17:36",
+                "date": "2022-06-05",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "00:12",
+                "date": "2022-06-06",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Angelita",
+        "last_name": "Clark",
+        "gt_email": "aclark4@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "Angelita_Clark_marattiales",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 62,
+        "est_time": "04:30",
+        "queue_date": "2022-12-21",
+        "queue_time": "20:21",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Timothy",
+        "last_name": "Galliher",
+        "gt_email": "tgalliher2@gatech.edu",
+        "PI_name": "Stephen Coble",
+        "tray_name": "Timothy_Galliher_undervaluement",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 34,
+        "est_time": "03:41",
+        "queue_date": "2021-09-29",
+        "queue_time": "04:08",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "10:20",
+                "date": "2021-10-01",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "13:46",
+                "date": "2021-10-01",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Kevin",
+        "last_name": "Streett",
+        "gt_email": "kstreett7@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Kevin_Streett_rivered",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 56,
+        "est_time": "00:23",
+        "queue_date": "2021-08-28",
+        "queue_time": "03:09",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "09:19",
+                "date": "2021-08-30",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "21:43",
+                "date": "2021-08-30",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "John",
+        "last_name": "Summers",
+        "gt_email": "jsummers0@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "John_Summers_salvation",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 37,
+        "est_time": "02:56",
+        "queue_date": "2020-06-20",
+        "queue_time": "03:23",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "18:58",
+                "date": "2020-06-20",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "08:48",
+                "date": "2020-06-21",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Shane",
+        "last_name": "Richards",
+        "gt_email": "srichards12@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Shane_Richards_prefeudal",
+        "printer_name": "Ultimaker 4",
+        "material_type": "PLA",
+        "est_material": 63,
+        "est_time": "06:57",
+        "queue_date": "2020-06-04",
+        "queue_time": "21:54",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "09:22",
+                "date": "2020-06-06",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "12:44",
+                "date": "2020-06-08",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Joseph",
+        "last_name": "King",
+        "gt_email": "jking5@gatech.edu",
+        "PI_name": "Jonathon Roos",
+        "tray_name": "Joseph_King_palmatisected",
+        "printer_name": "Ultimaker 2",
+        "material_type": "PLA",
+        "est_material": 52,
+        "est_time": "07:38",
+        "queue_date": "2022-06-19",
+        "queue_time": "15:44",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "14:11",
+                "date": "2022-06-20",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "20:25",
+                "date": "2022-06-22",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Carol",
+        "last_name": "Sosa",
+        "gt_email": "csosa13@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "Carol_Sosa_accusal",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 84,
+        "est_time": "01:18",
+        "queue_date": "2023-03-07",
+        "queue_time": "15:19",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "21:53",
+                "date": "2023-03-08",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "04:41",
+                "date": "2023-03-09",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Betty",
+        "last_name": "Reeder",
+        "gt_email": "breeder11@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Betty_Reeder_unfunnily",
+        "printer_name": "Ultimaker 4",
+        "material_type": "PLA",
+        "est_material": 18,
+        "est_time": "05:02",
+        "queue_date": "2022-08-01",
+        "queue_time": "01:45",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "06:32",
+                "date": "2022-08-01",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "13:46",
+                "date": "2022-08-03",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Patricia",
+        "last_name": "Dixon",
+        "gt_email": "pdixon7@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Patricia_Dixon_wurrus",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 87,
+        "est_time": "00:05",
+        "queue_date": "2022-11-20",
+        "queue_time": "01:05",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "22:20",
+                "date": "2022-11-20",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "05:57",
+                "date": "2022-11-21",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Barry",
+        "last_name": "Young",
+        "gt_email": "byoung9@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Barry_Young_coxes",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 40,
+        "est_time": "00:50",
+        "queue_date": "2021-01-31",
+        "queue_time": "00:10",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "18:48",
+                "date": "2021-01-31",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "00:16",
+                "date": "2021-02-02",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Mark",
+        "last_name": "Cosby",
+        "gt_email": "mcosby5@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Mark_Cosby_clomiphene",
+        "printer_name": "Ultimaker 3",
+        "material_type": "PLA",
+        "est_material": 92,
+        "est_time": "04:13",
+        "queue_date": "2021-10-17",
+        "queue_time": "07:58",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "10:55",
+                "date": "2021-10-19",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "18:46",
+                "date": "2021-10-19",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Pedro",
+        "last_name": "Powell",
+        "gt_email": "ppowell4@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Pedro_Powell_laceration",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 0,
+        "est_time": "04:04",
+        "queue_date": "2021-05-05",
+        "queue_time": "20:42",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "22:42",
+                "date": "2021-05-07",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "23:08",
+                "date": "2021-05-07",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Kathleen",
+        "last_name": "Adams",
+        "gt_email": "kadams2@gatech.edu",
+        "PI_name": "Phyllis Carlton",
+        "tray_name": "Kathleen_Adams_quaestorial",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 29,
+        "est_time": "04:48",
+        "queue_date": "2021-06-20",
+        "queue_time": "16:13",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "02:27",
+                "date": "2021-06-23",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "03:51",
+                "date": "2021-06-25",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Rose",
+        "last_name": "Jackson",
+        "gt_email": "rjackson1@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Rose_Jackson_watchwords",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 12,
+        "est_time": "02:05",
+        "queue_date": "2020-10-11",
+        "queue_time": "14:25",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "17:51",
+                "date": "2020-10-12",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "08:32",
+                "date": "2020-10-14",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Thomas",
+        "last_name": "Homes",
+        "gt_email": "thomes8@gatech.edu",
+        "PI_name": "Jonathon Roos",
+        "tray_name": "Thomas_Homes_undenunciated",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 19,
+        "est_time": "03:34",
+        "queue_date": "2020-07-09",
+        "queue_time": "23:32",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "23:36",
+                "date": "2020-07-10",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "10:55",
+                "date": "2020-07-13",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Marcia",
+        "last_name": "Caspari",
+        "gt_email": "mcaspari11@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Marcia_Caspari_kurtosis",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 49,
+        "est_time": "03:18",
+        "queue_date": "2022-01-31",
+        "queue_time": "14:58",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "10:48",
+                "date": "2022-02-01",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "14:17",
+                "date": "2022-02-03",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "David",
+        "last_name": "Spaid",
+        "gt_email": "dspaid9@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "David_Spaid_scapus",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 44,
+        "est_time": "00:00",
+        "queue_date": "2023-01-30",
+        "queue_time": "23:00",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "01:58",
+                "date": "2023-02-01",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "11:36",
+                "date": "2023-02-03",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Justin",
+        "last_name": "Richards",
+        "gt_email": "jrichards14@gatech.edu",
+        "PI_name": "Jonathon Roos",
+        "tray_name": "Justin_Richards_supersemination",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 31,
+        "est_time": "00:04",
+        "queue_date": "2021-08-19",
+        "queue_time": "17:53",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "18:15",
+                "date": "2021-08-19",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "16:27",
+                "date": "2021-08-21",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Bridget",
+        "last_name": "Jovich",
+        "gt_email": "bjovich5@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Bridget_Jovich_pelmatozoa",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 23,
+        "est_time": "03:58",
+        "queue_date": "2021-05-29",
+        "queue_time": "19:45",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "14:45",
+                "date": "2021-05-31",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "14:51",
+                "date": "2021-06-02",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Casey",
+        "last_name": "King",
+        "gt_email": "cking12@gatech.edu",
+        "PI_name": "Jonathon Roos",
+        "tray_name": "Casey_King_stablish",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 17,
+        "est_time": "02:58",
+        "queue_date": "2022-01-04",
+        "queue_time": "11:23",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "23:38",
+                "date": "2022-01-04",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "22:44",
+                "date": "2022-01-06",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Karen",
+        "last_name": "Stevenson",
+        "gt_email": "kstevenson8@gatech.edu",
+        "PI_name": "Stephen Coble",
+        "tray_name": "Karen_Stevenson_postabdominal",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 17,
+        "est_time": "02:22",
+        "queue_date": "2021-02-26",
+        "queue_time": "00:20",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "06:17",
+                "date": "2021-02-26",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "08:56",
+                "date": "2021-02-28",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Scott",
+        "last_name": "Ward",
+        "gt_email": "sward7@gatech.edu",
+        "PI_name": "Forest Mark",
+        "tray_name": "Scott_Ward_uncorrugated",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 62,
+        "est_time": "02:12",
+        "queue_date": "2021-06-27",
+        "queue_time": "15:17",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "00:00",
+                "date": "2021-06-29",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "16:42",
+                "date": "2021-06-30",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Jennifer",
+        "last_name": "Pearce",
+        "gt_email": "jpearce0@gatech.edu",
+        "PI_name": "Jonathon Roos",
+        "tray_name": "Jennifer_Pearce_subcinctoria",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 72,
+        "est_time": "04:53",
+        "queue_date": "2021-09-17",
+        "queue_time": "17:09",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "00:32",
+                "date": "2021-09-19",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "00:01",
+                "date": "2021-09-21",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Lewis",
+        "last_name": "Stanley",
+        "gt_email": "lstanley3@gatech.edu",
+        "PI_name": "Stephen Coble",
+        "tray_name": "Lewis_Stanley_leifite",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 62,
+        "est_time": "02:53",
+        "queue_date": "2022-12-03",
+        "queue_time": "14:01",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "15:30",
+                "date": "2022-12-03",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "17:37",
+                "date": "2022-12-04",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "David",
+        "last_name": "Williams",
+        "gt_email": "dwilliams11@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "David_Williams_arider",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 7,
+        "est_time": "06:41",
+        "queue_date": "2021-06-27",
+        "queue_time": "11:02",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Anthony",
+        "last_name": "Benenati",
+        "gt_email": "abenenati3@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Anthony_Benenati_operationist",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 91,
+        "est_time": "05:32",
+        "queue_date": "2020-09-12",
+        "queue_time": "06:16",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "James",
+        "last_name": "Morgan",
+        "gt_email": "jmorgan1@gatech.edu",
+        "PI_name": "Forest Mark",
+        "tray_name": "James_Morgan_mandamuses",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 13,
+        "est_time": "00:32",
+        "queue_date": "2022-09-18",
+        "queue_time": "10:39",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "06:41",
+                "date": "2022-09-19",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "15:17",
+                "date": "2022-09-19",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Martha",
+        "last_name": "Vallot",
+        "gt_email": "mvallot7@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Martha_Vallot_swampable",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 90,
+        "est_time": "06:11",
+        "queue_date": "2023-03-19",
+        "queue_time": "19:36",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "02:21",
+                "date": "2023-03-21",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "10:16",
+                "date": "2023-03-21",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Madeleine",
+        "last_name": "Henriksen",
+        "gt_email": "mhenriksen11@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Madeleine_Henriksen_diverseness",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 0,
+        "est_time": "06:45",
+        "queue_date": "2021-09-12",
+        "queue_time": "05:00",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Gregg",
+        "last_name": "Vargas",
+        "gt_email": "gvargas6@gatech.edu",
+        "PI_name": "Phyllis Carlton",
+        "tray_name": "Gregg_Vargas_habitudinal",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 13,
+        "est_time": "07:24",
+        "queue_date": "2022-05-19",
+        "queue_time": "21:28",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Daniel",
+        "last_name": "Gaytan",
+        "gt_email": "dgaytan8@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Daniel_Gaytan_quatorze",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 66,
+        "est_time": "05:35",
+        "queue_date": "2020-11-29",
+        "queue_time": "23:23",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "03:12",
+                "date": "2020-12-02",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "22:03",
+                "date": "2020-12-03",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Janet",
+        "last_name": "Williamson",
+        "gt_email": "jwilliamson8@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Janet_Williamson_superabundancy",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 56,
+        "est_time": "04:13",
+        "queue_date": "2021-06-13",
+        "queue_time": "09:37",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "18:05",
+                "date": "2021-06-14",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "10:56",
+                "date": "2021-06-15",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Troy",
+        "last_name": "Tvedt",
+        "gt_email": "ttvedt0@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "Troy_Tvedt_undocumented",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 37,
+        "est_time": "01:26",
+        "queue_date": "2020-10-11",
+        "queue_time": "01:31",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "17:10",
+                "date": "2020-10-11",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "07:51",
+                "date": "2020-10-12",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "John",
+        "last_name": "Cooperrider",
+        "gt_email": "jcooperrider5@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "John_Cooperrider_eponymy",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 93,
+        "est_time": "03:11",
+        "queue_date": "2022-12-18",
+        "queue_time": "15:58",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Frank",
+        "last_name": "Nestor",
+        "gt_email": "fnestor7@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Frank_Nestor_tinoceras",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 77,
+        "est_time": "00:55",
+        "queue_date": "2022-11-30",
+        "queue_time": "22:22",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "21:51",
+                "date": "2022-12-01",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "09:16",
+                "date": "2022-12-02",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Debbie",
+        "last_name": "Hunter",
+        "gt_email": "dhunter6@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Debbie_Hunter_eldern",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 43,
+        "est_time": "04:37",
+        "queue_date": "2021-02-01",
+        "queue_time": "09:29",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "20:28",
+                "date": "2021-02-03",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "00:52",
+                "date": "2021-02-05",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Gerardo",
+        "last_name": "Adams",
+        "gt_email": "gadams2@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Gerardo_Adams_gazon",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 66,
+        "est_time": "06:16",
+        "queue_date": "2021-07-10",
+        "queue_time": "19:48",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Edith",
+        "last_name": "Aucoin",
+        "gt_email": "eaucoin10@gatech.edu",
+        "PI_name": "Forest Mark",
+        "tray_name": "Edith_Aucoin_pastelists",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 26,
+        "est_time": "04:24",
+        "queue_date": "2020-05-24",
+        "queue_time": "13:38",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "14:23",
+                "date": "2020-05-26",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "02:43",
+                "date": "2020-05-27",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Jeffrey",
+        "last_name": "Goss",
+        "gt_email": "jgoss7@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Jeffrey_Goss_aviador",
+        "printer_name": "Ultimaker 4",
+        "material_type": "PLA",
+        "est_material": 53,
+        "est_time": "02:16",
+        "queue_date": "2021-08-11",
+        "queue_time": "23:39",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Sarah",
+        "last_name": "Paulin",
+        "gt_email": "spaulin4@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Sarah_Paulin_ungenialness",
+        "printer_name": "Ultimaker 2",
+        "material_type": "PLA",
+        "est_material": 49,
+        "est_time": "05:23",
+        "queue_date": "2021-07-10",
+        "queue_time": "01:26",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "19:46",
+                "date": "2021-07-10",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "19:04",
+                "date": "2021-07-11",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Jean",
+        "last_name": "Caldwell",
+        "gt_email": "jcaldwell2@gatech.edu",
+        "PI_name": "Phyllis Carlton",
+        "tray_name": "Jean_Caldwell_alaster",
+        "printer_name": "Ultimaker 3",
+        "material_type": "PLA",
+        "est_material": 1,
+        "est_time": "06:13",
+        "queue_date": "2022-10-09",
+        "queue_time": "07:20",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "17:33",
+                "date": "2022-10-11",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "19:35",
+                "date": "2022-10-11",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Clifford",
+        "last_name": "Murray",
+        "gt_email": "cmurray3@gatech.edu",
+        "PI_name": "Jonathon Roos",
+        "tray_name": "Clifford_Murray_micropoecilitic",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 62,
+        "est_time": "02:31",
+        "queue_date": "2022-01-14",
+        "queue_time": "02:03",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Jimmie",
+        "last_name": "Allen",
+        "gt_email": "jallen9@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Jimmie_Allen_unkinger",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 23,
+        "est_time": "02:00",
+        "queue_date": "2022-08-23",
+        "queue_time": "09:39",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "01:19",
+                "date": "2022-08-24",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "20:10",
+                "date": "2022-08-25",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Sarah",
+        "last_name": "Thomas",
+        "gt_email": "sthomas10@gatech.edu",
+        "PI_name": "Jonathon Roos",
+        "tray_name": "Sarah_Thomas_phototherapies",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 9,
+        "est_time": "07:06",
+        "queue_date": "2022-05-29",
+        "queue_time": "10:58",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "12:59",
+                "date": "2022-05-29",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "18:26",
+                "date": "2022-05-31",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Renee",
+        "last_name": "Gladwin",
+        "gt_email": "rgladwin0@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Renee_Gladwin_helminthosporoid",
+        "printer_name": "Ultimaker 3",
+        "material_type": "PLA",
+        "est_material": 14,
+        "est_time": "02:18",
+        "queue_date": "2020-10-15",
+        "queue_time": "06:03",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "07:21",
+                "date": "2020-10-16",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "14:46",
+                "date": "2020-10-17",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Aleida",
+        "last_name": "Massey",
+        "gt_email": "amassey7@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Aleida_Massey_pigeonberry",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 17,
+        "est_time": "05:11",
+        "queue_date": "2022-01-11",
+        "queue_time": "04:37",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "15:30",
+                "date": "2022-01-11",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "09:12",
+                "date": "2022-01-12",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Robert",
+        "last_name": "Lucas",
+        "gt_email": "rlucas5@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Robert_Lucas_confutator",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 1,
+        "est_time": "05:38",
+        "queue_date": "2023-03-13",
+        "queue_time": "10:13",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Ruth",
+        "last_name": "Breceda",
+        "gt_email": "rbreceda10@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Ruth_Breceda_variousness",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 46,
+        "est_time": "05:35",
+        "queue_date": "2020-05-22",
+        "queue_time": "14:41",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "02:13",
+                "date": "2020-05-23",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "16:56",
+                "date": "2020-05-24",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Christopher",
+        "last_name": "Harris",
+        "gt_email": "charris13@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Christopher_Harris_prestock",
+        "printer_name": "Ultimaker 4",
+        "material_type": "PLA",
+        "est_material": 82,
+        "est_time": "00:36",
+        "queue_date": "2023-01-22",
+        "queue_time": "02:58",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "04:31",
+                "date": "2023-01-24",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "14:57",
+                "date": "2023-01-26",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Marilyn",
+        "last_name": "Crosby",
+        "gt_email": "mcrosby6@gatech.edu",
+        "PI_name": "Forest Mark",
+        "tray_name": "Marilyn_Crosby_emotional",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 57,
+        "est_time": "01:52",
+        "queue_date": "2022-09-09",
+        "queue_time": "16:23",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "11:36",
+                "date": "2022-09-10",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "14:11",
+                "date": "2022-09-10",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Natalie",
+        "last_name": "Campbell",
+        "gt_email": "ncampbell13@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "Natalie_Campbell_interwreathe",
+        "printer_name": "Ultimaker 3",
+        "material_type": "PLA",
+        "est_material": 67,
+        "est_time": "04:51",
+        "queue_date": "2021-01-31",
+        "queue_time": "09:44",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "14:08",
+                "date": "2021-01-31",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "15:13",
+                "date": "2021-02-02",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Maureen",
+        "last_name": "Cardenas",
+        "gt_email": "mcardenas11@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "Maureen_Cardenas_haemamoeba",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 52,
+        "est_time": "02:32",
+        "queue_date": "2020-12-25",
+        "queue_time": "14:31",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "13:46",
+                "date": "2020-12-26",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "16:18",
+                "date": "2020-12-26",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Howard",
+        "last_name": "Honeycutt",
+        "gt_email": "hhoneycutt1@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Howard_Honeycutt_inthroned",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 91,
+        "est_time": "04:03",
+        "queue_date": "2021-03-20",
+        "queue_time": "19:58",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "13:54",
+                "date": "2021-03-21",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "18:13",
+                "date": "2021-03-23",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "David",
+        "last_name": "Thompson",
+        "gt_email": "dthompson5@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "David_Thompson_hypophysial",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 73,
+        "est_time": "06:45",
+        "queue_date": "2020-09-19",
+        "queue_time": "11:51",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "10:54",
+                "date": "2020-09-20",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "17:09",
+                "date": "2020-09-21",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Lisa",
+        "last_name": "Mcdonald",
+        "gt_email": "lmcdonald1@gatech.edu",
+        "PI_name": "Stephen Coble",
+        "tray_name": "Lisa_Mcdonald_choruser",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 74,
+        "est_time": "05:32",
+        "queue_date": "2022-12-27",
+        "queue_time": "04:55",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Ronda",
+        "last_name": "Farrow",
+        "gt_email": "rfarrow1@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Ronda_Farrow_argalas",
+        "printer_name": "Ultimaker 4",
+        "material_type": "PLA",
+        "est_material": 60,
+        "est_time": "05:24",
+        "queue_date": "2021-06-22",
+        "queue_time": "05:44",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "10:15",
+                "date": "2021-06-24",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "23:39",
+                "date": "2021-06-24",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Pamela",
+        "last_name": "Hornick",
+        "gt_email": "phornick3@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "Pamela_Hornick_universalists",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 87,
+        "est_time": "02:34",
+        "queue_date": "2020-08-17",
+        "queue_time": "21:32",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Paul",
+        "last_name": "Percy",
+        "gt_email": "ppercy4@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Paul_Percy_cyclopterous",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 71,
+        "est_time": "07:42",
+        "queue_date": "2021-03-20",
+        "queue_time": "16:08",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "19:29",
+                "date": "2021-03-22",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "12:05",
+                "date": "2021-03-24",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Jodie",
+        "last_name": "Carr",
+        "gt_email": "jcarr14@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Jodie_Carr_pediculosis",
+        "printer_name": "Ultimaker 3",
+        "material_type": "PLA",
+        "est_material": 58,
+        "est_time": "03:41",
+        "queue_date": "2022-01-18",
+        "queue_time": "09:30",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "07:18",
+                "date": "2022-01-19",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "08:54",
+                "date": "2022-01-20",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Wonda",
+        "last_name": "Starks",
+        "gt_email": "wstarks1@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Wonda_Starks_sonar",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 21,
+        "est_time": "01:03",
+        "queue_date": "2023-04-16",
+        "queue_time": "01:53",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "15:08",
+                "date": "2023-04-17",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "09:52",
+                "date": "2023-04-18",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Sherri",
+        "last_name": "Scott",
+        "gt_email": "sscott11@gatech.edu",
+        "PI_name": "Stephen Coble",
+        "tray_name": "Sherri_Scott_stepdame",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 28,
+        "est_time": "06:25",
+        "queue_date": "2021-05-15",
+        "queue_time": "03:54",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Daisy",
+        "last_name": "Diaz",
+        "gt_email": "ddiaz7@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Daisy_Diaz_idiomuscular",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 48,
+        "est_time": "04:55",
+        "queue_date": "2022-12-21",
+        "queue_time": "02:28",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Andrea",
+        "last_name": "Boulds",
+        "gt_email": "aboulds6@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Andrea_Boulds_deli",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 9,
+        "est_time": "04:18",
+        "queue_date": "2020-06-22",
+        "queue_time": "15:26",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "16:17",
+                "date": "2020-06-23",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "19:57",
+                "date": "2020-06-24",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Robin",
+        "last_name": "Renshaw",
+        "gt_email": "rrenshaw8@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Robin_Renshaw_etheria",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 25,
+        "est_time": "02:41",
+        "queue_date": "2022-07-27",
+        "queue_time": "15:33",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "02:29",
+                "date": "2022-07-30",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "02:53",
+                "date": "2022-07-31",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Allen",
+        "last_name": "Schmidt",
+        "gt_email": "aschmidt7@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Allen_Schmidt_shouldst",
+        "printer_name": "Ultimaker 3",
+        "material_type": "PLA",
+        "est_material": 58,
+        "est_time": "01:53",
+        "queue_date": "2020-09-24",
+        "queue_time": "17:55",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "05:20",
+                "date": "2020-09-26",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "01:34",
+                "date": "2020-09-27",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Paula",
+        "last_name": "White",
+        "gt_email": "pwhite12@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "Paula_White_locomobility",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 5,
+        "est_time": "01:56",
+        "queue_date": "2022-06-23",
+        "queue_time": "16:18",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "16:41",
+                "date": "2022-06-23",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "13:47",
+                "date": "2022-06-25",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Victor",
+        "last_name": "Gloeckner",
+        "gt_email": "vgloeckner7@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Victor_Gloeckner_unsuitable",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 33,
+        "est_time": "01:25",
+        "queue_date": "2022-01-29",
+        "queue_time": "14:17",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "10:10",
+                "date": "2022-01-30",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "11:02",
+                "date": "2022-01-31",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Barbara",
+        "last_name": "Brimage",
+        "gt_email": "bbrimage2@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Barbara_Brimage_overgirdle",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 54,
+        "est_time": "03:48",
+        "queue_date": "2020-06-23",
+        "queue_time": "14:31",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Jeremy",
+        "last_name": "Travis",
+        "gt_email": "jtravis5@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Jeremy_Travis_crosstie",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 77,
+        "est_time": "02:14",
+        "queue_date": "2022-09-27",
+        "queue_time": "01:37",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Michelle",
+        "last_name": "Burrough",
+        "gt_email": "mburrough2@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Michelle_Burrough_ileuses",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 85,
+        "est_time": "05:07",
+        "queue_date": "2022-03-19",
+        "queue_time": "02:18",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "07:26",
+                "date": "2022-03-19",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "19:31",
+                "date": "2022-03-19",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Amelia",
+        "last_name": "Boggioni",
+        "gt_email": "aboggioni10@gatech.edu",
+        "PI_name": "Forest Mark",
+        "tray_name": "Amelia_Boggioni_tape",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 17,
+        "est_time": "04:00",
+        "queue_date": "2020-07-15",
+        "queue_time": "04:06",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "Julia",
+        "last_name": "Durbin",
+        "gt_email": "jdurbin2@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Julia_Durbin_transgeneration",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 97,
+        "est_time": "06:48",
+        "queue_date": "2022-05-05",
+        "queue_time": "14:02",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "02:44",
+                "date": "2022-05-07",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "17:28",
+                "date": "2022-05-07",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Kara",
+        "last_name": "Harvey",
+        "gt_email": "kharvey0@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Kara_Harvey_misconstrual",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 82,
+        "est_time": "03:16",
+        "queue_date": "2021-02-08",
+        "queue_time": "19:18",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "10:50",
+                "date": "2021-02-10",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "17:57",
+                "date": "2021-02-11",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Sidney",
+        "last_name": "Smith",
+        "gt_email": "ssmith4@gatech.edu",
+        "PI_name": "Robert Meyers",
+        "tray_name": "Sidney_Smith_unbarbarous",
+        "printer_name": "Ultimaker 1",
+        "material_type": "PLA",
+        "est_material": 32,
+        "est_time": "05:38",
+        "queue_date": "2021-06-01",
+        "queue_time": "11:05",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "15:23",
+                "date": "2021-06-03",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "21:39",
+                "date": "2021-06-05",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Rosa",
+        "last_name": "Thomas",
+        "gt_email": "rthomas6@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Rosa_Thomas_electroscission",
+        "printer_name": "Ultimaker 4",
+        "material_type": "PLA",
+        "est_material": 49,
+        "est_time": "02:55",
+        "queue_date": "2020-08-03",
+        "queue_time": "23:43",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "11:27",
+                "date": "2020-08-04",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "05:16",
+                "date": "2020-08-05",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Donald",
+        "last_name": "Graham",
+        "gt_email": "dgraham7@gatech.edu",
+        "PI_name": "Dennis Weaver",
+        "tray_name": "Donald_Graham_abider",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 6,
+        "est_time": "01:20",
+        "queue_date": "2021-07-18",
+        "queue_time": "11:47",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "22:32",
+                "date": "2021-07-19",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "10:26",
+                "date": "2021-07-22",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Karen",
+        "last_name": "North",
+        "gt_email": "knorth8@gatech.edu",
+        "PI_name": "Ronald Martin",
+        "tray_name": "Karen_North_precarious",
+        "printer_name": "Left Stratasys",
+        "material_type": "ABS",
+        "est_material": 6,
+        "est_time": "07:23",
+        "queue_date": "2020-10-13",
+        "queue_time": "12:46",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            }
+        ],
+        "done": false,
+        "failed": false
+    },
+    {
+        "first_name": "David",
+        "last_name": "Leneave",
+        "gt_email": "dleneave2@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "David_Leneave_zandmole",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 82,
+        "est_time": "06:17",
+        "queue_date": "2022-12-12",
+        "queue_time": "17:58",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "00:12",
+                "date": "2022-12-15",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "06:12",
+                "date": "2022-12-17",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Esmeralda",
+        "last_name": "Holmes",
+        "gt_email": "eholmes4@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Esmeralda_Holmes_retalk",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 63,
+        "est_time": "02:46",
+        "queue_date": "2020-06-12",
+        "queue_time": "22:36",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "21:01",
+                "date": "2020-06-13",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "05:15",
+                "date": "2020-06-15",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Marie",
+        "last_name": "Gill",
+        "gt_email": "mgill13@gatech.edu",
+        "PI_name": "Phyllis Carlton",
+        "tray_name": "Marie_Gill_jobbery",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 42,
+        "est_time": "02:15",
+        "queue_date": "2022-09-25",
+        "queue_time": "19:00",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "00:10",
+                "date": "2022-09-28",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "06:43",
+                "date": "2022-09-28",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Chase",
+        "last_name": "Mandel",
+        "gt_email": "cmandel7@gatech.edu",
+        "PI_name": "Phyllis Carlton",
+        "tray_name": "Chase_Mandel_hypochrosis",
+        "printer_name": "Center Stratasys",
+        "material_type": "ABS",
+        "est_material": 44,
+        "est_time": "01:50",
+        "queue_date": "2020-11-27",
+        "queue_time": "05:57",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "07:08",
+                "date": "2020-11-28",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "12:12",
+                "date": "2020-11-28",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Kristin",
+        "last_name": "Hollingsworth",
+        "gt_email": "khollingsworth9@gatech.edu",
+        "PI_name": "Wade Allgood",
+        "tray_name": "Kristin_Hollingsworth_rockless",
+        "printer_name": "Ultimaker 2",
+        "material_type": "PLA",
+        "est_material": 56,
+        "est_time": "04:45",
+        "queue_date": "2021-09-15",
+        "queue_time": "15:07",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "12:26",
+                "date": "2021-09-16",
+                "comment": ""
+            },
+            {
+                "type": "print_fail",
+                "time": "13:33",
+                "date": "2021-09-16",
+                "comment": "Failed to print"
+            }
+        ],
+        "done": false,
+        "failed": true
+    },
+    {
+        "first_name": "Justin",
+        "last_name": "Solis",
+        "gt_email": "jsolis10@gatech.edu",
+        "PI_name": "Cheryl Malone",
+        "tray_name": "Justin_Solis_odored",
+        "printer_name": "WealthyAcouchi",
+        "material_type": "Resin",
+        "est_material": 88,
+        "est_time": "01:51",
+        "queue_date": "2021-03-15",
+        "queue_time": "13:19",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "16:42",
+                "date": "2021-03-15",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "09:23",
+                "date": "2021-03-17",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Enrique",
+        "last_name": "Edwards",
+        "gt_email": "eedwards4@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Enrique_Edwards_tealess",
+        "printer_name": "CloudyPytilia",
+        "material_type": "Resin",
+        "est_material": 21,
+        "est_time": "06:18",
+        "queue_date": "2021-09-17",
+        "queue_time": "23:04",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "03:36",
+                "date": "2021-09-18",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "15:18",
+                "date": "2021-09-19",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
+    },
+    {
+        "first_name": "Randall",
+        "last_name": "Bates",
+        "gt_email": "rbates7@gatech.edu",
+        "PI_name": "Christine Schuett",
+        "tray_name": "Randall_Bates_nontransgressive",
+        "printer_name": "Right Stratasys",
+        "material_type": "ABS",
+        "est_material": 3,
+        "est_time": "07:11",
+        "queue_date": "2021-01-02",
+        "queue_time": "15:26",
+        "events": [
+            {
+                "type": "print_queue",
+                "time": "time",
+                "date": "date",
+                "comment": ""
+            },
+            {
+                "type": "print_start",
+                "time": "19:33",
+                "date": "2021-01-04",
+                "comment": ""
+            },
+            {
+                "type": "print_success",
+                "time": "15:45",
+                "date": "2021-01-05",
+                "comment": ""
+            }
+        ],
+        "done": true,
+        "failed": false
     }
 ]
