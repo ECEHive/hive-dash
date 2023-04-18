@@ -47,9 +47,9 @@ function Maintenance(props) {
             <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
                 <div style={{ width: "auto", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
                     {/* <Typography variant="body1">Select a printer</Typography> */}
-                    <FormControl sx={{ minWidth: "200px" }}>
+                    <FormControl fullWidth sx={{ minWidth: "200px" }}>
                         <InputLabel id="printer-select-label">Printer</InputLabel>
-                        <Select label="Select printer" value={printerName} variant="outlined" size="small" onChange={selectPrinter}>
+                        <Select labelId="printer-select-label" label="Printer" value={printerName} variant="outlined" size="small" onChange={selectPrinter}>
                             {printers.map((printer, index) => {
                                 return (
                                     <MenuItem key={index} value={printer.name}>{printer.name}</MenuItem>

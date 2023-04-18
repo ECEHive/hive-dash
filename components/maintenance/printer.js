@@ -13,6 +13,7 @@ function Printer(props) {
 
     const [events, setEvents] = useState([])
     const [statusText, setStatusText] = useState("")
+    const [enabled, setEnabled] = useState(false)
 
     useEffect(() => {
         fetch(`/api/${printerName}/events`)
@@ -24,11 +25,14 @@ function Printer(props) {
 
     useEffect(() => {
         if (printerData.status === "down") {
-            setStatusText(`down since ${printerData.down_date} :(`)
+            setStatusText(`down since ${printerData.states.down_date} :(`)
+            setEnabled(false)
         } else if (printerData.status === "printing") {
             setStatusText("printing :)")
+            setEnabled(true)
         } else if (printerData.status === "idle") {
             setStatusText("idle")
+            setEnabled(true)
         }
     }, [printerData])
 
@@ -37,11 +41,11 @@ function Printer(props) {
             <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
                 <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", flexGrow: 1 }}>
                     <Typography variant="h5">{printerName}</Typography>
-                    <Typography variant="body2">operational :)</Typography>
+                    <Typography variant="body2">{statusText}</Typography>
                 </div>
                 <div style={{ width: "auto", height: "auto", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", gap: "5px" }}>
-                    <Chip label="down" color="error" variant="outlined" size="small" />
-                    <Switch />
+                    <Chip label={enabled ? "up" : "down"} color={enabled ? "success" : "error"} variant="outlined" size="small" />
+                    <Switch checked={enabled} onChange={null}/>
                 </div>
             </div>
 
@@ -50,7 +54,7 @@ function Printer(props) {
                 <div style={{ width: "50%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}>
 
                     <div style={{ width: "auto", height: "32px", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
-                        <Typography variant="h6"><strong>Maintenance logs</strong></Typography>
+                        <Typography variant="h6">Maintenance logs</Typography>
                         <Tooltip arrow title="Add a maintenance event" placement="bottom" >
                             <Button variant="outlined" size="small" startIcon={<Add />}>Add</Button>
                         </Tooltip>
@@ -66,7 +70,7 @@ function Printer(props) {
                 <div style={{ width: "50%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}>
 
                     <div style={{ width: "auto", height: "32px", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
-                        <Typography variant="h6"><strong>Recent events</strong></Typography>
+                        <Typography variant="h6">Recent events</Typography>
                     </div>
 
                     <div style={{ width: "100%", height: "auto", padding: "5px 0px", maxHeight: "350px", overflowY: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", marginTop: "5px", gap: "10px" }}>

@@ -4,7 +4,7 @@ import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Fo
 
 function NewMaintenance(props) {
     return (
-        <Dialog open fullWidth maxWidth="sm">
+        <Dialog open={false} fullWidth maxWidth="sm">
             <DialogTitle>New maintenance event for Ultimaker 2</DialogTitle>
 
             <DialogContent sx={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}>
