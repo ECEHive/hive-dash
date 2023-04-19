@@ -2,111 +2,131 @@
     {
         "name": "Ultimaker 1",
         "type": "Ultimaker",
+        "enabled": true,
         "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "Ultimaker 2",
         "type": "Ultimaker",
+        "enabled": true,
         "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "Ultimaker 3",
         "type": "Ultimaker",
+        "enabled": true,
         "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "Ultimaker 4",
         "type": "Ultimaker",
+        "enabled": true,
         "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "CloudyPytilia",
         "type": "Formlabs",
+        "enabled": true,
         "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "WealthyAcouchi",
         "type": "Formlabs",
+        "enabled": true,
         "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "Left Stratasys",
-        "status": "idle",
         "type": "Stratasys",
+        "enabled": true,
+        "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "Center Stratasys",
-        "status": "idle",
         "type": "Stratasys",
+        "enabled": true,
+        "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "Right Stratasys",
-        "status": "idle",
         "type": "Stratasys",
+        "enabled": true,
+        "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     },
     {
         "name": "Mark Two",
-        "status": "idle",
         "type": "Markforged",
+        "enabled": true,
+        "status": "idle",
         "states": {
             "current_tray_id": "",
             "last_tray_id": "",
             "down_note": "",
             "down_date": ""
-        }
+        },
+        "events": []
     }
 ]

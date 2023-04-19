@@ -48,7 +48,7 @@ function FindPrint(props) {
                                 <Stepper activeStep={3} orientation="vertical">
                                     <Step active sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "10px" }}>
                                         <StepLabel icon={<Check color="success" />} optional={<Typography variant="caption">2023-05-10 @ 10:00</Typography>}>Print success</StepLabel>
-                                        <IconButton sx={{ height: "40px" }} onClick={() => { setShowAllEvents(a => !a) }}>{showAllEvents ? <ArrowUpward /> : <ArrowDownward />}</IconButton>
+                                        <IconButton sx={{ height: "40px" }} color="primary" onClick={() => { setShowAllEvents(a => !a) }}>{showAllEvents ? <ArrowUpward /> : <ArrowDownward />}</IconButton>
                                     </Step>
                                     <Collapse in={showAllEvents}>
                                         <Step active>

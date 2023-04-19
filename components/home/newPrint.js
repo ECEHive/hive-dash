@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { Check } from "@mui/icons-material";
 import { Dialog, DialogContent, DialogTitle, DialogActions, Button, Step, Typography, StepLabel, Stepper, TextField, Autocomplete, RadioGroup, Radio, FormControl, FormControlLabel, InputAdornment, Fade, CircularProgress } from "@mui/material";
+import { getLocalTime } from '../../utils/time';
 
 function UserInfo(props) {
 
@@ -213,19 +214,22 @@ function NewPrint(props) {
     }
 
     function save() {
-        var localTime = new Date()
-        var utc = localTime.getTime() + (localTime.getTimezoneOffset() * 60000)
-        var edt = new Date(utc + (3600000 * -4))
-        // split edt into separate date and time
-        var date = edt.toLocaleDateString("en-US").replaceAll("/","-")
-        var time = edt.toLocaleTimeString("en-US", { hour12: false })
+        var [date, time] = getLocalTime();
+        console.log(date);
 
         var payload = {
             ...responses,
             "queue_date": date,
             "queue_time": time,
             "done": false,
-            "failed": false
+            "failed": false,
+            "events": [
+                {
+                    "type": "print_queue",
+                    "time": time,
+                    "date": date,
+                }
+            ],
         }
         fetch("/api/newPrint", {
             method: "POST",

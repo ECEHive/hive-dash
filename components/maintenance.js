@@ -4,7 +4,7 @@ import { Add } from "@mui/icons-material";
 import { Button, Chip, Container, Switch, Tooltip, Typography, Select, MenuItem, FormControl, InputLabel, Divider } from "@mui/material";
 
 import Printer from "./maintenance/printer.js";
-import NewMaintenance from "./maintenance/newMaintenance.js";
+import NewMaintenanceEvent from "./maintenance/newMaintenanceEvent.js";
 
 
 function Maintenance(props) {
@@ -21,6 +21,8 @@ function Maintenance(props) {
     const [printerData, setPrinterData] = useState([]);
     const [printers, setPrinters] = useState([])
 
+    const [maintenanceDialog, setMaintenanceDialog] = useState(null)
+
     useEffect(() => {
         fetch(`/api/printers`)
             .then(res => res.json())
@@ -34,11 +36,18 @@ function Maintenance(props) {
         setPrinterData(printers.find(printer => printer.name === event.target.value))
     }
 
+    function openDialog(printerName){
+        setMaintenanceDialog(<NewMaintenanceEvent data={printerData} printerName={printerName} callback={closeDialog}/>)
+    }
+
+    function closeDialog(){
+        setMaintenanceDialog(null)
+    }
 
     return (
         <Container maxWidth="lg" sx={{ width: "100%", height: "100%", marginBottom: "20px", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "20px" }}>
 
-            <NewMaintenance />
+            {maintenanceDialog}
             
             <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}>
                 <Typography variant="h4">Printer maintenance</Typography>
@@ -63,7 +72,7 @@ function Maintenance(props) {
             <Divider flexItem orientation="horizontal" variant="middle" />
 
             {printerName !== "" ?
-                <Printer printerName={printerName} printerData={printerData} />
+                <Printer printerName={printerName} printerData={printerData} addMaintenance={openDialog}/>
                 : <>
                     <Typography variant="bod1">Select a printer</Typography>
                 </>
