@@ -109,8 +109,8 @@ def main():
 
         new_struct["events"].append({
             "type": "print_queue",
-            "time": "time",
-            "date": "date",
+            "time": time,
+            "date": date,
             "comment": ""
         })
 

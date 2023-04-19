@@ -11,6 +11,7 @@ export default async function handler(req, res) {
 
     history.map((entry) => {
         entry.events.map((event) => {
+            //console.log(event.date, event.time)
             var date = new Date(event.date + "T" + event.time)
             events.push({
                 "type": event.type,
@@ -21,6 +22,8 @@ export default async function handler(req, res) {
             })
         })
     })
+
+    //console.log(events)
 
     // sort events by date
     events.sort((a, b) => {
