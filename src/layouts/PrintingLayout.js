@@ -7,10 +7,12 @@ export default function PrimaryLayout({ children }) {
 
     return (
         <>
-            <TopBar />
-            <Navigation />
-            <Box w="calc(100vw - 260px)" h="100%" left="260px" top="100px" pos="relative">
-                {children}
+            <Box w="100vw" h="100vh" pos="fixed">
+                <TopBar />
+                <Navigation />
+                <Box w="calc(100vw - 260px)" h="calc(100vh - 80px)" left="260px" top="80px" pos="relative">
+                    {children}
+                </Box>
             </Box>
         </>
     )

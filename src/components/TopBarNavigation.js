@@ -28,7 +28,7 @@ export default function TopBarNavigation(props) {
                 borderRight="1px solid"
                 borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-                <NextImage src={logo} height={50} placeholder="blur" priority />
+                <NextImage alt="HIVE logo" src={logo} height={50} placeholder="blur" priority />
             </HStack>
 
             <HStack
@@ -38,11 +38,14 @@ export default function TopBarNavigation(props) {
                 direction="row"
                 alignItems="center"
                 justifyContent="flex-start"
-                spacing={2}
+                spacing={3}
                 p={3}
             >   
                 <Button variant="ghost" isActive>
                     3D Printing
+                </Button>
+                <Button variant="ghost">
+                    Laser Cutting
                 </Button>
                 <Spacer />
                 <IconButton onClick={toggleColorMode}>
