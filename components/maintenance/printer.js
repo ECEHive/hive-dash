@@ -102,7 +102,7 @@ function Printer(props) {
                         {events.map((event) => {
                             if (event.type !== "print_queue") {
                                 return (
-                                    <EventItem key={event.date} data={event} />
+                                    <EventItem key={`${event.date}${event.title}`} data={event} />
                                 )
                             }
                         })}

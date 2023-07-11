@@ -20,8 +20,8 @@ function JobItem(props) {
                             : null}
                         <Typography variant="body1">{data.tray_name}</Typography>
                         {/* <Typography variant="subtitle2">{data._id}</Typography> */}
-                        <Chip variant="outlined" size="small" sx={{ marginLeft: "5px" }} label={data.printer_name} color="info" />
-                    </div>
+                        {/* <Chip variant="outlined" size="small" sx={{ marginLeft: "5px" }} label={data.printer_name} color="info" /> */}
+                    </div> 
 
                     <div style={{ width: "100%", height: "auto", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", gap: "20px" }}>
                         <div style={{ width: "auto", height: "auto", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "2px" }}>

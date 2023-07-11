@@ -19,6 +19,10 @@ function NewMaintenance(props) {
         console.log(enabled, title, description)
 
         var [date, time] = getLocalTime()
+        var fixedEnabled = enabled;
+        
+        if(fixedEnabled == 'false')
+            fixedEnabled = false;
 
         fetch(`/api/${name}/addMaintenanceEvent`, {
             method: "POST",
@@ -28,7 +32,7 @@ function NewMaintenance(props) {
             body: JSON.stringify({
                 "printer_name": name,
                 "data": {
-                    "enabled": enabled,
+                    "enabled": fixedEnabled,
                     "title": title,
                     "description": description,
                     "date": date,
