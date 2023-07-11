@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Divider, Flex, VStack, useColorModeValue } from "@chakra-ui/react";
+import { Button, ButtonGroup, Divider, Flex, VStack, useColorModeValue, Spacer } from "@chakra-ui/react";
 import { AiFillDashboard, AiFillPrinter, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 
 export default function Navigation(props) {
@@ -16,8 +16,15 @@ export default function Navigation(props) {
 
                 <VStack
                     p={2}
+                    h="100%"
                 >
-                    <Button variant="ghost" w="100%" justifyContent="flex-start" leftIcon={<AiOutlinePlus />}>
+                    <Button
+                        variant="ghost"
+                        w="100%"
+                        justifyContent="flex-start"
+                        colorScheme="green"
+                        leftIcon={<AiOutlinePlus />}
+                    >
                         New print
                     </Button>
 
@@ -47,6 +54,17 @@ export default function Navigation(props) {
                         leftIcon={<AiOutlineSearch />}
                     >
                         Find a print
+                    </Button>
+
+                    <Spacer />
+
+                    <Button
+                        variant="ghost"
+                        w="100%"
+                        justifyContent="flex-start"
+                        leftIcon={<AiOutlineSearch />}
+                    >
+                        Knowledge base
                     </Button>
                 </VStack>
 

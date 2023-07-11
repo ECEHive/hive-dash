@@ -1,21 +1,21 @@
-import { Card, CardBody, Heading, Text, Box, HStack, Badge, Button, VStack, Progress, useColorModeValue, Spacer, Stat, StatLabel, StatNumber, SimpleGrid, Divider, ButtonGroup, IconButton, Tooltip } from "@chakra-ui/react"
+import { useState, useEffect, useMemo } from "react";
+import { Card, CardBody, Heading, Text, Box, HStack, Badge, Button, VStack, Progress, useColorModeValue, Spacer, Stat, StatLabel, StatNumber, SimpleGrid, Divider, ButtonGroup, IconButton, Tooltip, Table, Thead, Tr, Th, Tbody, Td, TableContainer, StatHelpText, Flex } from "@chakra-ui/react"
 import { Responsive, WidthProvider } from "react-grid-layout";
-
-import Layout from "@/layouts/PrintingLayout"
-import { AiOutlineArrowRight, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
-import { FaHeartBroken, FaWrench } from "react-icons/fa";
-import { PiQueueFill } from "react-icons/pi";
+import { FaWrench } from "react-icons/fa";
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-
+import { HiMiniQueueList } from "react-icons/hi2";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-const layouts = {
+import Layout from "@/layouts/PrintingLayout"
+import PrinterCard from "@/components/printing/dashboard/PrinterItem";
+import CardTemplate from "@/components/printing/dashboard/CardTemplate";
+
+const defaultLayouts = {
     lg: [
-        { i: "printer1", x: 0, y: 0, w: 2, h: 2 },
-        { i: "printer2", x: 2, y: 0, w: 2, h: 2 },
-        { i: "printer3", x: 4, y: 0, w: 2, h: 2 },
-        { i: "printer4", x: 0, y: 2, w: 2, h: 2 },
+        { i: "recent", x: 0, y: 0, w: 4, h: 4 },
+        { i: "stratasyses", x: 4, y: 0, w: 3, h: 3 },
+        { i: "stat1", x: 4, y: 3, w: 2, h: 1 }
     ]
 }
 
@@ -23,283 +23,122 @@ export default function Dashboard(props) {
 
     const ResponsiveGridLayout = WidthProvider(Responsive);
 
+    const layouts = useMemo(() => {
+        let newLayouts = { lg: [...defaultLayouts.lg] }
+        for (let i = 0; i < 10; i++) {
+            newLayouts.lg.push({ i: `printer${i}`, x: (i * 2) % 12, y: i % 12, w: 2, h: 2 })
+        }
+        return newLayouts
+    }, [])
+
+    useEffect(() => {
+
+    }, [layouts])
+
     return (
         <>
             <Box h="100%" w="100%" overflow="auto">
                 <ResponsiveGridLayout
                     className="layout"
                     //draggableHandle=".drag-handle"
-                    style={{ width: "100%", height: "100%", overflow: "auto" }}
+                    style={{ width: "100%", height: "100%", overflow: "auto", }}
                     layouts={{ lg: layouts.lg }}
                     breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                     cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                     margin={[15, 15]}
                     rowHeight={150}
-                    isDraggable 
+                    isDraggable={true}
                     isResizable={false}
                 >
-                    <Card
-                        key="printer1"
-                        variant="filled"
-                        borderRadius={10}
-                    >
-                        <CardBody>
-                            <VStack spacing={3} alignItems="flex-start" h="100%">
 
-                                {/* header */}
-                                <HStack>
-                                    <Heading size="md">Left Stratasys</Heading>
-                                    <Badge variant="subtle" colorScheme="green">Printing</Badge>
-                                </HStack>
+                    {/* {layouts.lg.map((i) => {
+                        if(i.i.includes("printer"))
+                            return (
+                                <div key={i.i}>
+                                    <PrinterCard status="printing" />
+                                </div>
+                            )
+                    })} */}
 
-                                <HStack w="100%">
-                                    <Stat>
-                                        <StatNumber fontSize="2xl">3</StatNumber>
-                                        <StatLabel>Prints in queue</StatLabel>
-                                    </Stat>
-                                    <Stat>
-                                        <StatNumber fontSize="2xl">3 days</StatNumber>
-                                        <StatLabel>Uptime</StatLabel>
-                                    </Stat>
-                                </HStack>
+                    <div key="stratasyses">
+                        <CardTemplate title="Stratasyses" >
+                            <VStack spacing={3} alignItems="flex-start" flexGrow={1} w="100%">
+                                <PrinterCard status="printing"/>
+                                <PrinterCard status="idle"/>
+                                <PrinterCard status="down"/>
+                            </VStack>
+                        </CardTemplate>
+                    </div>
 
-                                <Spacer />
-                                <Divider />
+                    <div key="stat1">
+                        <CardTemplate>
+                            <Box w="100%" h="100%">
+                                <Stat>
+                                    <StatLabel fontSize="xl">Longest queue</StatLabel>
+                                    <StatNumber fontSize="3xl" fontFamily="heading">Ultimaker 2</StatNumber>
+                                    <Spacer />
+                                    <StatHelpText fontSize="md" m="auto">3 prints in queue</StatHelpText>
+                                </Stat>
+                            </Box>
+                        </CardTemplate>
+                    </div>
 
-                                {/* active print */}
-                                <VStack alignItems="flex-start" w="100%" spacing={4}>
+                    <div key="recent">
+                        <CardTemplate title="Recently queued" >
+                            <VStack w="100%" spacing={4}>
 
-                                    <VStack w="100%" spacing={2} alignItems="flex-start">
-                                        <HStack w="100%">
-                                            <Tooltip label="PI_Colin_Hartigan_long_print_name" placement="top">
-                                                <Text fontSize="lg" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
+                                <TableContainer w="100%">
+                                    <Table variant="simple">
+                                        <Thead>
+                                            <Tr>
+                                                <Th>
+                                                    Date
+                                                </Th>
+                                                <Th>
+                                                    Print name
+                                                </Th>
+                                                <Th>
+                                                    Printer
+                                                </Th>
+                                            </Tr>
+                                        </Thead>
+                                        <Tbody>
+                                            <Tr>
+                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
+                                                    2023-05-10 15:24
+                                                </Td>
+                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
                                                     PI_Colin_Hartigan_long_print_name
-                                                </Text>
-                                            </Tooltip>
-                                            <Spacer />
-                                            <Text fontSize="xs" whiteSpace="nowrap">
-                                                10:30:00
-                                            </Text>
-                                        </HStack>
-                                        <Progress
-                                            value={50}
-                                            size="sm"
-                                            w="100%"
-                                            borderRadius={5}
-                                        />
-                                        <VStack w="100%" alignItems="flex-start" spacing={1}>
-                                            <Text fontSize="xs">
-                                                Queued by person lastname
-                                            </Text>
-                                        </VStack>
-                                    </VStack>
-
-                                    <ButtonGroup
-                                        isAttached
-                                        size="md"
-                                        variant="outline"
-                                        w="100%"
-                                    >
-                                        <IconButton colorScheme="green" w="100%">
-                                            <CheckIcon />
-                                        </IconButton>
-                                        <IconButton colorScheme="red" w="100%">
-                                            <CloseIcon />
-                                        </IconButton>
-                                    </ButtonGroup>
-                                </VStack>
-
-                            </VStack>
-
-                        </CardBody>
-                    </Card>
-
-                    <Card
-                        key="printer2"
-                        variant="filled"
-                        borderRadius={10}
-                    >
-                        <CardBody>
-                            <VStack spacing={3} alignItems="flex-start" h="100%">
-
-                                {/* header */}
-                                <HStack>
-                                    <Heading size="md">Center Stratasys</Heading>
-                                    <Badge variant="subtle" colorScheme="yellow">Idle</Badge>
-                                </HStack>
-
-                                <HStack w="100%">
-                                    <Stat>
-                                        <StatNumber fontSize="2xl">3</StatNumber>
-                                        <StatLabel>Prints in queue</StatLabel>
-                                    </Stat>
-                                    <Stat>
-                                        <StatNumber fontSize="2xl">3 days</StatNumber>
-                                        <StatLabel>Uptime</StatLabel>
-                                    </Stat>
-                                </HStack>
-
-                                <Spacer />
-                                <Divider />
-
-                                {/* last print */}
-                                <VStack alignItems="flex-start" w="100%" spacing={4}>
-
-                                    <VStack w="100%" spacing={2} alignItems="flex-start">
-                                        <HStack w="100%">
-                                            <Tooltip label="PI_Colin_Hartigan_long_print_name" placement="top">
-                                                <Text fontSize="lg" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
+                                                </Td>
+                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
+                                                    <Badge variant="subtle" fontSize="sm">
+                                                        Ultimaker 3
+                                                    </Badge>
+                                                </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
+                                                    2023-05-10 15:24
+                                                </Td>
+                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
                                                     PI_Colin_Hartigan_long_print_name
-                                                </Text>
-                                            </Tooltip>
-                                            <Spacer />
-                                            <Text fontSize="xs" whiteSpace="nowrap">
-                                                done: 1h 30m
-                                            </Text>
-                                        </HStack>
-                                        <Progress
-                                            value={50}
-                                            size="sm"
-                                            w="100%"
-                                            borderRadius={5}
-                                            colorScheme="green"
-                                        />
-                                        <VStack w="100%" alignItems="flex-start" spacing={1}>
-                                            <Text fontSize="xs">
-                                                Queued by person lastname
-                                            </Text>
-                                        </VStack>
-                                    </VStack>
-
-                                    <Button w="100%" variant="outline" rightIcon={<ArrowForwardIcon />}>
-                                        Start print
-                                    </Button>
-                                </VStack>
-                            </VStack>
-
-                        </CardBody>
-                    </Card>
-
-                    <Card
-                        key="printer3"
-                        variant="filled"
-                        borderRadius={10}
-                    >
-                        <CardBody>
-                            <VStack spacing={3} alignItems="flex-start" h="100%">
-
-                                {/* header */}
-                                <HStack>
-                                    <Heading size="md">Center Stratasys</Heading>
-                                    <Badge variant="subtle" colorScheme="yellow">Idle</Badge>
-                                    <Badge variant="subtle" colorScheme="red">Failed</Badge>
-                                </HStack>
-
-                                <HStack w="100%">
-                                    <Stat>
-                                        <StatNumber fontSize="2xl">3</StatNumber>
-                                        <StatLabel>Prints in queue</StatLabel>
-                                    </Stat>
-                                    <Stat>
-                                        <StatNumber fontSize="2xl">3 days</StatNumber>
-                                        <StatLabel>Uptime</StatLabel>
-                                    </Stat>
-                                </HStack>
-
-                                <Spacer />
-                                <Divider />
-
-                                {/* last print */}
-                                <VStack alignItems="flex-start" w="100%" spacing={4}>
-
-                                    <VStack w="100%" spacing={2} alignItems="flex-start">
-                                        <HStack w="100%">
-                                            <Tooltip label="PI_Colin_Hartigan_long_print_name" placement="top">
-                                                <Text fontSize="lg" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
-                                                    PI_Colin_Hartigan_long_print_name
-                                                </Text>
-                                            </Tooltip>
-                                            <Spacer />
-                                            <Text fontSize="xs" whiteSpace="nowrap">
-                                                failed
-                                            </Text>
-                                        </HStack>
-                                        <Progress
-                                            value={50}
-                                            size="sm"
-                                            w="100%"
-                                            borderRadius={5}
-                                            colorScheme="red"
-                                        />
-                                        <VStack w="100%" alignItems="flex-start" spacing={1}>
-                                            <Text fontSize="xs">
-                                                Queued by person lastname
-                                            </Text>
-                                        </VStack>
-                                    </VStack>
-
-                                    <ButtonGroup
-                                        isAttached
-                                        size="md"
-                                        variant="outline"
-                                        w="100%"
-                                    >
-                                        <Button w="100%" variant="outline" colorScheme="orange">
-                                            Maintenance
-                                        </Button>
-                                        <Button w="100%" variant="outline" rightIcon={<ArrowForwardIcon />}>
-                                            Start print
-                                        </Button>
-                                    </ButtonGroup>
-                                </VStack>
-                            </VStack>
-
-                        </CardBody>
-                    </Card>
-
-                    <Card
-                        key="printer4"
-                        variant="filled"
-                        borderRadius={10}
-                    >
-                        <CardBody>
-                            <VStack spacing={3} alignItems="flex-start" h="100%">
-
-                                {/* header */}
-                                <HStack>
-                                    <Heading size="md">Right Stratasys</Heading>
-                                    <Badge variant="subtle" colorScheme="red">Down</Badge>
-                                </HStack>
-
-                                <HStack w="100%">
-                                    <Stat>
-                                        <StatNumber fontSize="2xl">3</StatNumber>
-                                        <StatLabel>Queue</StatLabel>
-                                    </Stat>
-                                    <Stat>
-                                        <StatNumber fontSize="2xl">1 day</StatNumber>
-                                        <StatLabel>Downtime</StatLabel>
-                                    </Stat>
-                                </HStack>
-
-                                <Box w="100%">
-                                    <Text fontSize="md">
-                                        a short text block about why the printer is down with updates about maintenance
-                                    </Text>
-                                </Box>
-
-                                <Spacer />
-                                <Button w="100%" variant="outline" colorScheme="orange" rightIcon={<FaWrench />}>
-                                    Maintenance
-                                </Button>
+                                                </Td>
+                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
+                                                    <Badge variant="subtle" fontSize="sm">
+                                                        Ultimaker 3
+                                                    </Badge>
+                                                </Td>
+                                            </Tr>
+                                        </Tbody>
+                                    </Table>
+                                </TableContainer>
 
                             </VStack>
+                        </CardTemplate>
+                    </div>
 
-                        </CardBody>
-                    </Card>
-
-                </ResponsiveGridLayout>
-            </Box>
+                </ResponsiveGridLayout >
+            </Box >
         </>
     )
 }
