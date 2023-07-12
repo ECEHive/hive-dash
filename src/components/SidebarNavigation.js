@@ -1,7 +1,18 @@
+import { useState, useEffect } from "react";
 import { Button, ButtonGroup, Divider, Flex, VStack, useColorModeValue, Spacer } from "@chakra-ui/react";
 import { AiFillDashboard, AiFillPrinter, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
+import { usePathname } from "next/navigation";
+import NextLink from "next/link";
 
 export default function Navigation(props) {
+
+    const pathname = usePathname()
+    const [pathPage, setPathPage] = useState("")
+
+    useEffect(() => {
+        setPathPage(pathname.split("/")[2])
+    }, [pathname])
+
     return (
         <>
             <Flex
@@ -23,6 +34,9 @@ export default function Navigation(props) {
                         w="100%"
                         justifyContent="flex-start"
                         colorScheme="green"
+                        as={NextLink}
+                        href="/printing/newprint"
+                        isActive={pathPage === "newprint"}
                         leftIcon={<AiOutlinePlus />}
                     >
                         New print
@@ -34,7 +48,9 @@ export default function Navigation(props) {
                         variant="ghost"
                         w="100%"
                         justifyContent="flex-start"
-                        isActive
+                        as={NextLink}
+                        href="/printing/dashboard"
+                        isActive={pathPage === "dashboard"}
                         leftIcon={<AiFillDashboard />}
                     >
                         Dashboard
@@ -43,6 +59,9 @@ export default function Navigation(props) {
                         variant="ghost"
                         w="100%"
                         justifyContent="flex-start"
+                        as={NextLink}
+                        href="/printing/printers"
+                        isActive={pathPage === "printers"}
                         leftIcon={<AiFillPrinter />}
                     >
                         Printers
@@ -51,6 +70,9 @@ export default function Navigation(props) {
                         variant="ghost"
                         w="100%"
                         justifyContent="flex-start"
+                        as={NextLink}
+                        href="/printing/find"
+                        isActive={pathPage === "find"}
                         leftIcon={<AiOutlineSearch />}
                     >
                         Find a print
@@ -62,6 +84,9 @@ export default function Navigation(props) {
                         variant="ghost"
                         w="100%"
                         justifyContent="flex-start"
+                        as={NextLink}
+                        href="/printing/knowledge"
+                        isActive={pathPage === "knowledge"}
                         leftIcon={<AiOutlineSearch />}
                     >
                         Knowledge base

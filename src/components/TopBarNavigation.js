@@ -1,13 +1,22 @@
-import { Flex, HStack, Button, Image, useColorModeValue, Spacer, IconButton, useColorMode} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Flex, HStack, Button, Image, useColorModeValue, Spacer, IconButton, useColorMode } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
 import NextImage from "next/image";
+import { usePathname } from "next/navigation";
 
 import logoDark from "@/assets/logo_dark.png"
 import logoLight from "@/assets/logo_light.png"
 
 export default function TopBarNavigation(props) {
 
-    const {colorMode, toggleColorMode} = useColorMode()
+    const { colorMode, toggleColorMode } = useColorMode()
+    const [pathSection, setPathSection] = useState("")
+    const pathname = usePathname()
+
+    useEffect(() => {
+        setPathSection(pathname.split("/")[1])
+    }, [pathname])
 
     return (
         <Flex
@@ -41,8 +50,13 @@ export default function TopBarNavigation(props) {
                 justifyContent="flex-start"
                 spacing={3}
                 p={3}
-            >   
-                <Button variant="ghost" isActive>
+            >
+                <Button
+                    variant="ghost"
+                    as={NextLink}
+                    href="/printing"
+                    isActive={pathSection === "printing"}
+                >
                     3D Printing
                 </Button>
                 <Button variant="ghost">

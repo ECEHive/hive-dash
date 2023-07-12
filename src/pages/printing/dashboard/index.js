@@ -7,9 +7,10 @@ import { HiMiniQueueList } from "react-icons/hi2";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import Layout from "@/layouts/PrintingLayout"
+import Layout from "@/layouts/printing/PrintingLayout"
 import PrinterCard from "@/components/printing/dashboard/PrinterItem";
 import CardTemplate from "@/components/printing/dashboard/CardTemplate";
+import { jsx } from "@emotion/react";
 
 const defaultLayouts = {
     lg: [
@@ -53,13 +54,24 @@ export default function Dashboard(props) {
                 <Grid
                     h="100%"
                     w="100%"
-                    templateColumns="repeat(12, 1fr)"
-                    templateRows="repeat(8, 1fr)"
+                    templateColumns={{
+                        "base": "repeat(12, 1fr)"
+                    }}
+                    templateRows={{
+                        "base": "repeat(6, 1fr)",
+                        "3xl": "repeat(8, 1fr)"
+                    }}
                     gap={4}
                     p={5}
                 >
 
-                    <GridItem rowSpan={4} colSpan={12}>
+                    <GridItem
+                        rowSpan={{
+                            "base": "4",
+                            "3xl": "4"
+                        }}
+                        colSpan={12}
+                    >
                         <CardTemplate title="Printer Statuses" >
                             <SimpleGrid spacing={4} columns={3} w="100%" h="100%">
                                 <PrinterCard status="printing" />
@@ -88,7 +100,16 @@ export default function Dashboard(props) {
                         </CardTemplate>
                     </div> */}
 
-                    <GridItem rowSpan={4} colSpan={4}>
+                    <GridItem
+                        rowSpan={{
+                            "base": "2",
+                            "3xl": "6"
+                        }}
+                        colSpan={{
+                            "base": "6",
+                            "3xl": "4"
+                        }}
+                    >
                         <CardTemplate title="Recently queued" >
                             <VStack w="100%" spacing={4} overflow="auto">
 
