@@ -124,6 +124,89 @@ export default function Printers(props) {
                                 </VStack>
                             </CardBody>
                         </Card>
+                        <Card
+                            w="100%"
+                            h="115px"
+                            as={Button}
+                            p={0}
+                            variant="filled"
+                        >
+                            <CardBody w="100%">
+                                <VStack
+                                    spacing={0}
+                                    alignItems="flex-start"
+                                    h="100%"
+                                >
+                                    <HStack w="100%">
+                                        <Heading size="md" fontWeight="medium">
+                                            Left Stratasys
+                                        </Heading>
+                                        <Badge
+                                            variant="subtle"
+                                            colorScheme="green"
+                                        >
+                                            printing
+                                        </Badge>
+                                    </HStack>
+
+                                    <Spacer />
+
+                                    <HStack
+                                        w="100%"
+                                        justifyContent="flex-start"
+                                        spacing={5}
+                                    >
+                                        {/* <CircularProgress value={100} color="green.200" size={8} /> */}
+                                        <VStack
+                                            alignItems="flex-start"
+                                            spacing={0}
+                                        >
+                                            <HStack spacing={1}>
+                                                <CircularProgress
+                                                    value={50}
+                                                    color="green.200"
+                                                    size={4}
+                                                    thickness={10}
+                                                />
+                                                <Text
+                                                    fontSize="lg"
+                                                    fontWeight="semibold"
+                                                >
+                                                    2:59
+                                                </Text>
+                                            </HStack>
+                                            <Text
+                                                fontSize="sm"
+                                                fontWeight="normal"
+                                            >
+                                                est. remaining
+                                            </Text>
+                                        </VStack>
+                                        <VStack
+                                            alignItems="flex-start"
+                                            spacing={0}
+                                        >
+                                            <Text
+                                                fontSize="lg"
+                                                fontWeight="semibold"
+                                            >
+                                                9
+                                            </Text>
+                                            <Text
+                                                fontSize="sm"
+                                                fontWeight="normal"
+                                            >
+                                                in queue
+                                            </Text>
+                                        </VStack>
+                                        {/* <VStack alignItems="flex-start" spacing={0}>
+                                            <Text fontSize="lg" fontWeight="semibold">ABS</Text>
+                                            <Text fontSize="xs" fontWeight="normal">material</Text>
+                                        </VStack> */}
+                                    </HStack>
+                                </VStack>
+                            </CardBody>
+                        </Card>
                     </VStack>
 
                     <Card
@@ -143,8 +226,10 @@ export default function Printers(props) {
                                 spacing={4}
                                 overflow="auto"
                             >
+
+                                {/* current print */}
                                 <Card
-                                    w="100%"
+                                    w="auto"
                                     h="auto"
                                     variant="filled"
                                     bgColor={useColorModeValue(
@@ -153,7 +238,7 @@ export default function Printers(props) {
                                     )}
                                 >
                                     <CardBody>
-                                        <HStack w="100%">
+                                        <VStack w="100%" spacing={4}>
                                             <VStack w="100%" spacing={1}>
                                                 <HStack w="100%">
                                                     <VStack
@@ -189,7 +274,54 @@ export default function Printers(props) {
                                                     colorScheme="green"
                                                 />
                                             </VStack>
-                                        </HStack>
+
+                                            <HStack justifyContent="flex-start" w="100%" spacing={6}>
+                                                <VStack
+                                                    alignItems="flex-start"
+                                                    spacing={0}
+                                                >
+                                                    <Text
+                                                        fontSize="3xl"
+                                                        fontWeight="semibold"
+                                                        lineHeight={1}
+                                                    >
+                                                        11:59
+                                                    </Text>
+                                                    <Text
+                                                        fontSize="md"
+                                                        fontWeight="normal"
+                                                    >
+                                                        est. print time
+                                                    </Text>
+                                                </VStack>
+                                                <VStack
+                                                    alignItems="flex-start"
+                                                    spacing={0}
+                                                >
+                                                    <HStack spacing={1}>
+                                                        <Text
+                                                            fontSize="3xl"
+                                                            fontWeight="semibold"
+                                                            lineHeight={1}
+                                                        >
+                                                            13
+                                                        </Text>
+                                                        <Text 
+                                                            fontSize="sm"
+                                                            alignSelf="flex-end"
+                                                        >
+                                                            in^3
+                                                        </Text>
+                                                    </HStack>
+                                                    <Text
+                                                        fontSize="md"
+                                                        fontWeight="normal"
+                                                    >
+                                                        est. material
+                                                    </Text>
+                                                </VStack>
+                                            </HStack>
+                                        </VStack>
                                     </CardBody>
                                 </Card>
                             </VStack>
