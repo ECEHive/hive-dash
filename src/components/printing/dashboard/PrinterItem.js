@@ -47,6 +47,8 @@ export default function PrinterCard({ status, k }) {
             w="100%"
             bgColor={useColorModeValue("gray.200", "gray.600")}
             flexGrow={1}
+            // maxH="115px"
+            // h="115px"
         >
             <CardBody>
                 <VStack spacing={2} alignItems="flex-start" h="100%">
@@ -60,6 +62,7 @@ export default function PrinterCard({ status, k }) {
                             <Text fontSize="sm">prints in queue</Text>
                         </HStack>
                     </HStack>
+                    {/* <Spacer /> */}
                     <VStack justifyContent="center" spacing={1} w="100%" h="100%">
                         <HStack w="100%">
                             <Text fontSize="md">

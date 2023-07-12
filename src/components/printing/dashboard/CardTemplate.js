@@ -11,7 +11,7 @@ export default function CardTemplate({ children, title }) {
             h="100%"
         >
             <CardBody h="100%">
-                <VStack alignItems="flex-start" h="100%" w="100%" spacing={4}>
+                <VStack alignItems="flex-start" h="100%" w="100%" spacing={4} overflow="auto">
                     {title && <Heading size="lg" fontWeight="semibold">{title}</Heading>}
 
                     {children}

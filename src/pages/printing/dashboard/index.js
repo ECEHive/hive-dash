@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Card, CardBody, Heading, Text, Box, HStack, Badge, Button, VStack, Progress, useColorModeValue, Spacer, Stat, StatLabel, StatNumber, SimpleGrid, Divider, ButtonGroup, IconButton, Tooltip, Table, Thead, Tr, Th, Tbody, Td, TableContainer, StatHelpText, Flex } from "@chakra-ui/react"
+import { Card, CardBody, Heading, Text, Box, HStack, Badge, Button, VStack, Progress, useColorModeValue, Spacer, Stat, StatLabel, StatNumber, SimpleGrid, Divider, ButtonGroup, IconButton, Tooltip, Table, Thead, Tr, Th, Tbody, Td, TableContainer, StatHelpText, Flex, Grid, GridItem } from "@chakra-ui/react"
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { FaWrench } from "react-icons/fa";
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
@@ -13,15 +13,14 @@ import CardTemplate from "@/components/printing/dashboard/CardTemplate";
 
 const defaultLayouts = {
     lg: [
-        { i: "recent", x: 0, y: 0, w: 4, h: 4 },
-        { i: "stratasyses", x: 4, y: 0, w: 3, h: 3 },
-        { i: "stat1", x: 4, y: 3, w: 2, h: 1 }
+        { i: "printers", x: 0, y: 0, w: 12, h: 7 },
+        { i: "recent", x: 0, y: 0, w: 4, h: 7 },
     ]
 }
 
 export default function Dashboard(props) {
 
-    const ResponsiveGridLayout = WidthProvider(Responsive);
+    const ResponsiveReactGridLayout = useMemo(() => WidthProvider(Responsive), []);
 
     const layouts = useMemo(() => {
         let newLayouts = { lg: [...defaultLayouts.lg] }
@@ -38,39 +37,45 @@ export default function Dashboard(props) {
     return (
         <>
             <Box h="100%" w="100%" overflow="auto">
-                <ResponsiveGridLayout
+                {/* <ResponsiveReactGridLayout
                     className="layout"
                     //draggableHandle=".drag-handle"
                     style={{ width: "100%", height: "100%", overflow: "auto", }}
                     layouts={{ lg: layouts.lg }}
                     breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                     cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                    margin={[15, 15]}
-                    rowHeight={150}
-                    isDraggable={true}
+                    margin={[20, 20]}
+                    rowHeight={50}
+                    isDraggable={false}
                     isResizable={false}
+                > */}
+
+                <Grid
+                    h="100%"
+                    w="100%"
+                    templateColumns="repeat(12, 1fr)"
+                    templateRows="repeat(8, 1fr)"
+                    gap={4}
+                    p={5}
                 >
 
-                    {/* {layouts.lg.map((i) => {
-                        if(i.i.includes("printer"))
-                            return (
-                                <div key={i.i}>
-                                    <PrinterCard status="printing" />
-                                </div>
-                            )
-                    })} */}
-
-                    <div key="stratasyses">
-                        <CardTemplate title="Stratasyses" >
-                            <VStack spacing={3} alignItems="flex-start" flexGrow={1} w="100%">
-                                <PrinterCard status="printing"/>
-                                <PrinterCard status="idle"/>
-                                <PrinterCard status="down"/>
-                            </VStack>
+                    <GridItem rowSpan={4} colSpan={12}>
+                        <CardTemplate title="Printer Statuses" >
+                            <SimpleGrid spacing={4} columns={3} w="100%" h="100%">
+                                <PrinterCard status="printing" />
+                                <PrinterCard status="idle" />
+                                <PrinterCard status="down" />
+                                <PrinterCard status="printing" />
+                                <PrinterCard status="idle" />
+                                <PrinterCard status="down" />
+                                <PrinterCard status="printing" />
+                                <PrinterCard status="idle" />
+                                <PrinterCard status="down" />
+                            </SimpleGrid>
                         </CardTemplate>
-                    </div>
+                    </GridItem>
 
-                    <div key="stat1">
+                    {/* <div key="stat1">
                         <CardTemplate>
                             <Box w="100%" h="100%">
                                 <Stat>
@@ -81,19 +86,16 @@ export default function Dashboard(props) {
                                 </Stat>
                             </Box>
                         </CardTemplate>
-                    </div>
+                    </div> */}
 
-                    <div key="recent">
+                    <GridItem rowSpan={4} colSpan={4}>
                         <CardTemplate title="Recently queued" >
-                            <VStack w="100%" spacing={4}>
+                            <VStack w="100%" spacing={4} overflow="auto">
 
                                 <TableContainer w="100%">
-                                    <Table variant="simple">
+                                    <Table variant="simple" maxW="100%">
                                         <Thead>
                                             <Tr>
-                                                <Th>
-                                                    Date
-                                                </Th>
                                                 <Th>
                                                     Print name
                                                 </Th>
@@ -105,9 +107,6 @@ export default function Dashboard(props) {
                                         <Tbody>
                                             <Tr>
                                                 <Td whiteSpace="nowrap" textOverflow="ellipsis" >
-                                                    2023-05-10 15:24
-                                                </Td>
-                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
                                                     PI_Colin_Hartigan_long_print_name
                                                 </Td>
                                                 <Td whiteSpace="nowrap" textOverflow="ellipsis" >
@@ -117,9 +116,6 @@ export default function Dashboard(props) {
                                                 </Td>
                                             </Tr>
                                             <Tr>
-                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
-                                                    2023-05-10 15:24
-                                                </Td>
                                                 <Td whiteSpace="nowrap" textOverflow="ellipsis" >
                                                     PI_Colin_Hartigan_long_print_name
                                                 </Td>
@@ -135,9 +131,10 @@ export default function Dashboard(props) {
 
                             </VStack>
                         </CardTemplate>
-                    </div>
+                    </GridItem>
 
-                </ResponsiveGridLayout >
+                </Grid>
+                {/* </ResponsiveReactGridLayout > */}
             </Box >
         </>
     )
