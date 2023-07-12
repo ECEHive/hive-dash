@@ -1,43 +1,81 @@
-import { useState, useEffect, useMemo } from "react";
-import { Card, CardBody, Heading, Text, Box, HStack, Badge, Button, VStack, Progress, useColorModeValue, Spacer, Stat, StatLabel, StatNumber, SimpleGrid, Divider, ButtonGroup, IconButton, Tooltip, Table, Thead, Tr, Th, Tbody, Td, TableContainer, StatHelpText, Flex, Grid, GridItem } from "@chakra-ui/react"
-import { Responsive, WidthProvider } from "react-grid-layout";
-import { FaWrench } from "react-icons/fa";
-import { ArrowForwardIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { HiMiniQueueList } from "react-icons/hi2";
+import { useState, useEffect, useMemo } from 'react';
+import {
+    Card,
+    CardBody,
+    Heading,
+    Text,
+    Box,
+    HStack,
+    Badge,
+    Button,
+    VStack,
+    Progress,
+    useColorModeValue,
+    Spacer,
+    Stat,
+    StatLabel,
+    StatNumber,
+    SimpleGrid,
+    Divider,
+    ButtonGroup,
+    IconButton,
+    Tooltip,
+    Table,
+    Thead,
+    Tr,
+    Th,
+    Tbody,
+    Td,
+    TableContainer,
+    StatHelpText,
+    Flex,
+    Grid,
+    GridItem
+} from '@chakra-ui/react';
+import { Responsive, WidthProvider } from 'react-grid-layout';
+import { FaWrench } from 'react-icons/fa';
+import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
+import { HiMiniQueueList } from 'react-icons/hi2';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import Layout from "@/layouts/printing/PrintingLayout"
-import PrinterCard from "@/components/printing/dashboard/PrinterItem";
-import CardTemplate from "@/components/printing/dashboard/CardTemplate";
-import { jsx } from "@emotion/react";
+import Layout from '@/layouts/printing/PrintingLayout';
+import PrinterCard from '@/components/printing/dashboard/PrinterItem';
+import CardTemplate from '@/components/printing/dashboard/CardTemplate';
+import { jsx } from '@emotion/react';
 
 const defaultLayouts = {
     lg: [
-        { i: "printers", x: 0, y: 0, w: 12, h: 7 },
-        { i: "recent", x: 0, y: 0, w: 4, h: 7 },
+        { i: 'printers', x: 0, y: 0, w: 12, h: 7 },
+        { i: 'recent', x: 0, y: 0, w: 4, h: 7 }
     ]
-}
+};
 
 export default function Dashboard(props) {
-
-    const ResponsiveReactGridLayout = useMemo(() => WidthProvider(Responsive), []);
+    const ResponsiveReactGridLayout = useMemo(
+        () => WidthProvider(Responsive),
+        []
+    );
 
     const layouts = useMemo(() => {
-        let newLayouts = { lg: [...defaultLayouts.lg] }
+        let newLayouts = { lg: [...defaultLayouts.lg] };
         for (let i = 0; i < 10; i++) {
-            newLayouts.lg.push({ i: `printer${i}`, x: (i * 2) % 12, y: i % 12, w: 2, h: 2 })
+            newLayouts.lg.push({
+                i: `printer${i}`,
+                x: (i * 2) % 12,
+                y: i % 12,
+                w: 2,
+                h: 2
+            });
         }
-        return newLayouts
-    }, [])
+        return newLayouts;
+    }, []);
 
-    useEffect(() => {
-
-    }, [layouts])
+    useEffect(() => {}, [layouts]);
 
     return (
         <>
-            <Box h="100%" w="100%" overflow="auto">
+            <Box h="100%" w="100%" overflow="auto" p={5}>
                 {/* <ResponsiveReactGridLayout
                     className="layout"
                     //draggableHandle=".drag-handle"
@@ -55,25 +93,28 @@ export default function Dashboard(props) {
                     h="100%"
                     w="100%"
                     templateColumns={{
-                        "base": "repeat(12, 1fr)"
+                        base: 'repeat(12, 1fr)'
                     }}
                     templateRows={{
-                        "base": "repeat(6, 1fr)",
-                        "3xl": "repeat(8, 1fr)"
+                        base: 'repeat(6, 1fr)',
+                        '3xl': 'repeat(8, 1fr)'
                     }}
                     gap={4}
-                    p={5}
                 >
-
                     <GridItem
                         rowSpan={{
-                            "base": "4",
-                            "3xl": "4"
+                            base: '4',
+                            '3xl': '4'
                         }}
                         colSpan={12}
                     >
-                        <CardTemplate title="Printer Statuses" >
-                            <SimpleGrid spacing={4} columns={3} w="100%" h="100%">
+                        <CardTemplate title="Printer Statuses">
+                            <SimpleGrid
+                                spacing={4}
+                                columns={3}
+                                w="100%"
+                                h="100%"
+                            >
                                 <PrinterCard status="printing" />
                                 <PrinterCard status="idle" />
                                 <PrinterCard status="down" />
@@ -102,46 +143,59 @@ export default function Dashboard(props) {
 
                     <GridItem
                         rowSpan={{
-                            "base": "2",
-                            "3xl": "6"
+                            base: '2',
+                            '3xl': '6'
                         }}
                         colSpan={{
-                            "base": "6",
-                            "3xl": "4"
+                            base: '5',
+                            '3xl': '3'
                         }}
                     >
-                        <CardTemplate title="Recently queued" >
+                        <CardTemplate title="Recently queued">
                             <VStack w="100%" spacing={4} overflow="auto">
-
                                 <TableContainer w="100%">
                                     <Table variant="simple" maxW="100%">
                                         <Thead>
                                             <Tr>
-                                                <Th>
-                                                    Print name
-                                                </Th>
-                                                <Th>
-                                                    Printer
-                                                </Th>
+                                                <Th>Print name</Th>
+                                                <Th>Printer</Th>
                                             </Tr>
                                         </Thead>
                                         <Tbody>
                                             <Tr>
-                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
+                                                <Td
+                                                    whiteSpace="nowrap"
+                                                    textOverflow="ellipsis"
+                                                >
                                                     PI_Colin_Hartigan_long_print_name
                                                 </Td>
-                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
-                                                    <Badge variant="subtle" fontSize="sm">
+                                                <Td
+                                                    whiteSpace="nowrap"
+                                                    textOverflow="ellipsis"
+                                                >
+                                                    <Badge
+                                                        variant="subtle"
+                                                        fontSize="sm"
+                                                    >
                                                         Ultimaker 3
                                                     </Badge>
                                                 </Td>
                                             </Tr>
                                             <Tr>
-                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
+                                                <Td
+                                                    whiteSpace="nowrap"
+                                                    textOverflow="ellipsis"
+                                                >
                                                     PI_Colin_Hartigan_long_print_name
                                                 </Td>
-                                                <Td whiteSpace="nowrap" textOverflow="ellipsis" >
-                                                    <Badge variant="subtle" fontSize="sm">
+                                                <Td
+                                                    whiteSpace="nowrap"
+                                                    textOverflow="ellipsis"
+                                                >
+                                                    <Badge
+                                                        variant="subtle"
+                                                        fontSize="sm"
+                                                    >
                                                         Ultimaker 3
                                                     </Badge>
                                                 </Td>
@@ -149,16 +203,14 @@ export default function Dashboard(props) {
                                         </Tbody>
                                     </Table>
                                 </TableContainer>
-
                             </VStack>
                         </CardTemplate>
                     </GridItem>
-
                 </Grid>
                 {/* </ResponsiveReactGridLayout > */}
-            </Box >
+            </Box>
         </>
-    )
+    );
 }
 
-Dashboard.getLayout = (page) => <Layout>{page}</Layout>
+Dashboard.getLayout = (page) => <Layout>{page}</Layout>;

@@ -1,6 +1,6 @@
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 
-import theme from "@/util/theme"
+import theme from '@/util/theme';
 
 function MyApp({ Component, pageProps }) {
     const getLayout = Component.getLayout || ((page) => page);
@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
                 {getLayout(<Component {...pageProps} />)}
             </ChakraProvider>
         </>
-    )
+    );
 }
 
 export default MyApp;

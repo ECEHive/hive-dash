@@ -1,22 +1,30 @@
-import { useEffect, useState } from "react";
-import { Flex, HStack, Button, Image, useColorModeValue, Spacer, IconButton, useColorMode } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import NextLink from "next/link";
-import NextImage from "next/image";
-import { usePathname } from "next/navigation";
+import { useEffect, useState } from 'react';
+import {
+    Flex,
+    HStack,
+    Button,
+    Image,
+    useColorModeValue,
+    Spacer,
+    IconButton,
+    useColorMode
+} from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import NextLink from 'next/link';
+import NextImage from 'next/image';
+import { usePathname } from 'next/navigation';
 
-import logoDark from "@/assets/logo_dark.png"
-import logoLight from "@/assets/logo_light.png"
+import logoDark from '@/assets/logo_dark.png';
+import logoLight from '@/assets/logo_light.png';
 
 export default function TopBarNavigation(props) {
-
-    const { colorMode, toggleColorMode } = useColorMode()
-    const [pathSection, setPathSection] = useState("")
-    const pathname = usePathname()
+    const { colorMode, toggleColorMode } = useColorMode();
+    const [pathSection, setPathSection] = useState('');
+    const pathname = usePathname();
 
     useEffect(() => {
-        setPathSection(pathname.split("/")[1])
-    }, [pathname])
+        setPathSection(pathname.split('/')[1]);
+    }, [pathname]);
 
     return (
         <Flex
@@ -25,7 +33,7 @@ export default function TopBarNavigation(props) {
             h="80px"
             position="fixed"
             borderBottom="1px solid"
-            borderColor={useColorModeValue("gray.200", "gray.700")}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
         >
             {/* intersection of sidebar/topbar */}
             <HStack
@@ -36,9 +44,15 @@ export default function TopBarNavigation(props) {
                 justifyContent="center"
                 spacing={2}
                 // borderRight="1px solid"
-                borderColor={useColorModeValue("gray.200", "gray.700")}
+                borderColor={useColorModeValue('gray.200', 'gray.700')}
             >
-                <NextImage alt="HIVE logo" src={colorMode === "dark" ? logoDark : logoLight} height={45} placeholder="blur" priority />
+                <NextImage
+                    alt="HIVE logo"
+                    src={colorMode === 'dark' ? logoDark : logoLight}
+                    height={45}
+                    placeholder="blur"
+                    priority
+                />
             </HStack>
 
             <HStack
@@ -55,18 +69,16 @@ export default function TopBarNavigation(props) {
                     variant="ghost"
                     as={NextLink}
                     href="/printing"
-                    isActive={pathSection === "printing"}
+                    isActive={pathSection === 'printing'}
                 >
                     3D Printing
                 </Button>
-                <Button variant="ghost">
-                    Laser Cutting
-                </Button>
+                <Button variant="ghost">Laser Cutting</Button>
                 <Spacer />
                 <IconButton onClick={toggleColorMode}>
-                    {colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
+                    {colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
                 </IconButton>
             </HStack>
         </Flex>
-    )
+    );
 }
