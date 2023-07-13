@@ -43,8 +43,8 @@ export default function Navigation(props) {
                         justifyContent="flex-start"
                         colorScheme="green"
                         as={NextLink}
-                        href="/printing/newprint"
-                        isActive={pathPage === 'newprint'}
+                        href="/printing/new"
+                        isActive={pathPage === 'new'}
                         leftIcon={<AiOutlinePlus />}
                     >
                         New print

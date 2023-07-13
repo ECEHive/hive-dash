@@ -22,62 +22,13 @@ import { FaWrench } from 'react-icons/fa';
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
 export default function PrinterCard({ status, k }) {
-    const statuses = {
-        printing: 'green',
-        idle: 'yellow',
-        down: 'red'
-    };
-
-    const progressColors = {
-        printing: null,
-        idle: 'green',
-        failed: 'red'
-    };
-
-    const buttons = {
-        printing: (
-            <>
-                <IconButton colorScheme="green" w="100%">
-                    <CheckIcon />
-                </IconButton>
-                <IconButton colorScheme="red" w="100%">
-                    <CloseIcon />
-                </IconButton>
-            </>
-        ),
-        idle: (
-            <>
-                <Button
-                    w="100%"
-                    variant="outline"
-                    rightIcon={<ArrowForwardIcon />}
-                >
-                    Start print
-                </Button>
-            </>
-        ),
-        down: (
-            <>
-                <Button w="100%" variant="outline" colorScheme="orange">
-                    Maintenance
-                </Button>
-                <Button
-                    w="100%"
-                    variant="outline"
-                    rightIcon={<ArrowForwardIcon />}
-                >
-                    Start print
-                </Button>
-            </>
-        )
-    };
 
     return (
         <Card
             variant="filled"
-            borderRadius={5}
+            borderRadius={10}
             w="100%"
-            bgColor={useColorModeValue('gray.200', 'gray.600')}
+            // bgColor={useColorModeValue('gray.200', 'gray.600')}
             flexGrow={1}
             // maxH="115px"
             // h="115px"
