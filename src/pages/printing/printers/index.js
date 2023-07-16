@@ -28,7 +28,7 @@ import {
     TableContainer
 } from '@chakra-ui/react';
 import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
-import { FaPlay, FaWrench } from 'react-icons/fa';
+import { FaPlay, FaWrench, FaPencilAlt } from 'react-icons/fa';
 
 import InfoCard from '@/components/printing/printers/InfoCard';
 import TopLayout from '@/layouts/printing/PrintingLayout';
@@ -62,7 +62,7 @@ export default function Printers(props) {
                         <VStack
                             w="100%"
                             alignItems="flex-start"
-                            spacing={2}
+                            spacing={3}
                             overflow="auto"
                         >
                             <Text fontSize="xl" fontWeight="bold" my={1}>
@@ -106,7 +106,7 @@ export default function Printers(props) {
                                             {/* <CircularProgress value={100} color="green.200" size={8} /> */}
                                             <VStack
                                                 alignItems="flex-start"
-                                                spacing={0}
+                                                spacing={0.5}
                                             >
                                                 <HStack spacing={1}>
                                                     <CircularProgress
@@ -131,7 +131,7 @@ export default function Printers(props) {
                                             </VStack>
                                             <VStack
                                                 alignItems="flex-start"
-                                                spacing={0}
+                                                spacing={0.5}
                                             >
                                                 <Text
                                                     fontSize="lg"
@@ -192,7 +192,7 @@ export default function Printers(props) {
                                             {/* <CircularProgress value={100} color="green.200" size={8} /> */}
                                             <VStack
                                                 alignItems="flex-start"
-                                                spacing={0}
+                                                spacing={0.5}
                                             >
                                                 <HStack spacing={1}>
                                                     <CircularProgress
@@ -217,7 +217,7 @@ export default function Printers(props) {
                                             </VStack>
                                             <VStack
                                                 alignItems="flex-start"
-                                                spacing={0}
+                                                spacing={0.5}
                                             >
                                                 <Text
                                                     fontSize="lg"
@@ -467,7 +467,7 @@ export default function Printers(props) {
                                                             />
                                                             <IconButton
                                                                 icon={
-                                                                    <FaWrench />
+                                                                    <FaPencilAlt />
                                                                 }
                                                                 colorScheme="orange"
                                                                 variant="outline"
@@ -504,7 +504,7 @@ export default function Printers(props) {
                                                             />
                                                             <IconButton
                                                                 icon={
-                                                                    <FaWrench />
+                                                                    <FaPencilAlt />
                                                                 }
                                                                 colorScheme="orange"
                                                                 variant="outline"

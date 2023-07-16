@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import {
     Box,
     useSteps,
@@ -26,7 +26,13 @@ import {
     FormLabel,
     Input,
     InputGroup,
-    InputRightAddon
+    InputRightAddon,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
+    CloseButton,
+    CircularProgress
 } from '@chakra-ui/react';
 
 import TopLayout from '@/layouts/printing/PrintingLayout';
@@ -42,6 +48,7 @@ import {
 import PrinterItem from '@/components/printing/new/PrinterItem';
 import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
+import PrintInfo from '@/components/printing/new/PrintInfo';
 
 export default function NewPrint(props) {
     const steps = useMemo(
@@ -60,12 +67,29 @@ export default function NewPrint(props) {
         []
     );
 
-    
-
     const { activeStep, setActiveStep } = useSteps({
         index: 0,
         count: steps.length || 0
     });
+
+    const [inputData, setInputData] = useState({
+        printer: {
+            type: '',
+            name: ''
+        },
+        print: {
+            name: '',
+            time: '',
+            material: '',
+            materialUsage: ''
+        },
+        user: {
+            firstname: '',
+            lastname: '',
+            email: '',
+            assistingPI: ''
+        }
+    })
 
     return (
         <>
@@ -89,7 +113,7 @@ export default function NewPrint(props) {
                                         />
                                     </StepIndicator>
 
-                                    <Box flexShrink="0">
+                                    <Box flexShrink={0}>
                                         <StepTitle>{step.title}</StepTitle>
                                         <StepDescription>
                                             {step.description}
@@ -102,7 +126,7 @@ export default function NewPrint(props) {
                         </Stepper>
 
                         <VStack
-                            w="auto"
+                            w="680px"
                             h="100%"
                             justifyContent="flex-start"
                             alignItems="flex-start"
@@ -110,40 +134,80 @@ export default function NewPrint(props) {
                             p={2}
                             overflow="hidden"
                         >
-                            <PrinterSelect />
-                            
-                            {/* <UserInfo /> */}
-
-                            
+                            {activeStep === 0 && <PrinterSelect />}
+                            {activeStep === 1 && <PrintInfo />}
+                            {activeStep === 2 && <UserInfo />}
+                            {activeStep === 3 && (
+                                <>
+                                    <VStack
+                                        w="100%"
+                                        h="100%"
+                                        justify="center"
+                                        align="center"
+                                    >
+                                        <CircularProgress
+                                            isIndeterminate
+                                            color="yellow.300"
+                                        />
+                                        <Alert
+                                            status="success"
+                                            variant="subtle"
+                                            flexDirection="column"
+                                            alignItems="center"
+                                            justifyContent="center"
+                                            textAlign="center"
+                                            height="200px"
+                                        >
+                                            <AlertIcon boxSize="40px" mr={0} />
+                                            <AlertTitle
+                                                mt={4}
+                                                mb={1}
+                                                fontSize="lg"
+                                            >
+                                                Print submitted
+                                            </AlertTitle>
+                                            <AlertDescription maxWidth="sm">
+                                                The end user can check the
+                                                status of their print on this
+                                                website
+                                            </AlertDescription>
+                                        </Alert>
+                                    </VStack>
+                                </>
+                            )}
                         </VStack>
 
                         {/* forward/back control */}
                         <HStack w="100%" h="auto">
-                            <Button
-                                leftIcon={<ArrowBackIcon />}
-                                size="md"
-                                variant="solid"
-                                alignSelf="flex-end"
-                                colorScheme="blue"
-                                onClick={() => {
-                                    setActiveStep((prev) => prev - 1);
-                                }}
-                            >
-                                Previous
-                            </Button>
+                            {activeStep !== 0 && activeStep !== steps.length && (
+                                <Button
+                                    leftIcon={<ArrowBackIcon />}
+                                    size="md"
+                                    variant="solid"
+                                    alignSelf="flex-end"
+                                    colorScheme="blue"
+                                    onClick={() => {
+                                        setActiveStep((prev) => prev - 1);
+                                    }}
+                                >
+                                    Previous
+                                </Button>
+                            )}
                             <Spacer />
-                            <Button
-                                rightIcon={<ArrowForwardIcon />}
-                                size="md"
-                                variant="solid"
-                                alignSelf="flex-end"
-                                colorScheme="blue"
-                                onClick={() => {
-                                    setActiveStep((prev) => prev + 1);
-                                }}
-                            >
-                                Next
-                            </Button>
+                            {activeStep !== steps.length && (
+                                <Button
+                                    rightIcon={<ArrowForwardIcon />}
+                                    size="md"
+                                    variant="solid"
+                                    alignSelf="flex-end"
+                                    colorScheme="blue"
+                                    onClick={() => {
+                                        setActiveStep((prev) => prev + 1);
+                                    }}
+                                >
+                                    Next
+                                </Button>
+                            )}
                         </HStack>
                     </VStack>
                 </Box>

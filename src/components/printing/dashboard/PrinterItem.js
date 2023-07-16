@@ -22,7 +22,6 @@ import { FaWrench } from 'react-icons/fa';
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
 export default function PrinterCard({ status, k }) {
-
     return (
         <Card
             variant="filled"
@@ -35,28 +34,29 @@ export default function PrinterCard({ status, k }) {
         >
             <CardBody>
                 <VStack spacing={2} alignItems="flex-start" h="100%">
-                    <HStack w="100%">
-                        <Heading size="md" fontWeight="medium">
-                            Center Stratasys
-                        </Heading>
-                        <Badge variant="subtle" colorScheme="yellow">
-                            idle
-                        </Badge>
-                        <Spacer />
+                    <VStack spacing={0.25} align="start">
+                        <HStack w="100%">
+                            <Heading size="md" fontWeight="medium">
+                                Center Stratasys
+                            </Heading>
+                            <Badge variant="subtle" colorScheme="yellow">
+                                idle
+                            </Badge>
+                        </HStack>
                         <HStack spacing={1}>
                             {/* <HiMiniQueueList /> */}
-                            <Text fontSize="md" fontWeight="bold">
+                            <Text fontSize="md" fontWeight="semibold">
                                 1
                             </Text>
                             <Text fontSize="sm">in queue</Text>
                         </HStack>
-                    </HStack>
-                    {/* <Spacer /> */}
+                    </VStack>
+                    <Spacer />
                     <VStack
                         justifyContent="center"
                         spacing={1}
                         w="100%"
-                        h="100%"
+                        h="auto"
                     >
                         <HStack w="100%" maxW="100%" overflow="hidden">
                             <Tooltip

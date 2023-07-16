@@ -18,7 +18,6 @@ import {
 } from '@choc-ui/chakra-autocomplete';
 
 export default function UserInfo(props) {
-    const [pickerItems, setPickerItems] = useState([]);
 
     const PIList = useMemo(() => ['Colin Hartigan', 'Someone else'], []);
 
@@ -29,7 +28,7 @@ export default function UserInfo(props) {
             </Heading>
 
             <VStack w="100%" h="100%" spacing={3} overflow="auto" p={2}>
-                <HStack spacing={5}>
+                <HStack spacing={5} w="100%">
                     <FormControl>
                         <FormLabel>End user firstname</FormLabel>
                         <Input type="text" placeholder="George" />
