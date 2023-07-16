@@ -27,7 +27,7 @@ export default function UserInfo(props) {
                 End user info
             </Heading>
 
-            <VStack w="100%" h="100%" spacing={3} overflow="auto" p={2}>
+            <VStack w="100%" h="100%" spacing={3} overflow="auto">
                 <HStack spacing={5} w="100%">
                     <FormControl>
                         <FormLabel>End user firstname</FormLabel>

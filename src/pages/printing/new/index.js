@@ -89,7 +89,7 @@ export default function NewPrint(props) {
             email: '',
             assistingPI: ''
         }
-    })
+    });
 
     return (
         <>
@@ -130,8 +130,7 @@ export default function NewPrint(props) {
                             h="100%"
                             justifyContent="flex-start"
                             alignItems="flex-start"
-                            spacing={5}
-                            p={2}
+                            spacing={3}
                             overflow="hidden"
                         >
                             {activeStep === 0 && <PrinterSelect />}
@@ -156,7 +155,8 @@ export default function NewPrint(props) {
                                             alignItems="center"
                                             justifyContent="center"
                                             textAlign="center"
-                                            height="200px"
+                                            height="auto"
+                                            padding={10}
                                         >
                                             <AlertIcon boxSize="40px" mr={0} />
                                             <AlertTitle
@@ -167,10 +167,13 @@ export default function NewPrint(props) {
                                                 Print submitted
                                             </AlertTitle>
                                             <AlertDescription maxWidth="sm">
+                                                Position in queue: 5
+                                            </AlertDescription>
+                                            {/* <AlertDescription maxWidth="sm">
                                                 The end user can check the
                                                 status of their print on this
                                                 website
-                                            </AlertDescription>
+                                            </AlertDescription> */}
                                         </Alert>
                                     </VStack>
                                 </>
@@ -179,20 +182,21 @@ export default function NewPrint(props) {
 
                         {/* forward/back control */}
                         <HStack w="100%" h="auto">
-                            {activeStep !== 0 && activeStep !== steps.length && (
-                                <Button
-                                    leftIcon={<ArrowBackIcon />}
-                                    size="md"
-                                    variant="solid"
-                                    alignSelf="flex-end"
-                                    colorScheme="blue"
-                                    onClick={() => {
-                                        setActiveStep((prev) => prev - 1);
-                                    }}
-                                >
-                                    Previous
-                                </Button>
-                            )}
+                            {activeStep !== 0 &&
+                                activeStep !== steps.length && (
+                                    <Button
+                                        leftIcon={<ArrowBackIcon />}
+                                        size="md"
+                                        variant="solid"
+                                        alignSelf="flex-end"
+                                        colorScheme="blue"
+                                        onClick={() => {
+                                            setActiveStep((prev) => prev - 1);
+                                        }}
+                                    >
+                                        Previous
+                                    </Button>
+                                )}
                             <Spacer />
                             {activeStep !== steps.length && (
                                 <Button

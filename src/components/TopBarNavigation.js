@@ -9,7 +9,7 @@ import {
     IconButton,
     useColorMode
 } from '@chakra-ui/react';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { MoonIcon, SettingsIcon, SunIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
 import NextImage from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -73,10 +73,12 @@ export default function TopBarNavigation(props) {
                 >
                     3D Printing
                 </Button>
-                <Button variant="ghost">Laser Cutting</Button>
                 <Spacer />
                 <IconButton onClick={toggleColorMode}>
                     {colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+                </IconButton>
+                <IconButton as={NextLink} href="/config">
+                    <SettingsIcon />
                 </IconButton>
             </HStack>
         </Flex>

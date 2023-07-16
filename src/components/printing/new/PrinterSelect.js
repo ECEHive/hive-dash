@@ -20,7 +20,7 @@ export default function PrinterSelect(props) {
                 w="100%"
                 h="auto"
                 spacing={3}
-                justify="center"
+                justify="start"
                 overflow="auto"
             >
                 <VStack

@@ -20,7 +20,7 @@ export default function PrintInfo(props) {
                 Print info
             </Heading>
 
-            <VStack w="100%" h="100%" spacing={3} overflow="auto" p={2}>
+            <VStack w="100%" h="100%" spacing={3} overflow="auto">
                 <FormControl>
                     <FormLabel>Tray name</FormLabel>
                     <Input type="text" placeholder="George_Brudell_benchy" />
