@@ -1,5 +1,39 @@
 [
     {
-        
+        "id": "ultimaker",
+        "displayName": "Ultimaker",
+        "description": "Detailed, sturdy prints",
+        "materials": [
+            "ABS"
+        ],
+        "materialUnits": {
+            "symbol": "g",
+            "type": "Mass"
+        }
+    },
+    {
+        "id": "stratasys",
+        "displayName": "Stratasys",
+        "description": "Fast, lightweight prints",
+        "materials": [
+            "PLA"
+        ],
+        "materialUnits": {
+            "symbol": "in^3",
+            "type": "Volume"
+        }
+    },
+    {
+        "id": "formlabs",
+        "displayName": "Formlabs",
+        "description": "Durable, ultra-detailed prints",
+        "materials": [
+            "Resin (Clear)",
+            "Resin (White)"
+        ],
+        "materialUnits": {
+            "symbol": "mL",
+            "type": "Volume"
+        }
     }
 ]

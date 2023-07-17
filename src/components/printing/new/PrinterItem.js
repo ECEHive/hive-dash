@@ -10,15 +10,17 @@ import {
     useColorModeValue
 } from '@chakra-ui/react';
 
-export default function PrinterItem(props) {
+export default function PrinterItem({ data, onClick, isActive }) {
     return (
         <Card
             as={Button}
             variant="filled"
             h="auto"
-            w="300px"
+            w="100%"
             p={0}
             bgColor={useColorModeValue('gray.200', 'gray.600')}
+            onClick={onClick}
+            isActive={isActive}
         >
             <CardBody w="100%">
                 <VStack
@@ -39,14 +41,14 @@ export default function PrinterItem(props) {
                                 fontWeight="medium"
                                 fontFamily="heading"
                             >
-                                Ultimaker 1
+                                {data.displayName}
                             </Heading>
                             <Badge colorScheme="green" variant="subtle">
-                                Printing
+                                {data.status.state}
                             </Badge>
                         </HStack>
                         <Text fontSize="md" fontWeight="normal">
-                            3 prints in queue
+                            X prints in queue
                         </Text>
                     </VStack>
                 </VStack>

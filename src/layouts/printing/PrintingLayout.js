@@ -1,17 +1,75 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex } from "@chakra-ui/react";
+import { useState, useEffect } from 'react';
+import {
+    Alert,
+    AlertDescription,
+    AlertIcon,
+    AlertTitle,
+    Box,
+    Flex,
+    useToast
+} from '@chakra-ui/react';
 
-import PrintingNavigation from "@/components/printing/SidebarNavigation"
-import TopBar from "@/components/TopBarNavigation"
+import PrintingNavigation from '@/components/printing/SidebarNavigation';
+import TopBar from '@/components/TopBarNavigation';
+import PrintingContext from '@/contexts/PrintingContext';
 
 export default function PrimaryLayout({ children }) {
+    const toast = useToast();
+
+    const [prints, setPrints] = useState([]);
+    const [printers, setPrinters] = useState([]);
+    const [printerTypes, setPrinterTypes] = useState([]);
+
+    useEffect(() => {
+        fetch('/api/printing/printerTypes', {
+            method: 'GET'
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setPrinterTypes(data);
+            })
+            .catch((err) => {
+                toast({
+                    title: 'Fetch error',
+                    description: `Couldn't fetch printer types: ${err.message}`,
+                    status: 'error',
+                    duration: 5000
+                });
+            });
+
+        fetch('/api/printing/printers', {
+            method: 'GET'
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setPrinters(data);
+            })
+            .catch((err) => {
+                toast({
+                    title: 'Fetch error',
+                    description: `Couldn't fetch printers: ${err.message}`,
+                    status: 'error',
+                    duration: 5000
+                });
+            });
+    }, []);
 
     return (
         <>
-            <Box w="100vw" h="100vh" pos="fixed">
-                <TopBar />
-                <PrintingNavigation />
-                <Box w="calc(100vw - 260px)" h="calc(100vh - 80px)" left="260px" top="80px" pos="relative">
-                    {/* <Alert status="error">
+            <PrintingContext.Provider
+                value={{ prints, printers, printerTypes }}
+            >
+                <Box w="100vw" h="100vh" pos="fixed">
+                    <TopBar />
+                    <PrintingNavigation />
+                    <Box
+                        w="calc(100% - 260px)"
+                        h="calc(100% - 80px)"
+                        left="260px"
+                        top="80px"
+                        pos="relative"
+                    >
+                        {/* <Alert status="error">
                         <AlertIcon />
                         <AlertTitle>
                             End of semester
@@ -20,9 +78,10 @@ export default function PrimaryLayout({ children }) {
                             3D Printing queues will be longer than expected leading up to the end of the semester.
                         </AlertDescription>
                     </Alert> */}
-                    {children}
+                        {children}
+                    </Box>
                 </Box>
-            </Box>
+            </PrintingContext.Provider>
         </>
-    )
+    );
 }

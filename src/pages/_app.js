@@ -1,9 +1,15 @@
-import { ChakraProvider, ColorModeScript, useColorModeValue } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import {
+    Box,
+    ChakraProvider,
+    ColorModeScript,
+    useColorModeValue
+} from '@chakra-ui/react';
 import NextNProgress from 'nextjs-progressbar';
 
 import theme from '@/util/theme';
 
-function MyApp({ Component, pageProps }) {
+function HiveDash({ Component, pageProps }) {
     const getLayout = Component.getLayout || ((page) => page);
 
     return (
@@ -13,9 +19,9 @@ function MyApp({ Component, pageProps }) {
                     color={'#FFE500'}
                     startPosition={0}
                     //stopDelayMs={250}
-                    height={1.5}
+                    height={2}
                     options={{
-                        showSpinner: false,
+                        showSpinner: false
                     }}
                 />
                 {getLayout(<Component {...pageProps} />)}
@@ -24,4 +30,4 @@ function MyApp({ Component, pageProps }) {
     );
 }
 
-export default MyApp;
+export default HiveDash;

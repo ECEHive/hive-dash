@@ -32,50 +32,25 @@ import {
     AlertTitle,
     AlertDescription,
     CloseButton,
-    CircularProgress
+    CircularProgress,
+    useToast
 } from '@chakra-ui/react';
 
-import TopLayout from '@/layouts/printing/PrintingLayout';
-import PrinterType from '@/components/printing/new/PrinterType';
-import {
-    ArrowBackIcon,
-    ArrowForwardIcon,
-    ArrowLeftIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon
-} from '@chakra-ui/icons';
+import Layout from '@/layouts/printing/PrintingLayout';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 
-import PrinterItem from '@/components/printing/new/PrinterItem';
 import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
 import PrintInfo from '@/components/printing/new/PrintInfo';
 
 export default function NewPrint(props) {
-    const steps = useMemo(
-        () => [
-            {
-                title: 'Printer',
-                description: 'Ultimaker 2'
-            },
-            {
-                title: 'Print info'
-            },
-            {
-                title: 'End user info'
-            }
-        ],
-        []
-    );
-
-    const { activeStep, setActiveStep } = useSteps({
-        index: 0,
-        count: steps.length || 0
-    });
+    const toast = useToast();
 
     const [inputData, setInputData] = useState({
         printer: {
             type: '',
-            name: ''
+            name: '',
+            id: ''
         },
         print: {
             name: '',
@@ -90,6 +65,80 @@ export default function NewPrint(props) {
             assistingPI: ''
         }
     });
+
+    const steps = useMemo(
+        () => [
+            {
+                title: 'Printer',
+                description: inputData.printer.name
+            },
+            {
+                title: 'Print info'
+            },
+            {
+                title: 'End user info'
+            }
+        ],
+        [inputData]
+    );
+
+    const { activeStep, setActiveStep } = useSteps({
+        index: 0,
+        count: steps.length || 0
+    });
+
+    const [enableNext, setEnableNext] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+
+    useEffect(() => {
+        setEnableNext(false);
+
+        if (activeStep === 3) {
+            setSubmitting(true);
+            submit();
+        }
+    }, [activeStep]);
+
+    function submit() {
+        let timestamp = new Date().toISOString();
+        const payload = {
+            trayName: inputData.print.name,
+            printer: inputData.printer.id,
+            estTime: inputData.print.time,
+            materialType: inputData.print.material,
+            materialUsage: inputData.print.materialUsage,
+            queuedBy: inputData.user.assistingPI,
+            queuedAt: timestamp,
+            endUser: {
+                firstname: inputData.user.firstname,
+                lastname: inputData.user.lastname,
+                email: inputData.user.email
+            },
+            events: [
+                {
+                    type: 'queued',
+                    timestamp: timestamp
+                }
+            ]
+        };
+
+        fetch('/api/printing/queue', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                setSubmitting(false);
+            })
+            .catch((err) => {
+                toast({
+                    title: 'Error',
+                    description: `Couldn't queue the print: ${err.message}`,
+                    status: 'error',
+                    duration: 5000
+                });
+            });
+    }
 
     return (
         <>
@@ -133,9 +182,27 @@ export default function NewPrint(props) {
                             spacing={3}
                             overflow="hidden"
                         >
-                            {activeStep === 0 && <PrinterSelect />}
-                            {activeStep === 1 && <PrintInfo />}
-                            {activeStep === 2 && <UserInfo />}
+                            {activeStep === 0 && (
+                                <PrinterSelect
+                                    set={setInputData}
+                                    data={inputData}
+                                    setNext={setEnableNext}
+                                />
+                            )}
+                            {activeStep === 1 && (
+                                <PrintInfo
+                                    set={setInputData}
+                                    data={inputData}
+                                    setNext={setEnableNext}
+                                />
+                            )}
+                            {activeStep === 2 && (
+                                <UserInfo
+                                    set={setInputData}
+                                    data={inputData}
+                                    setNext={setEnableNext}
+                                />
+                            )}
                             {activeStep === 3 && (
                                 <>
                                     <VStack
@@ -144,37 +211,40 @@ export default function NewPrint(props) {
                                         justify="center"
                                         align="center"
                                     >
-                                        <CircularProgress
-                                            isIndeterminate
-                                            color="yellow.300"
-                                        />
-                                        <Alert
-                                            status="success"
-                                            variant="subtle"
-                                            flexDirection="column"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                            textAlign="center"
-                                            height="auto"
-                                            padding={10}
-                                        >
-                                            <AlertIcon boxSize="40px" mr={0} />
-                                            <AlertTitle
-                                                mt={4}
-                                                mb={1}
-                                                fontSize="lg"
+                                        {submitting ? (
+                                            <CircularProgress isIndeterminate />
+                                        ) : (
+                                            <Alert
+                                                status="success"
+                                                variant="subtle"
+                                                flexDirection="column"
+                                                alignItems="center"
+                                                justifyContent="center"
+                                                textAlign="center"
+                                                height="auto"
+                                                padding={10}
                                             >
-                                                Print submitted
-                                            </AlertTitle>
-                                            <AlertDescription maxWidth="sm">
-                                                Position in queue: 5
-                                            </AlertDescription>
-                                            {/* <AlertDescription maxWidth="sm">
-                                                The end user can check the
-                                                status of their print on this
-                                                website
-                                            </AlertDescription> */}
-                                        </Alert>
+                                                <AlertIcon
+                                                    boxSize="40px"
+                                                    mr={0}
+                                                />
+                                                <AlertTitle
+                                                    mt={4}
+                                                    mb={1}
+                                                    fontSize="lg"
+                                                >
+                                                    Print submitted
+                                                </AlertTitle>
+                                                <AlertDescription maxWidth="sm">
+                                                    Position in queue: 5
+                                                </AlertDescription>
+                                                <AlertDescription maxWidth="sm">
+                                                    The end user can check the
+                                                    status of their print on
+                                                    this website
+                                                </AlertDescription>
+                                            </Alert>
+                                        )}
                                     </VStack>
                                 </>
                             )}
@@ -205,6 +275,7 @@ export default function NewPrint(props) {
                                     variant="solid"
                                     alignSelf="flex-end"
                                     colorScheme="blue"
+                                    isDisabled={!enableNext}
                                     onClick={() => {
                                         setActiveStep((prev) => prev + 1);
                                     }}
@@ -220,4 +291,4 @@ export default function NewPrint(props) {
     );
 }
 
-NewPrint.getLayout = (page) => <TopLayout>{page}</TopLayout>;
+NewPrint.getLayout = (page) => <Layout>{page}</Layout>;

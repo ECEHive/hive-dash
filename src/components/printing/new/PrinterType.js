@@ -8,7 +8,7 @@ import {
     useColorModeValue
 } from '@chakra-ui/react';
 
-export default function PrinterType({ type }) {
+export default function PrinterType({ data, onClick, isActive }) {
     return (
         <Card
             as={Button}
@@ -17,6 +17,8 @@ export default function PrinterType({ type }) {
             w="300px"
             p={0}
             bgColor={useColorModeValue('gray.200', 'gray.600')}
+            onClick={onClick}
+            isActive={isActive}
         >
             <CardBody w="100%">
                 <VStack
@@ -32,10 +34,10 @@ export default function PrinterType({ type }) {
                         alignItems="flex-start"
                     >
                         <Heading size="md" fontWeight="medium">
-                            {type}
+                            {data.displayName}
                         </Heading>
                         <Text fontSize="md" fontWeight="normal">
-                            Detailed, sturdy prints
+                            {data.description}
                         </Text>
                     </VStack>
                 </VStack>

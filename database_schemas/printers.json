@@ -1,6 +1,32 @@
 [
     {
-        "name": "Ultimaker",
-        "description": "Detailed, sturdy prints"
+        "id": "ultimaker-1",
+        "displayName": "Ultimaker 1",
+        "type": "ultimaker",
+        "enabled": true,
+        "status": {
+            "state": "idle",
+            "current_tray": null
+        },
+        "maintenance": {
+            "notes": "",
+            "events": []
+        },
+        "updatedAt": ""
+    },
+    {
+        "id": "left-stratasys",
+        "displayName": "Left Stratasys",
+        "type": "stratasys",
+        "enabled": true,
+        "status": {
+            "state": "idle",
+            "current_tray": null
+        },
+        "maintenance": {
+            "notes": "",
+            "events": []
+        },
+        "updatedAt": ""
     }
 ]
