@@ -18,9 +18,11 @@ export default async function handler(req, res) {
         const data = await mongoClient
             .db('printing')
             .collection('print-log')
-            .find({ complete: false })
+            .find()
             .sort({ queuedAt: 1 })
             .toArray();
+
+        //.find({ completed: false })
 
         res.status(200).json(data);
     }

@@ -13,7 +13,7 @@ import {
     Button
 } from '@chakra-ui/react';
 
-import PrintingContext from '@/contexts/PrintingContext';
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function PrintInfo({ data, set, setNext }) {
     const { printerTypes } = useContext(PrintingContext);

@@ -1,6 +1,6 @@
 import { useColorModeValue } from '@chakra-ui/react';
 
-function useStateColor(state) {
+export default function getStateColor(state) {
     switch (state) {
         case 'printing':
             return 'green';
@@ -8,7 +8,9 @@ function useStateColor(state) {
             return 'yellow';
         case 'down':
             return 'red';
+        case 'queued':
+            return 'orange';
+        case 'failed':
+            return 'red';
     }
 }
-
-export { useStateColor };

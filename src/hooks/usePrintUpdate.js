@@ -1,7 +1,11 @@
 import { useToast } from '@chakra-ui/react';
+import PrintingContext from '@/contexts/printing/PrintingContext';
+import { useContext } from 'react';
 
-export default function usePrinterUpdate() {
+export default function usePrintUpdate(silent=false) {
     const toast = useToast();
+
+    const { refreshData } = useContext(PrintingContext);
 
     function update(printId, data) {
         fetch(`/api/printing/prints/${printId}`, {
@@ -13,12 +17,15 @@ export default function usePrinterUpdate() {
         })
             .then((res) => res.json())
             .then((data) => {
-                toast({
-                    title: 'Success',
-                    description: 'Print updated',
-                    status: 'success',
-                    duration: 5000
-                });
+                refreshData();
+                if (!silent) {
+                    toast({
+                        title: 'Success',
+                        description: 'Print updated',
+                        status: 'success',
+                        duration: 5000
+                    });
+                }
             })
             .catch((err) => {
                 toast({

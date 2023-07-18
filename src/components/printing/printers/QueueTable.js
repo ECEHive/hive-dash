@@ -19,28 +19,27 @@ import { FaPlay, FaPencilAlt } from 'react-icons/fa';
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/PrintingContext';
-import usePrinterUpdate from '@/util/usePrinterUpdate';
+import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrintUpdate from '@/hooks/usePrintUpdate';
+import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+import getStateColor from '@/util/getStateColor';
 
-export default function QueueTable({ selectedPrinterId }) {
-    const toast = useToast();
-    const updater = usePrinterUpdate();
+export default function QueueTable({ selectedPrinterId, selectedPrinterData, activePrint }) {
+    const printUpdater = usePrintUpdate();
+    const printerUpdater = usePrinterUpdate(true);
 
     const { queue } = useContext(PrintingContext);
 
     const printerQueue = useMemo(() => {
-        return queue.filter((print) => print.printer === selectedPrinterId);
+        return queue.filter((print) => print.printer === selectedPrinterId && !print.completed);
     }, [selectedPrinterId, queue]);
 
     const canQueue = useMemo(() => {
-        const activePrint = queue.find(
-            (print) => print.printer === selectedPrinterId && print.printing
-        );
-        return !activePrint;
-    }, [selectedPrinterId, queue]);
+        return !activePrint?.printing
+    }, [activePrint]);
 
     function startPrint(printData) {
-        let data = {
+        let newPrintData = {
             ...printData,
             printing: true,
             events: [
@@ -52,7 +51,13 @@ export default function QueueTable({ selectedPrinterId }) {
             ]
         };
 
-        updater(printData._id, data)
+        let newPrinterData = {
+            ...selectedPrinterData,
+            currentTray: printData._id
+        };
+
+        printerUpdater(selectedPrinterData._id, newPrinterData);
+        printUpdater(printData._id, newPrintData);
     }
 
     return (
@@ -75,11 +80,18 @@ export default function QueueTable({ selectedPrinterId }) {
                                 .local()
                                 .format('MM/DD/YYYY');
 
-                            let estTime = dayjs.duration(print.estTime).format('HH:mm')
+                            let fullQueueDate = dayjs
+                                .utc(print.queuedAt)
+                                .local()
+                                .format('MM/DD/YYYY HH:mm A');
+
+                            let estTime = dayjs
+                                .duration(print.estTime)
+                                .format('HH:mm');
                             return (
                                 <Tr key={print._id}>
                                     <Tooltip
-                                        label="2021-09-01 4:10 PM"
+                                        label={fullQueueDate}
                                         placement="bottom-start"
                                     >
                                         <Td>{queueDate}</Td>
@@ -87,7 +99,9 @@ export default function QueueTable({ selectedPrinterId }) {
                                     <Td>
                                         <Badge
                                             variant="subtle"
-                                            colorScheme="red"
+                                            colorScheme={getStateColor(
+                                                print.events[0].type
+                                            )}
                                         >
                                             {print.events[0].type}
                                         </Badge>

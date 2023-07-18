@@ -1,4 +1,4 @@
-import { useStateColor } from '@/util/useStateColor';
+import { useMemo } from 'react';
 import {
     Badge,
     Button,
@@ -9,10 +9,20 @@ import {
     HStack,
     Spacer,
     Text,
+    useColorModeValue,
     VStack
 } from '@chakra-ui/react';
+import getStateColor from '@/util/getStateColor';
+import usePrintParser from '@/hooks/usePrintParser';
+import usePrinterParser from '@/hooks/usePrinterParser';
 
 export default function PrinterListItem({ data, onClick, isActive, queue }) {
+    const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
+    const { expandedPrintData, timeLeft, progress } =
+        usePrintParser(currentPrintData);
+
+    const progressTrackColor = useColorModeValue('gray.200', 'gray.600');
+
     return (
         <Card
             w="100%"
@@ -31,9 +41,11 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
                         </Heading>
                         <Badge
                             variant="subtle"
-                            colorScheme={useStateColor(data.status.state)}
+                            colorScheme={getStateColor(
+                                expandedPrinterData.state
+                            )}
                         >
-                            {data.status.state}
+                            {expandedPrinterData.state}
                         </Badge>
                     </HStack>
 
@@ -41,27 +53,37 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
 
                     <HStack w="100%" justifyContent="flex-start" spacing={5}>
                         {/* <CircularProgress value={100} color="green.200" size={8} /> */}
-                        <VStack alignItems="flex-start" spacing={0.5}>
-                            <HStack spacing={1}>
-                                <CircularProgress
-                                    value={100}
-                                    color="green.200"
-                                    size={4}
-                                    thickness={10}
-                                />
-                                <Text fontSize="lg" fontWeight="semibold">
-                                    11:59
+                        {expandedPrinterData.state === 'printing' && (
+                            <VStack alignItems="flex-start" spacing={0.5}>
+                                <HStack spacing={1.5}>
+                                    <CircularProgress
+                                        value={progress}
+                                        color="green.200"
+                                        size={5}
+                                        thickness={10}
+                                        trackColor={progressTrackColor}
+                                    />
+                                    <Text
+                                        fontSize="lg"
+                                        fontWeight="semibold"
+                                        lineHeight={1}
+                                    >
+                                        {timeLeft}
+                                    </Text>
+                                </HStack>
+                                <Text fontSize="sm" fontWeight="normal">
+                                    est. remaining
                                 </Text>
-                            </HStack>
-                            <Text fontSize="sm" fontWeight="normal">
-                                est. remaining
-                            </Text>
-                        </VStack>
+                            </VStack>
+                        )}
                         <VStack alignItems="flex-start" spacing={0.5}>
                             <Text fontSize="lg" fontWeight="semibold">
                                 {
-                                    queue.filter((p) => p.printer === data.id)
-                                        .length
+                                    queue.filter(
+                                        (p) =>
+                                            p.printer === data.id &&
+                                            !p.completed
+                                    ).length
                                 }
                             </Text>
                             <Text fontSize="sm" fontWeight="normal">

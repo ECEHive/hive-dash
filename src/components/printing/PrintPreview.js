@@ -13,15 +13,19 @@ import {
     useColorModeValue
 } from '@chakra-ui/react';
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
-import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/PrintingContext';
-import usePrintProgress from '@/hooks/usePrintProgress';
+import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrintParser from '@/hooks/usePrintParser';
 
 export default function PrintPreview({ actions, print }) {
-    const { printerTypes, printers } = useContext(PrintingContext);
-
-    const [progress, timeLeft] = usePrintProgress(print);
+    const {
+        expandedPrintData,
+        progress,
+        timeLeft,
+        complete,
+        progressColor,
+        progressMessage
+    } = usePrintParser(print);
 
     return (
         <Card
@@ -42,23 +46,25 @@ export default function PrintPreview({ actions, print }) {
                                     spacing={0}
                                 >
                                     <Text fontSize="lg" fontWeight="medium">
-                                        {print.trayName}
+                                        {expandedPrintData.trayName}
                                     </Text>
                                     <Text fontSize="sm">
-                                        Queued by: {print.queuedBy}
+                                        Queued by: {expandedPrintData.queuedBy}
                                     </Text>
                                 </VStack>
                                 <Spacer />
                                 <Badge variant="subtle" alignSelf="flex-end">
-                                    est. {timeLeft}
+                                    {progressMessage}
                                 </Badge>
                             </HStack>
                             <Progress
                                 w="100%"
-                                value={progress}
+                                value={
+                                    (expandedPrintData.failed || expandedPrintData.completed) ? 100 : progress
+                                }
                                 size="sm"
                                 borderRadius={5}
-                                colorScheme="blue"
+                                colorScheme={progressColor}
                             />
                         </VStack>
 
@@ -74,9 +80,7 @@ export default function PrintPreview({ actions, print }) {
                                     fontWeight="semibold"
                                     lineHeight={1}
                                 >
-                                    {dayjs
-                                        .duration(print.estTime)
-                                        .format('HH:mm')}
+                                    {expandedPrintData.estTimeFormatted}
                                 </Text>
                                 <Text fontSize="md" fontWeight="normal">
                                     est. print time
@@ -89,20 +93,10 @@ export default function PrintPreview({ actions, print }) {
                                         fontWeight="semibold"
                                         lineHeight={1}
                                     >
-                                        {print.materialUsage}
+                                        {expandedPrintData.materialUsage}
                                     </Text>
                                     <Text fontSize="sm" alignSelf="flex-end">
-                                        {
-                                            printerTypes.find(
-                                                (type) =>
-                                                    type.id ===
-                                                    printers.find(
-                                                        (p) =>
-                                                            p.id ===
-                                                            print.printer
-                                                    ).type
-                                            ).materialUnits.symbol
-                                        }
+                                        {expandedPrintData.materialSymbol}
                                     </Text>
                                 </HStack>
                                 <Text fontSize="md" fontWeight="normal">
@@ -115,7 +109,7 @@ export default function PrintPreview({ actions, print }) {
                                     fontWeight="semibold"
                                     lineHeight={1}
                                 >
-                                    {print.materialType}
+                                    {expandedPrintData.materialType}
                                 </Text>
                                 <Text fontSize="md" fontWeight="normal">
                                     material type

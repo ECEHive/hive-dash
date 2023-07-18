@@ -5,7 +5,7 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 
 import PrinterType from '@/components/printing/new/PrinterType';
 import PrinterItem from '@/components/printing/new/PrinterItem';
-import PrintingContext from '@/contexts/PrintingContext';
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function PrinterSelect({ set, data, setNext }) {
     const { printerTypes, printers } = useContext(PrintingContext);

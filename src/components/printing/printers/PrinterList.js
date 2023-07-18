@@ -17,9 +17,9 @@ import {
 import { SearchIcon } from '@chakra-ui/icons';
 import PrinterListItem from './PrinterListItem';
 
-import PrintingContext from '@/contexts/PrintingContext';
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
-export default function PrinterList({ selectedPrinterId, setselectedPrinterId }) {
+export default function PrinterList({ selectedPrinterId, setSelectedPrinterId }) {
     const { printers, printerTypes, queue } = useContext(PrintingContext);
 
     return (
@@ -59,7 +59,7 @@ export default function PrinterList({ selectedPrinterId, setselectedPrinterId })
                                                 key={printer._id}
                                                 data={printer}
                                                 queue={queue}
-                                                onClick={() => {setselectedPrinterId(printer.id)}}
+                                                onClick={() => {setSelectedPrinterId(printer.id)}}
                                                 isActive={printer.id === selectedPrinterId}
                                             />
                                         );

@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState, useCallback } from 'react';
+import { useMemo, useEffect, useState, useCallback, useContext } from 'react';
 import {
     Box,
     useSteps,
@@ -33,7 +33,8 @@ import {
     AlertDescription,
     CloseButton,
     CircularProgress,
-    useToast
+    useToast,
+    Spinner
 } from '@chakra-ui/react';
 
 import Layout from '@/layouts/printing/PrintingLayout';
@@ -43,8 +44,9 @@ import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
 import PrintInfo from '@/components/printing/new/PrintInfo';
 import dayjs from '@/lib/time';
-
+import PrintingContext from '@/contexts/printing/PrintingContext';
 export default function NewPrint(props) {
+    const { refreshData } = useContext(PrintingContext);
     const toast = useToast();
 
     const [inputData, setInputData] = useState({
@@ -110,7 +112,7 @@ export default function NewPrint(props) {
             materialUsage: inputData.print.materialUsage,
             queuedBy: inputData.user.assistingPI,
             queuedAt: timestamp,
-            complete: false,
+            completed: false,
             printing: false,
             endUser: {
                 firstname: inputData.user.firstname,
@@ -134,6 +136,7 @@ export default function NewPrint(props) {
         })
             .then((res) => res.json())
             .then((res) => {
+                refreshData();
                 setSubmitting(false);
             })
             .catch((err) => {
@@ -144,7 +147,7 @@ export default function NewPrint(props) {
                     duration: 5000
                 });
             });
-    }, [inputData, toast]);
+    }, [inputData, toast, refreshData]);
 
     useEffect(() => {
         if (activeStep === 3) {
@@ -229,7 +232,7 @@ export default function NewPrint(props) {
                                         align="center"
                                     >
                                         {submitting ? (
-                                            <CircularProgress isIndeterminate />
+                                            <Spinner size="xl"/>
                                         ) : (
                                             <Alert
                                                 status="success"

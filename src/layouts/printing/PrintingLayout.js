@@ -11,7 +11,7 @@ import {
 
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
 import TopBar from '@/components/TopBarNavigation';
-import PrintingContext from '@/contexts/PrintingContext';
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function PrimaryLayout({ children }) {
     const toast = useToast();
@@ -20,7 +20,8 @@ export default function PrimaryLayout({ children }) {
     const [printers, setPrinters] = useState([]);
     const [printerTypes, setPrinterTypes] = useState([]);
 
-    const refresh = useCallback(() => {
+    const refreshData = useCallback(() => {
+        console.log('REFRESHING DATA')
         fetch('/api/printing/printerTypes', {
             method: 'GET'
         })
@@ -71,18 +72,19 @@ export default function PrimaryLayout({ children }) {
     }, [toast]);
 
     useEffect(() => {
+        refreshData();
         const int = setInterval(() => {
-            refresh();
-        }, 1000)
+            refreshData();
+        }, 30000)
 
         return () => {
             clearInterval(int);
         }
-    }, [refresh]);
+    }, [refreshData]);
 
     return (
         <>
-            <PrintingContext.Provider value={{ queue, printers, printerTypes }}>
+            <PrintingContext.Provider value={{ queue, printers, printerTypes, refreshData }}>
                 <Box w="100vw" h="100vh" pos="fixed">
                     <TopBar />
                     <PrintingNavigation />

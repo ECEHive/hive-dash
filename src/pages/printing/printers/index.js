@@ -1,4 +1,4 @@
-import { useState, useContext, useMemo } from 'react';
+import { useState, useContext, useMemo, createContext } from 'react';
 import {
     Box,
     Button,
@@ -33,32 +33,34 @@ import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import { FaPlay, FaWrench, FaPencilAlt } from 'react-icons/fa';
 
 import dayjs from '@/lib/time';
-import usePrinterUpdate from '@/util/usePrinterUpdate';
+import usePrintUpdate from '@/hooks/usePrintUpdate';
+import PrintingContext from '@/contexts/printing/PrintingContext';
+import PrinterContext from '@/contexts/printing/printers/PrinterContext';
 
 import InfoCard from '@/components/printing/printers/InfoCard';
 import TopLayout from '@/layouts/printing/PrintingLayout';
 import PrintPreview from '@/components/printing/PrintPreview';
-
-import PrintingContext from '@/contexts/PrintingContext';
 import PrinterList from '@/components/printing/printers/PrinterList';
 import QueueTable from '@/components/printing/printers/QueueTable';
+import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+import usePrintParser from '@/hooks/usePrintParser';
 
 export default function Printers(props) {
     const { printers, queue, printerTypes } = useContext(PrintingContext);
 
-    const toast = useToast()
-    const updater = usePrinterUpdate()
+    const printUpdater = usePrintUpdate();
 
-    const [selectedPrinterId, setselectedPrinterId] = useState(null);
+    const [selectedPrinterId, setSelectedPrinterId] = useState(null);
+
     const selectedPrinterData = useMemo(() => {
         return printers.find((p) => p.id === selectedPrinterId);
-    }, [selectedPrinterId, printers])
+    }, [selectedPrinterId, printers]);
 
     const activePrint = useMemo(() => {
         return queue.find(
-            (print) => print.printing && print.printer === selectedPrinterId
+            (print) => print._id === selectedPrinterData?.currentTray
         );
-    }, [queue, selectedPrinterId]);
+    }, [queue, selectedPrinterData]);
 
     function cancelPrint(printData) {
         let data = {
@@ -72,7 +74,23 @@ export default function Printers(props) {
                 ...printData.events
             ]
         };
-        updater(printData._id, data)
+        printUpdater(printData._id, data);
+    }
+
+    function completePrint(printData) {
+        let data = {
+            ...printData,
+            printing: false,
+            completed: true,
+            events: [
+                {
+                    type: 'completed',
+                    timestamp: dayjs.utc()
+                },
+                ...printData.events
+            ]
+        };
+        printUpdater(printData._id, data)
     }
 
     return (
@@ -87,7 +105,7 @@ export default function Printers(props) {
                 >
                     <PrinterList
                         selectedPrinterId={selectedPrinterId}
-                        setselectedPrinterId={setselectedPrinterId}
+                        setSelectedPrinterId={setSelectedPrinterId}
                     />
 
                     <Card
@@ -98,7 +116,9 @@ export default function Printers(props) {
                     >
                         <CardBody>
                             <HStack w="100%" mb={4} alignItems="center">
-                                <Heading size="lg">{selectedPrinterData?.displayName}</Heading>
+                                <Heading size="lg">
+                                    {selectedPrinterData?.displayName}
+                                </Heading>
                                 <Spacer />
                                 <IconButton
                                     icon={<FaWrench />}
@@ -118,32 +138,45 @@ export default function Printers(props) {
                                     <PrintPreview
                                         print={activePrint}
                                         actions={
-                                            <ButtonGroup
-                                                isAttached
-                                                variant="outline"
-                                                size="md"
-                                            >
-                                                <Button
-                                                    colorScheme="red"
-                                                    leftIcon={<CloseIcon />}
-                                                    onClick={() => cancelPrint(activePrint)}
+                                            activePrint.printing && (
+                                                <ButtonGroup
+                                                    isAttached
+                                                    variant="outline"
+                                                    size="md"
                                                 >
-                                                    Failed
-                                                </Button>
-                                                <Button
-                                                    colorScheme="green"
-                                                    leftIcon={<CheckIcon />}
-                                                >
-                                                    Completed
-                                                </Button>
-                                            </ButtonGroup>
+                                                    <Button
+                                                        colorScheme="red"
+                                                        leftIcon={<CloseIcon />}
+                                                        onClick={() =>
+                                                            cancelPrint(
+                                                                activePrint
+                                                            )
+                                                        }
+                                                    >
+                                                        Failed
+                                                    </Button>
+                                                    <Button
+                                                        colorScheme="green"
+                                                        leftIcon={<CheckIcon />}
+                                                        onClick={() =>
+                                                            completePrint(
+                                                                activePrint
+                                                            )
+                                                        }
+                                                    >
+                                                        Completed
+                                                    </Button>
+                                                </ButtonGroup>
+                                            )
                                         }
                                     />
                                 )}
 
                                 {/* queue */}
                                 <QueueTable
+                                    activePrint={activePrint}
                                     selectedPrinterId={selectedPrinterId}
+                                    selectedPrinterData={selectedPrinterData}
                                 />
                             </VStack>
                         </CardBody>

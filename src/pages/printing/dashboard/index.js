@@ -7,7 +7,7 @@ import { HiMiniQueueList } from 'react-icons/hi2';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import PrintingContext from '@/contexts/PrintingContext';
+import PrintingContext from '@/contexts/printing/PrintingContext';
 import Layout from '@/layouts/printing/PrintingLayout';
 import PrinterCard from '@/components/printing/dashboard/PrinterItem';
 import CardTemplate from '@/components/printing/dashboard/CardTemplate';
