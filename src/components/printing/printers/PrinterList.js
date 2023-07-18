@@ -45,7 +45,6 @@ export default function PrinterList({ selectedPrinterId, setselectedPrinterId })
                     overflow="auto"
                 >
                     {printerTypes.map((type) => {
-                        console.log(type)
                         return (
                             <>
                                 <Text fontSize="xl" fontWeight="bold" my={1}>
@@ -55,7 +54,6 @@ export default function PrinterList({ selectedPrinterId, setselectedPrinterId })
                                 {printers
                                     .filter((printer) => printer.type === type.id)
                                     .map((printer) => {
-                                        console.log(printer)
                                         return (
                                             <PrinterListItem
                                                 key={printer._id}

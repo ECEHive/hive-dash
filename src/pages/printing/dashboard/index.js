@@ -21,7 +21,7 @@ export default function Dashboard(props) {
                 <SimpleGrid spacing={4} columns={3} w="100%" h="100%">
                     {printers.map((printer) => {
                         return (
-                            <PrinterCard data={printer} />
+                            <PrinterCard key={printer.id} data={printer} />
                         )
                     })}
                 </SimpleGrid>

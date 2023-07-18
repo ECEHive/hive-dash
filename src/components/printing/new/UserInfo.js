@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import {
     Heading,
     VStack,
@@ -32,12 +32,11 @@ export default function UserInfo({ set, data, setNext }) {
 
     function makeEmail() {
         if (data.user.email === '') {
-            console.log('hi');
             update('email', `${data.user.firstname[0].toLowerCase()}${data.user.lastname.toLowerCase()}`);
         }
     }
 
-    useEffect(() => {
+    const validate = useCallback(() => {
         if (
             data.user.firstname !== '' &&
             data.user.lastname !== '' &&
@@ -48,7 +47,11 @@ export default function UserInfo({ set, data, setNext }) {
         } else {
             setNext(false);
         }
-    }, [data]);
+    }, [data, setNext]);
+
+    useEffect(() => {
+        validate();
+    }, [validate]);
 
     return (
         <>

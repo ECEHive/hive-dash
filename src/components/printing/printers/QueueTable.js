@@ -12,7 +12,8 @@ import {
     Th,
     Td,
     TableContainer,
-    Tooltip
+    Tooltip,
+    useToast
 } from '@chakra-ui/react';
 import { FaPlay, FaPencilAlt } from 'react-icons/fa';
 
@@ -21,19 +22,59 @@ import dayjs from '@/lib/time';
 import PrintingContext from '@/contexts/PrintingContext';
 
 export default function QueueTable({ selectedPrinterId }) {
+    const toast = useToast();
+
     const { queue } = useContext(PrintingContext);
 
     const printerQueue = useMemo(() => {
         return queue.filter((print) => print.printer === selectedPrinterId);
-    }, [selectedPrinterId]);
+    }, [selectedPrinterId, queue]);
 
     const canQueue = useMemo(() => {
-        const activePrint = queue.find((print) => print.printer === selectedPrinterId && print.printing);
+        const activePrint = queue.find(
+            (print) => print.printer === selectedPrinterId && print.printing
+        );
         return !activePrint;
-    }, [selectedPrinterId])
+    }, [selectedPrinterId, queue]);
 
-    function startPrint(printId){
-        fetch()
+    function startPrint(printData) {
+        let data = {
+            ...printData,
+            printing: true,
+            events: [
+                {
+                    type: 'printing',
+                    timestamp: dayjs.utc()
+                },
+                ...printData.events
+            ]
+        };
+        delete data._id;
+
+        fetch(`/api/printing/${printData._id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                toast({
+                    title: 'Success',
+                    description: 'Print started',
+                    status: 'success',
+                    duration: 5000
+                });
+            })
+            .catch((err) => {
+                toast({
+                    title: 'Error',
+                    description: `Couldn't start print: ${err}`,
+                    status: 'error',
+                    duration: 5000
+                });
+            });
     }
 
     return (
@@ -51,9 +92,12 @@ export default function QueueTable({ selectedPrinterId }) {
                     </Thead>
                     <Tbody>
                         {printerQueue.map((print) => {
-                            let queueDate = dayjs.utc(print.queuedAt).local().format("MM/DD/YYYY")
+                            let queueDate = dayjs
+                                .utc(print.queuedAt)
+                                .local()
+                                .format('MM/DD/YYYY');
                             return (
-                                <Tr>
+                                <Tr key={print._id}>
                                     <Tooltip
                                         label="2021-09-01 4:10 PM"
                                         placement="bottom-start"
@@ -83,7 +127,9 @@ export default function QueueTable({ selectedPrinterId }) {
                                                 colorScheme="green"
                                                 variant="outline"
                                                 isDisabled={!canQueue}
-                                                onClick={null}
+                                                onClick={() =>
+                                                    startPrint(print)
+                                                }
                                             />
                                             <IconButton
                                                 icon={<FaPencilAlt />}

@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState, useCallback } from 'react';
 import {
     Box,
     useSteps,
@@ -42,6 +42,7 @@ import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
 import PrintInfo from '@/components/printing/new/PrintInfo';
+import dayjs from '@/lib/time'
 
 export default function NewPrint(props) {
     const toast = useToast();
@@ -65,6 +66,8 @@ export default function NewPrint(props) {
             assistingPI: ''
         }
     });
+    const [enableNext, setEnableNext] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     const steps = useMemo(
         () => [
@@ -87,24 +90,12 @@ export default function NewPrint(props) {
         count: steps.length || 0
     });
 
-    const [enableNext, setEnableNext] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
-
     useEffect(() => {
         console.log(inputData);
     }, [inputData])
 
-    useEffect(() => {
-        setEnableNext(false);
-
-        if (activeStep === 3) {
-            setSubmitting(true);
-            submit();
-        }
-    }, [activeStep]);
-
-    function submit() {
-        let timestamp = new Date().toISOString();
+    const submit = useCallback(() => {
+        let timestamp = dayjs.utc()
         const payload = {
             trayName: inputData.print.name,
             printer: inputData.printer.id,
@@ -146,7 +137,18 @@ export default function NewPrint(props) {
                     duration: 5000
                 });
             });
-    }
+    }, [inputData, toast])
+
+    useEffect(() => {
+        if (activeStep === 3) {
+            setSubmitting(true);
+            submit();
+        }
+    }, [activeStep, submit]);
+
+    useEffect(() => {
+        setEnableNext(false);
+    }, [activeStep])
 
     return (
         <>

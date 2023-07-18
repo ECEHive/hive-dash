@@ -11,10 +11,6 @@ export default function PrinterSelect({ set, data, setNext }) {
     const { printerTypes, printers } = useContext(PrintingContext);
 
     useEffect(() => {
-        console.log(printers, printerTypes)
-    }, [printers])
-
-    useEffect(() => {
         if (data.printer.type !== '' && data.printer.name !== '') {
             setNext(true);
         } else {
@@ -45,6 +41,7 @@ export default function PrinterSelect({ set, data, setNext }) {
                     {printerTypes.map((typeData) => {
                         return (
                             <PrinterType
+                                key={typeData.id}
                                 isActive={data.printer.type === typeData.id}
                                 data={typeData}
                                 onClick={() => {
@@ -75,9 +72,9 @@ export default function PrinterSelect({ set, data, setNext }) {
                         printers
                             .filter((p) => p.type === data.printer.type)
                             .map((printer) => {
-                                console.log(printer);
                                 return (
                                     <PrinterItem
+                                        key={printer.id}
                                         isActive={
                                             data.printer.name ===
                                             printer.displayName

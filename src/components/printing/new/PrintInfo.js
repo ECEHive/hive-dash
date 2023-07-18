@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useContext } from 'react';
+import { useMemo, useState, useEffect, useContext, useCallback } from 'react';
 import {
     Heading,
     VStack,
@@ -20,8 +20,12 @@ export default function PrintInfo({ data, set, setNext }) {
 
     const selectedPrinterTypeData = useMemo(() => {
         return printerTypes.find((p) => p.id === data.printer.type);
-    }, [data.printer.type]);
-
+    }, [data.printer.type, printerTypes]);
+    
+    const forceUseMaterial = useMemo(() => {
+        return selectedPrinterTypeData.materials.length === 1;
+    }, [selectedPrinterTypeData]);
+    
     function update(field, value) {
         set({
             ...data,
@@ -32,13 +36,7 @@ export default function PrintInfo({ data, set, setNext }) {
         });
     }
 
-    useEffect(() => {
-        if (selectedPrinterTypeData.materials.length === 1) {
-            update('material', selectedPrinterTypeData.materials[0]);
-        }
-    }, [selectedPrinterTypeData]);
-
-    useEffect(() => {
+    const validate = useCallback(() => {
         if (
             data.print.name !== '' &&
             data.print.time !== '' &&
@@ -49,7 +47,11 @@ export default function PrintInfo({ data, set, setNext }) {
         } else {
             setNext(false);
         }
-    }, [data]);
+    }, [data, setNext]);
+
+    useEffect(() => {
+        validate();
+    }, [validate]);
 
     return (
         <>

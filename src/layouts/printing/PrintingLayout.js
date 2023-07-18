@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     Alert,
     AlertDescription,
@@ -20,7 +20,7 @@ export default function PrimaryLayout({ children }) {
     const [printers, setPrinters] = useState([]);
     const [printerTypes, setPrinterTypes] = useState([]);
 
-    useEffect(() => {
+    const refresh = useCallback(() => {
         fetch('/api/printing/printerTypes', {
             method: 'GET'
         })
@@ -68,13 +68,21 @@ export default function PrimaryLayout({ children }) {
                     duration: 5000
                 });
             });
-    }, []);
+    }, [toast]);
+
+    useEffect(() => {
+        const int = setInterval(() => {
+            refresh();
+        }, 1000)
+
+        return () => {
+            clearInterval(int);
+        }
+    }, [refresh]);
 
     return (
         <>
-            <PrintingContext.Provider
-                value={{ queue, printers, printerTypes }}
-            >
+            <PrintingContext.Provider value={{ queue, printers, printerTypes }}>
                 <Box w="100vw" h="100vh" pos="fixed">
                     <TopBar />
                     <PrintingNavigation />
