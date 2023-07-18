@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useMemo } from 'react';
 import {
     Box,
     Button,
@@ -26,10 +26,14 @@ import {
     Tr,
     Th,
     Td,
-    TableContainer
+    TableContainer,
+    useToast
 } from '@chakra-ui/react';
 import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import { FaPlay, FaWrench, FaPencilAlt } from 'react-icons/fa';
+
+import dayjs from '@/lib/time';
+import usePrinterUpdate from '@/util/usePrinterUpdate';
 
 import InfoCard from '@/components/printing/printers/InfoCard';
 import TopLayout from '@/layouts/printing/PrintingLayout';
@@ -42,7 +46,34 @@ import QueueTable from '@/components/printing/printers/QueueTable';
 export default function Printers(props) {
     const { printers, queue, printerTypes } = useContext(PrintingContext);
 
+    const toast = useToast()
+    const updater = usePrinterUpdate()
+
     const [selectedPrinterId, setselectedPrinterId] = useState(null);
+    const selectedPrinterData = useMemo(() => {
+        return printers.find((p) => p.id === selectedPrinterId);
+    }, [selectedPrinterId, printers])
+
+    const activePrint = useMemo(() => {
+        return queue.find(
+            (print) => print.printing && print.printer === selectedPrinterId
+        );
+    }, [queue, selectedPrinterId]);
+
+    function cancelPrint(printData) {
+        let data = {
+            ...printData,
+            printing: false,
+            events: [
+                {
+                    type: 'failed',
+                    timestamp: dayjs.utc()
+                },
+                ...printData.events
+            ]
+        };
+        updater(printData._id, data)
+    }
 
     return (
         <>
@@ -67,7 +98,7 @@ export default function Printers(props) {
                     >
                         <CardBody>
                             <HStack w="100%" mb={4} alignItems="center">
-                                <Heading size="lg">Center Stratasys</Heading>
+                                <Heading size="lg">{selectedPrinterData?.displayName}</Heading>
                                 <Spacer />
                                 <IconButton
                                     icon={<FaWrench />}
@@ -83,31 +114,37 @@ export default function Printers(props) {
                                 overflow="auto"
                             >
                                 {/* current print */}
-                                <PrintPreview
-                                    actions={
-                                        <ButtonGroup
-                                            isAttached
-                                            variant="outline"
-                                            size="md"
-                                        >
-                                            <Button
-                                                colorScheme="red"
-                                                leftIcon={<CloseIcon />}
+                                {activePrint && (
+                                    <PrintPreview
+                                        print={activePrint}
+                                        actions={
+                                            <ButtonGroup
+                                                isAttached
+                                                variant="outline"
+                                                size="md"
                                             >
-                                                Failed
-                                            </Button>
-                                            <Button
-                                                colorScheme="green"
-                                                leftIcon={<CheckIcon />}
-                                            >
-                                                Completed
-                                            </Button>
-                                        </ButtonGroup>
-                                    }
-                                />
+                                                <Button
+                                                    colorScheme="red"
+                                                    leftIcon={<CloseIcon />}
+                                                    onClick={() => cancelPrint(activePrint)}
+                                                >
+                                                    Failed
+                                                </Button>
+                                                <Button
+                                                    colorScheme="green"
+                                                    leftIcon={<CheckIcon />}
+                                                >
+                                                    Completed
+                                                </Button>
+                                            </ButtonGroup>
+                                        }
+                                    />
+                                )}
 
                                 {/* queue */}
-                                <QueueTable selectedPrinterId={selectedPrinterId}/>
+                                <QueueTable
+                                    selectedPrinterId={selectedPrinterId}
+                                />
                             </VStack>
                         </CardBody>
                     </Card>

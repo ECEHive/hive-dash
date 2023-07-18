@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
     Badge,
     Button,
@@ -9,11 +10,19 @@ import {
     Spacer,
     Text,
     VStack,
-    useColorModeValue,
+    useColorModeValue
 } from '@chakra-ui/react';
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
+import dayjs from '@/lib/time';
 
-export default function PrintPreview({ actions }) {
+import PrintingContext from '@/contexts/PrintingContext';
+import usePrintProgress from '@/hooks/usePrintProgress';
+
+export default function PrintPreview({ actions, print }) {
+    const { printerTypes, printers } = useContext(PrintingContext);
+
+    const [progress, timeLeft] = usePrintProgress(print);
+
     return (
         <Card
             w="100%"
@@ -33,23 +42,23 @@ export default function PrintPreview({ actions }) {
                                     spacing={0}
                                 >
                                     <Text fontSize="lg" fontWeight="medium">
-                                        PI_Colin_Hartigan_long_print_name
+                                        {print.trayName}
                                     </Text>
                                     <Text fontSize="sm">
-                                        Queued by: firstname lastname
+                                        Queued by: {print.queuedBy}
                                     </Text>
                                 </VStack>
                                 <Spacer />
                                 <Badge variant="subtle" alignSelf="flex-end">
-                                    waiting for confirmation
+                                    est. {timeLeft}
                                 </Badge>
                             </HStack>
                             <Progress
                                 w="100%"
-                                value={100}
+                                value={progress}
                                 size="sm"
                                 borderRadius={5}
-                                colorScheme="green"
+                                colorScheme="blue"
                             />
                         </VStack>
 
@@ -65,7 +74,9 @@ export default function PrintPreview({ actions }) {
                                     fontWeight="semibold"
                                     lineHeight={1}
                                 >
-                                    11:59
+                                    {dayjs
+                                        .duration(print.estTime)
+                                        .format('HH:mm')}
                                 </Text>
                                 <Text fontSize="md" fontWeight="normal">
                                     est. print time
@@ -78,10 +89,20 @@ export default function PrintPreview({ actions }) {
                                         fontWeight="semibold"
                                         lineHeight={1}
                                     >
-                                        13
+                                        {print.materialUsage}
                                     </Text>
                                     <Text fontSize="sm" alignSelf="flex-end">
-                                        in^3
+                                        {
+                                            printerTypes.find(
+                                                (type) =>
+                                                    type.id ===
+                                                    printers.find(
+                                                        (p) =>
+                                                            p.id ===
+                                                            print.printer
+                                                    ).type
+                                            ).materialUnits.symbol
+                                        }
                                     </Text>
                                 </HStack>
                                 <Text fontSize="md" fontWeight="normal">
@@ -94,7 +115,7 @@ export default function PrintPreview({ actions }) {
                                     fontWeight="semibold"
                                     lineHeight={1}
                                 >
-                                    ABS
+                                    {print.materialType}
                                 </Text>
                                 <Text fontSize="md" fontWeight="normal">
                                     material type

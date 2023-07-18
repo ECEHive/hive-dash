@@ -42,7 +42,7 @@ import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
 import PrintInfo from '@/components/printing/new/PrintInfo';
-import dayjs from '@/lib/time'
+import dayjs from '@/lib/time';
 
 export default function NewPrint(props) {
     const toast = useToast();
@@ -92,19 +92,26 @@ export default function NewPrint(props) {
 
     useEffect(() => {
         console.log(inputData);
-    }, [inputData])
+    }, [inputData]);
 
     const submit = useCallback(() => {
-        let timestamp = dayjs.utc()
+        let timestamp = dayjs.utc();
+        let duration = dayjs
+            .duration({
+                hours: inputData.print.time.split(':')[0],
+                minutes: inputData.print.time.split(':')[1]
+            })
+            .toISOString();
         const payload = {
             trayName: inputData.print.name,
             printer: inputData.printer.id,
-            estTime: inputData.print.time,
+            estTime: duration,
             materialType: inputData.print.material,
             materialUsage: inputData.print.materialUsage,
             queuedBy: inputData.user.assistingPI,
             queuedAt: timestamp,
             complete: false,
+            printing: false,
             endUser: {
                 firstname: inputData.user.firstname,
                 lastname: inputData.user.lastname,
@@ -137,7 +144,7 @@ export default function NewPrint(props) {
                     duration: 5000
                 });
             });
-    }, [inputData, toast])
+    }, [inputData, toast]);
 
     useEffect(() => {
         if (activeStep === 3) {
@@ -148,7 +155,7 @@ export default function NewPrint(props) {
 
     useEffect(() => {
         setEnableNext(false);
-    }, [activeStep])
+    }, [activeStep]);
 
     return (
         <>

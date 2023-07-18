@@ -20,19 +20,27 @@ import {
 export default function UserInfo({ set, data, setNext }) {
     const PIList = useMemo(() => ['Colin Hartigan', 'Someone else'], []);
 
-    function update(field, value) {
-        set({
-            ...data,
-            user: {
-                ...data.user,
-                [field]: value
-            }
-        });
-    }
-
+    const update = useCallback(
+        (field, value) => {
+            set((old) => {
+                return {
+                    ...old,
+                    user: {
+                        ...old.user,
+                        [field]: value
+                    }
+                };
+            });
+        },
+        [set]
+    );
+    
     function makeEmail() {
-        if (data.user.email === '') {
-            update('email', `${data.user.firstname[0].toLowerCase()}${data.user.lastname.toLowerCase()}`);
+        if (data.user.email === '' && data.user.firstname !== '' && data.user.lastname !== '') {
+            update(
+                'email',
+                `${data.user.firstname[0].toLowerCase()}${data.user.lastname.toLowerCase()}`
+            );
         }
     }
 

@@ -20,7 +20,7 @@ import PrinterListItem from './PrinterListItem';
 import PrintingContext from '@/contexts/PrintingContext';
 
 export default function PrinterList({ selectedPrinterId, setselectedPrinterId }) {
-    const { printers, printerTypes } = useContext(PrintingContext);
+    const { printers, printerTypes, queue } = useContext(PrintingContext);
 
     return (
         <>
@@ -58,6 +58,7 @@ export default function PrinterList({ selectedPrinterId, setselectedPrinterId })
                                             <PrinterListItem
                                                 key={printer._id}
                                                 data={printer}
+                                                queue={queue}
                                                 onClick={() => {setselectedPrinterId(printer.id)}}
                                                 isActive={printer.id === selectedPrinterId}
                                             />

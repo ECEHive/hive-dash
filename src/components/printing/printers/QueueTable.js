@@ -20,9 +20,11 @@ import { FaPlay, FaPencilAlt } from 'react-icons/fa';
 import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/PrintingContext';
+import usePrinterUpdate from '@/util/usePrinterUpdate';
 
 export default function QueueTable({ selectedPrinterId }) {
     const toast = useToast();
+    const updater = usePrinterUpdate();
 
     const { queue } = useContext(PrintingContext);
 
@@ -49,32 +51,8 @@ export default function QueueTable({ selectedPrinterId }) {
                 ...printData.events
             ]
         };
-        delete data._id;
 
-        fetch(`/api/printing/${printData._id}`, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                toast({
-                    title: 'Success',
-                    description: 'Print started',
-                    status: 'success',
-                    duration: 5000
-                });
-            })
-            .catch((err) => {
-                toast({
-                    title: 'Error',
-                    description: `Couldn't start print: ${err}`,
-                    status: 'error',
-                    duration: 5000
-                });
-            });
+        updater(printData._id, data)
     }
 
     return (
@@ -96,6 +74,8 @@ export default function QueueTable({ selectedPrinterId }) {
                                 .utc(print.queuedAt)
                                 .local()
                                 .format('MM/DD/YYYY');
+
+                            let estTime = dayjs.duration(print.estTime).format('HH:mm')
                             return (
                                 <Tr key={print._id}>
                                     <Tooltip
@@ -119,7 +99,7 @@ export default function QueueTable({ selectedPrinterId }) {
                                     >
                                         {print.trayName}
                                     </Td>
-                                    <Td>{print.estTime}</Td>
+                                    <Td>{estTime}</Td>
                                     <Td>
                                         <ButtonGroup size="sm" isAttached>
                                             <IconButton

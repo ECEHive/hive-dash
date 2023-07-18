@@ -1,4 +1,4 @@
-import { stateColorLookup } from '@/util/statusColors';
+import { useStateColor } from '@/util/useStateColor';
 import {
     Badge,
     Button,
@@ -12,9 +12,17 @@ import {
     VStack
 } from '@chakra-ui/react';
 
-export default function PrinterListItem({ data, onClick, isActive }) {
+export default function PrinterListItem({ data, onClick, isActive, queue }) {
     return (
-        <Card w="100%" minH="115px" as={Button} p={0} variant="filled" onClick={onClick} isActive={isActive}>
+        <Card
+            w="100%"
+            minH="115px"
+            as={Button}
+            p={0}
+            variant="filled"
+            onClick={onClick}
+            isActive={isActive}
+        >
             <CardBody w="100%">
                 <VStack spacing={0} alignItems="flex-start" h="100%">
                     <HStack w="100%">
@@ -23,7 +31,7 @@ export default function PrinterListItem({ data, onClick, isActive }) {
                         </Heading>
                         <Badge
                             variant="subtle"
-                            colorScheme={stateColorLookup(data.status.state)}
+                            colorScheme={useStateColor(data.status.state)}
                         >
                             {data.status.state}
                         </Badge>
@@ -51,7 +59,10 @@ export default function PrinterListItem({ data, onClick, isActive }) {
                         </VStack>
                         <VStack alignItems="flex-start" spacing={0.5}>
                             <Text fontSize="lg" fontWeight="semibold">
-                                X
+                                {
+                                    queue.filter((p) => p.printer === data.id)
+                                        .length
+                                }
                             </Text>
                             <Text fontSize="sm" fontWeight="normal">
                                 in queue

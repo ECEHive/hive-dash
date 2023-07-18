@@ -1,14 +1,14 @@
 import { useColorModeValue } from '@chakra-ui/react';
 
-function stateColorLookup(state) {
+function useStateColor(state) {
     switch (state) {
         case 'printing':
-            return 'green'
+            return 'green';
         case 'idle':
-            return 'yellow'
+            return 'yellow';
         case 'down':
-            return 'red'
+            return 'red';
     }
 }
 
-export { stateColorLookup };
+export { useStateColor };

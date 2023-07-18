@@ -21,20 +21,30 @@ export default function PrintInfo({ data, set, setNext }) {
     const selectedPrinterTypeData = useMemo(() => {
         return printerTypes.find((p) => p.id === data.printer.type);
     }, [data.printer.type, printerTypes]);
-    
-    const forceUseMaterial = useMemo(() => {
-        return selectedPrinterTypeData.materials.length === 1;
-    }, [selectedPrinterTypeData]);
-    
-    function update(field, value) {
-        set({
-            ...data,
-            print: {
-                ...data.print,
-                [field]: value
-            }
-        });
-    }
+
+    const update = useCallback(
+        (field, value) => {
+            set((old) => {
+                return {
+                    ...old,
+                    print: {
+                        ...old.print,
+                        [field]: value
+                    }
+                };
+            });
+        },
+        [set]
+    );
+
+    useEffect(() => {
+        if (
+            selectedPrinterTypeData.materials.length === 1 &&
+            data.print.material === ''
+        ) {
+            update('material', selectedPrinterTypeData.materials[0]);
+        }
+    }, [selectedPrinterTypeData, update, data]);
 
     const validate = useCallback(() => {
         if (
@@ -81,7 +91,10 @@ export default function PrintInfo({ data, set, setNext }) {
                         placeholder="9:00"
                         value={data.print.time}
                         onChange={(e) => {
-                            update('time', e.target.value);
+                            let r = (
+                                e.target.value.match(/[0-9.:]+/g) || []
+                            ).join('');
+                            update('time', r);
                         }}
                     />
                     {/* show an alert if time is over 9 hours confirming MPI approval */}

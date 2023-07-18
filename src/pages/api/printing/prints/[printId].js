@@ -10,7 +10,9 @@ export default async function handler(req, res) {
     if (req.method === "PUT") {
         const body = req.body
 
-        console.log(printId)
+        delete body._id;
+
+        console.log(body)
 
         const data = await mongoClient.db("printing").collection("print-log").updateOne({
             _id: new ObjectId(printId)

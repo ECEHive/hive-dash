@@ -16,7 +16,7 @@ export default function PrinterSelect({ set, data, setNext }) {
         } else {
             setNext(false);
         }
-    }, [data]);
+    }, [data, setNext]);
 
     return (
         <>

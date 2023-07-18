@@ -21,7 +21,7 @@ import {
 import { FaWrench } from 'react-icons/fa';
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
-import { stateColorLookup } from '@/util/statusColors';
+import { useStateColor } from '@/util/useStateColor';
 
 export default function PrinterCard({ data }) {
     return (
@@ -41,7 +41,10 @@ export default function PrinterCard({ data }) {
                             <Heading size="md" fontWeight="medium">
                                 {data.displayName}
                             </Heading>
-                            <Badge variant="subtle" colorScheme={stateColorLookup(data.status.state)}>
+                            <Badge
+                                variant="subtle"
+                                colorScheme={useStateColor(data.status.state)}
+                            >
                                 {data.status.state}
                             </Badge>
                         </HStack>
