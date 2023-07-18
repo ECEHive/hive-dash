@@ -8,7 +8,7 @@ import {
     Button
 } from '@chakra-ui/react';
 
-export default function CompleteConfirm(props) {
+export default function TimeConfirm(props) {
     return (
         <AlertDialog isOpen>
             <AlertDialogOverlay>

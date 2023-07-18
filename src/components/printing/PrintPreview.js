@@ -24,7 +24,8 @@ export default function PrintPreview({ actions, print }) {
         timeLeft,
         complete,
         progressColor,
-        progressMessage
+        progressMessage,
+        fixedProgress
     } = usePrintParser(print);
 
     return (
@@ -59,9 +60,7 @@ export default function PrintPreview({ actions, print }) {
                             </HStack>
                             <Progress
                                 w="100%"
-                                value={
-                                    (expandedPrintData.failed || expandedPrintData.completed) ? 100 : progress
-                                }
+                                value={fixedProgress}
                                 size="sm"
                                 borderRadius={5}
                                 colorScheme={progressColor}

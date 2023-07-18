@@ -3,7 +3,7 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-export default function usePrintParser(printer) {
+export default function usePrinterParser(printer) {
     const { queue } = useContext(PrintingContext);
 
     const currentPrintData = useMemo(() => {
@@ -20,9 +20,11 @@ export default function usePrintParser(printer) {
 
         return {
             ...printer,
-            state: state
+            state: state,
+            queueLength: queue.filter((print) => print.printer === printer.id)
+                .length
         };
-    }, [printer, currentPrintData]);
+    }, [printer, currentPrintData, queue]);
 
     return {
         expandedPrinterData,

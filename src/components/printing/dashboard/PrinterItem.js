@@ -22,8 +22,13 @@ import { FaWrench } from 'react-icons/fa';
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
 import getStateColor from '@/util/getStateColor';
+import usePrinterParser from '@/hooks/usePrinterParser';
+import usePrintParser from '@/hooks/usePrintParser';
 
 export default function PrinterCard({ data }) {
+    const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
+    const { expandedPrintData, progress, timeLeft, progressColor, progressMessage, fixedProgress } = usePrintParser(currentPrintData);
+
     return (
         <Card
             variant="filled"
@@ -39,19 +44,21 @@ export default function PrinterCard({ data }) {
                     <VStack spacing={0.25} align="start">
                         <HStack w="100%">
                             <Heading size="md" fontWeight="medium">
-                                {data.displayName}
+                                {expandedPrinterData.displayName}
                             </Heading>
                             <Badge
                                 variant="subtle"
-                                colorScheme={"gray"}
+                                colorScheme={getStateColor(
+                                    expandedPrinterData.state
+                                )}
                             >
-                                change me
+                                {expandedPrinterData.state}
                             </Badge>
                         </HStack>
                         <HStack spacing={1}>
                             {/* <HiMiniQueueList /> */}
                             <Text fontSize="md" fontWeight="semibold">
-                                1
+                                {expandedPrinterData.queueLength}
                             </Text>
                             <Text fontSize="sm">in queue</Text>
                         </HStack>
@@ -74,18 +81,18 @@ export default function PrinterCard({ data }) {
                                     textOverflow="ellipsis"
                                     overflow="hidden"
                                 >
-                                    PI_Colin_Hartigan_long_print_name
+                                    {expandedPrintData.trayName}
                                 </Text>
                             </Tooltip>
                             <Spacer />
-                            <Badge variant="subtle">complete</Badge>
+                            <Badge variant="subtle">{progressMessage}</Badge>
                         </HStack>
                         <Progress
-                            value={100}
+                            value={fixedProgress}
                             size="sm"
                             w="100%"
                             borderRadius={5}
-                            colorScheme="green"
+                            colorScheme={progressColor}
                         />
                     </VStack>
                 </VStack>

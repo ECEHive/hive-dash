@@ -8,23 +8,23 @@ import {
     Button
 } from '@chakra-ui/react';
 
-export default function CompleteConfirm(props) {
+export default function CompleteConfirm({ isOpen, onClose, confirm }) {
     return (
-        <AlertDialog isOpen>
-            <AlertDialogOverlay>
-                <AlertDialogContent>
-                    <AlertDialogHeader>Confirm print removal</AlertDialogHeader>
+        <AlertDialog isOpen motionPreset='slideInBottom'>
+            <AlertDialogOverlay />
+            <AlertDialogContent>
+                <AlertDialogHeader>Confirm print removal</AlertDialogHeader>
 
-                    <AlertDialogBody>
-                        Confirm the print has been removed from the tray and the
-                        tray is replaced
-                    </AlertDialogBody>
+                <AlertDialogBody>
+                    Confirm the print has been removed from the tray and the
+                    printer is ready for the next print.
+                </AlertDialogBody>
 
-                    <AlertDialogFooter>
-                        <Button colorScheme="green">Confirm</Button>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialogOverlay>
+                <AlertDialogFooter gap={3}>
+                    <Button>Cancel</Button>
+                    <Button colorScheme="green">Confirm</Button>
+                </AlertDialogFooter>
+            </AlertDialogContent>
         </AlertDialog>
     );
 }

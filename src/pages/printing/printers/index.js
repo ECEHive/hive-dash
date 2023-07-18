@@ -27,7 +27,8 @@ import {
     Th,
     Td,
     TableContainer,
-    useToast
+    useToast,
+    useDisclosure
 } from '@chakra-ui/react';
 import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import { FaPlay, FaWrench, FaPencilAlt } from 'react-icons/fa';
@@ -44,6 +45,7 @@ import PrinterList from '@/components/printing/printers/PrinterList';
 import QueueTable from '@/components/printing/printers/QueueTable';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 import usePrintParser from '@/hooks/usePrintParser';
+import CompleteConfirm from '@/components/printing/printers/CompleteConfirm';
 
 export default function Printers(props) {
     const { printers, queue, printerTypes } = useContext(PrintingContext);
@@ -95,6 +97,7 @@ export default function Printers(props) {
 
     return (
         <>
+            {/* <CompleteConfirm /> */}
             <Box w="100%" h="100%" overflow="auto" p={5}>
                 <HStack
                     w="100%"

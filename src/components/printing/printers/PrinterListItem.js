@@ -78,13 +78,7 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
                         )}
                         <VStack alignItems="flex-start" spacing={0.5}>
                             <Text fontSize="lg" fontWeight="semibold">
-                                {
-                                    queue.filter(
-                                        (p) =>
-                                            p.printer === data.id &&
-                                            !p.completed
-                                    ).length
-                                }
+                                {expandedPrinterData.queueLength}
                             </Text>
                             <Text fontSize="sm" fontWeight="normal">
                                 in queue

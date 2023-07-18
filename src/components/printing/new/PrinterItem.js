@@ -9,8 +9,11 @@ import {
     Badge,
     useColorModeValue
 } from '@chakra-ui/react';
+import usePrinterParser from '@/hooks/usePrinterParser';
 
 export default function PrinterItem({ data, onClick, isActive }) {
+    const { expandedPrinterData } = usePrinterParser(data);
+
     return (
         <Card
             as={Button}

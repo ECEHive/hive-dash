@@ -75,7 +75,7 @@ export default function PrimaryLayout({ children }) {
         refreshData();
         const int = setInterval(() => {
             refreshData();
-        }, 30000)
+        }, 2000)
 
         return () => {
             clearInterval(int);
