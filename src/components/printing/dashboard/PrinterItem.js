@@ -21,7 +21,9 @@ import {
 import { FaWrench } from 'react-icons/fa';
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
-export default function PrinterCard({ status, k }) {
+import { stateColorLookup } from '@/util/statusColors';
+
+export default function PrinterCard({ data }) {
     return (
         <Card
             variant="filled"
@@ -29,7 +31,7 @@ export default function PrinterCard({ status, k }) {
             w="100%"
             // bgColor={useColorModeValue('gray.200', 'gray.600')}
             flexGrow={1}
-            // maxH="115px"
+            maxH="200px"
             // h="115px"
         >
             <CardBody>
@@ -37,10 +39,10 @@ export default function PrinterCard({ status, k }) {
                     <VStack spacing={0.25} align="start">
                         <HStack w="100%">
                             <Heading size="md" fontWeight="medium">
-                                Center Stratasys
+                                {data.displayName}
                             </Heading>
-                            <Badge variant="subtle" colorScheme="yellow">
-                                idle
+                            <Badge variant="subtle" colorScheme={stateColorLookup(data.status.state)}>
+                                {data.status.state}
                             </Badge>
                         </HStack>
                         <HStack spacing={1}>

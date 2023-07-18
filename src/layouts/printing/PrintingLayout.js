@@ -16,7 +16,7 @@ import PrintingContext from '@/contexts/PrintingContext';
 export default function PrimaryLayout({ children }) {
     const toast = useToast();
 
-    const [prints, setPrints] = useState([]);
+    const [queue, setQueue] = useState([]);
     const [printers, setPrinters] = useState([]);
     const [printerTypes, setPrinterTypes] = useState([]);
 
@@ -52,12 +52,28 @@ export default function PrimaryLayout({ children }) {
                     duration: 5000
                 });
             });
+
+        fetch('/api/printing/queue', {
+            method: 'GET'
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setQueue(data);
+            })
+            .catch((err) => {
+                toast({
+                    title: 'Fetch error',
+                    description: `Couldn't fetch prints: ${err.message}`,
+                    status: 'error',
+                    duration: 5000
+                });
+            });
     }, []);
 
     return (
         <>
             <PrintingContext.Provider
-                value={{ prints, printers, printerTypes }}
+                value={{ queue, printers, printerTypes }}
             >
                 <Box w="100vw" h="100vh" pos="fixed">
                     <TopBar />

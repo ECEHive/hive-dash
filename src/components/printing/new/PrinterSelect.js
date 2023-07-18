@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect} from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import { VStack, HStack, Heading } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
@@ -11,12 +11,16 @@ export default function PrinterSelect({ set, data, setNext }) {
     const { printerTypes, printers } = useContext(PrintingContext);
 
     useEffect(() => {
-        if(data.printer.type !== '' && data.printer.name !== ''){
-            setNext(true)
+        console.log(printers, printerTypes)
+    }, [printers])
+
+    useEffect(() => {
+        if (data.printer.type !== '' && data.printer.name !== '') {
+            setNext(true);
         } else {
-            setNext(false)
+            setNext(false);
         }
-    }, [data])
+    }, [data]);
 
     return (
         <>
@@ -47,6 +51,7 @@ export default function PrinterSelect({ set, data, setNext }) {
                                     set({
                                         ...data,
                                         printer: {
+                                            ...data.printer,
                                             name: '',
                                             type: typeData.id
                                         }
@@ -66,29 +71,31 @@ export default function PrinterSelect({ set, data, setNext }) {
                     justify="flex-start"
                     overflow="auto"
                 >
-                    {printers
-                        .filter((p) => p.type === data.printer.type)
-                        .map((printer) => {
-                            return (
-                                <PrinterItem
-                                    isActive={
-                                        data.printer.name ===
-                                        printer.displayName
-                                    }
-                                    data={printer}
-                                    onClick={() => {
-                                        set({
-                                            ...data,
-                                            printer: {
-                                                ...data.printer,
-                                                name: printer.displayName,
-                                                id: printer.id
-                                            }
-                                        });
-                                    }}
-                                />
-                            );
-                        })}
+                    {data.printer.type !== '' &&
+                        printers
+                            .filter((p) => p.type === data.printer.type)
+                            .map((printer) => {
+                                console.log(printer);
+                                return (
+                                    <PrinterItem
+                                        isActive={
+                                            data.printer.name ===
+                                            printer.displayName
+                                        }
+                                        data={printer}
+                                        onClick={() => {
+                                            set({
+                                                ...data,
+                                                printer: {
+                                                    ...data.printer,
+                                                    name: printer.displayName,
+                                                    id: printer.id
+                                                }
+                                            });
+                                        }}
+                                    />
+                                );
+                            })}
                     ;
                 </VStack>
             </HStack>

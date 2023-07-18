@@ -91,6 +91,10 @@ export default function NewPrint(props) {
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
+        console.log(inputData);
+    }, [inputData])
+
+    useEffect(() => {
         setEnableNext(false);
 
         if (activeStep === 3) {
@@ -109,6 +113,7 @@ export default function NewPrint(props) {
             materialUsage: inputData.print.materialUsage,
             queuedBy: inputData.user.assistingPI,
             queuedAt: timestamp,
+            complete: false,
             endUser: {
                 firstname: inputData.user.firstname,
                 lastname: inputData.user.lastname,
@@ -124,6 +129,9 @@ export default function NewPrint(props) {
 
         fetch('/api/printing/queue', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(payload)
         })
             .then((res) => res.json())

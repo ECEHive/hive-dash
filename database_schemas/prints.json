@@ -7,13 +7,18 @@
         "materialUsage": 13.2,
         "queuedBy": "",
         "queuedAt": "2017-03-28T15:00:00.000Z",
+        "complete": false,
+        "printing": false,
         "endUser": {
             "firstName": "Colin",
             "lastName": "Hartigan",
             "email": "chartigan6"
         },
         "events": [
-            
+            {
+                "type": "queued",
+                "timestamp": "2017-03-28T15:00:00.000Z"
+            }
         ]
     }
 ]

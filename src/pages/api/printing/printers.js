@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
         const data = await mongoClient
             .db('printing')
-            .collection('printer-types')
+            .collection('printers')
             .find()
             .toArray();
 

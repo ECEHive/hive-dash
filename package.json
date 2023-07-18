@@ -18,6 +18,7 @@
         "@fontsource/inter": "^5.0.5",
         "@fontsource/rubik": "^5.0.5",
         "chakra-ui-autocomplete": "^1.4.5",
+        "dayjs": "^1.11.9",
         "eslint": "8.44.0",
         "eslint-config-next": "13.4.9",
         "mongodb": "^5.7.0",
