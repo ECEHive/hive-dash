@@ -52,11 +52,7 @@ export default function Printers(props) {
 
     const printUpdater = usePrintUpdate();
 
-    const [selectedPrinterId, setSelectedPrinterId] = useState(null);
-
-    const selectedPrinterData = useMemo(() => {
-        return printers.find((p) => p.id === selectedPrinterId);
-    }, [selectedPrinterId, printers]);
+    const [selectedPrinterData, setSelectedPrinterData] = useState(null);
 
     const activePrint = useMemo(() => {
         return queue.find(
@@ -107,8 +103,8 @@ export default function Printers(props) {
                     justifyContent="flex-start"
                 >
                     <PrinterList
-                        selectedPrinterId={selectedPrinterId}
-                        setSelectedPrinterId={setSelectedPrinterId}
+                        selectedPrinter={selectedPrinterData}
+                        setSelectedPrinter={setSelectedPrinterData}
                     />
 
                     <Card
@@ -178,7 +174,6 @@ export default function Printers(props) {
                                 {/* queue */}
                                 <QueueTable
                                     activePrint={activePrint}
-                                    selectedPrinterId={selectedPrinterId}
                                     selectedPrinterData={selectedPrinterData}
                                 />
                             </VStack>

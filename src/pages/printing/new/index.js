@@ -45,6 +45,7 @@ import UserInfo from '@/components/printing/new/UserInfo';
 import PrintInfo from '@/components/printing/new/PrintInfo';
 import dayjs from '@/lib/time';
 import PrintingContext from '@/contexts/printing/PrintingContext';
+
 export default function NewPrint(props) {
     const { refreshData } = useContext(PrintingContext);
     const toast = useToast();
@@ -232,7 +233,7 @@ export default function NewPrint(props) {
                                         align="center"
                                     >
                                         {submitting ? (
-                                            <Spinner size="xl"/>
+                                            <Spinner size="xl" />
                                         ) : (
                                             <Alert
                                                 status="success"

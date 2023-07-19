@@ -10,6 +10,7 @@ import {
     useColorModeValue
 } from '@chakra-ui/react';
 import usePrinterParser from '@/hooks/usePrinterParser';
+import getStateColor from '@/util/getStateColor';
 
 export default function PrinterItem({ data, onClick, isActive }) {
     const { expandedPrinterData } = usePrinterParser(data);
@@ -44,14 +45,14 @@ export default function PrinterItem({ data, onClick, isActive }) {
                                 fontWeight="medium"
                                 fontFamily="heading"
                             >
-                                {data.displayName}
+                                {expandedPrinterData.displayName}
                             </Heading>
-                            <Badge colorScheme="green" variant="subtle">
-                                {data.status.state}
+                            <Badge colorScheme={getStateColor(expandedPrinterData.state)} variant="subtle">
+                                {expandedPrinterData.state}
                             </Badge>
                         </HStack>
                         <Text fontSize="md" fontWeight="normal">
-                            X prints in queue
+                            {expandedPrinterData.queueLength} in queue
                         </Text>
                     </VStack>
                 </VStack>

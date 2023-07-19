@@ -24,15 +24,15 @@ import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 import getStateColor from '@/util/getStateColor';
 
-export default function QueueTable({ selectedPrinterId, selectedPrinterData, activePrint }) {
+export default function QueueTable({ selectedPrinterData, activePrint }) {
     const printUpdater = usePrintUpdate();
     const printerUpdater = usePrinterUpdate(true);
 
     const { queue } = useContext(PrintingContext);
 
     const printerQueue = useMemo(() => {
-        return queue.filter((print) => print.printer === selectedPrinterId && !print.completed);
-    }, [selectedPrinterId, queue]);
+        return queue.filter((print) => print.printer === selectedPrinterData?.id && !print.completed);
+    }, [selectedPrinterData, queue]);
 
     const canQueue = useMemo(() => {
         return !activePrint?.printing

@@ -72,7 +72,7 @@ export default function PrinterCard({ data }) {
                     >
                         <HStack w="100%" maxW="100%" overflow="hidden">
                             <Tooltip
-                                label="PI_Colin_Hartigan_long_print_name"
+                                label={expandedPrintData.trayName}
                                 placement="top"
                             >
                                 <Text

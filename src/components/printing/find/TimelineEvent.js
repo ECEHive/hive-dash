@@ -1,7 +1,15 @@
 import { Box, HStack, VStack, Heading, Text } from '@chakra-ui/react';
 import { CheckCircleIcon, InfoIcon } from '@chakra-ui/icons';
 
-export default function TimelineEvent({ topEnd, bottomEnd, message }) {
+import dayjs from '@/lib/time';
+import { useMemo, useEffect } from 'react';
+
+export default function TimelineEvent({ topEnd, bottomEnd, event }) {
+
+    useEffect(() => {
+        console.log(event)
+    }, [event])
+
     return (
         <Box w="100%" h="auto">
             <HStack w="100%" h="100%">
@@ -12,7 +20,7 @@ export default function TimelineEvent({ topEnd, bottomEnd, message }) {
                         h="50%"
                         visibility={topEnd ? 'hidden' : 'visible'}
                     />
-                    <CheckCircleIcon color="green.200" h={5} w={5} />
+                    {event.icon}
                     <Box
                         w="2px"
                         bgColor="gray.400"
@@ -26,10 +34,10 @@ export default function TimelineEvent({ topEnd, bottomEnd, message }) {
                         size="md"
                         fontWeight="medium"
                     >
-                        {message}
+                        {event.type}
                     </Heading>
                     <Text fontSize="sm" color="gray.400">
-                        10/23/2023 11:35 am
+                        {event.formattedTimestamp}
                     </Text>
                 </VStack>
             </HStack>

@@ -95,7 +95,7 @@ export default function UserInfo({ set, data, setNext }) {
                     <FormLabel>End user GT email</FormLabel>
                     <InputGroup>
                         <Input
-                            type="email"
+                            type="text"
                             placeholder="gbrudell3"
                             value={data.user.email}
                             onChange={(e) => update('email', e.target.value)}
