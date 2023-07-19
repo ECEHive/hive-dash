@@ -1,55 +1,61 @@
-import { useState, useContext, useMemo, useEffect } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { FaPencilAlt, FaPlay, FaWrench } from 'react-icons/fa';
+
 import {
+    Badge,
     Box,
     Button,
+    ButtonGroup,
     Card,
     CardBody,
-    VStack,
+    CircularProgress,
+    Flex,
     HStack,
     Heading,
-    Badge,
-    Spacer,
-    Text,
-    CircularProgress,
-    ButtonGroup,
     IconButton,
-    useColorModeValue,
-    Progress,
-    Flex,
-    Tooltip,
     Input,
     InputGroup,
     InputLeftElement,
+    Progress,
+    Spacer,
     Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
     TableContainer,
-    useToast,
-    useDisclosure
+    Tbody,
+    Td,
+    Text,
+    Th,
+    Thead,
+    Tooltip,
+    Tr,
+    VStack,
+    useColorModeValue,
+    useDisclosure,
+    useToast
 } from '@chakra-ui/react';
-import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
-import { FaPlay, FaWrench, FaPencilAlt } from 'react-icons/fa';
-import {useRouter} from 'next/router';
 
-import dayjs from '@/lib/time';
-import usePrintUpdate from '@/hooks/usePrintUpdate';
+import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
+
+import { useRouter } from 'next/router';
+
 import PrintingContext from '@/contexts/printing/PrintingContext';
 import PrinterContext from '@/contexts/printing/printers/PrinterContext';
 
-import InfoCard from '@/components/printing/printers/InfoCard';
+import usePrintParser from '@/hooks/usePrintParser';
+import usePrintUpdate from '@/hooks/usePrintUpdate';
+import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+
+import dayjs from '@/lib/time';
+
 import TopLayout from '@/layouts/printing/PrintingLayout';
+
 import PrintPreview from '@/components/printing/PrintPreview';
+import CompleteConfirm from '@/components/printing/printers/CompleteConfirm';
+import InfoCard from '@/components/printing/printers/InfoCard';
 import PrinterList from '@/components/printing/printers/PrinterList';
 import QueueTable from '@/components/printing/printers/QueueTable';
-import usePrinterUpdate from '@/hooks/usePrinterUpdate';
-import usePrintParser from '@/hooks/usePrintParser';
-import CompleteConfirm from '@/components/printing/printers/CompleteConfirm';
 
 export default function Printers(props) {
-    const router = useRouter()
+    const router = useRouter();
 
     const { printers, queue, printerTypes } = useContext(PrintingContext);
 
@@ -102,7 +108,7 @@ export default function Printers(props) {
                 ...printData.events
             ]
         };
-        printUpdater(printData._id, data)
+        printUpdater(printData._id, data);
     }
 
     return (

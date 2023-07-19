@@ -1,4 +1,4 @@
-import { Card, CardBody, VStack, Heading, Box } from '@chakra-ui/react';
+import { Box, Card, CardBody, Heading, VStack } from '@chakra-ui/react';
 
 export default function CardTemplate({ children, title }) {
     return (

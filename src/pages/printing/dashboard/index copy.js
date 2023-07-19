@@ -1,48 +1,52 @@
-import { useState, useEffect, useMemo } from 'react';
-import {
-    Card,
-    CardBody,
-    Heading,
-    Text,
-    Box,
-    HStack,
-    Badge,
-    Button,
-    VStack,
-    Progress,
-    useColorModeValue,
-    Spacer,
-    Stat,
-    StatLabel,
-    StatNumber,
-    SimpleGrid,
-    Divider,
-    ButtonGroup,
-    IconButton,
-    Tooltip,
-    Table,
-    Thead,
-    Tr,
-    Th,
-    Tbody,
-    Td,
-    TableContainer,
-    StatHelpText,
-    Flex,
-    Grid,
-    GridItem
-} from '@chakra-ui/react';
+import { useEffect, useMemo, useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { FaWrench } from 'react-icons/fa';
-import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
-import { HiMiniQueueList } from 'react-icons/hi2';
 import 'react-grid-layout/css/styles.css';
+import { FaWrench } from 'react-icons/fa';
+import { HiMiniQueueList } from 'react-icons/hi2';
 import 'react-resizable/css/styles.css';
 
-import Layout from '@/layouts/printing/PrintingLayout';
-import PrinterCard from '@/components/printing/dashboard/PrinterItem';
-import CardTemplate from '@/components/printing/dashboard/CardTemplate';
+import {
+    Badge,
+    Box,
+    Button,
+    ButtonGroup,
+    Card,
+    CardBody,
+    Divider,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Heading,
+    IconButton,
+    Progress,
+    SimpleGrid,
+    Spacer,
+    Stat,
+    StatHelpText,
+    StatLabel,
+    StatNumber,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Text,
+    Th,
+    Thead,
+    Tooltip,
+    Tr,
+    VStack,
+    useColorModeValue
+} from '@chakra-ui/react';
+
+import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
+
 import { jsx } from '@emotion/react';
+
+import Layout from '@/layouts/printing/PrintingLayout';
+
+import CardTemplate from '@/components/printing/dashboard/CardTemplate';
+import PrinterCard from '@/components/printing/dashboard/PrinterItem';
 
 const defaultLayouts = {
     lg: [

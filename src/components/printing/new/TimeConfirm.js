@@ -1,10 +1,10 @@
 import {
     AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogOverlay,
-    AlertDialogContent,
-    AlertDialogBody,
-    AlertDialogFooter,
     Button
 } from '@chakra-ui/react';
 

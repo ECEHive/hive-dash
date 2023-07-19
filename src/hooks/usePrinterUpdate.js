@@ -1,6 +1,8 @@
-import { useToast } from '@chakra-ui/react';
-import PrintingContext from '@/contexts/printing/PrintingContext';
 import { useContext } from 'react';
+
+import { useToast } from '@chakra-ui/react';
+
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function usePrinterUpdate(silent = false) {
     const toast = useToast();

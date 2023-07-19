@@ -1,25 +1,28 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
+
 import {
-    VStack,
+    Badge,
+    Button,
+    Card,
+    CardBody,
+    HStack,
+    Heading,
     Input,
     InputGroup,
     InputLeftElement,
-    Text,
-    Heading,
-    Badge,
-    HStack,
-    Spacer,
-    Button,
     InputRightAddon,
-    Card,
-    CardBody,
-    Tooltip
+    Spacer,
+    Text,
+    Tooltip,
+    VStack
 } from '@chakra-ui/react';
+
 import { SearchIcon } from '@chakra-ui/icons';
+
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
 import PrintListItem from './PrintListItem';
 
 export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
@@ -62,7 +65,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
                         value={searchEmail}
                         onChange={(e) => setSearchEmail(e.target.value)}
                         onKeyDown={(e) => {
-                            if(e.key === 'Enter') search();
+                            if (e.key === 'Enter') search();
                         }}
                     />
                     <InputRightAddon>@gatech.edu</InputRightAddon>

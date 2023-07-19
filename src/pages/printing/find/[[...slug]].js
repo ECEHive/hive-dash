@@ -1,38 +1,44 @@
-import { useState, useEffect, useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
+
 import {
-    Box,
-    HStack,
-    InputRightAddon,
-    VStack,
-    InputGroup,
-    InputLeftElement,
-    Input,
-    Text,
-    Card,
-    CardBody,
-    Heading,
-    Badge,
-    Spacer,
-    Button,
-    CircularProgress,
-    Tooltip,
     Alert,
+    AlertDescription,
     AlertIcon,
     AlertTitle,
-    AlertDescription,
+    Badge,
+    Box,
+    Button,
+    Card,
+    CardBody,
+    CircularProgress,
+    HStack,
+    Heading,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    InputRightAddon,
+    Spacer,
+    Text,
+    Tooltip,
+    VStack,
     useColorModeValue
 } from '@chakra-ui/react';
+
 import { InfoIcon, SearchIcon } from '@chakra-ui/icons';
 
+import { useRouter } from 'next/router';
+
+import PrintingContext from '@/contexts/printing/PrintingContext';
+
+import usePrintParser from '@/hooks/usePrintParser';
+
 import Layout from '@/layouts/printing/PrintingLayout';
+
 import PrintPreview from '@/components/printing/PrintPreview';
-import TimelineEvent from '@/components/printing/find/TimelineEvent';
+import PrintAlert from '@/components/printing/find/PrintAlert';
 import PrintList from '@/components/printing/find/PrintList';
 import Timeline from '@/components/printing/find/Timeline';
-import usePrintParser from '@/hooks/usePrintParser';
-import PrintAlert from '@/components/printing/find/PrintAlert';
-import { useRouter } from 'next/router';
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import TimelineEvent from '@/components/printing/find/TimelineEvent';
 
 export default function FindPrint(props) {
     const { queue } = useContext(PrintingContext);

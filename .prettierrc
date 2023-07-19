@@ -9,6 +9,23 @@
     "trailingComma": "none",
     "bracketSpacing": true,
     "jsxBracketSameLine": false,
-    //"singleAttributePerLine": true,
-    "semi": true
+    "semi": true,
+    "importOrder": [
+        "^react",
+        "^@chakra-ui/react",
+        "^@chakra-ui/icons",
+        "^react-icons/(.*)$",
+        "<THIRD_PARTY_MODULES>",
+        "^@/contexts/(.*)$",
+        "^@/hooks/(.*)$",
+        "^@/lib/(.*)$",
+        "^@/util/(.*)$",
+        "^@/assets/(.*)$",
+        "^@/layouts/(.*)$",
+        "^@/components/(.*)$",
+        "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }

@@ -1,20 +1,23 @@
 import { useMemo } from 'react';
+
 import {
     Badge,
     Button,
     Card,
     CardBody,
     CircularProgress,
-    Heading,
     HStack,
+    Heading,
     Spacer,
     Text,
-    useColorModeValue,
-    VStack
+    VStack,
+    useColorModeValue
 } from '@chakra-ui/react';
-import getStateColor from '@/util/getStateColor';
+
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrinterParser from '@/hooks/usePrinterParser';
+
+import getStateColor from '@/util/getStateColor';
 
 export default function PrinterListItem({ data, onClick, isActive, queue }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
@@ -36,7 +39,11 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
             <CardBody w="100%">
                 <VStack spacing={0} alignItems="flex-start" h="100%">
                     <HStack w="100%">
-                        <Heading size="md" fontWeight="medium">
+                        <Heading
+                            size="md"
+                            fontWeight="medium"
+                            fontFamily="body"
+                        >
                             {data.displayName}
                         </Heading>
                         <Badge

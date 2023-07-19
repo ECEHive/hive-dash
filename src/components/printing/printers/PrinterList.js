@@ -1,23 +1,26 @@
 import { useContext } from 'react';
+
 import {
-    VStack,
+    Badge,
+    Button,
+    Card,
+    CardBody,
+    CircularProgress,
+    HStack,
+    Heading,
     Input,
     InputGroup,
     InputLeftElement,
-    Text,
-    Heading,
-    Badge,
-    HStack,
     Spacer,
-    Button,
-    CircularProgress,
-    Card,
-    CardBody
+    Text,
+    VStack
 } from '@chakra-ui/react';
+
 import { SearchIcon } from '@chakra-ui/icons';
-import PrinterListItem from './PrinterListItem';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
+
+import PrinterListItem from './PrinterListItem';
 
 export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
     const { printers, printerTypes, queue } = useContext(PrintingContext);
@@ -52,15 +55,22 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                                 </Text>
 
                                 {printers
-                                    .filter((printer) => printer.type === type.id)
+                                    .filter(
+                                        (printer) => printer.type === type.id
+                                    )
                                     .map((printer) => {
                                         return (
                                             <PrinterListItem
                                                 key={printer._id}
                                                 data={printer}
                                                 queue={queue}
-                                                onClick={() => {setSelectedPrinter(printer)}}
-                                                isActive={printer.id === selectedPrinter?.id}
+                                                onClick={() => {
+                                                    setSelectedPrinter(printer);
+                                                }}
+                                                isActive={
+                                                    printer.id ===
+                                                    selectedPrinter?.id
+                                                }
                                             />
                                         );
                                     })}

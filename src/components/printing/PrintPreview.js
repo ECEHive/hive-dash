@@ -1,8 +1,5 @@
-import { useContext } from 'react';
 import {
     Badge,
-    Button,
-    ButtonGroup,
     Card,
     CardBody,
     HStack,
@@ -12,9 +9,7 @@ import {
     VStack,
     useColorModeValue
 } from '@chakra-ui/react';
-import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
 import usePrintParser from '@/hooks/usePrintParser';
 
 export default function PrintPreview({ actions, print }) {
@@ -38,7 +33,7 @@ export default function PrintPreview({ actions, print }) {
             <CardBody>
                 <HStack w="100%" spacing={5}>
                     <VStack w="100%" spacing={4}>
-                        <VStack w="100%" spacing={1}>
+                        <VStack w="100%" spacing={2}>
                             <HStack w="100%">
                                 <VStack
                                     alignItems="flex-start"
@@ -46,7 +41,11 @@ export default function PrintPreview({ actions, print }) {
                                     w="100%"
                                     spacing={0}
                                 >
-                                    <Text fontSize="lg" fontWeight="medium">
+                                    <Text
+                                        fontSize="xl"
+                                        fontWeight="medium"
+                                        lineHeight={1}
+                                    >
                                         {expandedPrintData.trayName}
                                     </Text>
                                     <Text fontSize="sm">

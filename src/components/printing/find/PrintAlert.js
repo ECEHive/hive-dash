@@ -1,12 +1,13 @@
-import usePrintParser from '@/hooks/usePrintParser';
 import {
     Alert,
-    AlertIcon,
     AlertDescription,
-    useColorModeValue,
+    AlertIcon,
     Box,
-    Text
+    Text,
+    useColorModeValue
 } from '@chakra-ui/react';
+
+import usePrintParser from '@/hooks/usePrintParser';
 
 export default function PrintAlert({ print }) {
     const { printerData } = usePrintParser(print);
@@ -19,8 +20,8 @@ export default function PrintAlert({ print }) {
                         <AlertIcon />
                         <AlertDescription>
                             This print uses QSR supports, which we will remove
-                            for you. Expect it to be ready one business day later than the
-                            print completion date.
+                            for you. Expect it to be ready one business day
+                            later than the print completion date.
                         </AlertDescription>
                     </Alert>
                 </Box>

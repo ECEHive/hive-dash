@@ -8,9 +8,7 @@ export default function InfoCard({ children }) {
             variant="filled"
             bgColor={useColorModeValue('gray.200', 'gray.600')}
         >
-            <CardBody>
-                {children}
-            </CardBody>
+            <CardBody>{children}</CardBody>
         </Card>
     );
 }

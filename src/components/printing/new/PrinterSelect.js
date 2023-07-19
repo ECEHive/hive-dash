@@ -1,11 +1,13 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { VStack, HStack, Heading } from '@chakra-ui/react';
+import { HStack, Heading, VStack } from '@chakra-ui/react';
+
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
-import PrinterType from '@/components/printing/new/PrinterType';
-import PrinterItem from '@/components/printing/new/PrinterItem';
 import PrintingContext from '@/contexts/printing/PrintingContext';
+
+import PrinterItem from '@/components/printing/new/PrinterItem';
+import PrinterType from '@/components/printing/new/PrinterType';
 
 export default function PrinterSelect({ set, data, setNext }) {
     const { printerTypes, printers } = useContext(PrintingContext);

@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
 import {
     Alert,
     AlertDescription,
@@ -9,9 +10,10 @@ import {
     useToast
 } from '@chakra-ui/react';
 
-import PrintingNavigation from '@/components/printing/SidebarNavigation';
-import TopBar from '@/components/TopBarNavigation';
 import PrintingContext from '@/contexts/printing/PrintingContext';
+
+import TopBar from '@/components/TopBarNavigation';
+import PrintingNavigation from '@/components/printing/SidebarNavigation';
 
 export default function PrimaryLayout({ children }) {
     const toast = useToast();

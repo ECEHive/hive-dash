@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import {
     Box,
     ChakraProvider,
     ColorModeScript,
     useColorModeValue
 } from '@chakra-ui/react';
+
 import NextNProgress from 'nextjs-progressbar';
 
 import theme from '@/util/theme';

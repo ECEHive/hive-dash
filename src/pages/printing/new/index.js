@@ -1,50 +1,54 @@
-import { useMemo, useEffect, useState, useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+
 import {
+    Alert,
+    AlertDescription,
+    AlertIcon,
+    AlertTitle,
     Box,
-    useSteps,
-    Stepper,
-    Step,
-    StepIndicator,
-    StepTitle,
-    StepDescription,
-    StepSeparator,
-    StepIcon,
-    StepNumber,
-    StepStatus,
-    VStack,
-    Heading,
-    SimpleGrid,
+    Button,
     Card,
     CardBody,
-    Button,
-    HStack,
-    Text,
-    Spacer,
-    IconButton,
     Center,
+    CircularProgress,
+    CloseButton,
     FormControl,
     FormLabel,
+    HStack,
+    Heading,
+    IconButton,
     Input,
     InputGroup,
     InputRightAddon,
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
-    CloseButton,
-    CircularProgress,
-    useToast,
-    Spinner
+    SimpleGrid,
+    Spacer,
+    Spinner,
+    Step,
+    StepDescription,
+    StepIcon,
+    StepIndicator,
+    StepNumber,
+    StepSeparator,
+    StepStatus,
+    StepTitle,
+    Stepper,
+    Text,
+    VStack,
+    useSteps,
+    useToast
 } from '@chakra-ui/react';
 
-import Layout from '@/layouts/printing/PrintingLayout';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 
+import PrintingContext from '@/contexts/printing/PrintingContext';
+
+import dayjs from '@/lib/time';
+
+import Layout from '@/layouts/printing/PrintingLayout';
+
+import PrintInfo from '@/components/printing/new/PrintInfo';
 import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
-import PrintInfo from '@/components/printing/new/PrintInfo';
-import dayjs from '@/lib/time';
-import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function NewPrint(props) {
     const { refreshData } = useContext(PrintingContext);
@@ -172,7 +176,12 @@ export default function NewPrint(props) {
                         justify="flex-start"
                         align="center"
                     >
-                        <Stepper size="lg" w="100%" index={activeStep}>
+                        <Stepper
+                            size="lg"
+                            w="100%"
+                            minH="50px"
+                            index={activeStep}
+                        >
                             {steps.map((step, index) => (
                                 <Step key={index}>
                                     <StepIndicator>

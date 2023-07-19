@@ -1,6 +1,8 @@
 import { VStack } from '@chakra-ui/react';
-import TimelineEvent from './TimelineEvent';
+
 import usePrintParser from '@/hooks/usePrintParser';
+
+import TimelineEvent from './TimelineEvent';
 
 export default function Timeline({ print }) {
     const { expandedPrintData } = usePrintParser(print);

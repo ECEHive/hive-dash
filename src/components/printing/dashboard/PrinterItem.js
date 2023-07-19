@@ -1,33 +1,34 @@
 import {
+    Badge,
     Card,
     CardBody,
-    VStack,
     HStack,
     Heading,
-    Badge,
-    useColorModeValue,
-    StatNumber,
-    StatLabel,
-    Box,
-    Spacer,
-    Divider,
+    Link,
     Progress,
-    Tooltip,
+    Spacer,
     Text,
-    ButtonGroup,
-    Button,
-    IconButton
+    Tooltip,
+    VStack
 } from '@chakra-ui/react';
-import { FaWrench } from 'react-icons/fa';
-import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
+
+import NextLink from 'next/link';
+
+import usePrintParser from '@/hooks/usePrintParser';
+import usePrinterParser from '@/hooks/usePrinterParser';
 
 import getStateColor from '@/util/getStateColor';
-import usePrinterParser from '@/hooks/usePrinterParser';
-import usePrintParser from '@/hooks/usePrintParser';
 
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
-    const { expandedPrintData, progress, timeLeft, progressColor, progressMessage, fixedProgress } = usePrintParser(currentPrintData);
+    const {
+        expandedPrintData,
+        progress,
+        timeLeft,
+        progressColor,
+        progressMessage,
+        fixedProgress
+    } = usePrintParser(currentPrintData);
 
     return (
         <Card
@@ -44,7 +45,12 @@ export default function PrinterCard({ data }) {
                     <VStack spacing={0.25} align="start">
                         <HStack w="100%">
                             <Heading size="md" fontWeight="medium">
-                                {expandedPrinterData.displayName}
+                                <Link
+                                    as={NextLink}
+                                    href={`/printing/printers/${data.id}`}
+                                >
+                                    {expandedPrinterData.displayName}
+                                </Link>
                             </Heading>
                             <Badge
                                 variant="subtle"

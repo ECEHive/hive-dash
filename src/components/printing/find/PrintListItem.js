@@ -1,20 +1,23 @@
-import usePrintParser from '@/hooks/usePrintParser';
-import getStateColor from '@/util/getStateColor';
 import {
+    Badge,
+    Button,
     Card,
     CardBody,
-    VStack,
     HStack,
     Heading,
-    Badge,
     Spacer,
-    Button,
+    Text,
     Tooltip,
-    Text
+    VStack
 } from '@chakra-ui/react';
 
+import usePrintParser from '@/hooks/usePrintParser';
+
+import getStateColor from '@/util/getStateColor';
+
 export default function PrintListItem({ data, isActive, onClick }) {
-    const { expandedPrintData, progressMessage, printerData } = usePrintParser(data);
+    const { expandedPrintData, progressMessage, printerData } =
+        usePrintParser(data);
 
     return (
         <Card

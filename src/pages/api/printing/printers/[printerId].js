@@ -1,6 +1,6 @@
-import clientPromise from '@/lib/mongodb';
-
 import { ObjectId } from 'mongodb';
+
+import clientPromise from '@/lib/mongodb';
 
 export default async function handler(req, res) {
     const mongoClient = await clientPromise;
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
         delete body._id;
 
-        console.log(body)
+        console.log(body);
 
         const data = await mongoClient
             .db('printing')

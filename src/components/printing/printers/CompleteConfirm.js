@@ -1,16 +1,16 @@
 import {
     AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogOverlay,
-    AlertDialogContent,
-    AlertDialogBody,
-    AlertDialogFooter,
     Button
 } from '@chakra-ui/react';
 
 export default function CompleteConfirm({ isOpen, onClose, confirm }) {
     return (
-        <AlertDialog isOpen motionPreset='slideInBottom'>
+        <AlertDialog isOpen motionPreset="slideInBottom">
             <AlertDialogOverlay />
             <AlertDialogContent>
                 <AlertDialogHeader>Confirm print removal</AlertDialogHeader>

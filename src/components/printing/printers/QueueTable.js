@@ -1,27 +1,30 @@
 import { useContext, useMemo } from 'react';
+import { FaPencilAlt, FaPlay } from 'react-icons/fa';
+
 import {
+    Badge,
     Box,
     Button,
     ButtonGroup,
-    Badge,
     IconButton,
     Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
     TableContainer,
+    Tbody,
+    Td,
+    Th,
+    Thead,
     Tooltip,
+    Tr,
     useToast
 } from '@chakra-ui/react';
-import { FaPlay, FaPencilAlt } from 'react-icons/fa';
+
+import PrintingContext from '@/contexts/printing/PrintingContext';
+
+import usePrintUpdate from '@/hooks/usePrintUpdate';
+import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
-import usePrintUpdate from '@/hooks/usePrintUpdate';
-import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 import getStateColor from '@/util/getStateColor';
 
 export default function QueueTable({ selectedPrinterData, activePrint }) {
@@ -31,11 +34,14 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     const { queue } = useContext(PrintingContext);
 
     const printerQueue = useMemo(() => {
-        return queue.filter((print) => print.printer === selectedPrinterData?.id && !print.completed);
+        return queue.filter(
+            (print) =>
+                print.printer === selectedPrinterData?.id && !print.completed
+        );
     }, [selectedPrinterData, queue]);
 
     const canQueue = useMemo(() => {
-        return !activePrint?.printing
+        return !activePrint?.printing;
     }, [activePrint]);
 
     function startPrint(printData) {

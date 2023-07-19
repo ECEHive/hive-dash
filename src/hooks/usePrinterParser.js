@@ -1,7 +1,8 @@
-import { useMemo, useContext } from 'react';
-import dayjs from '@/lib/time';
+import { useContext, useMemo } from 'react';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
+
+import dayjs from '@/lib/time';
 
 export default function usePrinterParser(printer) {
     const { queue } = useContext(PrintingContext);
@@ -21,8 +22,9 @@ export default function usePrinterParser(printer) {
         return {
             ...printer,
             state: state,
-            queueLength: queue.filter((print) => print.printer === printer.id && !print.completed)
-                .length
+            queueLength: queue.filter(
+                (print) => print.printer === printer.id && !print.completed
+            ).length
         };
     }, [printer, currentPrintData, queue]);
 

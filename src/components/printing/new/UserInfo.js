@@ -1,15 +1,16 @@
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import {
-    Heading,
-    VStack,
-    HStack,
     FormControl,
     FormLabel,
+    HStack,
+    Heading,
     Input,
     InputGroup,
-    InputRightAddon
+    InputRightAddon,
+    VStack
 } from '@chakra-ui/react';
-import { CUIAutoComplete } from 'chakra-ui-autocomplete';
+
 import {
     AutoComplete,
     AutoCompleteInput,
@@ -34,9 +35,13 @@ export default function UserInfo({ set, data, setNext }) {
         },
         [set]
     );
-    
+
     function makeEmail() {
-        if (data.user.email === '' && data.user.firstname !== '' && data.user.lastname !== '') {
+        if (
+            data.user.email === '' &&
+            data.user.firstname !== '' &&
+            data.user.lastname !== ''
+        ) {
             update(
                 'email',
                 `${data.user.firstname[0].toLowerCase()}${data.user.lastname.toLowerCase()}`

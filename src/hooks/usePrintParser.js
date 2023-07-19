@@ -1,8 +1,9 @@
-import { useMemo, useContext } from 'react';
-import dayjs from '@/lib/time';
+import { useContext, useMemo } from 'react';
+import { BsCheck, BsPencilFill, BsPlayFill, BsStopFill } from 'react-icons/bs';
+import { FaPencilAlt } from 'react-icons/fa';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
-import usePrintProgress from './usePrintProgress';
+import { Avatar, useColorModeValue } from '@chakra-ui/react';
+
 import {
     AddIcon,
     CheckCircleIcon,
@@ -11,9 +12,12 @@ import {
     WarningIcon,
     WarningTwoIcon
 } from '@chakra-ui/icons';
-import { FaPencilAlt } from 'react-icons/fa';
-import { BsCheck, BsPencilFill, BsPlayFill, BsStopFill } from 'react-icons/bs';
-import { Avatar, useColorModeValue } from '@chakra-ui/react';
+
+import PrintingContext from '@/contexts/printing/PrintingContext';
+
+import dayjs from '@/lib/time';
+
+import usePrintProgress from './usePrintProgress';
 
 export default function usePrintParser(print) {
     const eventIcons = {

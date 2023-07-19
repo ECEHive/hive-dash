@@ -1,11 +1,12 @@
-import { Box, HStack, VStack, Heading, Text } from '@chakra-ui/react';
+import { useEffect, useMemo } from 'react';
+
+import { Box, HStack, Heading, Text, VStack } from '@chakra-ui/react';
+
 import { CheckCircleIcon, InfoIcon } from '@chakra-ui/icons';
 
 import dayjs from '@/lib/time';
-import { useMemo, useEffect } from 'react';
 
 export default function TimelineEvent({ topEnd, bottomEnd, event }) {
-
     return (
         <Box w="100%" h="auto">
             <HStack w="100%" h="100%">
@@ -27,11 +28,7 @@ export default function TimelineEvent({ topEnd, bottomEnd, event }) {
                     />
                 </VStack>
                 <VStack align="start" spacing={1} p={3}>
-                    <Heading
-                        fontFamily="body"
-                        size="md"
-                        fontWeight="medium"
-                    >
+                    <Heading fontFamily="body" size="md" fontWeight="medium">
                         {event.type}
                     </Heading>
                     <Text fontSize="sm" color="gray.400">

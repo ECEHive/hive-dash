@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
+
 import {
+    Button,
     Flex,
     HStack,
-    Button,
-    Image,
-    useColorModeValue,
-    Spacer,
     IconButton,
-    useColorMode
+    Image,
+    Spacer,
+    useColorMode,
+    useColorModeValue
 } from '@chakra-ui/react';
+
 import { MoonIcon, SettingsIcon, SunIcon } from '@chakra-ui/icons';
-import NextLink from 'next/link';
+
 import NextImage from 'next/image';
+import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import logoDark from '@/assets/logo_dark.png';
