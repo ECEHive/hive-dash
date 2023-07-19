@@ -28,22 +28,28 @@ import PrintListItem from './PrintListItem';
 export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
     const { printers, printerTypes, queue } = useContext(PrintingContext);
 
-    const [searchEmail, setSearchEmail] = useState('chartigan6');
     const [matchedPrints, setMatchedPrints] = useState([]);
 
-    const search = useCallback(() => {
-        setMatchedPrints(
-            queue
-                .filter((print) => print.endUser.email.includes(searchEmail))
-                .sort((a, b) => {
-                    return dayjs.utc(b.queuedAt) - dayjs.utc(a.queuedAt);
-                })
-        );
-    }, [queue, searchEmail]);
-
-    useEffect(() => {
-        search();
-    }, []);
+    const search = useCallback(
+        (searchEmail) => {
+            if (searchEmail.length > 0) {
+                setMatchedPrints(
+                    queue
+                        .filter((print) =>
+                            print.endUser.email.includes(searchEmail)
+                        )
+                        .sort((a, b) => {
+                            return (
+                                dayjs.utc(b.queuedAt) - dayjs.utc(a.queuedAt)
+                            );
+                        })
+                );
+            } else {
+                setMatchedPrints([]);
+            }
+        },
+        [queue]
+    );
 
     return (
         <>
@@ -62,11 +68,11 @@ export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
                         placeholder="GT email"
                         type="text"
                         //onBlur={search}
-                        value={searchEmail}
-                        onChange={(e) => setSearchEmail(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') search();
-                        }}
+                        // value={searchEmail}
+                        onChange={(e) => search(e.target.value)}
+                        // onKeyDown={(e) => {
+                        //     if (e.key === 'Enter') search();
+                        // }}
                     />
                     <InputRightAddon>@gatech.edu</InputRightAddon>
                 </InputGroup>
@@ -76,19 +82,26 @@ export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
                     alignItems="flex-start"
                     spacing={3}
                     overflow="auto"
+                    pt={3}
                 >
-                    {matchedPrints.map((print) => {
-                        return (
-                            <PrintListItem
-                                key={print._id}
-                                data={print}
-                                onClick={() => {
-                                    setSelectedPrintData(print);
-                                }}
-                                isActive={selectedPrintData?._id === print._id}
-                            />
-                        );
-                    })}
+                    {matchedPrints.length > 0 ? (
+                        matchedPrints.map((print) => {
+                            return (
+                                <PrintListItem
+                                    key={print._id}
+                                    data={print}
+                                    onClick={() => {
+                                        setSelectedPrintData(print);
+                                    }}
+                                    isActive={
+                                        selectedPrintData?._id === print._id
+                                    }
+                                />
+                            );
+                        })
+                    ) : (
+                        <Text fontSize="xl">Search for a print!</Text>
+                    )}
                 </VStack>
             </VStack>
         </>

@@ -62,7 +62,7 @@ export default function PrintListItem({ data, isActive, onClick }) {
 
                     <HStack w="100%" justifyContent="flex-start" spacing={5}>
                         {/* <CircularProgress value={100} color="green.200" size={8} /> */}
-                        <VStack alignItems="flex-start" spacing={0.5}>
+                        {/* <VStack alignItems="flex-start" spacing={0.5}>
                             <HStack spacing={1}>
                                 <Text fontSize="lg" fontWeight="semibold">
                                     {expandedPrintData.queuedAtFormatted}
@@ -71,7 +71,7 @@ export default function PrintListItem({ data, isActive, onClick }) {
                             <Text fontSize="sm" fontWeight="normal">
                                 queue date
                             </Text>
-                        </VStack>
+                        </VStack> */}
                         <VStack alignItems="flex-start" spacing={0.5}>
                             <HStack spacing={1}>
                                 <Text fontSize="lg" fontWeight="semibold">
