@@ -94,7 +94,12 @@ export default function PrinterCard({ data }) {
                                                 textOverflow="ellipsis"
                                                 overflow="hidden"
                                             >
-                                                {expandedPrintData.trayName}
+                                                <Link
+                                                    as={NextLink}
+                                                    href={`/printing/find/${expandedPrintData._id}`}
+                                                >
+                                                    {expandedPrintData.trayName}
+                                                </Link>
                                             </Text>
                                         </Tooltip>
                                         <Spacer />
