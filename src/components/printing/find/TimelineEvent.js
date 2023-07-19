@@ -6,10 +6,6 @@ import { useMemo, useEffect } from 'react';
 
 export default function TimelineEvent({ topEnd, bottomEnd, event }) {
 
-    useEffect(() => {
-        console.log(event)
-    }, [event])
-
     return (
         <Box w="100%" h="auto">
             <HStack w="100%" h="100%">
@@ -19,6 +15,7 @@ export default function TimelineEvent({ topEnd, bottomEnd, event }) {
                         bgColor="gray.400"
                         h="50%"
                         visibility={topEnd ? 'hidden' : 'visible'}
+                        borderBottomRadius={10}
                     />
                     {event.icon}
                     <Box
@@ -26,6 +23,7 @@ export default function TimelineEvent({ topEnd, bottomEnd, event }) {
                         bgColor="gray.400"
                         h="50%"
                         visibility={bottomEnd ? 'hidden' : 'visible'}
+                        borderTopRadius={10}
                     />
                 </VStack>
                 <VStack align="start" spacing={1} p={3}>

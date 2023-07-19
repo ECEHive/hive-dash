@@ -10,6 +10,8 @@ export default function getStateColor(state) {
             return 'red';
         case 'queued':
             return 'orange';
+        case 'completed':
+            return 'green';
         case 'failed':
             return 'red';
     }

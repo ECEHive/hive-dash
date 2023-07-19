@@ -1,4 +1,4 @@
-import { useState, useContext, useMemo, createContext } from 'react';
+import { useState, useContext, useMemo, useEffect } from 'react';
 import {
     Box,
     Button,
@@ -32,6 +32,7 @@ import {
 } from '@chakra-ui/react';
 import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import { FaPlay, FaWrench, FaPencilAlt } from 'react-icons/fa';
+import {useRouter} from 'next/router';
 
 import dayjs from '@/lib/time';
 import usePrintUpdate from '@/hooks/usePrintUpdate';
@@ -48,6 +49,8 @@ import usePrintParser from '@/hooks/usePrintParser';
 import CompleteConfirm from '@/components/printing/printers/CompleteConfirm';
 
 export default function Printers(props) {
+    const router = useRouter()
+
     const { printers, queue, printerTypes } = useContext(PrintingContext);
 
     const printUpdater = usePrintUpdate();
@@ -59,6 +62,17 @@ export default function Printers(props) {
             (print) => print._id === selectedPrinterData?.currentTray
         );
     }, [queue, selectedPrinterData]);
+
+    useEffect(() => {
+        if (!selectedPrinterData) {
+            if (router.query.slug) {
+                let data = printers.find(
+                    (printer) => printer.id === router.query.slug[0]
+                );
+                setSelectedPrinterData(data);
+            }
+        }
+    }, [router.query, selectedPrinterData, printers]);
 
     function cancelPrint(printData) {
         let data = {

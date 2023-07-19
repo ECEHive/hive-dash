@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function PrintListItem({ data, isActive, onClick }) {
-    const { expandedPrintData, progressMessage } = usePrintParser(data);
+    const { expandedPrintData, progressMessage, printerData } = usePrintParser(data);
 
     return (
         <Card
@@ -67,6 +67,16 @@ export default function PrintListItem({ data, isActive, onClick }) {
                             </HStack>
                             <Text fontSize="sm" fontWeight="normal">
                                 queue date
+                            </Text>
+                        </VStack>
+                        <VStack alignItems="flex-start" spacing={0.5}>
+                            <HStack spacing={1}>
+                                <Text fontSize="lg" fontWeight="semibold">
+                                    {printerData.displayName}
+                                </Text>
+                            </HStack>
+                            <Text fontSize="sm" fontWeight="normal">
+                                printer
                             </Text>
                         </VStack>
                     </HStack>

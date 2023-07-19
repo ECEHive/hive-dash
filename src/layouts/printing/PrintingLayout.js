@@ -21,13 +21,20 @@ export default function PrimaryLayout({ children }) {
     const [printerTypes, setPrinterTypes] = useState([]);
 
     const refreshData = useCallback(() => {
-        console.log('REFRESHING DATA')
+        console.log('REFRESHING DATA');
         fetch('/api/printing/printerTypes', {
             method: 'GET'
         })
             .then((res) => res.json())
             .then((data) => {
-                setPrinterTypes(data);
+                setPrinterTypes((old) => {
+                    if (JSON.stringify(old) !== JSON.stringify(data)) {
+                        console.log('updated printer types');
+                        return data;
+                    } else {
+                        return old;
+                    }
+                });
             })
             .catch((err) => {
                 toast({
@@ -43,7 +50,14 @@ export default function PrimaryLayout({ children }) {
         })
             .then((res) => res.json())
             .then((data) => {
-                setPrinters(data);
+                setPrinters((old) => {
+                    if (JSON.stringify(old) !== JSON.stringify(data)) {
+                        console.log('updated printers');
+                        return data;
+                    } else {
+                        return old;
+                    }
+                });
             })
             .catch((err) => {
                 toast({
@@ -59,7 +73,14 @@ export default function PrimaryLayout({ children }) {
         })
             .then((res) => res.json())
             .then((data) => {
-                setQueue(data);
+                setQueue((old) => {
+                    if (JSON.stringify(old) !== JSON.stringify(data)) {
+                        console.log('updated queue');
+                        return data;
+                    } else {
+                        return old;
+                    }
+                });
             })
             .catch((err) => {
                 toast({
@@ -75,16 +96,18 @@ export default function PrimaryLayout({ children }) {
         refreshData();
         const int = setInterval(() => {
             refreshData();
-        }, 2000)
+        }, 2000);
 
         return () => {
             clearInterval(int);
-        }
+        };
     }, [refreshData]);
 
     return (
         <>
-            <PrintingContext.Provider value={{ queue, printers, printerTypes, refreshData }}>
+            <PrintingContext.Provider
+                value={{ queue, printers, printerTypes, refreshData }}
+            >
                 <Box w="100vw" h="100vh" pos="fixed">
                     <TopBar />
                     <PrintingNavigation />

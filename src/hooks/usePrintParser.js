@@ -17,10 +17,10 @@ import { Avatar, useColorModeValue } from '@chakra-ui/react';
 
 export default function usePrintParser(print) {
     const eventIcons = {
-        queued: <BsPencilFill fontSize={10}/>,
-        completed: <BsCheck fontSize={22}/>,
-        failed: <BsStopFill fontSize={16}/>,
-        printing: <BsPlayFill fontSize={16}/>
+        queued: <BsPencilFill fontSize={10} />,
+        completed: <BsCheck fontSize={22} />,
+        failed: <BsStopFill fontSize={16} />,
+        printing: <BsPlayFill fontSize={16} />
     };
 
     const eventColors = {
@@ -28,7 +28,7 @@ export default function usePrintParser(print) {
         completed: useColorModeValue('green.600', 'green.300'),
         failed: useColorModeValue('red.600', 'red.300'),
         printing: useColorModeValue('green.600', 'green.300')
-    }
+    };
 
     const { printers, printerTypes } = useContext(PrintingContext);
 
@@ -53,7 +53,13 @@ export default function usePrintParser(print) {
                         .utc(event.timestamp)
                         .local()
                         .format('MM/DD/YYYY h:mm A'),
-                    icon: <Avatar size="xs" icon={eventIcons[event.type]} bgColor={eventColors[event.type]} />
+                    icon: (
+                        <Avatar
+                            size="xs"
+                            icon={eventIcons[event.type]}
+                            bgColor={eventColors[event.type]}
+                        />
+                    )
                 };
             }),
             failed: print.events[0].type === 'failed',

@@ -1,3 +1,4 @@
+import { useState, useEffect, useContext, useMemo } from 'react';
 import {
     Box,
     HStack,
@@ -27,11 +28,28 @@ import Layout from '@/layouts/printing/PrintingLayout';
 import PrintPreview from '@/components/printing/PrintPreview';
 import TimelineEvent from '@/components/printing/find/TimelineEvent';
 import PrintList from '@/components/printing/find/PrintList';
-import { useState } from 'react';
 import Timeline from '@/components/printing/find/Timeline';
+import usePrintParser from '@/hooks/usePrintParser';
+import PrintAlert from '@/components/printing/find/PrintAlert';
+import { useRouter } from 'next/router';
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function FindPrint(props) {
+    const { queue } = useContext(PrintingContext);
+    const router = useRouter();
+
     const [selectedPrintData, setSelectedPrintData] = useState(null);
+
+    useEffect(() => {
+        if (!selectedPrintData) {
+            if (router.query.slug) {
+                let data = queue.find(
+                    (print) => print._id === router.query.slug[0]
+                );
+                setSelectedPrintData(data);
+            }
+        }
+    }, [router.query, selectedPrintData, queue]);
 
     const editBgColor = useColorModeValue('gray.200', 'gray.600');
 
@@ -66,30 +84,27 @@ export default function FindPrint(props) {
                                 spacing={3}
                                 overflow="auto"
                             >
-                                {/* <Alert
-                                    status="warning"
-                                    borderRadius={5}
-                                    h="100%"
-                                >
-                                    <AlertIcon />
-                                    <AlertDescription h="auto">
-                                        This print uses QSR supports, which we
-                                        dissolve for you. Expect it to be ready
-                                        a day later than the print completion
-                                        date.
-                                    </AlertDescription>
-                                </Alert> */}
+                                <PrintAlert print={selectedPrintData} />
 
                                 <PrintPreview print={selectedPrintData} />
 
                                 {/* timeline */}
-                                <HStack w="100%" h="auto" flexGrow={1} spacing={3} overflow="hidden">
+                                <HStack
+                                    w="100%"
+                                    h="auto"
+                                    flexGrow={1}
+                                    spacing={3}
+                                    overflow="hidden"
+                                >
                                     <Timeline print={selectedPrintData} />
-                                    
-                                    <Card w="100%" h="100%" variant="filled" bgColor={editBgColor}>
-                                        <CardBody>
-                                            haiii
-                                        </CardBody>
+
+                                    <Card
+                                        w="100%"
+                                        h="100%"
+                                        variant="filled"
+                                        bgColor={editBgColor}
+                                    >
+                                        <CardBody>haiii</CardBody>
                                     </Card>
                                 </HStack>
                             </VStack>

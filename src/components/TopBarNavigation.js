@@ -23,7 +23,9 @@ export default function TopBarNavigation(props) {
     const pathname = usePathname();
 
     useEffect(() => {
-        setPathSection(pathname.split('/')[1]);
+        if (pathname) {
+            setPathSection(pathname.split('/')[1]);
+        }
     }, [pathname]);
 
     return (
