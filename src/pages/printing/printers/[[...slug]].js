@@ -51,6 +51,7 @@ import TopLayout from '@/layouts/printing/PrintingLayout';
 import PrintPreview from '@/components/printing/PrintPreview';
 import CompleteConfirm from '@/components/printing/printers/CompleteConfirm';
 import InfoCard from '@/components/printing/printers/InfoCard';
+import PrinterInfo from '@/components/printing/printers/PrinterInfo';
 import PrinterList from '@/components/printing/printers/PrinterList';
 import QueueTable from '@/components/printing/printers/QueueTable';
 
@@ -63,12 +64,6 @@ export default function Printers(props) {
 
     const [selectedPrinterData, setSelectedPrinterData] = useState(null);
 
-    const activePrint = useMemo(() => {
-        return queue.find(
-            (print) => print._id === selectedPrinterData?.currentTray
-        );
-    }, [queue, selectedPrinterData]);
-
     useEffect(() => {
         if (!selectedPrinterData) {
             if (router.query.slug) {
@@ -80,36 +75,12 @@ export default function Printers(props) {
         }
     }, [router.query, selectedPrinterData, printers]);
 
-    function cancelPrint(printData) {
-        let data = {
-            ...printData,
-            printing: false,
-            events: [
-                {
-                    type: 'failed',
-                    timestamp: dayjs.utc()
-                },
-                ...printData.events
-            ]
-        };
-        printUpdater(printData._id, data);
-    }
-
-    function completePrint(printData) {
-        let data = {
-            ...printData,
-            printing: false,
-            completed: true,
-            events: [
-                {
-                    type: 'completed',
-                    timestamp: dayjs.utc()
-                },
-                ...printData.events
-            ]
-        };
-        printUpdater(printData._id, data);
-    }
+    useEffect(() => {
+        setSelectedPrinterData((prev) => {
+            if (!prev) return null;
+            return printers.find((printer) => printer.id === prev.id);
+        });
+    }, [printers]);
 
     return (
         <>
@@ -127,78 +98,11 @@ export default function Printers(props) {
                         setSelectedPrinter={setSelectedPrinterData}
                     />
 
-                    <Card
-                        h="100%"
-                        flexGrow={1}
-                        variant="filled"
-                        borderRadius={10}
-                    >
-                        <CardBody>
-                            <HStack w="100%" mb={4} alignItems="center">
-                                <Heading size="lg">
-                                    {selectedPrinterData?.displayName}
-                                </Heading>
-                                <Spacer />
-                                <IconButton
-                                    icon={<FaWrench />}
-                                    colorScheme="orange"
-                                    isDisabled
-                                />
-                            </HStack>
-                            <VStack
-                                alignItems="flex-start"
-                                h="auto"
-                                w="100%"
-                                spacing={4}
-                                overflow="auto"
-                            >
-                                {/* current print */}
-                                {activePrint && (
-                                    <PrintPreview
-                                        print={activePrint}
-                                        actions={
-                                            activePrint.printing && (
-                                                <ButtonGroup
-                                                    isAttached
-                                                    variant="outline"
-                                                    size="md"
-                                                >
-                                                    <Button
-                                                        colorScheme="red"
-                                                        leftIcon={<CloseIcon />}
-                                                        onClick={() =>
-                                                            cancelPrint(
-                                                                activePrint
-                                                            )
-                                                        }
-                                                    >
-                                                        Failed
-                                                    </Button>
-                                                    <Button
-                                                        colorScheme="green"
-                                                        leftIcon={<CheckIcon />}
-                                                        onClick={() =>
-                                                            completePrint(
-                                                                activePrint
-                                                            )
-                                                        }
-                                                    >
-                                                        Completed
-                                                    </Button>
-                                                </ButtonGroup>
-                                            )
-                                        }
-                                    />
-                                )}
-
-                                {/* queue */}
-                                <QueueTable
-                                    activePrint={activePrint}
-                                    selectedPrinterData={selectedPrinterData}
-                                />
-                            </VStack>
-                        </CardBody>
-                    </Card>
+                    {selectedPrinterData && (
+                        <PrinterInfo
+                            selectedPrinterData={selectedPrinterData}
+                        />
+                    )}
                 </HStack>
             </Box>
         </>

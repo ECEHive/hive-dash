@@ -1,32 +1,86 @@
 [
     {
-        "id": "ultimaker-1",
-        "displayName": "Ultimaker 1",
+        "id": "ultimaker-2",
+        "displayName": "Ultimaker 2",
         "type": "ultimaker",
         "enabled": true,
-        "status": {
-            "state": "idle",
-            "current_tray": null
-        },
         "maintenance": {
-            "notes": "",
-            "events": []
+          "notes": "",
+          "events": []
         },
-        "updatedAt": ""
-    },
-    {
-        "id": "left-stratasys",
-        "displayName": "Left Stratasys",
+        "updatedAt": "",
+        "currentTray": ""
+      },
+      {
+        "id": "ultimaker-3",
+        "displayName": "Ultimaker 3",
+        "type": "ultimaker",
+        "enabled": true,
+        "maintenance": {
+          "notes": "",
+          "events": []
+        },
+        "updatedAt": "",
+        "currentTray": ""
+      },
+      {
+        "id": "ultimaker-4",
+        "displayName": "Ultimaker 4",
+        "type": "ultimaker",
+        "enabled": true,
+        "maintenance": {
+          "notes": "",
+          "events": []
+        },
+        "updatedAt": "",
+        "currentTray": ""
+      },
+      {
+        "id": "center-stratasys",
+        "displayName": "Center Stratasys",
         "type": "stratasys",
         "enabled": true,
-        "status": {
-            "state": "idle",
-            "current_tray": null
-        },
         "maintenance": {
-            "notes": "",
-            "events": []
+          "notes": "",
+          "events": []
         },
-        "updatedAt": ""
-    }
+        "updatedAt": "",
+        "currentTray": ""
+      },
+      {
+        "id": "right-stratasys",
+        "displayName": "Right Stratasys",
+        "type": "stratasys",
+        "enabled": true,
+        "maintenance": {
+          "notes": "",
+          "events": []
+        },
+        "updatedAt": "",
+        "currentTray": ""
+      },
+      {
+        "id": "wealthyacouchi",
+        "displayName": "WealthyAcouchi",
+        "type": "formlabs",
+        "enabled": true,
+        "maintenance": {
+          "notes": "",
+          "events": []
+        },
+        "updatedAt": "",
+        "currentTray": ""
+      },
+      {
+        "id": "cloudypytilia",
+        "displayName": "Cloudy Pytilia",
+        "type": "formlabs",
+        "enabled": true,
+        "maintenance": {
+          "notes": "",
+          "events": []
+        },
+        "updatedAt": "",
+        "currentTray": ""
+      }
 ]

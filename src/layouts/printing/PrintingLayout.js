@@ -18,9 +18,9 @@ import PrintingNavigation from '@/components/printing/SidebarNavigation';
 export default function PrimaryLayout({ children }) {
     const toast = useToast();
 
-    const [queue, setQueue] = useState([]);
-    const [printers, setPrinters] = useState([]);
-    const [printerTypes, setPrinterTypes] = useState([]);
+    const [queue, setQueue] = useState(null);
+    const [printers, setPrinters] = useState(null);
+    const [printerTypes, setPrinterTypes] = useState(null);
 
     const refreshData = useCallback(() => {
         console.log('REFRESHING DATA');
@@ -129,7 +129,9 @@ export default function PrimaryLayout({ children }) {
                             3D Printing queues will be longer than expected leading up to the end of the semester.
                         </AlertDescription>
                     </Alert> */}
-                        {children}
+                        {queue && printers && printerTypes ? (
+                            <>{children}</>
+                        ) : null}
                     </Box>
                 </Box>
             </PrintingContext.Provider>

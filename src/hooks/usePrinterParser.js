@@ -15,7 +15,7 @@ export default function usePrinterParser(printer) {
         let state = 'idle';
         if (!printer.enabled) {
             state = 'down';
-        } else if (currentPrintData.printing) {
+        } else if (currentPrintData?.printing) {
             state = 'printing';
         }
 

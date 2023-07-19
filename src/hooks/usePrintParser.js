@@ -39,14 +39,17 @@ export default function usePrintParser(print) {
     const [progress, timeLeft, complete] = usePrintProgress(print);
 
     const printerData = useMemo(() => {
+        if (!print) return null;
         return printers.find((p) => p.id === print.printer);
     }, [print, printers]);
 
     const printerTypeData = useMemo(() => {
+        if (!printerData) return null;
         return printerTypes.find((t) => t.id === printerData.type);
     }, [printerData, printerTypes]);
 
     const expandedPrintData = useMemo(() => {
+        if (!print) return null;
         return {
             ...print,
             //sprinkle in some useful data so i dont have to make it again later
@@ -77,17 +80,19 @@ export default function usePrintParser(print) {
                 .utc(print.queuedAt)
                 .local()
                 .format('MM/DD/YYYY'),
-            materialSymbol: printerTypeData.materialUnits.symbol
+            materialSymbol: printerTypeData?.materialUnits.symbol
         };
     }, [print, printerTypeData]);
 
     const fixedProgress = useMemo(() => {
+        if (!expandedPrintData) return 0;
         return expandedPrintData.failed || expandedPrintData.completed
             ? 100
             : progress;
     }, [expandedPrintData, progress]);
 
     const progressColor = useMemo(() => {
+        if (!expandedPrintData) return 'gray';
         if (expandedPrintData.failed) {
             return 'red';
         } else if (print.completed) {
@@ -102,6 +107,7 @@ export default function usePrintParser(print) {
     }, [print, expandedPrintData, complete]);
 
     const progressMessage = useMemo(() => {
+        if (!expandedPrintData) return 'unknown';
         if (expandedPrintData.failed) {
             return 'failed';
         } else if (complete && !expandedPrintData.completed) {
@@ -110,6 +116,8 @@ export default function usePrintParser(print) {
             return 'completed';
         } else if (expandedPrintData.printing) {
             return `${timeLeft} left`;
+        } else if (expandedPrintData.latestEvent === 'queued') {
+            return 'queued';
         }
     }, [complete, expandedPrintData, timeLeft]);
 

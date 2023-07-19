@@ -8,12 +8,14 @@ export default function usePrintProgress(printData) {
     const [complete, setComplete] = useState(false);
 
     const startTime = useMemo(() => {
+        if (!printData) return null;
         return dayjs.utc(
             printData.events.find((e) => e.type === 'printing')?.timestamp
         );
     }, [printData]);
 
     const endTime = useMemo(() => {
+        if (!startTime) return null;
         let end = startTime.add(dayjs.duration(printData.estTime));
         return end;
     }, [printData, startTime]);
@@ -43,12 +45,17 @@ export default function usePrintProgress(printData) {
     }, [startTime, endTime]);
 
     useEffect(() => {
+        if (!printData) return;
         if (printData.printing) {
             update();
             const interval = setInterval(() => {
                 update();
             }, 1000);
             return () => clearInterval(interval);
+        } else {
+            setProgress(0);
+            setTimeLeft(0);
+            setComplete(false);
         }
     }, [update, printData]);
 

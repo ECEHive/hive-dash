@@ -94,7 +94,9 @@ export default function FindPrint(props) {
                                         variant="filled"
                                         bgColor={editBgColor}
                                     >
-                                        <CardBody>haiii</CardBody>
+                                        <CardBody>
+                                            idk what goes here yet
+                                        </CardBody>
                                     </Card>
                                 </HStack>
                             </VStack>

@@ -19,6 +19,10 @@ import PrinterCard from '@/components/printing/dashboard/PrinterItem';
 export default function Dashboard(props) {
     const { printers, queue } = useContext(PrintingContext);
 
+    useEffect(() => {
+        console.log(printers);
+    }, [printers]);
+
     return (
         <>
             <Box h="100%" w="100%" overflow="auto" p={5}>

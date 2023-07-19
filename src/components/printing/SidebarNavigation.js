@@ -3,7 +3,8 @@ import {
     AiFillDashboard,
     AiFillPrinter,
     AiOutlinePlus,
-    AiOutlineSearch
+    AiOutlineSearch,
+    AiOutlineTable
 } from 'react-icons/ai';
 
 import SidebarTemplate from '@/components/SidebarTemplate';
@@ -40,6 +41,12 @@ export default function Navigation(props) {
                 name: 'Find a print',
                 icon: <AiOutlineSearch />,
                 href: '/find'
+            },
+            {
+                type: 'button',
+                name: 'Print logs',
+                icon: <AiOutlineTable />,
+                href: '/logs'
             },
 
             {
