@@ -1,25 +1,10 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
 import {
-    Alert,
-    AlertDescription,
-    AlertIcon,
-    AlertTitle,
-    Badge,
     Box,
-    Button,
     Card,
     CardBody,
-    CircularProgress,
     HStack,
-    Heading,
-    Input,
-    InputGroup,
-    InputLeftElement,
-    InputRightAddon,
-    Spacer,
-    Text,
-    Tooltip,
     VStack,
     useColorModeValue
 } from '@chakra-ui/react';
@@ -38,7 +23,6 @@ import PrintPreview from '@/components/printing/PrintPreview';
 import PrintAlert from '@/components/printing/find/PrintAlert';
 import PrintList from '@/components/printing/find/PrintList';
 import Timeline from '@/components/printing/find/Timeline';
-import TimelineEvent from '@/components/printing/find/TimelineEvent';
 
 export default function FindPrint(props) {
     const { queue } = useContext(PrintingContext);
