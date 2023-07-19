@@ -1,8 +1,8 @@
 import { useContext, useMemo } from 'react';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
-
 import dayjs from '@/lib/time';
+
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function usePrinterParser(printer) {
     const { queue } = useContext(PrintingContext);

@@ -13,9 +13,9 @@ import {
     WarningTwoIcon
 } from '@chakra-ui/icons';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
-
 import dayjs from '@/lib/time';
+
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintProgress from './usePrintProgress';
 

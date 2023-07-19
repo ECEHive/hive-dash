@@ -40,9 +40,9 @@ import {
 
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
-
 import dayjs from '@/lib/time';
+
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import Layout from '@/layouts/printing/PrintingLayout';
 

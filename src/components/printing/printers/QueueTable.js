@@ -18,12 +18,12 @@ import {
     useToast
 } from '@chakra-ui/react';
 
+import dayjs from '@/lib/time';
+
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
-
-import dayjs from '@/lib/time';
 
 import getStateColor from '@/util/getStateColor';
 
