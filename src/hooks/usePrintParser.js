@@ -36,6 +36,7 @@ export default function usePrintParser(print) {
 
     const { printers, printerTypes } = useContext(PrintingContext);
 
+    // MOVE PROGRESS TRACKING TO ITS OWN SEPARATE THING TO REDUCE OVERHEAD
     const [progress, timeLeft, complete] = usePrintProgress(print);
 
     const printerData = useMemo(() => {

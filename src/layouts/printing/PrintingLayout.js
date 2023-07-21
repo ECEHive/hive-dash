@@ -15,7 +15,7 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 import TopBar from '@/components/TopBarNavigation';
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
 
-export default function PrimaryLayout({ children }) {
+export default function PrintingLayout({ children }) {
     const toast = useToast();
 
     const [queue, setQueue] = useState(null);
