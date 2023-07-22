@@ -2,7 +2,7 @@ import { Box, Card, CardBody, Heading, VStack } from '@chakra-ui/react';
 
 export default function CardTemplate({ children, title }) {
     return (
-        <Card key="stratasyses" variant="filled" borderRadius={10} h="100%">
+        <Card key="stratasyses" variant="filled" borderRadius={10} h="auto">
             <CardBody h="100%">
                 <VStack alignItems="flex-start" h="100%" w="100%" spacing={4}>
                     {title && (

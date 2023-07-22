@@ -23,13 +23,25 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import PrintingLayout from '@/layouts/printing/PrintingLayout';
 
+import LogItem from '@/components/printing/logs/LogItem';
+
 export default function PrintLogs(props) {
     const { queue } = useContext(PrintingContext);
+
+    const sortedQueue = queue.sort((a, b) => {
+        return new Date(b.queuedAt) - new Date(a.queuedAt);
+    });
 
     return (
         <>
             <Box w="100%" h="100%" p={5}>
-                <VStack w="100%" spacing={5} align="start">
+                <VStack
+                    w="100%"
+                    h="100%"
+                    spacing={5}
+                    align="start"
+                    overflow="hidden"
+                >
                     <HStack w="auto">
                         <InputGroup>
                             <InputLeftElement>
@@ -38,8 +50,8 @@ export default function PrintLogs(props) {
                             <Input placeholder="Search for a print" />
                         </InputGroup>
                     </HStack>
-                    <TableContainer w="100%">
-                        <Table variant="simple" size="sm">
+                    <TableContainer w="100%" h="auto" overflowY="auto">
+                        <Table variant="simple" size="md" overflow="auto">
                             <Thead>
                                 <Tr>
                                     <Th>Queue date</Th>
@@ -51,20 +63,14 @@ export default function PrintLogs(props) {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Tr>
-                                    <Td>9/23/2023 11:52 am</Td>
-                                    <Td>
-                                        <Badge
-                                            variant="subtle"
-                                            colorScheme="green"
-                                        >
-                                            printing
-                                        </Badge>
-                                    </Td>
-                                    <Td>Test print</Td>
-                                    <Td>Left Stratasys</Td>
-                                    <Td>1:30</Td>
-                                </Tr>
+                                {sortedQueue.map((print) => {
+                                    return (
+                                        <LogItem
+                                            key={print.id}
+                                            printData={print}
+                                        />
+                                    );
+                                })}
                             </Tbody>
                         </Table>
                     </TableContainer>

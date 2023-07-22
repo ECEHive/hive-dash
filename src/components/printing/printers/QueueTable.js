@@ -27,6 +27,8 @@ import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
 import getStateColor from '@/util/getStateColor';
 
+import QueueTableItem from './QueueTableItem';
+
 export default function QueueTable({ selectedPrinterData, activePrint }) {
     const printUpdater = usePrintUpdate();
     const printerUpdater = usePrinterUpdate(true);
@@ -81,64 +83,13 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                     </Thead>
                     <Tbody>
                         {printerQueue.map((print) => {
-                            let queueDate = dayjs
-                                .utc(print.queuedAt)
-                                .local()
-                                .format('MM/DD/YYYY');
-
-                            let fullQueueDate = dayjs
-                                .utc(print.queuedAt)
-                                .local()
-                                .format('MM/DD/YYYY HH:mm A');
-
-                            let estTime = dayjs
-                                .duration(print.estTime)
-                                .format('HH:mm');
                             return (
-                                <Tr key={print._id}>
-                                    <Tooltip
-                                        label={fullQueueDate}
-                                        placement="bottom-start"
-                                    >
-                                        <Td>{queueDate}</Td>
-                                    </Tooltip>
-                                    <Td>
-                                        <Badge
-                                            variant="subtle"
-                                            colorScheme={getStateColor(
-                                                print.events[0].type
-                                            )}
-                                        >
-                                            {print.events[0].type}
-                                        </Badge>
-                                    </Td>
-                                    <Td
-                                        overflow="hidden"
-                                        whiteSpace="nowarp"
-                                        textOverflow="ellipsis"
-                                    >
-                                        {print.trayName}
-                                    </Td>
-                                    <Td>{estTime}</Td>
-                                    <Td>
-                                        <ButtonGroup size="sm" isAttached>
-                                            <IconButton
-                                                icon={<FaPlay />}
-                                                colorScheme="green"
-                                                variant="outline"
-                                                isDisabled={!canQueue}
-                                                onClick={() =>
-                                                    startPrint(print)
-                                                }
-                                            />
-                                            <IconButton
-                                                icon={<FaPencilAlt />}
-                                                colorScheme="orange"
-                                                variant="outline"
-                                            />
-                                        </ButtonGroup>
-                                    </Td>
-                                </Tr>
+                                <QueueTableItem
+                                    key={print._id}
+                                    printData={print}
+                                    startPrint={startPrint}
+                                    canQueue={canQueue}
+                                />
                             );
                         })}
                     </Tbody>

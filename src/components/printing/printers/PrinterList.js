@@ -48,7 +48,7 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
     return (
         <>
             <VStack
-                w="400px"
+                w="auto"
                 h="100%"
                 spacing={3}
                 alignItems="flex-start"

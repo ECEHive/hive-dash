@@ -36,7 +36,7 @@ export default function usePrintParser(print) {
 
     const { printers, printerTypes } = useContext(PrintingContext);
 
-    // MOVE PROGRESS TRACKING TO ITS OWN SEPARATE THING TO REDUCE OVERHEAD
+    // maybe? MOVE PROGRESS TRACKING TO ITS OWN SEPARATE THING TO REDUCE OVERHEAD
     const [progress, timeLeft, complete] = usePrintProgress(print);
 
     const printerData = useMemo(() => {
@@ -102,6 +102,8 @@ export default function usePrintParser(print) {
             return 'yellow';
         } else if (print.printing) {
             return 'blue';
+        } else if (expandedPrintData.latestEvent === 'queued') {
+            return 'orange';
         } else {
             return 'gray';
         }
@@ -112,7 +114,7 @@ export default function usePrintParser(print) {
         if (expandedPrintData.failed) {
             return 'failed';
         } else if (complete && !expandedPrintData.completed) {
-            return 'waiting for confirmation';
+            return 'waiting';
         } else if (expandedPrintData.completed) {
             return 'completed';
         } else if (expandedPrintData.printing) {

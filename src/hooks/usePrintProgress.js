@@ -30,14 +30,15 @@ export default function usePrintProgress(printData) {
                 .add({ minutes: 1 })
                 .format('HH:mm');
 
+            let progress = Math.floor((elapsed / total) * 100);
+
             if (remaining.asSeconds() <= 0) {
                 setComplete(true);
                 remainingFormatted = '00:00';
+                progress = 99;
             } else {
                 setComplete(false);
             }
-
-            const progress = Math.floor((elapsed / total) * 100);
 
             setProgress(progress);
             setTimeLeft(remainingFormatted);
