@@ -1,6 +1,7 @@
 import { FaWrench } from 'react-icons/fa';
 
 import {
+    Box,
     Button,
     ButtonGroup,
     Card,
@@ -69,8 +70,9 @@ export default function PrinterInfo({ selectedPrinterData }) {
     return (
         <>
             <MaintenanceModal open={isOpen} onClose={onClose} />
-            <Card h="100%" flexGrow={1} variant="filled" borderRadius={10}>
+            <Card h="100%" flexGrow={1} variant="outline" borderRadius={10}>
                 <CardBody>
+                    {/* <Box w="auto" h="100%" p={2}> */}
                     <HStack w="100%" mb={4} alignItems="center">
                         <Heading size="lg">
                             {selectedPrinterData.displayName}
@@ -130,6 +132,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                             selectedPrinterData={selectedPrinterData}
                         />
                     </VStack>
+                    {/* </Box> */}
                 </CardBody>
             </Card>
         </>

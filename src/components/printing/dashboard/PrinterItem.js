@@ -34,7 +34,7 @@ export default function PrinterCard({ data }) {
         <>
             {expandedPrinterData && (
                 <Card
-                    variant="filled"
+                    variant="outline"
                     borderRadius={10}
                     w="100%"
                     // bgColor={useColorModeValue('gray.200', 'gray.600')}
