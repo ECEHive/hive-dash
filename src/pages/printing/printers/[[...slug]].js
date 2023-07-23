@@ -49,12 +49,12 @@ import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 import TopLayout from '@/layouts/printing/PrintingLayout';
 
 import PrintPreview from '@/components/printing/PrintPreview';
+import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import CompleteConfirm from '@/components/printing/printers/CompleteConfirm';
 import InfoCard from '@/components/printing/printers/InfoCard';
 import PrinterInfo from '@/components/printing/printers/PrinterInfo';
 import PrinterList from '@/components/printing/printers/PrinterList';
 import QueueTable from '@/components/printing/printers/QueueTable';
-import MaintenanceModal from '@/components/printing/printers/maintenance/MaintenanceModal';
 
 export default function Printers(props) {
     const router = useRouter();

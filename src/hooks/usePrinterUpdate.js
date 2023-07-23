@@ -9,8 +9,8 @@ export default function usePrinterUpdate(silent = false) {
 
     const { refreshData } = useContext(PrintingContext);
 
-    function update(printId, data) {
-        fetch(`/api/printing/printers/${printId}`, {
+    function update(printerId, data) {
+        fetch(`/api/printing/printers/${printerId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

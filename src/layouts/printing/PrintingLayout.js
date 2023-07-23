@@ -12,6 +12,8 @@ import {
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
+import useFocus from '@/hooks/useFocus';
+
 import TopBar from '@/components/TopBarNavigation';
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
 
@@ -22,7 +24,10 @@ export default function PrintingLayout({ children }) {
     const [printers, setPrinters] = useState(null);
     const [printerTypes, setPrinterTypes] = useState(null);
 
+    const focus = useFocus();
+
     const refreshData = useCallback(() => {
+        if (!focus) return;
         console.log('REFRESHING DATA');
         fetch('/api/printing/printerTypes', {
             method: 'GET'
@@ -92,7 +97,7 @@ export default function PrintingLayout({ children }) {
                     duration: 5000
                 });
             });
-    }, [toast]);
+    }, [toast, focus]);
 
     useEffect(() => {
         refreshData();

@@ -1,6 +1,9 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
 import {
+    Alert,
+    AlertDescription,
+    AlertIcon,
     Box,
     Card,
     CardBody,
@@ -21,7 +24,6 @@ import usePrintParser from '@/hooks/usePrintParser';
 import Layout from '@/layouts/printing/PrintingLayout';
 
 import PrintPreview from '@/components/printing/PrintPreview';
-import PrintAlert from '@/components/printing/find/PrintAlert';
 import PrintList from '@/components/printing/find/PrintList';
 import Timeline from '@/components/printing/find/Timeline';
 
@@ -30,6 +32,7 @@ export default function FindPrint(props) {
     const router = useRouter();
 
     const [selectedPrintData, setSelectedPrintData] = useState(null);
+    const { printerData } = usePrintParser(selectedPrintData);
 
     useEffect(() => {
         if (!selectedPrintData) {
@@ -61,7 +64,7 @@ export default function FindPrint(props) {
                 <Card
                     h="100%"
                     flexGrow={1}
-                    variant="filled"
+                    variant="outline"
                     borderRadius={10}
                     overflow="hidden"
                 >
@@ -75,7 +78,23 @@ export default function FindPrint(props) {
                                 spacing={3}
                                 overflow="auto"
                             >
-                                <PrintAlert print={selectedPrintData} />
+                                {printerData.type === 'stratasys' && (
+                                    <Box w="100%" h="auto">
+                                        <Alert
+                                            status="warning"
+                                            borderRadius={5}
+                                        >
+                                            <AlertIcon />
+                                            <AlertDescription>
+                                                This print uses QSR supports,
+                                                which we will remove for you.
+                                                Expect it to be ready one
+                                                business day later than the
+                                                print completion date.
+                                            </AlertDescription>
+                                        </Alert>
+                                    </Box>
+                                )}
 
                                 <PrintPreview print={selectedPrintData} />
 

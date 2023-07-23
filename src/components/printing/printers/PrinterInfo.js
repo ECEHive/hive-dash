@@ -1,6 +1,11 @@
 import { FaWrench } from 'react-icons/fa';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 import {
+    Alert,
+    AlertDescription,
+    AlertIcon,
+    AlertTitle,
     Box,
     Button,
     ButtonGroup,
@@ -10,11 +15,14 @@ import {
     Heading,
     IconButton,
     Spacer,
+    Text,
     VStack,
     useDisclosure
 } from '@chakra-ui/react';
 
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
+
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 
 import dayjs from '@/lib/time';
 
@@ -25,7 +33,7 @@ import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 import PrintPreview from '@/components/printing/PrintPreview';
 import QueueTable from '@/components/printing/printers/QueueTable';
 
-import MaintenanceModal from './maintenance/MaintenanceModal';
+import MaintenanceModal from '../maintenance/MaintenanceModal';
 
 export default function PrinterInfo({ selectedPrinterData }) {
     const printUpdater = usePrintUpdate();
@@ -69,7 +77,11 @@ export default function PrinterInfo({ selectedPrinterData }) {
 
     return (
         <>
-            <MaintenanceModal open={isOpen} onClose={onClose} />
+            <MaintenanceModal
+                open={isOpen}
+                onClose={onClose}
+                printerData={selectedPrinterData}
+            />
             <Card h="100%" flexGrow={1} variant="outline" borderRadius={10}>
                 <CardBody>
                     {/* <Box w="auto" h="100%" p={2}> */}
@@ -91,6 +103,20 @@ export default function PrinterInfo({ selectedPrinterData }) {
                         spacing={4}
                         overflow="auto"
                     >
+                        {!selectedPrinterData.enabled && (
+                            <Box w="100%" h="auto">
+                                <Alert status="error" borderRadius={5}>
+                                    <AlertIcon />
+                                    <HStack w="100%">
+                                        <AlertTitle>
+                                            This printer is down.
+                                        </AlertTitle>
+                                        <Spacer />
+                                        <Button size="sm">Read more</Button>
+                                    </HStack>
+                                </Alert>
+                            </Box>
+                        )}
                         {/* current print */}
                         {activePrint && (
                             <PrintPreview
