@@ -54,6 +54,7 @@ import InfoCard from '@/components/printing/printers/InfoCard';
 import PrinterInfo from '@/components/printing/printers/PrinterInfo';
 import PrinterList from '@/components/printing/printers/PrinterList';
 import QueueTable from '@/components/printing/printers/QueueTable';
+import MaintenanceModal from '@/components/printing/printers/maintenance/MaintenanceModal';
 
 export default function Printers(props) {
     const router = useRouter();

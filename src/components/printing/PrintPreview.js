@@ -27,8 +27,9 @@ export default function PrintPreview({ actions, print }) {
         <Card
             w="100%"
             h="auto"
-            variant="filled"
-            bgColor={useColorModeValue('gray.200', 'gray.600')}
+            variant="outline"
+            background="transparent"
+            //bgColor={useColorModeValue('gray.200', 'gray.600')}
         >
             <CardBody>
                 <HStack w="100%" spacing={5}>

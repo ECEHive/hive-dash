@@ -103,7 +103,7 @@ export default function usePrintParser(print) {
         } else if (print.printing) {
             return 'blue';
         } else if (expandedPrintData.latestEvent === 'queued') {
-            return 'orange';
+            return 'gray';
         } else {
             return 'gray';
         }

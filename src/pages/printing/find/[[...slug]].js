@@ -5,6 +5,7 @@ import {
     Card,
     CardBody,
     HStack,
+    Text,
     VStack,
     useColorModeValue
 } from '@chakra-ui/react';
@@ -88,16 +89,16 @@ export default function FindPrint(props) {
                                 >
                                     <Timeline print={selectedPrintData} />
 
-                                    <Card
-                                        w="100%"
-                                        h="100%"
-                                        variant="filled"
-                                        bgColor={editBgColor}
-                                    >
-                                        <CardBody>
-                                            idk what goes here yet
-                                        </CardBody>
-                                    </Card>
+                                    <Box w="50%" h="100%">
+                                        <VStack
+                                            w="100%"
+                                            h="100%"
+                                            align="flex-start"
+                                            justify="flex-start"
+                                        >
+                                            <Text>something goes here</Text>
+                                        </VStack>
+                                    </Box>
                                 </HStack>
                             </VStack>
                         )}
