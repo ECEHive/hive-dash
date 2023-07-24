@@ -74,9 +74,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                 <Table variant="simple" size="sm">
                     <Thead>
                         <Tr>
-                            <Th>Queue date</Th>
-                            <Th>Status</Th>
-                            <Th>Print name</Th>
+                            <Th>Print info</Th>
                             <Th>Est. time</Th>
                             <Th>Actions</Th>
                         </Tr>

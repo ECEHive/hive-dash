@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 import {
     Badge,
@@ -8,15 +8,17 @@ import {
     CircularProgress,
     HStack,
     Heading,
+    IconButton,
     Input,
     InputGroup,
     InputLeftElement,
     Spacer,
     Text,
-    VStack
+    VStack,
+    VisuallyHidden
 } from '@chakra-ui/react';
 
-import { SearchIcon } from '@chakra-ui/icons';
+import { ChevronRightIcon, SearchIcon } from '@chakra-ui/icons';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
@@ -25,30 +27,32 @@ import PrinterListItem from './PrinterListItem';
 export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
     const { printers, printerTypes, queue } = useContext(PrintingContext);
 
-    //const [searchTerm, setSearchTerm] = useState('');
-    const [matchedPrinters, setMatchedPrinters] = useState(printers);
+    const [searchTerm, setSearchTerm] = useState('');
 
-    const search = useCallback(
-        (searchTerm) => {
-            if (searchTerm.length > 0) {
-                setMatchedPrinters(
-                    printers.filter((printer) =>
-                        printer.displayName
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase())
-                    )
-                );
-            } else {
-                setMatchedPrinters(printers);
-            }
-        },
-        [printers]
-    );
+    const matchedPrinters = useMemo(() => {
+        if (searchTerm.length > 0) {
+            return printers.filter(
+                (printer) =>
+                    printer.displayName
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) ||
+                    printerTypes
+                        .find((type) => type.id === printer.type)
+                        .displayName.toLowerCase()
+                        .includes(searchTerm.toLowerCase())
+            );
+        } else {
+            return printers;
+        }
+    }, [printers, printerTypes, searchTerm]);
 
     return (
         <>
+            {/* <VStack w="auto" h="100%" justify="center">
+                <IconButton icon={<ChevronRightIcon />} />
+            </VStack> */}
             <VStack
-                w="auto"
+                minW="300px"
                 h="100%"
                 spacing={3}
                 alignItems="flex-start"
@@ -63,7 +67,7 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                         type="text"
                         //value={searchTerm}
                         onChange={(e) => {
-                            search(e.target.value);
+                            setSearchTerm(e.target.value);
                         }}
                         // onKeyDown={(e) => {
                         //     if (e.key === 'Enter') search();

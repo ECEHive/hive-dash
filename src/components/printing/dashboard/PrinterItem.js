@@ -1,3 +1,5 @@
+import { BsSortNumericDown } from 'react-icons/bs';
+
 import {
     Badge,
     Card,
@@ -63,12 +65,12 @@ export default function PrinterCard({ data }) {
                                         {expandedPrinterData.state}
                                     </Badge>
                                 </HStack>
-                                <HStack spacing={1}>
-                                    {/* <HiMiniQueueList /> */}
-                                    <Text fontSize="md" fontWeight="semibold">
-                                        {expandedPrinterData.queueLength}
+                                <HStack spacing={2} color="gray.300">
+                                    <BsSortNumericDown size={15} />
+                                    <Text fontWeight="normal">
+                                        {expandedPrinterData?.queueLength} in
+                                        queue
                                     </Text>
-                                    <Text fontSize="sm">in queue</Text>
                                 </HStack>
                             </VStack>
                             <Spacer />

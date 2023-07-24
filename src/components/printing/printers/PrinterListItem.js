@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { BsPrinterFill, BsSortNumericDown } from 'react-icons/bs';
 
 import {
     Badge,
@@ -6,6 +7,7 @@ import {
     Card,
     CardBody,
     CircularProgress,
+    Divider,
     HStack,
     Heading,
     Spacer,
@@ -20,26 +22,30 @@ import usePrinterParser from '@/hooks/usePrinterParser';
 import getStateColor from '@/util/getStateColor';
 
 export default function PrinterListItem({ data, onClick, isActive, queue }) {
-    const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
+    const { expandedPrinterData, currentPrintData, printerTypeData } =
+        usePrinterParser(data);
     const { expandedPrintData, timeLeft, progress } =
         usePrintParser(currentPrintData);
 
-    const progressTrackColor = useColorModeValue('gray.200', 'gray.600');
+    const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
+    const cardColor = useColorModeValue('white.100', 'gray.700');
 
     return (
         <>
             {expandedPrinterData && (
                 <Card
-                    w="100%"
-                    minH="115px"
+                    w="400px"
+                    //minH="115px"
+                    h="auto"
                     as={Button}
                     p={0}
                     variant="filled"
                     onClick={onClick}
                     isActive={isActive}
+                    bgColor={cardColor}
                 >
                     <CardBody w="100%">
-                        <VStack spacing={0} alignItems="flex-start" h="100%">
+                        <VStack spacing={3} alignItems="flex-start" h="100%">
                             <HStack w="100%">
                                 <Heading
                                     size="md"
@@ -58,53 +64,63 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
                                 </Badge>
                             </HStack>
 
-                            <Spacer />
-
                             <HStack
                                 w="100%"
                                 justifyContent="flex-start"
                                 spacing={5}
+                                color="gray.300"
                             >
-                                {/* <CircularProgress value={100} color="green.200" size={8} /> */}
-                                {expandedPrinterData.state === 'printing' && (
-                                    <VStack
-                                        alignItems="flex-start"
-                                        spacing={0.5}
-                                    >
-                                        <HStack spacing={1.5}>
-                                            <CircularProgress
-                                                value={progress}
-                                                color="green.200"
-                                                size={5}
-                                                thickness={10}
-                                                trackColor={progressTrackColor}
-                                            />
+                                <HStack spacing={2}>
+                                    <BsPrinterFill size={15} />
+                                    <Text fontWeight="normal">
+                                        {printerTypeData?.displayName}
+                                    </Text>
+                                </HStack>
+                                <HStack spacing={2}>
+                                    <BsSortNumericDown size={15} />
+                                    <Text fontWeight="normal">
+                                        {expandedPrinterData?.queueLength} in
+                                        queue
+                                    </Text>
+                                </HStack>
+                            </HStack>
+
+                            {expandedPrinterData.state === 'printing' && (
+                                <>
+                                    <Divider />
+
+                                    <HStack spacing={1.5}>
+                                        <CircularProgress
+                                            value={progress}
+                                            color="green.200"
+                                            size={7}
+                                            thickness={8}
+                                            trackColor={progressTrackColor}
+                                        />
+                                        <VStack
+                                            align="start"
+                                            justify="start"
+                                            spacing={1}
+                                        >
                                             <Text
-                                                fontSize="lg"
-                                                fontWeight="semibold"
+                                                fontSize="md"
+                                                fontWeight="medium"
+                                                lineHeight={1}
+                                            >
+                                                {expandedPrintData.trayName}
+                                            </Text>
+                                            <Text
+                                                fontSize="xs"
+                                                fontWeight="normal"
+                                                color="gray.400"
                                                 lineHeight={1}
                                             >
                                                 {timeLeft}
                                             </Text>
-                                        </HStack>
-                                        <Text fontSize="sm" fontWeight="normal">
-                                            est. remaining
-                                        </Text>
-                                    </VStack>
-                                )}
-                                <VStack alignItems="flex-start" spacing={0.5}>
-                                    <Text fontSize="lg" fontWeight="semibold">
-                                        {expandedPrinterData.queueLength}
-                                    </Text>
-                                    <Text fontSize="sm" fontWeight="normal">
-                                        in queue
-                                    </Text>
-                                </VStack>
-                                {/* <VStack alignItems="flex-start" spacing={0}>
-                                                <Text fontSize="lg" fontWeight="semibold">ABS</Text>
-                                                <Text fontSize="xs" fontWeight="normal">material</Text>
-                                            </VStack> */}
-                            </HStack>
+                                        </VStack>
+                                    </HStack>
+                                </>
+                            )}
                         </VStack>
                     </CardBody>
                 </Card>

@@ -37,6 +37,8 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
                 position="fixed"
                 borderRight="1px solid"
                 borderColor={useColorModeValue('gray.200', 'gray.700')}
+                zIndex={500}
+                bgColor={useColorModeValue('white', 'gray.800')}
             >
                 <VStack p={2} h="100%">
                     {pageData &&

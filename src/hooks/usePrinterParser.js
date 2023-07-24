@@ -5,7 +5,12 @@ import dayjs from '@/lib/time';
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function usePrinterParser(printer) {
-    const { queue } = useContext(PrintingContext);
+    const { queue, printerTypes } = useContext(PrintingContext);
+
+    const printerTypeData = useMemo(() => {
+        console.log(printerTypes.find((type) => type.id === printer.type));
+        return printerTypes.find((type) => type.id === printer.type);
+    }, [printerTypes, printer]);
 
     const currentPrintData = useMemo(() => {
         return queue.find((print) => print._id === printer.currentTray);
@@ -30,6 +35,7 @@ export default function usePrinterParser(printer) {
 
     return {
         expandedPrinterData,
+        printerTypeData,
         currentPrintData
     };
 }
