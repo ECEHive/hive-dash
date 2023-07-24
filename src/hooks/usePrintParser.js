@@ -14,10 +14,10 @@ import usePrintProgress from './usePrintProgress';
 
 export default function usePrintParser(print) {
     const eventIcons = {
-        queued: <BsPencilFill fontSize={10} />,
-        completed: <BsCheck fontSize={22} />,
-        failed: <BsStopFill fontSize={16} />,
-        printing: <BsPlayFill fontSize={16} />
+        queued: <BsPencilFill fontSize={14} />,
+        completed: <BsCheck fontSize={26} />,
+        failed: <BsStopFill fontSize={22} />,
+        printing: <BsPlayFill fontSize={22} />
     };
 
     const eventColors = {
@@ -61,7 +61,8 @@ export default function usePrintParser(print) {
                     formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
                     icon: (
                         <Avatar
-                            size="xs"
+                            cursor="pointer"
+                            size="sm"
                             icon={eventIcons[event.type]}
                             bgColor={eventColors[event.type]}
                         />

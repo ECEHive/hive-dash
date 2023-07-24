@@ -25,6 +25,7 @@ import usePrintParser from '@/hooks/usePrintParser';
 import Layout from '@/layouts/printing/PrintingLayout';
 
 import PrintPreview from '@/components/printing/PrintPreview';
+import HorizontalTimeline from '@/components/printing/find/HorizontalTimeline';
 import PrintList from '@/components/printing/find/PrintList';
 import Timeline from '@/components/printing/find/Timeline';
 
@@ -106,15 +107,17 @@ export default function FindPrint(props) {
                                 <PrintPreview print={selectedPrintData} />
 
                                 {/* timeline */}
-                                <HStack
+                                <VStack
                                     w="100%"
                                     h="auto"
                                     flexGrow={1}
                                     spacing={3}
                                     overflow="auto"
+                                    align="start"
                                 >
-                                    <Timeline print={selectedPrintData} />
-                                </HStack>
+                                    {/* <Timeline print={selectedPrintData} /> */}
+                                    <HorizontalTimeline print={selectedPrintData} />
+                                </VStack>
                             </VStack>
                         ) : (
                             <VStack
