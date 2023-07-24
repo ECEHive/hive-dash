@@ -39,10 +39,7 @@ export default function PrintInfo({ data, set, setNext }) {
     );
 
     useEffect(() => {
-        if (
-            selectedPrinterTypeData.materials.length === 1 &&
-            data.print.material === ''
-        ) {
+        if (selectedPrinterTypeData.materials.length === 1 && data.print.material === '') {
             update('material', selectedPrinterTypeData.materials[0]);
         }
     }, [selectedPrinterTypeData, update, data]);
@@ -66,11 +63,20 @@ export default function PrintInfo({ data, set, setNext }) {
 
     return (
         <>
-            <Heading size="lg" fontFamily="body">
+            <Heading
+                size="lg"
+                fontFamily="body"
+            >
                 Print info
             </Heading>
 
-            <VStack w="100%" h="100%" spacing={3} overflow="auto" p={1}>
+            <VStack
+                w="100%"
+                h="100%"
+                spacing={3}
+                overflow="auto"
+                p={1}
+            >
                 <FormControl w="100%">
                     <FormLabel>Tray name</FormLabel>
                     <Input
@@ -81,9 +87,7 @@ export default function PrintInfo({ data, set, setNext }) {
                             update('name', e.target.value);
                         }}
                     />
-                    <FormHelperText>
-                        Format: (M/PI)_Firstname_Lastname_printdescription
-                    </FormHelperText>
+                    <FormHelperText>Format: (M/PI)_Firstname_Lastname_printdescription</FormHelperText>
                 </FormControl>
                 <FormControl>
                     <FormLabel>Estimated print time</FormLabel>
@@ -92,9 +96,7 @@ export default function PrintInfo({ data, set, setNext }) {
                         placeholder="9:00"
                         value={data.print.time}
                         onChange={(e) => {
-                            let r = (
-                                e.target.value.match(/[0-9.:]+/g) || []
-                            ).join('');
+                            let r = (e.target.value.match(/[0-9.:]+/g) || []).join('');
                             update('time', r);
                         }}
                     />
@@ -102,7 +104,11 @@ export default function PrintInfo({ data, set, setNext }) {
                 </FormControl>
                 <FormControl w="100%">
                     <FormLabel>Material</FormLabel>
-                    <ButtonGroup w="100%" isAttached variant="outline">
+                    <ButtonGroup
+                        w="100%"
+                        isAttached
+                        variant="outline"
+                    >
                         {selectedPrinterTypeData.materials.map((material) => {
                             return (
                                 <Button
@@ -129,9 +135,7 @@ export default function PrintInfo({ data, set, setNext }) {
                                 update('materialUsage', e.target.value);
                             }}
                         />
-                        <InputRightAddon>
-                            {selectedPrinterTypeData.materialUnits.symbol}
-                        </InputRightAddon>
+                        <InputRightAddon>{selectedPrinterTypeData.materialUnits.symbol}</InputRightAddon>
                     </InputGroup>
                 </FormControl>
             </VStack>

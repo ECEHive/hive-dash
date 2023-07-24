@@ -36,15 +36,12 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     const { queue } = useContext(PrintingContext);
 
     const printerQueue = useMemo(() => {
-        return queue.filter(
-            (print) =>
-                print.printer === selectedPrinterData?.id && !print.completed
-        );
+        return queue.filter((print) => print.printer === selectedPrinterData?.id && !print.completed);
     }, [selectedPrinterData, queue]);
 
     const canQueue = useMemo(() => {
-        return !activePrint?.printing;
-    }, [activePrint]);
+        return !activePrint?.printing && selectedPrinterData?.enabled;
+    }, [activePrint, selectedPrinterData]);
 
     function startPrint(printData) {
         let newPrintData = {
@@ -69,9 +66,15 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     }
 
     return (
-        <Box w="100%" h="auto">
+        <Box
+            w="100%"
+            h="auto"
+        >
             <TableContainer maxW="100%">
-                <Table variant="simple" size="sm">
+                <Table
+                    variant="simple"
+                    size="sm"
+                >
                     <Thead>
                         <Tr>
                             <Th>Print info</Th>

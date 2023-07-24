@@ -25,10 +25,25 @@ export default function Dashboard(props) {
 
     return (
         <>
-            <Box h="100%" w="100%" overflow="auto" p={5}>
-                <SimpleGrid spacing={4} columns={3} w="100%" h="auto">
+            <Box
+                h="100%"
+                w="100%"
+                overflow="auto"
+                p={5}
+            >
+                <SimpleGrid
+                    spacing={4}
+                    columns={3}
+                    w="100%"
+                    h="auto"
+                >
                     {printers.map((printer) => {
-                        return <PrinterCard key={printer.id} data={printer} />;
+                        return (
+                            <PrinterCard
+                                key={printer.id}
+                                data={printer}
+                            />
+                        );
                     })}
                 </SimpleGrid>
             </Box>

@@ -19,7 +19,12 @@ export default function Timeline({ print }) {
                                 )}
                             >
                                 <CardBody w="100%" h="100%"> */}
-            <VStack w="100%" h="100%" spacing={0} overflow="auto">
+            <VStack
+                w="auto"
+                h="100%"
+                spacing={0}
+                overflow="auto"
+            >
                 {expandedPrintData.detailedEvents.map((event, i) => {
                     return (
                         <TimelineEvent

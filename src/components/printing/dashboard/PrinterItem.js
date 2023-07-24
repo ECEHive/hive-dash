@@ -23,14 +23,8 @@ import getStateColor from '@/util/getStateColor';
 
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
-    const {
-        expandedPrintData,
-        progress,
-        timeLeft,
-        progressColor,
-        progressMessage,
-        fixedProgress
-    } = usePrintParser(currentPrintData);
+    const { expandedPrintData, progress, timeLeft, progressColor, progressMessage, fixedProgress } =
+        usePrintParser(currentPrintData);
 
     return (
         <>
@@ -45,10 +39,20 @@ export default function PrinterCard({ data }) {
                     // h="115px"
                 >
                     <CardBody>
-                        <VStack spacing={2} alignItems="flex-start" h="100%">
-                            <VStack spacing={0.25} align="start">
+                        <VStack
+                            spacing={2}
+                            alignItems="flex-start"
+                            h="100%"
+                        >
+                            <VStack
+                                spacing={0.25}
+                                align="start"
+                            >
                                 <HStack w="100%">
-                                    <Heading size="md" fontWeight="medium">
+                                    <Heading
+                                        size="md"
+                                        fontWeight="medium"
+                                    >
                                         <Link
                                             as={NextLink}
                                             href={`/printing/printers/${data.id}`}
@@ -58,19 +62,17 @@ export default function PrinterCard({ data }) {
                                     </Heading>
                                     <Badge
                                         variant="subtle"
-                                        colorScheme={getStateColor(
-                                            expandedPrinterData.state
-                                        )}
+                                        colorScheme={getStateColor(expandedPrinterData.state)}
                                     >
                                         {expandedPrinterData.state}
                                     </Badge>
                                 </HStack>
-                                <HStack spacing={2} color="gray.300">
+                                <HStack
+                                    spacing={2}
+                                    color="gray.300"
+                                >
                                     <BsSortNumericDown size={15} />
-                                    <Text fontWeight="normal">
-                                        {expandedPrinterData?.queueLength} in
-                                        queue
-                                    </Text>
+                                    <Text fontWeight="normal">{expandedPrinterData?.queueLength} in queue</Text>
                                 </HStack>
                             </VStack>
                             <Spacer />
@@ -105,9 +107,7 @@ export default function PrinterCard({ data }) {
                                             </Text>
                                         </Tooltip>
                                         <Spacer />
-                                        <Badge variant="subtle">
-                                            {progressMessage}
-                                        </Badge>
+                                        <Badge variant="subtle">{progressMessage}</Badge>
                                     </HStack>
                                     <Progress
                                         value={fixedProgress}

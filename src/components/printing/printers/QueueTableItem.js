@@ -20,20 +20,29 @@ import {
 import usePrintParser from '@/hooks/usePrintParser';
 
 export default function QueueTableItem({ printData, startPrint, canQueue }) {
-    const { expandedPrintData, progressMessage, progressColor } =
-        usePrintParser(printData);
+    const { expandedPrintData, progressMessage, progressColor } = usePrintParser(printData);
 
     return (
         <Tr key={print._id}>
             <Td>
-                <VStack align="start" justify="start" spacing={1}>
+                <VStack
+                    align="start"
+                    justify="start"
+                    spacing={1}
+                >
                     <HStack>
                         <Text fontSize="md">{expandedPrintData.trayName}</Text>
-                        <Badge variant="subtle" colorScheme={progressColor}>
+                        <Badge
+                            variant="subtle"
+                            colorScheme={progressColor}
+                        >
                             {progressMessage}
                         </Badge>
                     </HStack>
-                    <Text fontSize="xs" color="gray.500">
+                    <Text
+                        fontSize="xs"
+                        color="gray.500"
+                    >
                         {expandedPrintData.queuedAtExtendedFormatted}
                     </Text>
                 </VStack>

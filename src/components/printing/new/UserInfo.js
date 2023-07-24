@@ -1,22 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import {
-    FormControl,
-    FormLabel,
-    HStack,
-    Heading,
-    Input,
-    InputGroup,
-    InputRightAddon,
-    VStack
-} from '@chakra-ui/react';
+import { FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightAddon, VStack } from '@chakra-ui/react';
 
-import {
-    AutoComplete,
-    AutoCompleteInput,
-    AutoCompleteItem,
-    AutoCompleteList
-} from '@choc-ui/chakra-autocomplete';
+import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from '@choc-ui/chakra-autocomplete';
 
 export default function UserInfo({ set, data, setNext }) {
     const PIList = useMemo(() => ['Colin Hartigan', 'Someone else'], []);
@@ -37,15 +23,8 @@ export default function UserInfo({ set, data, setNext }) {
     );
 
     function makeEmail() {
-        if (
-            data.user.email === '' &&
-            data.user.firstname !== '' &&
-            data.user.lastname !== ''
-        ) {
-            update(
-                'email',
-                `${data.user.firstname[0].toLowerCase()}${data.user.lastname.toLowerCase()}`
-            );
+        if (data.user.email === '' && data.user.firstname !== '' && data.user.lastname !== '') {
+            update('email', `${data.user.firstname[0].toLowerCase()}${data.user.lastname.toLowerCase()}`);
         }
     }
 
@@ -68,21 +47,31 @@ export default function UserInfo({ set, data, setNext }) {
 
     return (
         <>
-            <Heading size="lg" fontFamily="body">
+            <Heading
+                size="lg"
+                fontFamily="body"
+            >
                 End user info
             </Heading>
 
-            <VStack w="100%" h="100%" spacing={3} overflow="auto" p={1}>
-                <HStack spacing={5} w="100%">
+            <VStack
+                w="100%"
+                h="100%"
+                spacing={3}
+                overflow="auto"
+                p={1}
+            >
+                <HStack
+                    spacing={5}
+                    w="100%"
+                >
                     <FormControl>
                         <FormLabel>End user firstname</FormLabel>
                         <Input
                             type="text"
                             placeholder="George"
                             value={data.user.firstname}
-                            onChange={(e) =>
-                                update('firstname', e.target.value)
-                            }
+                            onChange={(e) => update('firstname', e.target.value)}
                         />
                     </FormControl>
                     <FormControl>

@@ -13,13 +13,10 @@ export default function TimeConfirm(props) {
         <AlertDialog isOpen>
             <AlertDialogOverlay>
                 <AlertDialogContent>
-                    <AlertDialogHeader>
-                        Confirm long print permission
-                    </AlertDialogHeader>
+                    <AlertDialogHeader>Confirm long print permission</AlertDialogHeader>
 
                     <AlertDialogBody>
-                        Have you confirmed with an MPI that this 9+ hour print
-                        is allowed?
+                        Have you confirmed with an MPI that this 9+ hour print is allowed?
                     </AlertDialogBody>
 
                     <AlertDialogFooter>

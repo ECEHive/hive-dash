@@ -22,10 +22,8 @@ import usePrinterParser from '@/hooks/usePrinterParser';
 import getStateColor from '@/util/getStateColor';
 
 export default function PrinterListItem({ data, onClick, isActive, queue }) {
-    const { expandedPrinterData, currentPrintData, printerTypeData } =
-        usePrinterParser(data);
-    const { expandedPrintData, timeLeft, progress } =
-        usePrintParser(currentPrintData);
+    const { expandedPrinterData, currentPrintData, printerTypeData } = usePrinterParser(data);
+    const { expandedPrintData, timeLeft, progress } = usePrintParser(currentPrintData);
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
     const cardColor = useColorModeValue('white.100', 'gray.700');
@@ -45,7 +43,11 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
                     bgColor={cardColor}
                 >
                     <CardBody w="100%">
-                        <VStack spacing={3} alignItems="flex-start" h="100%">
+                        <VStack
+                            spacing={3}
+                            alignItems="flex-start"
+                            h="100%"
+                        >
                             <HStack w="100%">
                                 <Heading
                                     size="md"
@@ -56,9 +58,7 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
                                 </Heading>
                                 <Badge
                                     variant="subtle"
-                                    colorScheme={getStateColor(
-                                        expandedPrinterData.state
-                                    )}
+                                    colorScheme={getStateColor(expandedPrinterData.state)}
                                 >
                                     {expandedPrinterData.state}
                                 </Badge>
@@ -70,18 +70,15 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
                                 spacing={5}
                                 color="gray.300"
                             >
-                                <HStack spacing={2}>
+                                {/* <HStack spacing={2}>
                                     <BsPrinterFill size={15} />
                                     <Text fontWeight="normal">
                                         {printerTypeData?.displayName}
                                     </Text>
-                                </HStack>
+                                </HStack> */}
                                 <HStack spacing={2}>
                                     <BsSortNumericDown size={15} />
-                                    <Text fontWeight="normal">
-                                        {expandedPrinterData?.queueLength} in
-                                        queue
-                                    </Text>
+                                    <Text fontWeight="normal">{expandedPrinterData?.queueLength} in queue</Text>
                                 </HStack>
                             </HStack>
 

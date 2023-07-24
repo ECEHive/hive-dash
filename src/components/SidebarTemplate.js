@@ -1,13 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import {
-    Button,
-    Divider,
-    Flex,
-    Spacer,
-    VStack,
-    useColorModeValue
-} from '@chakra-ui/react';
+import { Button, Divider, Flex, Spacer, VStack, useColorModeValue } from '@chakra-ui/react';
 
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -40,7 +33,10 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
                 zIndex={500}
                 bgColor={useColorModeValue('white', 'gray.800')}
             >
-                <VStack p={2} h="100%">
+                <VStack
+                    p={2}
+                    h="100%"
+                >
                     {pageData &&
                         pageData.map((element, index) => {
                             if (element.type === 'button') {
@@ -49,15 +45,10 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
                                         variant="ghost"
                                         w="100%"
                                         justifyContent="flex-start"
-                                        colorScheme={
-                                            element?.colorScheme || 'gray'
-                                        }
+                                        colorScheme={element?.colorScheme || 'gray'}
                                         as={NextLink}
                                         href={baseUrl + element.href}
-                                        isActive={
-                                            pathPage ===
-                                            element.href.replace('/', '')
-                                        }
+                                        isActive={pathPage === element.href.replace('/', '')}
                                         leftIcon={element.icon}
                                         key={element.name}
                                     >

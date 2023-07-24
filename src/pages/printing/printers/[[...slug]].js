@@ -68,9 +68,7 @@ export default function Printers(props) {
     useEffect(() => {
         if (!selectedPrinterData) {
             if (router.query.slug) {
-                let data = printers.find(
-                    (printer) => printer.id === router.query.slug[0]
-                );
+                let data = printers.find((printer) => printer.id === router.query.slug[0]);
                 setSelectedPrinterData(data);
             }
         }
@@ -86,7 +84,12 @@ export default function Printers(props) {
     return (
         <>
             {/* <CompleteConfirm /> */}
-            <Box w="100%" h="100%" overflow="auto" p={5}>
+            <Box
+                w="100%"
+                h="100%"
+                overflow="auto"
+                p={5}
+            >
                 <HStack
                     w="100%"
                     h="100%"
@@ -99,11 +102,9 @@ export default function Printers(props) {
                         setSelectedPrinter={setSelectedPrinterData}
                     />
 
-                    {selectedPrinterData && (
-                        <PrinterInfo
-                            selectedPrinterData={selectedPrinterData}
-                        />
-                    )}
+                    {/* {selectedPrinterData && ( */}
+                    <PrinterInfo selectedPrinterData={selectedPrinterData} />
+                    {/* )} */}
                 </HStack>
             </Box>
         </>

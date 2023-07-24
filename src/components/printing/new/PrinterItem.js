@@ -1,14 +1,4 @@
-import {
-    Badge,
-    Button,
-    Card,
-    CardBody,
-    HStack,
-    Heading,
-    Text,
-    VStack,
-    useColorModeValue
-} from '@chakra-ui/react';
+import { Badge, Button, Card, CardBody, HStack, Heading, Text, VStack, useColorModeValue } from '@chakra-ui/react';
 
 import usePrinterParser from '@/hooks/usePrinterParser';
 
@@ -50,15 +40,16 @@ export default function PrinterItem({ data, onClick, isActive }) {
                                 {expandedPrinterData.displayName}
                             </Heading>
                             <Badge
-                                colorScheme={getStateColor(
-                                    expandedPrinterData.state
-                                )}
+                                colorScheme={getStateColor(expandedPrinterData.state)}
                                 variant="subtle"
                             >
                                 {expandedPrinterData.state}
                             </Badge>
                         </HStack>
-                        <Text fontSize="md" fontWeight="normal">
+                        <Text
+                            fontSize="md"
+                            fontWeight="normal"
+                        >
                             {expandedPrinterData.queueLength} in queue
                         </Text>
                     </VStack>

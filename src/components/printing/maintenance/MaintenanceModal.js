@@ -63,12 +63,18 @@ export default function MaintenanceModal({ open, onClose, printerData }) {
         >
             <ModalOverlay />
             <ModalContent h="container.sm">
-                <ModalHeader>
-                    Maintenance - {printerData.displayName}
-                </ModalHeader>
+                <ModalHeader>Maintenance - {printerData.displayName}</ModalHeader>
                 <ModalBody h="100%">
-                    <HStack w="100%" h="100%" spacing={3}>
-                        <VStack w="50%" h="100%" spacing={3}>
+                    <HStack
+                        w="100%"
+                        h="100%"
+                        spacing={3}
+                    >
+                        <VStack
+                            w="50%"
+                            h="100%"
+                            spacing={3}
+                        >
                             <FormControl>
                                 <FormLabel>Printer enabled</FormLabel>
                                 <InputGroup>
@@ -84,10 +90,7 @@ export default function MaintenanceModal({ open, onClose, printerData }) {
                                         }}
                                     />
                                 </InputGroup>
-                                <FormHelperText>
-                                    Disable to prevent any new prints from being
-                                    queued
-                                </FormHelperText>
+                                <FormHelperText>Disable to prevent any new prints from being queued</FormHelperText>
                             </FormControl>
                             <FormControl
                                 flexGrow={1}
@@ -110,14 +113,13 @@ export default function MaintenanceModal({ open, onClose, printerData }) {
                                             })
                                         }
                                         placeholder="use some markdown!"
-                                        resize="vertical"
+                                        resize="none"
                                         flexGrow={1}
                                         h="full"
                                     />
                                 </InputGroup>
                                 <FormHelperText>
-                                    Description of the printer&apos;s current
-                                    status, i.e. &quot;the bed isn&apos;t
+                                    Description of the printer&apos;s current status, i.e. &quot;the bed isn&apos;t
                                     level&quot;. Markdown is supported.
                                 </FormHelperText>
                             </FormControl>
@@ -129,7 +131,10 @@ export default function MaintenanceModal({ open, onClose, printerData }) {
                             w="50%"
                             h="full"
                         >
-                            <CardBody h="100%">
+                            <CardBody
+                                h="100%"
+                                overflow="auto"
+                            >
                                 {data.maintenance.notes.length > 0 ? (
                                     <ReactMarkdown
                                         components={ChakraUIRenderer()}
@@ -144,9 +149,7 @@ export default function MaintenanceModal({ open, onClose, printerData }) {
                                         justifyContent="center"
                                         alignItems="center"
                                     >
-                                        <Text color="gray.400">
-                                            enter some notes
-                                        </Text>
+                                        <Text color="gray.400">enter some notes</Text>
                                     </VStack>
                                 )}
                             </CardBody>

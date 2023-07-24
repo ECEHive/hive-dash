@@ -15,12 +15,7 @@ export default async function handler(req, res) {
 
         res.status(200).json(data);
     } else if (req.method === 'GET') {
-        const data = await mongoClient
-            .db('printing')
-            .collection('print-log')
-            .find()
-            .sort({ queuedAt: 1 })
-            .toArray();
+        const data = await mongoClient.db('printing').collection('print-log').find().sort({ queuedAt: 1 }).toArray();
 
         //.find({ completed: false })
 

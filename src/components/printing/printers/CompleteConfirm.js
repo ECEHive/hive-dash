@@ -10,14 +10,16 @@ import {
 
 export default function CompleteConfirm({ isOpen, onClose, confirm }) {
     return (
-        <AlertDialog isOpen motionPreset="slideInBottom">
+        <AlertDialog
+            isOpen
+            motionPreset="slideInBottom"
+        >
             <AlertDialogOverlay />
             <AlertDialogContent>
                 <AlertDialogHeader>Confirm print removal</AlertDialogHeader>
 
                 <AlertDialogBody>
-                    Confirm the print has been removed from the tray and the
-                    printer is ready for the next print.
+                    Confirm the print has been removed from the tray and the printer is ready for the next print.
                 </AlertDialogBody>
 
                 <AlertDialogFooter gap={3}>

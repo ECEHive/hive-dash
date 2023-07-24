@@ -33,13 +33,11 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
         if (searchTerm.length > 0) {
             return printers.filter(
                 (printer) =>
-                    printer.displayName
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase()) ||
+                    printer.displayName.includes(searchTerm.toLowerCase()) ||
                     printerTypes
                         .find((type) => type.id === printer.type)
                         .displayName.toLowerCase()
-                        .includes(searchTerm.toLowerCase())
+                        .includes(searchTerm)
             );
         } else {
             return printers;
@@ -66,8 +64,9 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                         placeholder="Search for a printer"
                         type="text"
                         //value={searchTerm}
+                        value={searchTerm}
                         onChange={(e) => {
-                            setSearchTerm(e.target.value);
+                            setSearchTerm(e.target.value.toLowerCase());
                         }}
                         // onKeyDown={(e) => {
                         //     if (e.key === 'Enter') search();
@@ -84,14 +83,16 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                     {printerTypes.map((type) => {
                         return (
                             <>
-                                <Text fontSize="xl" fontWeight="bold" my={1}>
+                                <Text
+                                    fontSize="2xl"
+                                    fontWeight="bold"
+                                    my={1}
+                                >
                                     {type.displayName}
                                 </Text>
 
                                 {matchedPrinters
-                                    .filter(
-                                        (printer) => printer.type === type.id
-                                    )
+                                    .filter((printer) => printer.type === type.id)
                                     .map((printer) => {
                                         return (
                                             <PrinterListItem
@@ -101,10 +102,7 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                                                 onClick={() => {
                                                     setSelectedPrinter(printer);
                                                 }}
-                                                isActive={
-                                                    printer.id ===
-                                                    selectedPrinter?.id
-                                                }
+                                                isActive={printer.id === selectedPrinter?.id}
                                             />
                                         );
                                     })}

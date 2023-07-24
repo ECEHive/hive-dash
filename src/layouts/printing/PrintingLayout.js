@@ -1,14 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-    Alert,
-    AlertDescription,
-    AlertIcon,
-    AlertTitle,
-    Box,
-    Flex,
-    useToast
-} from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex, VStack, useToast } from '@chakra-ui/react';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
@@ -112,32 +104,42 @@ export default function PrintingLayout({ children }) {
 
     return (
         <>
-            <PrintingContext.Provider
-                value={{ queue, printers, printerTypes, refreshData }}
-            >
-                <Box w="100vw" h="100vh" pos="fixed">
+            <PrintingContext.Provider value={{ queue, printers, printerTypes, refreshData }}>
+                <Box
+                    w="100vw"
+                    h="100vh"
+                    pos="fixed"
+                >
                     <TopBar />
                     <PrintingNavigation />
-                    <Box
+                    <VStack
                         w="calc(100% - 260px)"
                         h="calc(100% - 80px)"
                         left="260px"
                         top="80px"
                         pos="relative"
+                        justify="start"
+                        align="start"
                     >
                         {/* <Alert status="error">
-                        <AlertIcon />
-                        <AlertTitle>
-                            End of semester
-                        </AlertTitle>
-                        <AlertDescription>
-                            3D Printing queues will be longer than expected leading up to the end of the semester.
-                        </AlertDescription>
-                    </Alert> */}
-                        {queue && printers && printerTypes ? (
-                            <>{children}</>
-                        ) : null}
-                    </Box>
+                            <AlertIcon />
+                            <Box>
+                                <AlertTitle>End of semester</AlertTitle>
+                                <AlertDescription>
+                                    3D Printing queues will be longer than
+                                    expected leading up to the end of the
+                                    semester.
+                                </AlertDescription>
+                            </Box>
+                        </Alert> */}
+                        <Box
+                            w="100%"
+                            h="100%"
+                            overflow="hidden"
+                        >
+                            {queue && printers && printerTypes ? <>{children}</> : null}
+                        </Box>
+                    </VStack>
                 </Box>
             </PrintingContext.Provider>
         </>

@@ -1,27 +1,10 @@
-import {
-    Badge,
-    Card,
-    CardBody,
-    HStack,
-    Progress,
-    Spacer,
-    Text,
-    VStack,
-    useColorModeValue
-} from '@chakra-ui/react';
+import { Badge, Card, CardBody, HStack, Progress, Spacer, Text, VStack, useColorModeValue } from '@chakra-ui/react';
 
 import usePrintParser from '@/hooks/usePrintParser';
 
 export default function PrintPreview({ actions, print }) {
-    const {
-        expandedPrintData,
-        progress,
-        timeLeft,
-        complete,
-        progressColor,
-        progressMessage,
-        fixedProgress
-    } = usePrintParser(print);
+    const { expandedPrintData, progress, timeLeft, complete, progressColor, progressMessage, fixedProgress } =
+        usePrintParser(print);
 
     return (
         <Card
@@ -32,9 +15,18 @@ export default function PrintPreview({ actions, print }) {
             //bgColor={useColorModeValue('gray.200', 'gray.600')}
         >
             <CardBody>
-                <HStack w="100%" spacing={5}>
-                    <VStack w="100%" spacing={4}>
-                        <VStack w="100%" spacing={2}>
+                <HStack
+                    w="100%"
+                    spacing={5}
+                >
+                    <VStack
+                        w="100%"
+                        spacing={4}
+                    >
+                        <VStack
+                            w="100%"
+                            spacing={2}
+                        >
                             <HStack w="100%">
                                 <VStack
                                     alignItems="flex-start"
@@ -49,12 +41,13 @@ export default function PrintPreview({ actions, print }) {
                                     >
                                         {expandedPrintData.trayName}
                                     </Text>
-                                    <Text fontSize="sm">
-                                        Queued by: {expandedPrintData.queuedBy}
-                                    </Text>
+                                    <Text fontSize="sm">Queued by: {expandedPrintData.queuedBy}</Text>
                                 </VStack>
                                 <Spacer />
-                                <Badge variant="subtle" alignSelf="flex-end">
+                                <Badge
+                                    variant="subtle"
+                                    alignSelf="flex-end"
+                                >
                                     {progressMessage}
                                 </Badge>
                             </HStack>
@@ -73,7 +66,10 @@ export default function PrintPreview({ actions, print }) {
                             w="100%"
                             spacing={6}
                         >
-                            <VStack alignItems="flex-start" spacing={0}>
+                            <VStack
+                                alignItems="flex-start"
+                                spacing={0}
+                            >
                                 <Text
                                     fontSize="3xl"
                                     fontWeight="semibold"
@@ -81,11 +77,17 @@ export default function PrintPreview({ actions, print }) {
                                 >
                                     {expandedPrintData.estTimeFormatted}
                                 </Text>
-                                <Text fontSize="md" fontWeight="normal">
+                                <Text
+                                    fontSize="md"
+                                    fontWeight="normal"
+                                >
                                     est. print time
                                 </Text>
                             </VStack>
-                            <VStack alignItems="flex-start" spacing={0}>
+                            <VStack
+                                alignItems="flex-start"
+                                spacing={0}
+                            >
                                 <HStack spacing={1}>
                                     <Text
                                         fontSize="3xl"
@@ -94,15 +96,24 @@ export default function PrintPreview({ actions, print }) {
                                     >
                                         {expandedPrintData.materialUsage}
                                     </Text>
-                                    <Text fontSize="sm" alignSelf="flex-end">
+                                    <Text
+                                        fontSize="sm"
+                                        alignSelf="flex-end"
+                                    >
                                         {expandedPrintData.materialSymbol}
                                     </Text>
                                 </HStack>
-                                <Text fontSize="md" fontWeight="normal">
+                                <Text
+                                    fontSize="md"
+                                    fontWeight="normal"
+                                >
                                     est. material
                                 </Text>
                             </VStack>
-                            <VStack alignItems="flex-start" spacing={0}>
+                            <VStack
+                                alignItems="flex-start"
+                                spacing={0}
+                            >
                                 <Text
                                     fontSize="3xl"
                                     fontWeight="semibold"
@@ -110,7 +121,10 @@ export default function PrintPreview({ actions, print }) {
                                 >
                                     {expandedPrintData.materialType}
                                 </Text>
-                                <Text fontSize="md" fontWeight="normal">
+                                <Text
+                                    fontSize="md"
+                                    fontWeight="normal"
+                                >
                                     material type
                                 </Text>
                             </VStack>

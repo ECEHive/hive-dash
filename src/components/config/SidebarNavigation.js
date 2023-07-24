@@ -1,11 +1,5 @@
 import { useMemo } from 'react';
-import {
-    AiFillDashboard,
-    AiFillPrinter,
-    AiFillSmile,
-    AiOutlinePlus,
-    AiOutlineSearch
-} from 'react-icons/ai';
+import { AiFillDashboard, AiFillPrinter, AiFillSmile, AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 
 import SidebarTemplate from '@/components/SidebarTemplate';
 
@@ -34,5 +28,10 @@ export default function Navigation(props) {
         []
     );
 
-    return <SidebarTemplate pageData={pages} baseUrl="/config" />;
+    return (
+        <SidebarTemplate
+            pageData={pages}
+            baseUrl="/config"
+        />
+    );
 }

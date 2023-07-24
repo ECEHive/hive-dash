@@ -167,8 +167,15 @@ export default function NewPrint(props) {
 
     return (
         <>
-            <Center w="100%" h="100%" p={5}>
-                <Box w="full" h="100%">
+            <Center
+                w="100%"
+                h="100%"
+                p={5}
+            >
+                <Box
+                    w="full"
+                    h="100%"
+                >
                     <VStack
                         h="100%"
                         w="100%"
@@ -194,9 +201,7 @@ export default function NewPrint(props) {
 
                                     <Box flexShrink={0}>
                                         <StepTitle>{step.title}</StepTitle>
-                                        <StepDescription>
-                                            {step.description}
-                                        </StepDescription>
+                                        <StepDescription>{step.description}</StepDescription>
                                     </Box>
 
                                     <StepSeparator />
@@ -265,13 +270,9 @@ export default function NewPrint(props) {
                                                 >
                                                     Print submitted
                                                 </AlertTitle>
+                                                <AlertDescription maxWidth="sm">Position in queue: 5</AlertDescription>
                                                 <AlertDescription maxWidth="sm">
-                                                    Position in queue: 5
-                                                </AlertDescription>
-                                                <AlertDescription maxWidth="sm">
-                                                    The end user can check the
-                                                    status of their print on
-                                                    this website
+                                                    The end user can check the status of their print on this website
                                                 </AlertDescription>
                                             </Alert>
                                         )}
@@ -281,22 +282,24 @@ export default function NewPrint(props) {
                         </VStack>
 
                         {/* forward/back control */}
-                        <HStack w="100%" h="auto">
-                            {activeStep !== 0 &&
-                                activeStep !== steps.length && (
-                                    <Button
-                                        leftIcon={<ArrowBackIcon />}
-                                        size="md"
-                                        variant="solid"
-                                        alignSelf="flex-end"
-                                        colorScheme="blue"
-                                        onClick={() => {
-                                            setActiveStep((prev) => prev - 1);
-                                        }}
-                                    >
-                                        Previous
-                                    </Button>
-                                )}
+                        <HStack
+                            w="100%"
+                            h="auto"
+                        >
+                            {activeStep !== 0 && activeStep !== steps.length && (
+                                <Button
+                                    leftIcon={<ArrowBackIcon />}
+                                    size="md"
+                                    variant="solid"
+                                    alignSelf="flex-end"
+                                    colorScheme="blue"
+                                    onClick={() => {
+                                        setActiveStep((prev) => prev - 1);
+                                    }}
+                                >
+                                    Previous
+                                </Button>
+                            )}
                             <Spacer />
                             {activeStep !== steps.length && (
                                 <Button

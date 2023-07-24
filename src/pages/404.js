@@ -4,7 +4,10 @@ import NextLink from 'next/link';
 
 export default function PageNotFound() {
     return (
-        <Box w="100%" h="100vh">
+        <Box
+            w="100%"
+            h="100vh"
+        >
             <VStack
                 w="100%"
                 h="100%"
@@ -12,7 +15,10 @@ export default function PageNotFound() {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Heading size="lg" fontWeight="semibold">
+                <Heading
+                    size="lg"
+                    fontWeight="semibold"
+                >
                     page not found :(
                 </Heading>
                 <Button

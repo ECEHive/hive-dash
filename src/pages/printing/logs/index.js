@@ -34,7 +34,11 @@ export default function PrintLogs(props) {
 
     return (
         <>
-            <Box w="100%" h="100%" p={5}>
+            <Box
+                w="100%"
+                h="100%"
+                p={5}
+            >
                 <VStack
                     w="100%"
                     h="100%"
@@ -50,15 +54,23 @@ export default function PrintLogs(props) {
                             <Input placeholder="Search for a print" />
                         </InputGroup>
                     </HStack>
-                    <TableContainer w="100%" h="auto" overflowY="auto">
-                        <Table variant="simple" size="md" overflow="auto">
+                    <TableContainer
+                        w="100%"
+                        h="auto"
+                        overflowY="auto"
+                    >
+                        <Table
+                            variant="simple"
+                            size="sm"
+                            overflow="auto"
+                        >
                             <Thead>
                                 <Tr>
-                                    <Th>Queue date</Th>
-                                    <Th>Status</Th>
-                                    <Th>Print name</Th>
+                                    <Th>Print info</Th>
                                     <Th>Printer</Th>
+                                    <Th>Status</Th>
                                     <Th>Est. time</Th>
+                                    <Th>Queued by</Th>
                                     {/* <Th>Queued by</Th> */}
                                 </Tr>
                             </Thead>

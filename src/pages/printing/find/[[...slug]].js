@@ -1,4 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
+import { MdTimeline } from 'react-icons/md';
 
 import {
     Alert,
@@ -37,9 +38,7 @@ export default function FindPrint(props) {
     useEffect(() => {
         if (!selectedPrintData) {
             if (router.query.slug) {
-                let data = queue.find(
-                    (print) => print._id === router.query.slug[0]
-                );
+                let data = queue.find((print) => print._id === router.query.slug[0]);
                 setSelectedPrintData(data);
             }
         }
@@ -48,7 +47,12 @@ export default function FindPrint(props) {
     const editBgColor = useColorModeValue('gray.200', 'gray.600');
 
     return (
-        <Box w="100%" h="100%" p={5} overflow="auto">
+        <Box
+            w="100%"
+            h="100%"
+            p={5}
+            overflow="auto"
+        >
             <HStack
                 w="100%"
                 h="100%"
@@ -68,8 +72,11 @@ export default function FindPrint(props) {
                     borderRadius={10}
                     overflow="hidden"
                 >
-                    <CardBody w="100%" h="100%">
-                        {selectedPrintData && (
+                    <CardBody
+                        w="100%"
+                        h="100%"
+                    >
+                        {selectedPrintData ? (
                             <VStack
                                 w="100%"
                                 h="100%"
@@ -79,18 +86,18 @@ export default function FindPrint(props) {
                                 overflow="auto"
                             >
                                 {printerData.type === 'stratasys' && (
-                                    <Box w="100%" h="auto">
+                                    <Box
+                                        w="100%"
+                                        h="auto"
+                                    >
                                         <Alert
                                             status="warning"
                                             borderRadius={5}
                                         >
                                             <AlertIcon />
                                             <AlertDescription>
-                                                This print uses QSR supports,
-                                                which we will remove for you.
-                                                Expect it to be ready one
-                                                business day later than the
-                                                print completion date.
+                                                This print uses QSR supports, which we will remove for you. Expect it to
+                                                be ready one business day later than the print completion date.
                                             </AlertDescription>
                                         </Alert>
                                     </Box>
@@ -104,21 +111,18 @@ export default function FindPrint(props) {
                                     h="auto"
                                     flexGrow={1}
                                     spacing={3}
-                                    overflow="hidden"
+                                    overflow="auto"
                                 >
                                     <Timeline print={selectedPrintData} />
-
-                                    <Box w="50%" h="100%">
-                                        <VStack
-                                            w="100%"
-                                            h="100%"
-                                            align="flex-start"
-                                            justify="flex-start"
-                                        >
-                                            <Text>something goes here</Text>
-                                        </VStack>
-                                    </Box>
                                 </HStack>
+                            </VStack>
+                        ) : (
+                            <VStack
+                                h="100%"
+                                w="100%"
+                                justify="center"
+                            >
+                                <Text color="gray.400">select a print</Text>
                             </VStack>
                         )}
                     </CardBody>

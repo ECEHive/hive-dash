@@ -1,14 +1,19 @@
+import { BsCalendarFill, BsPrinterFill } from 'react-icons/bs';
+
 import {
     Badge,
     Button,
     Card,
     CardBody,
+    CircularProgress,
+    Divider,
     HStack,
     Heading,
     Spacer,
     Text,
     Tooltip,
-    VStack
+    VStack,
+    useColorModeValue
 } from '@chakra-ui/react';
 
 import usePrintParser from '@/hooks/usePrintParser';
@@ -16,13 +21,14 @@ import usePrintParser from '@/hooks/usePrintParser';
 import getStateColor from '@/util/getStateColor';
 
 export default function PrintListItem({ data, isActive, onClick }) {
-    const { expandedPrintData, progressMessage, printerData } =
-        usePrintParser(data);
+    const { expandedPrintData, progressMessage, printerData, progress, timeLeft } = usePrintParser(data);
+
+    const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
 
     return (
         <Card
             w="100%"
-            minH="115px"
+            h="auto"
             as={Button}
             p={0}
             variant="filled"
@@ -30,59 +36,76 @@ export default function PrintListItem({ data, isActive, onClick }) {
             onClick={onClick}
         >
             <CardBody w="100%">
-                <VStack spacing={0} alignItems="flex-start" h="100%">
+                <VStack
+                    spacing={3}
+                    alignItems="flex-start"
+                    h="100%"
+                >
                     <HStack w="100%">
-                        <Tooltip
-                            label={expandedPrintData.trayName}
-                            placement="top"
-                        >
+                        <Tooltip label={expandedPrintData.trayName}>
                             <Heading
                                 size="md"
                                 fontWeight="medium"
                                 fontFamily="body"
                                 overflow="hidden"
-                                whiteSpace="nowrap"
                                 textOverflow="ellipsis"
+                                whiteSpace="nowrap"
                             >
                                 {expandedPrintData.trayName}
                             </Heading>
                         </Tooltip>
-                        <Spacer />
                         <Badge
                             variant="subtle"
-                            colorScheme={getStateColor(
-                                expandedPrintData.latestEvent
-                            )}
+                            colorScheme={getStateColor(expandedPrintData.latestEvent)}
                         >
                             {expandedPrintData.latestEvent}
                         </Badge>
                     </HStack>
 
-                    <Spacer />
-
-                    <HStack w="100%" justifyContent="flex-start" spacing={5}>
-                        {/* <CircularProgress value={100} color="green.200" size={8} /> */}
-                        {/* <VStack alignItems="flex-start" spacing={0.5}>
-                            <HStack spacing={1}>
-                                <Text fontSize="lg" fontWeight="semibold">
-                                    {expandedPrintData.queuedAtFormatted}
-                                </Text>
-                            </HStack>
-                            <Text fontSize="sm" fontWeight="normal">
-                                queue date
-                            </Text>
-                        </VStack> */}
-                        <VStack alignItems="flex-start" spacing={0.5}>
-                            <HStack spacing={1}>
-                                <Text fontSize="lg" fontWeight="semibold">
-                                    {printerData.displayName}
-                                </Text>
-                            </HStack>
-                            <Text fontSize="sm" fontWeight="normal">
-                                printer
-                            </Text>
-                        </VStack>
+                    <HStack
+                        w="100%"
+                        justifyContent="flex-start"
+                        spacing={5}
+                        color="gray.300"
+                    >
+                        <HStack spacing={2}>
+                            <BsPrinterFill size={15} />
+                            <Text fontWeight="normal">{printerData?.displayName}</Text>
+                        </HStack>
+                        <HStack spacing={2}>
+                            <BsCalendarFill size={15} />
+                            <Text fontWeight="normal">{expandedPrintData.queuedAtFormatted}</Text>
+                        </HStack>
                     </HStack>
+
+                    {expandedPrintData.printing && (
+                        <>
+                            <Divider />
+
+                            <HStack spacing={1.5}>
+                                <CircularProgress
+                                    value={progress}
+                                    color="green.200"
+                                    size={5}
+                                    thickness={8}
+                                    trackColor={progressTrackColor}
+                                />
+                                <VStack
+                                    align="start"
+                                    justify="start"
+                                    spacing={1}
+                                >
+                                    <Text
+                                        fontSize="lg"
+                                        fontWeight="medium"
+                                        lineHeight={1}
+                                    >
+                                        {timeLeft}
+                                    </Text>
+                                </VStack>
+                            </HStack>
+                        </>
+                    )}
                 </VStack>
             </CardBody>
         </Card>

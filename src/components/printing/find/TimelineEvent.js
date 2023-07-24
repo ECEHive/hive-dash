@@ -8,9 +8,33 @@ import dayjs from '@/lib/time';
 
 export default function TimelineEvent({ topEnd, bottomEnd, event }) {
     return (
-        <Box w="100%" h="auto">
-            <HStack w="100%" h="100%">
-                <VStack w="25px" h="100%" spacing={1}>
+        <Box
+            w="100%"
+            h="auto"
+        >
+            <HStack
+                w="100%"
+                h="100%"
+                spacing={3}
+            >
+                <HStack
+                    justify="center"
+                    w="90px"
+                >
+                    <Text
+                        fontSize="xs"
+                        color="gray.400"
+                    >
+                        {event.formattedTimestamp}
+                    </Text>
+                </HStack>
+
+                <VStack
+                    w="25px"
+                    //h={!topEnd && !bottomEnd ? '60px' : '40px'}
+                    h="60px"
+                    spacing={1}
+                >
                     <Box
                         w="2px"
                         bgColor="gray.400"
@@ -27,14 +51,19 @@ export default function TimelineEvent({ topEnd, bottomEnd, event }) {
                         borderTopRadius={10}
                     />
                 </VStack>
-                <VStack align="start" spacing={1} p={3}>
-                    <Heading fontFamily="body" size="md" fontWeight="medium">
-                        {event.type}
+
+                <HStack
+                    justify="start"
+                    w="160px"
+                >
+                    <Heading
+                        fontFamily="body"
+                        size="md"
+                        fontWeight="medium"
+                    >
+                        {event.description}
                     </Heading>
-                    <Text fontSize="sm" color="gray.400">
-                        {event.formattedTimestamp}
-                    </Text>
-                </VStack>
+                </HStack>
             </HStack>
         </Box>
     );

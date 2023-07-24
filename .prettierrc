@@ -1,6 +1,6 @@
 {
     "singleQuote": true,
-    // "printWidth": 80,
+    "printWidth": 120,
     "editor.formatOnSave": true,
     "proseWrap": "always",
     "tabWidth": 4,
@@ -10,6 +10,7 @@
     "bracketSpacing": true,
     "jsxBracketSameLine": false,
     "semi": true,
+    "singleAttributePerLine": true,
     "importOrder": [
         "^react",
         "^@chakra-ui/react",

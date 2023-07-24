@@ -9,22 +9,22 @@ export default function usePrinterUpdate(silent = false) {
 
     const { refreshData } = useContext(PrintingContext);
 
-    function update(printerId, data) {
+    function update(printerId, printerData) {
         return new Promise((resolve, reject) => {
             fetch(`/api/printing/printers/${printerId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(printerData)
             })
                 .then((res) => res.json())
                 .then((data) => {
                     refreshData();
                     if (!silent) {
                         toast({
-                            title: 'Success',
-                            description: 'Printer updated',
+                            title: `${printerData.displayName} updated`,
+                            //description: 'Printer updated',
                             status: 'success',
                             duration: 5000
                         });

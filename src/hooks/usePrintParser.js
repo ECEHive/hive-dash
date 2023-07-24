@@ -4,14 +4,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 
 import { Avatar, useColorModeValue } from '@chakra-ui/react';
 
-import {
-    AddIcon,
-    CheckCircleIcon,
-    CheckIcon,
-    DownloadIcon,
-    WarningIcon,
-    WarningTwoIcon
-} from '@chakra-ui/icons';
+import { AddIcon, CheckCircleIcon, CheckIcon, DownloadIcon, WarningIcon, WarningTwoIcon } from '@chakra-ui/icons';
 
 import dayjs from '@/lib/time';
 
@@ -32,6 +25,13 @@ export default function usePrintParser(print) {
         completed: useColorModeValue('green.600', 'green.300'),
         failed: useColorModeValue('red.600', 'red.300'),
         printing: useColorModeValue('green.600', 'green.300')
+    };
+
+    const eventNames = {
+        queued: 'Print queued',
+        completed: 'Print completed',
+        failed: 'Print failed',
+        printing: 'Print started'
     };
 
     const { printers, printerTypes } = useContext(PrintingContext);
@@ -57,10 +57,8 @@ export default function usePrintParser(print) {
             detailedEvents: print.events.map((event) => {
                 return {
                     ...event,
-                    formattedTimestamp: dayjs
-                        .utc(event.timestamp)
-                        .local()
-                        .format('MM/DD/YYYY h:mm A'),
+                    description: eventNames[event.type],
+                    formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
                     icon: (
                         <Avatar
                             size="xs"
@@ -73,23 +71,15 @@ export default function usePrintParser(print) {
             failed: print.events[0].type === 'failed',
             latestEvent: print.events[0].type,
             estTimeFormatted: dayjs.duration(print.estTime).format('HH:mm'),
-            queuedAtExtendedFormatted: dayjs
-                .utc(print.queuedAt)
-                .local()
-                .format('MM/DD/YYYY h:mm A'),
-            queuedAtFormatted: dayjs
-                .utc(print.queuedAt)
-                .local()
-                .format('MM/DD/YYYY'),
+            queuedAtExtendedFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY h:mm A'),
+            queuedAtFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY'),
             materialSymbol: printerTypeData?.materialUnits.symbol
         };
     }, [print, printerTypeData]);
 
     const fixedProgress = useMemo(() => {
         if (!expandedPrintData) return 0;
-        return expandedPrintData.failed || expandedPrintData.completed
-            ? 100
-            : progress;
+        return expandedPrintData.failed || expandedPrintData.completed ? 100 : progress;
     }, [expandedPrintData, progress]);
 
     const progressColor = useMemo(() => {

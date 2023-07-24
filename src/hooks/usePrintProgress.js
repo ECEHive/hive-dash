@@ -9,9 +9,7 @@ export default function usePrintProgress(printData) {
 
     const startTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(
-            printData.events.find((e) => e.type === 'printing')?.timestamp
-        );
+        return dayjs.utc(printData.events.find((e) => e.type === 'printing')?.timestamp);
     }, [printData]);
 
     const endTime = useMemo(() => {
@@ -26,9 +24,7 @@ export default function usePrintProgress(printData) {
             const total = endTime.diff(startTime);
             const elapsed = now.diff(startTime);
             const remaining = dayjs.duration(endTime.diff(now));
-            let remainingFormatted = remaining
-                .add({ minutes: 1 })
-                .format('HH:mm');
+            let remainingFormatted = remaining.add({ minutes: 1 }).format('HH:mm');
 
             let progress = Math.floor((elapsed / total) * 100);
 

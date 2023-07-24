@@ -10,7 +10,10 @@ export default function Home() {
                 <title>hive</title>
             </Head>
 
-            <Link as={NextLink} href={'/printing/dashboard'}>
+            <Link
+                as={NextLink}
+                href={'/printing/dashboard'}
+            >
                 dashboard
             </Link>
         </>

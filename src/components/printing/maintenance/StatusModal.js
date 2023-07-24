@@ -26,16 +26,25 @@ import {
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 
-export default function MaintenanceModal({ open, onClose }) {
+export default function MaintenanceModal({ open, onClose, printerData }) {
     return (
-        <Modal isOpen={open} onClose={onClose} isCentered>
+        <Modal
+            isOpen={open}
+            onClose={onClose}
+            isCentered
+            size="6xl"
+            scrollBehavior="inside"
+        >
             <ModalOverlay />
-            <ModalContent minW="500px">
-                <ModalHeader></ModalHeader>
+            <ModalContent h="container.sm">
+                <ModalHeader>Maintenance notes - {printerData.displayName}</ModalHeader>
                 <ModalBody>
                     <Box>
-                        <ReactMarkdown components={ChakraUIRenderer()} skipHtml>
-                            {md}
+                        <ReactMarkdown
+                            components={ChakraUIRenderer()}
+                            skipHtml
+                        >
+                            {printerData.maintenance.notes}
                         </ReactMarkdown>
                     </Box>
                 </ModalBody>

@@ -1,12 +1,4 @@
-import {
-    Button,
-    Card,
-    CardBody,
-    Heading,
-    Text,
-    VStack,
-    useColorModeValue
-} from '@chakra-ui/react';
+import { Button, Card, CardBody, Heading, Text, VStack, useColorModeValue } from '@chakra-ui/react';
 
 export default function PrinterType({ data, onClick, isActive }) {
     return (
@@ -33,10 +25,16 @@ export default function PrinterType({ data, onClick, isActive }) {
                         spacing={1}
                         alignItems="flex-start"
                     >
-                        <Heading size="md" fontWeight="medium">
+                        <Heading
+                            size="md"
+                            fontWeight="medium"
+                        >
                             {data.displayName}
                         </Heading>
-                        <Text fontSize="md" fontWeight="normal">
+                        <Text
+                            fontSize="md"
+                            fontWeight="normal"
+                        >
                             {data.description}
                         </Text>
                     </VStack>

@@ -22,7 +22,10 @@ export default function PrinterSelect({ set, data, setNext }) {
 
     return (
         <>
-            <Heading size="lg" fontFamily="body">
+            <Heading
+                size="lg"
+                fontFamily="body"
+            >
                 Printer
             </Heading>
 
@@ -77,10 +80,7 @@ export default function PrinterSelect({ set, data, setNext }) {
                                 return (
                                     <PrinterItem
                                         key={printer.id}
-                                        isActive={
-                                            data.printer.name ===
-                                            printer.displayName
-                                        }
+                                        isActive={data.printer.name === printer.displayName}
                                         data={printer}
                                         onClick={() => {
                                             set({
