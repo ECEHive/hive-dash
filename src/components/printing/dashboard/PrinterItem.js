@@ -47,6 +47,7 @@ export default function PrinterCard({ data }) {
                             <VStack
                                 spacing={0.25}
                                 align="start"
+                                w="full"
                             >
                                 <HStack w="100%">
                                     <Heading
@@ -60,6 +61,7 @@ export default function PrinterCard({ data }) {
                                             {expandedPrinterData.displayName}
                                         </Link>
                                     </Heading>
+                                    {/* <Spacer /> */}
                                     <Badge
                                         variant="subtle"
                                         colorScheme={getStateColor(expandedPrinterData.state)}
