@@ -56,7 +56,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
     return (
         <>
             <VStack
-                w="400px"
+                maxW="400px"
                 h="100%"
                 spacing={3}
                 alignItems="flex-start"

@@ -108,8 +108,8 @@ export default function Timeline({ print }) {
                                                     fontSize="xl"
                                                     fontWeight="medium"
                                                     whiteSpace="nowrap"
-                                                    ref={lastElement}
                                                     lineHeight={1}
+                                                    ref={lastElement}
                                                 >
                                                     {event.description}
                                                 </Text>
@@ -120,6 +120,11 @@ export default function Timeline({ print }) {
                                 </>
                             );
                         })}
+                        {/* <Box
+                            ref={lastElement}
+                            minW="40%"
+                            h="100%"
+                        /> */}
                     </HStack>
                 </CardBody>
             </Card>
