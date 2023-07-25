@@ -32,7 +32,7 @@ export default function PrinterListItem({ data, onClick, isActive, queue }) {
         <>
             {expandedPrinterData && (
                 <Card
-                    w="400px"
+                    w="100%"
                     //minH="115px"
                     h="auto"
                     as={Button}

@@ -101,7 +101,7 @@ export default function Timeline({ print }) {
                                             <ArrowForwardIcon fontSize="2xl" />
                                         ) : (
                                             <VStack
-                                                spacing={1}
+                                                spacing={0.5}
                                                 align="start"
                                             >
                                                 <Text
@@ -113,7 +113,12 @@ export default function Timeline({ print }) {
                                                 >
                                                     {event.description}
                                                 </Text>
-                                                <Text fontSize="xs">{event.formattedTimestamp}</Text>
+                                                <Text
+                                                    fontSize="xs"
+                                                    color="gray.400"
+                                                >
+                                                    {event.formattedTimestamp}
+                                                </Text>
                                             </VStack>
                                         )}
                                     </HStack>

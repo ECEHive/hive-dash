@@ -4,6 +4,7 @@ import { Box, ChakraProvider, ColorModeScript, useColorModeValue } from '@chakra
 
 import NextNProgress from 'nextjs-progressbar';
 
+import '@/util/global.css';
 import theme from '@/util/theme';
 
 function HiveDash({ Component, pageProps }) {

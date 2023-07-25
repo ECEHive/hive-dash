@@ -50,7 +50,7 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                 <IconButton icon={<ChevronRightIcon />} />
             </VStack> */}
             <VStack
-                minW="400px"
+                w="400px"
                 h="100%"
                 spacing={3}
                 alignItems="flex-start"
