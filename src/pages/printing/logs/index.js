@@ -11,6 +11,7 @@ import {
     TableContainer,
     Tbody,
     Td,
+    Text,
     Th,
     Thead,
     Tr,
@@ -21,9 +22,44 @@ import { SearchIcon } from '@chakra-ui/icons';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
+import usePrintParser from '@/hooks/usePrintParser';
+
 import PrintingLayout from '@/layouts/printing/PrintingLayout';
 
-import LogItem from '@/components/printing/logs/LogItem';
+function LogItem({ printData }) {
+    const { expandedPrintData, progressMessage, progressColor, printerData } = usePrintParser(printData);
+
+    return (
+        <Tr>
+            <Td>
+                <VStack
+                    align="start"
+                    justify="start"
+                    spacing={1}
+                >
+                    <Text fontSize="md">{expandedPrintData.trayName}</Text>
+                    <Text
+                        fontSize="xs"
+                        color="gray.500"
+                    >
+                        {expandedPrintData.queuedAtExtendedFormatted}
+                    </Text>
+                </VStack>
+            </Td>
+            <Td>{printerData.displayName}</Td>
+            <Td>
+                <Badge
+                    variant="subtle"
+                    colorScheme={progressColor}
+                >
+                    {progressMessage}
+                </Badge>
+            </Td>
+            <Td>{expandedPrintData.estTimeFormatted}</Td>
+            <Td>{expandedPrintData.queuedBy}</Td>
+        </Tr>
+    );
+}
 
 export default function PrintLogs(props) {
     const { queue } = useContext(PrintingContext);

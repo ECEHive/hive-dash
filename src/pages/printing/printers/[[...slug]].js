@@ -40,7 +40,6 @@ import { useRouter } from 'next/router';
 import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
-import PrinterContext from '@/contexts/printing/printers/PrinterContext';
 
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrintUpdate from '@/hooks/usePrintUpdate';
@@ -51,7 +50,6 @@ import TopLayout from '@/layouts/printing/PrintingLayout';
 import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import CompleteConfirm from '@/components/printing/printers/CompleteConfirm';
-import InfoCard from '@/components/printing/printers/InfoCard';
 import PrinterInfo from '@/components/printing/printers/PrinterInfo';
 import PrinterList from '@/components/printing/printers/PrinterList';
 import QueueTable from '@/components/printing/printers/QueueTable';

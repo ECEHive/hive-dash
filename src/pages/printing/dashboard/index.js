@@ -13,7 +13,6 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import Layout from '@/layouts/printing/PrintingLayout';
 
-import CardTemplate from '@/components/printing/dashboard/CardTemplate';
 import PrinterCard from '@/components/printing/dashboard/PrinterItem';
 
 export default function Dashboard(props) {

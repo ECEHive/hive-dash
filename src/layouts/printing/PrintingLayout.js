@@ -1,110 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex, VStack, useToast } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex, VStack, useDisclosure } from '@chakra-ui/react';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
-
-import useFocus from '@/hooks/useFocus';
+import { PrintingProvider } from '@/contexts/printing/PrintingContext';
 
 import TopBar from '@/components/TopBarNavigation';
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
+import NewPrintModal from '@/components/printing/new/NewPrintModal';
 
 export default function PrintingLayout({ children }) {
-    const toast = useToast();
-
-    const [queue, setQueue] = useState(null);
-    const [printers, setPrinters] = useState(null);
-    const [printerTypes, setPrinterTypes] = useState(null);
-
-    const focus = useFocus();
-
-    const refreshData = useCallback(() => {
-        if (!focus) return;
-        console.log('REFRESHING DATA');
-        fetch('/api/printing/printerTypes', {
-            method: 'GET'
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setPrinterTypes((old) => {
-                    if (JSON.stringify(old) !== JSON.stringify(data)) {
-                        console.log('updated printer types');
-                        return data;
-                    } else {
-                        return old;
-                    }
-                });
-            })
-            .catch((err) => {
-                toast({
-                    title: 'Fetch error',
-                    description: `Couldn't fetch printer types: ${err.message}`,
-                    status: 'error',
-                    duration: 5000
-                });
-            });
-
-        fetch('/api/printing/printers', {
-            method: 'GET'
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setPrinters((old) => {
-                    if (JSON.stringify(old) !== JSON.stringify(data)) {
-                        console.log('updated printers');
-                        return data;
-                    } else {
-                        return old;
-                    }
-                });
-            })
-            .catch((err) => {
-                toast({
-                    title: 'Fetch error',
-                    description: `Couldn't fetch printers: ${err.message}`,
-                    status: 'error',
-                    duration: 5000
-                });
-            });
-
-        fetch('/api/printing/queue', {
-            method: 'GET'
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setQueue((old) => {
-                    if (JSON.stringify(old) !== JSON.stringify(data)) {
-                        console.log('updated queue');
-                        return data;
-                    } else {
-                        return old;
-                    }
-                });
-            })
-            .catch((err) => {
-                toast({
-                    title: 'Fetch error',
-                    description: `Couldn't fetch prints: ${err.message}`,
-                    status: 'error',
-                    duration: 5000
-                });
-            });
-    }, [toast, focus]);
-
-    useEffect(() => {
-        refreshData();
-        const int = setInterval(() => {
-            refreshData();
-        }, 2000);
-
-        return () => {
-            clearInterval(int);
-        };
-    }, [refreshData]);
+    const { isOpen: isNewPrintOpen, onOpen: onNewPrintOpen, onClose: onNewPrintClose } = useDisclosure();
 
     return (
         <>
-            <PrintingContext.Provider value={{ queue, printers, printerTypes, refreshData }}>
+            <PrintingProvider>
+                {/* <NewPrintModal
+                    isOpen={isNewPrintOpen}
+                    onClose={onNewPrintClose}
+                /> */}
                 <Box
                     w="100vw"
                     h="100vh"
@@ -137,11 +50,11 @@ export default function PrintingLayout({ children }) {
                             h="100%"
                             overflow="hidden"
                         >
-                            {queue && printers && printerTypes ? <>{children}</> : null}
+                            {children}
                         </Box>
                     </VStack>
                 </Box>
-            </PrintingContext.Provider>
+            </PrintingProvider>
         </>
     );
 }
