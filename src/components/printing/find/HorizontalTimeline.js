@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import {
     Box,
@@ -19,6 +20,8 @@ import {
 
 import { ArrowForwardIcon, ArrowRightIcon } from '@chakra-ui/icons';
 
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+
 import usePrintParser from '@/hooks/usePrintParser';
 
 function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
@@ -37,8 +40,10 @@ function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
                         borderRightRadius={10}
                         visibility={isTopEnd ? 'hidden' : 'visible'}
                     /> */}
-            <Popover>
-                <PopoverTrigger>{event.icon}</PopoverTrigger>
+            <Popover preventOverflow>
+                <PopoverTrigger>
+                    <Box cursor="pointer">{event.icon}</Box>
+                </PopoverTrigger>
                 <Portal>
                     <PopoverContent>
                         <PopoverArrow />
@@ -46,6 +51,19 @@ function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
                         <PopoverHeader>
                             {event.description} @ {event.formattedTimestamp}
                         </PopoverHeader>
+                        {event?.notes?.length > 0 && (
+                            <PopoverBody
+                                maxH="200px"
+                                overflow="auto"
+                            >
+                                <ReactMarkdown
+                                    skipHtml
+                                    components={ChakraUIRenderer()}
+                                >
+                                    {event?.notes}
+                                </ReactMarkdown>
+                            </PopoverBody>
+                        )}
                     </PopoverContent>
                 </Portal>
             </Popover>
@@ -80,12 +98,14 @@ export default function Timeline({ print }) {
                 h="auto"
                 variant="filled"
             >
-                <CardBody w="full">
+                <CardBody
+                    w="full"
+                    overflow="auto"
+                >
                     <HStack
-                        w="100%"
+                        w="min-content"
                         h="100%"
                         spacing={2}
-                        overflow="auto"
                     >
                         {expandedPrintData.detailedEvents.reverse().map((event, i) => {
                             return (

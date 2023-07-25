@@ -1,3 +1,4 @@
+import { useCallback, useState } from 'react';
 import { FaWrench } from 'react-icons/fa';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
@@ -34,6 +35,7 @@ import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import StatusModal from '@/components/printing/maintenance/StatusModal';
 import QueueTable from '@/components/printing/printers/QueueTable';
+import UpdateModal from '@/components/printing/printers/UpdateModal';
 
 export default function PrinterInfo({ selectedPrinterData }) {
     const printUpdater = usePrintUpdate();
@@ -41,53 +43,64 @@ export default function PrinterInfo({ selectedPrinterData }) {
 
     const { isOpen: isMaintenanceOpen, onOpen: onMaintenanceOpen, onClose: onMaintenanceClose } = useDisclosure();
     const { isOpen: isStatusOpen, onOpen: onStatusOpen, onClose: onStatusClose } = useDisclosure();
+    const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onClose: onUpdateClose } = useDisclosure();
 
     const { currentPrintData: activePrint } = usePrinterParser(selectedPrinterData);
 
-    function cancelPrint(printData) {
-        let data = {
-            ...printData,
-            printing: false,
-            events: [
-                {
-                    type: 'failed',
-                    timestamp: dayjs.utc()
-                },
-                ...printData.events
-            ]
-        };
-        printUpdater(printData._id, data);
+    const [nextEventData, setNextEventData] = useState(null);
+
+    function completePrint(completed) {
+        let eventData;
+        if (completed) {
+            eventData = {
+                type: 'completed',
+                timestamp: dayjs.utc().toISOString(),
+                notes: ''
+            };
+        } else {
+            eventData = {
+                type: 'failed',
+                timestamp: dayjs.utc().toISOString(),
+                notes: ''
+            };
+        }
+        setNextEventData(eventData);
+        onUpdateOpen();
     }
 
-    function completePrint(printData) {
-        let data = {
-            ...printData,
-            printing: false,
-            completed: true,
-            events: [
-                {
-                    type: 'completed',
-                    timestamp: dayjs.utc()
-                },
-                ...printData.events
-            ]
-        };
-        printUpdater(printData._id, data);
-    }
+    const confirmUpdate = useCallback(
+        (event) => {
+            let data = {
+                ...activePrint,
+                printing: false,
+                completed: event.type === 'completed' || activePrint.completed,
+                events: [event, ...activePrint.events]
+            };
+            printUpdater(activePrint._id, data);
+            onUpdateClose();
+        },
+        [activePrint, printUpdater, onUpdateClose]
+    );
 
     return (
         <>
             {selectedPrinterData && (
                 <>
                     <MaintenanceModal
-                        open={isMaintenanceOpen}
+                        isOpen={isMaintenanceOpen}
                         onClose={onMaintenanceClose}
                         printerData={selectedPrinterData}
                     />
                     <StatusModal
-                        open={isStatusOpen}
+                        isOpen={isStatusOpen}
                         onClose={onStatusClose}
                         printerData={selectedPrinterData}
+                    />
+                    <UpdateModal
+                        isOpen={isUpdateOpen}
+                        onClose={onUpdateClose}
+                        eventData={nextEventData}
+                        save={confirmUpdate}
                     />
                 </>
             )}
@@ -157,14 +170,14 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                     <Button
                                                         colorScheme="red"
                                                         leftIcon={<CloseIcon />}
-                                                        onClick={() => cancelPrint(activePrint)}
+                                                        onClick={() => completePrint(false)}
                                                     >
                                                         Failed
                                                     </Button>
                                                     <Button
                                                         colorScheme="green"
                                                         leftIcon={<CheckIcon />}
-                                                        onClick={() => completePrint(activePrint)}
+                                                        onClick={() => completePrint(true)}
                                                     >
                                                         Completed
                                                     </Button>
@@ -179,7 +192,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                     activePrint={activePrint}
                                     selectedPrinterData={selectedPrinterData}
                                 />
-                            </VStack>{' '}
+                            </VStack>
                         </>
                     ) : (
                         <VStack

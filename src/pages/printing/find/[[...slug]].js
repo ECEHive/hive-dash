@@ -6,12 +6,14 @@ import {
     AlertDescription,
     AlertIcon,
     Box,
+    Button,
     Card,
     CardBody,
     HStack,
     Text,
     VStack,
-    useColorModeValue
+    useColorModeValue,
+    useDisclosure
 } from '@chakra-ui/react';
 
 import { InfoIcon, SearchIcon } from '@chakra-ui/icons';
@@ -24,10 +26,10 @@ import usePrintParser from '@/hooks/usePrintParser';
 
 import Layout from '@/layouts/printing/PrintingLayout';
 
+import PrintEditorModal from '@/components/printing/PrintEditorModal';
 import PrintPreview from '@/components/printing/PrintPreview';
 import HorizontalTimeline from '@/components/printing/find/HorizontalTimeline';
 import PrintList from '@/components/printing/find/PrintList';
-import Timeline from '@/components/printing/find/Timeline';
 
 export default function FindPrint(props) {
     const { queue } = useContext(PrintingContext);
@@ -35,6 +37,8 @@ export default function FindPrint(props) {
 
     const [selectedPrintData, setSelectedPrintData] = useState(null);
     const { printerData } = usePrintParser(selectedPrintData);
+
+    const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
 
     useEffect(() => {
         if (!selectedPrintData) {
@@ -45,93 +49,106 @@ export default function FindPrint(props) {
         }
     }, [router.query, selectedPrintData, queue]);
 
-    const editBgColor = useColorModeValue('gray.200', 'gray.600');
-
     return (
-        <Box
-            w="100%"
-            h="100%"
-            p={5}
-            overflow="auto"
-        >
-            <HStack
+        <>
+            {selectedPrintData && (
+                <PrintEditorModal
+                    isOpen={isEditorOpen}
+                    onClose={onEditorClose}
+                    printData={selectedPrintData}
+                ></PrintEditorModal>
+            )}
+            <Box
                 w="100%"
                 h="100%"
-                spacing={4}
-                alignItems="flex-start"
-                justifyContent="flex-start"
+                p={5}
+                overflow="auto"
             >
-                <PrintList
-                    selectedPrintData={selectedPrintData}
-                    setSelectedPrintData={setSelectedPrintData}
-                />
-
-                <Card
+                <HStack
+                    w="100%"
                     h="100%"
-                    flexGrow={1}
-                    variant="outline"
-                    borderRadius={10}
-                    overflow="hidden"
+                    spacing={4}
+                    alignItems="flex-start"
+                    justifyContent="flex-start"
                 >
-                    <CardBody
-                        w="100%"
+                    <PrintList
+                        selectedPrintData={selectedPrintData}
+                        setSelectedPrintData={setSelectedPrintData}
+                    />
+
+                    <Card
                         h="100%"
+                        flexGrow={1}
+                        variant="outline"
+                        borderRadius={10}
+                        overflow="hidden"
                     >
-                        {selectedPrintData ? (
-                            <VStack
-                                w="100%"
-                                h="100%"
-                                justify="start"
-                                align="start"
-                                spacing={3}
-                                overflow="auto"
-                            >
-                                {printerData.type === 'stratasys' && (
-                                    <Box
-                                        w="100%"
-                                        h="auto"
-                                    >
-                                        <Alert
-                                            status="warning"
-                                            borderRadius={5}
-                                        >
-                                            <AlertIcon />
-                                            <AlertDescription>
-                                                This print uses QSR supports, which we will remove for you. Expect it to
-                                                be ready one business day later than the print completion date.
-                                            </AlertDescription>
-                                        </Alert>
-                                    </Box>
-                                )}
-
-                                <PrintPreview print={selectedPrintData} />
-
-                                {/* timeline */}
+                        <CardBody
+                            w="100%"
+                            h="100%"
+                        >
+                            {selectedPrintData ? (
                                 <VStack
                                     w="100%"
-                                    h="auto"
-                                    flexGrow={1}
+                                    h="100%"
+                                    justify="start"
+                                    align="start"
                                     spacing={3}
                                     overflow="auto"
-                                    align="start"
                                 >
-                                    {/* <Timeline print={selectedPrintData} /> */}
-                                    <HorizontalTimeline print={selectedPrintData} />
+                                    {printerData.type === 'stratasys' && (
+                                        <Box
+                                            w="100%"
+                                            h="auto"
+                                        >
+                                            <Alert
+                                                status="warning"
+                                                borderRadius={5}
+                                            >
+                                                <AlertIcon />
+                                                <AlertDescription>
+                                                    This print uses QSR supports, which we will remove for you. Expect
+                                                    it to be ready one business day later than the print completion
+                                                    date.
+                                                </AlertDescription>
+                                            </Alert>
+                                        </Box>
+                                    )}
+
+                                    <PrintPreview print={selectedPrintData} />
+
+                                    {/* timeline */}
+                                    <VStack
+                                        w="100%"
+                                        h="auto"
+                                        flexGrow={1}
+                                        spacing={3}
+                                        overflow="auto"
+                                        align="start"
+                                    >
+                                        {/* <Timeline print={selectedPrintData} /> */}
+                                        <HorizontalTimeline print={selectedPrintData} />
+
+                                        <HStack>
+                                            <Button>Move to printer</Button>
+                                            <Button onClick={onEditorOpen}>Advanced edit</Button>
+                                        </HStack>
+                                    </VStack>
                                 </VStack>
-                            </VStack>
-                        ) : (
-                            <VStack
-                                h="100%"
-                                w="100%"
-                                justify="center"
-                            >
-                                <Text color="gray.400">select a print</Text>
-                            </VStack>
-                        )}
-                    </CardBody>
-                </Card>
-            </HStack>
-        </Box>
+                            ) : (
+                                <VStack
+                                    h="100%"
+                                    w="100%"
+                                    justify="center"
+                                >
+                                    <Text color="gray.400">select a print</Text>
+                                </VStack>
+                            )}
+                        </CardBody>
+                    </Card>
+                </HStack>
+            </Box>
+        </>
     );
 }
 

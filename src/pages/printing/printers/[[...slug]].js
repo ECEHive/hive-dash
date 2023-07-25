@@ -49,7 +49,6 @@ import TopLayout from '@/layouts/printing/PrintingLayout';
 
 import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
-import CompleteConfirm from '@/components/printing/printers/CompleteConfirm';
 import PrinterInfo from '@/components/printing/printers/PrinterInfo';
 import PrinterList from '@/components/printing/printers/PrinterList';
 import QueueTable from '@/components/printing/printers/QueueTable';

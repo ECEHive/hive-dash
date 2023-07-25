@@ -26,10 +26,10 @@ import {
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 
-export default function MaintenanceModal({ open, onClose, printerData }) {
+export default function MaintenanceModal({ isOpen, onClose, printerData }) {
     return (
         <Modal
-            isOpen={open}
+            isOpen={isOpen}
             onClose={onClose}
             isCentered
             size="6xl"

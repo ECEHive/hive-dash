@@ -2,7 +2,7 @@ import { useContext, useMemo } from 'react';
 import { BsCheck, BsPencilFill, BsPlayFill, BsStopFill } from 'react-icons/bs';
 import { FaPencilAlt } from 'react-icons/fa';
 
-import { Avatar, useColorModeValue } from '@chakra-ui/react';
+import { Avatar, AvatarBadge, useColorModeValue } from '@chakra-ui/react';
 
 import { AddIcon, CheckCircleIcon, CheckIcon, DownloadIcon, WarningIcon, WarningTwoIcon } from '@chakra-ui/icons';
 
@@ -61,11 +61,18 @@ export default function usePrintParser(print) {
                     formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
                     icon: (
                         <Avatar
-                            cursor="pointer"
                             size="sm"
                             icon={eventIcons[event.type]}
                             bgColor={eventColors[event.type]}
-                        />
+                        >
+                            {event?.notes?.length > 0 && (
+                                <AvatarBadge
+                                    bg="yellow.300"
+                                    boxSize="1em"
+                                    placement="top-end"
+                                />
+                            )}
+                        </Avatar>
                     )
                 };
             }),
