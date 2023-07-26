@@ -33,7 +33,7 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/usePrintParser';
 
-import getStateColor from '@/util/getStateColor';
+import stateColors from '@/util/stateColors';
 
 function PrintListItem({ data, isActive, onClick }) {
     const { expandedPrintData, progressMessage, printerData, progress, timeLeft } = usePrintParser(data);
@@ -72,7 +72,7 @@ function PrintListItem({ data, isActive, onClick }) {
                         <Spacer />
                         <Badge
                             variant="subtle"
-                            colorScheme={getStateColor(expandedPrintData.latestEvent)}
+                            colorScheme={stateColors[expandedPrintData.latestEvent]}
                         >
                             {expandedPrintData.latestEvent}
                         </Badge>

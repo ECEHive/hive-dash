@@ -19,7 +19,7 @@ import NextLink from 'next/link';
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrinterParser from '@/hooks/usePrinterParser';
 
-import getStateColor from '@/util/getStateColor';
+import stateColors from '@/util/stateColors';
 
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
@@ -64,7 +64,7 @@ export default function PrinterCard({ data }) {
                                     {/* <Spacer /> */}
                                     <Badge
                                         variant="subtle"
-                                        colorScheme={getStateColor(expandedPrinterData.state)}
+                                        colorScheme={stateColors[expandedPrinterData.state]}
                                     >
                                         {expandedPrinterData.state}
                                     </Badge>

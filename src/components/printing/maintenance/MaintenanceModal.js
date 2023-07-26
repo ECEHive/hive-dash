@@ -114,7 +114,6 @@ export default function MaintenanceModal({ isOpen, onClose, printerData }) {
                                         }
                                         placeholder="use some markdown!"
                                         resize="none"
-                                        flexGrow={1}
                                         h="full"
                                     />
                                 </InputGroup>

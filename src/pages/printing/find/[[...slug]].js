@@ -26,10 +26,10 @@ import usePrintParser from '@/hooks/usePrintParser';
 
 import Layout from '@/layouts/printing/PrintingLayout';
 
-import PrintEditorModal from '@/components/printing/PrintEditorModal';
 import PrintPreview from '@/components/printing/PrintPreview';
 import HorizontalTimeline from '@/components/printing/find/HorizontalTimeline';
 import PrintList from '@/components/printing/find/PrintList';
+import PrintEditorModal from '@/components/printing/printEdit/PrintEditorModal';
 
 export default function FindPrint(props) {
     const { queue } = useContext(PrintingContext);

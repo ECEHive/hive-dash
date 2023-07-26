@@ -25,8 +25,6 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
-import getStateColor from '@/util/getStateColor';
-
 import QueueTableItem from './QueueTableItem';
 
 export default function QueueTable({ selectedPrinterData, activePrint }) {
