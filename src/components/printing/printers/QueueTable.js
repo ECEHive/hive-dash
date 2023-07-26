@@ -29,7 +29,7 @@ import { PrintStates } from '@/util/states';
 import QueueTableItem from './QueueTableItem';
 
 export default function QueueTable({ selectedPrinterData, activePrint }) {
-    const printUpdater = usePrintUpdate();
+    const { update: printUpdater } = usePrintUpdate();
     const printerUpdater = usePrinterUpdate(true);
 
     const { queue } = useContext(PrintingContext);

@@ -42,7 +42,7 @@ import QueueTable from '@/components/printing/printers/QueueTable';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 
 export default function PrinterInfo({ selectedPrinterData }) {
-    const printUpdater = usePrintUpdate();
+    const { update: printUpdater } = usePrintUpdate();
     const printerUpdater = usePrinterUpdate();
 
     const { secondary } = useTextColor();

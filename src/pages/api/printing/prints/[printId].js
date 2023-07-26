@@ -26,5 +26,14 @@ export default async function handler(req, res) {
             );
 
         res.status(200).json(data);
+    } else if (req.method === 'DELETE') {
+        const data = await mongoClient
+            .db('printing')
+            .collection('print-log')
+            .deleteOne({
+                _id: new ObjectId(printId)
+            });
+
+        res.status(200).json(data);
     }
 }

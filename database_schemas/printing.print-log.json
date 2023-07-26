@@ -1,325 +1,400 @@
-[
+[{
+  "_id": {
+    "$oid": "64b5d85b1a28a8dd5ece4086"
+  },
+  "trayName": "PI_Colin_Hartigan_test",
+  "printer": "left-stratasys",
+  "estTime": "PT2H30M",
+  "materialType": "ABS",
+  "materialUsage": "3",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-17T23:35:49.660Z",
+  "notes": "",
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
     {
-        "_id": {
-            "$oid": "64b5d85b1a28a8dd5ece4086"
-        },
-        "trayName": "PI_Colin_Hartigan_test",
-        "printer": "left-stratasys",
-        "estTime": "PT2H30M",
-        "materialType": "ABS",
-        "materialUsage": "3",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-17T23:35:49.660Z",
-        "endUser": {
-            "firstname": "Colin",
-            "lastname": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-17T23:35:49.660Z"
-            }
-        ],
-        "state": 0
+      "type": "failed",
+      "timestamp": "2023-07-26T18:54:54.944Z",
+      "notes": ""
     },
     {
-        "_id": {
-            "$oid": "64b5dde81a28a8dd5ece4087"
-        },
-        "trayName": "PI_Colin_Hartigan_long_print_name",
-        "printer": "ultimaker-1",
-        "estTime": "PT0H1M",
-        "materialType": "PLA",
-        "materialUsage": 13.2,
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2017-03-28T15:00:00.000Z",
-
-        "endUser": {
-            "firstName": "Colin",
-            "lastName": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2017-03-28T15:00:00.000Z"
-            }
-        ],
-        "state": 0
+      "type": "printing",
+      "timestamp": "2023-07-26T16:58:49.470Z"
     },
     {
-        "_id": {
-            "$oid": "64b713ac036e1f5b6d31bcf7"
-        },
-        "trayName": "test numero 3",
-        "printer": "ultimaker-1",
-        "estTime": "PT0H05M",
-        "materialType": "PLA",
-        "materialUsage": "2",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-18T22:35:24.053Z",
-        "state": 0,
-        "endUser": {
-            "firstname": "Will",
-            "lastname": "Lauer",
-            "email": "wlauer3"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-18T22:35:24.053Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64b7ed21e653a5a34123caae"
-        },
-        "trayName": "PI_Colin_Hartigan_ult2_test",
-        "printer": "ultimaker-2",
-        "estTime": "PT3H24M",
-        "materialType": "PLA",
-        "materialUsage": "5",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-19T14:03:13.131Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "Colin",
-            "lastname": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-19T14:03:13.131Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64b7ed44e653a5a34123caaf"
-        },
-        "trayName": "PI_Colin_Hartigan_ult3_test",
-        "printer": "ultimaker-3",
-        "estTime": "PT7H20M",
-        "materialType": "PLA",
-        "materialUsage": "5",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-19T14:03:48.075Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "Colin",
-            "lastname": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-19T14:03:48.075Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64b7ed67e653a5a34123cab0"
-        },
-        "trayName": "PI_Colin_Hartigan_rstrat_test",
-        "printer": "right-stratasys",
-        "estTime": "PT5H23M",
-        "materialType": "ABS",
-        "materialUsage": "7",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-19T14:04:23.740Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "Colin",
-            "lastname": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-19T14:04:23.740Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64b7ef1de653a5a34123cab1"
-        },
-        "trayName": "PI_Colin_Hartigan_wealthy_test",
-        "printer": "wealthyacouchi",
-        "estTime": "PT0H30M",
-        "materialType": "Resin (Clear)",
-        "materialUsage": "16",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-19T14:11:41.324Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "Colin",
-            "lastname": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-19T14:11:41.324Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64b7f6c6e653a5a34123cab2"
-        },
-        "trayName": "PI_Colin_Hartigan_cloudy_test",
-        "printer": "cloudypytilia",
-        "estTime": "PT0H02M",
-        "materialType": "Resin (White)",
-        "materialUsage": "5",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-19T14:44:22.333Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "Colin",
-            "lastname": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-19T14:44:22.333Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64b81366e653a5a34123cab3"
-        },
-        "trayName": "firstname_lastname_description",
-        "printer": "ultimaker-1",
-        "estTime": "PT3H35M",
-        "materialType": "PLA",
-        "materialUsage": "5",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-19T16:46:30.816Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "Person",
-            "lastname": "Lastname",
-            "email": "plastname1"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-19T16:46:30.816Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64b814f7e653a5a34123cab4"
-        },
-        "trayName": "PI_Colin_Hartigan_anotherult2test",
-        "printer": "ultimaker-2",
-        "estTime": "PT7H20M",
-        "materialType": "PLA",
-        "materialUsage": "7",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-19T16:53:11.104Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "Colin",
-            "lastname": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-19T16:53:11.104Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64ba18ecbedc334b80bb93c6"
-        },
-        "trayName": "1",
-        "printer": "wealthyacouchi",
-        "estTime": "PT9H00M",
-        "materialType": "Resin (White)",
-        "materialUsage": "-1",
-        "queuedBy": "Someone else",
-        "queuedAt": "2023-07-21T05:34:36.339Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "C",
-            "lastname": "Holla",
-            "email": "cholla"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-21T05:34:36.339Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64bb385455086003c356f67d"
-        },
-        "trayName": "test",
-        "printer": "ultimaker-1",
-        "estTime": "PT2H",
-        "materialType": "PLA",
-        "materialUsage": "3",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-22T02:00:51.710Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "test",
-            "lastname": "test",
-            "email": "test"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-22T02:00:51.710Z"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "64be98f127442f4cc28115d8"
-        },
-        "trayName": "PI_Colin_Hartigan_anotherstrat",
-        "printer": "right-stratasys",
-        "estTime": "PT0H50M",
-        "materialType": "ABS",
-        "materialUsage": "25",
-        "queuedBy": "Colin Hartigan",
-        "queuedAt": "2023-07-24T15:29:52.973Z",
-        "state": 0,
-
-        "endUser": {
-            "firstname": "Colin",
-            "lastname": "Hartigan",
-            "email": "chartigan6"
-        },
-        "events": [
-            {
-                "type": "queued",
-                "timestamp": "2023-07-24T15:29:52.973Z"
-            }
-        ]
+      "type": "queued",
+      "timestamp": "2023-07-17T23:35:49.660Z"
     }
-]
+  ],
+  "state": 2
+},
+{
+  "_id": {
+    "$oid": "64b5dde81a28a8dd5ece4087"
+  },
+  "trayName": "PI_Colin_Hartigan_long_print_name",
+  "printer": "ultimaker-1",
+  "estTime": "PT0H1M",
+  "materialType": "PLA",
+  "materialUsage": 13.2,
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2017-03-28T15:00:00.000Z",
+  "notes": "",
+  "endUser": {
+    "firstName": "Colin",
+    "lastName": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "queued",
+      "timestamp": "2017-03-28T15:00:00.000Z"
+    }
+  ],
+  "state": 0
+},
+{
+  "_id": {
+    "$oid": "64b713ac036e1f5b6d31bcf7"
+  },
+  "trayName": "test numero 3",
+  "printer": "ultimaker-1",
+  "estTime": "PT0H05M",
+  "materialType": "PLA",
+  "materialUsage": "2",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-18T22:35:24.053Z",
+  "state": 2,
+  "notes": "",
+  "endUser": {
+    "firstname": "Will",
+    "lastname": "Lauer",
+    "email": "wlauer3"
+  },
+  "events": [
+    {
+      "type": "failed",
+      "timestamp": "2023-07-26T17:21:55.148Z",
+      "notes": "L bozo"
+    },
+    {
+      "type": "printing",
+      "timestamp": "2023-07-26T16:49:30.943Z"
+    },
+    {
+      "type": "queued",
+      "timestamp": "2023-07-18T22:35:24.053Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64b7ed21e653a5a34123caae"
+  },
+  "trayName": "PI_Colin_Hartigan_ult2_test",
+  "printer": "ultimaker-2",
+  "estTime": "PT3H24M",
+  "materialType": "PLA",
+  "materialUsage": "5",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-19T14:03:13.131Z",
+  "state": 2,
+  "notes": "",
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "failed",
+      "timestamp": "2023-07-26T18:54:47.597Z",
+      "notes": ""
+    },
+    {
+      "type": "printing",
+      "timestamp": "2023-07-26T16:58:45.325Z"
+    },
+    {
+      "type": "queued",
+      "timestamp": "2023-07-19T14:03:13.131Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64b7ed44e653a5a34123caaf"
+  },
+  "trayName": "PI_Colin_Hartigan_ult3_test",
+  "printer": "ultimaker-3",
+  "estTime": "PT7H20M",
+  "materialType": "PLA",
+  "materialUsage": "5",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-19T14:03:48.075Z",
+  "state": 2,
+  "notes": "",
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "failed",
+      "timestamp": "2023-07-26T18:54:49.907Z",
+      "notes": ""
+    },
+    {
+      "type": "printing",
+      "timestamp": "2023-07-26T16:58:47.076Z"
+    },
+    {
+      "type": "queued",
+      "timestamp": "2023-07-19T14:03:48.075Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64b7ed67e653a5a34123cab0"
+  },
+  "trayName": "PI_Colin_Hartigan_rstrat_test",
+  "printer": "right-stratasys",
+  "estTime": "PT5H23M",
+  "materialType": "ABS",
+  "materialUsage": "7",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-19T14:04:23.740Z",
+  "state": 0,
+  "notes": "",
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "queued",
+      "timestamp": "2023-07-19T14:04:23.740Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64b7ef1de653a5a34123cab1"
+  },
+  "trayName": "PI_Colin_Hartigan_wealthy_test",
+  "printer": "wealthyacouchi",
+  "estTime": "PT0H30M",
+  "materialType": "Resin (Clear)",
+  "materialUsage": "16",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-19T14:11:41.324Z",
+  "state": 2,
+  "notes": "",
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "failed",
+      "timestamp": "2023-07-26T18:54:57.554Z",
+      "notes": ""
+    },
+    {
+      "type": "printing",
+      "timestamp": "2023-07-26T16:58:43.156Z"
+    },
+    {
+      "type": "queued",
+      "timestamp": "2023-07-19T14:11:41.324Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64b7f6c6e653a5a34123cab2"
+  },
+  "trayName": "PI_Colin_Hartigan_cloudy_test",
+  "printer": "cloudypytilia",
+  "estTime": "PT0H02M",
+  "materialType": "Resin (White)",
+  "materialUsage": "5",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-19T14:44:22.333Z",
+  "state": 0,
+  "notes": "",
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "queued",
+      "timestamp": "2023-07-19T14:44:22.333Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64b81366e653a5a34123cab3"
+  },
+  "trayName": "firstname_lastname_description",
+  "printer": "ultimaker-1",
+  "estTime": "PT3H35M",
+  "materialType": "PLA",
+  "materialUsage": "5",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-19T16:46:30.816Z",
+  "state": 0,
+  "notes": "",
+  "endUser": {
+    "firstname": "Person",
+    "lastname": "Lastname",
+    "email": "plastname1"
+  },
+  "events": [
+    {
+      "type": "queued",
+      "timestamp": "2023-07-19T16:46:30.816Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64b814f7e653a5a34123cab4"
+  },
+  "trayName": "PI_Colin_Hartigan_anotherult2test",
+  "printer": "ultimaker-2",
+  "estTime": "PT7H20M",
+  "materialType": "PLA",
+  "materialUsage": "7",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-19T16:53:11.104Z",
+  "state": 0,
+  "notes": "",
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "queued",
+      "timestamp": "2023-07-19T16:53:11.104Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64ba18ecbedc334b80bb93c6"
+  },
+  "trayName": "1",
+  "printer": "wealthyacouchi",
+  "estTime": "PT9H00M",
+  "materialType": "Resin (White)",
+  "materialUsage": "-1",
+  "queuedBy": "Someone else",
+  "queuedAt": "2023-07-21T05:34:36.339Z",
+  "state": 0,
+  "notes": "",
+  "endUser": {
+    "firstname": "C",
+    "lastname": "Holla",
+    "email": "cholla"
+  },
+  "events": [
+    {
+      "type": "queued",
+      "timestamp": "2023-07-21T05:34:36.339Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64bb385455086003c356f67d"
+  },
+  "trayName": "test",
+  "printer": "ultimaker-1",
+  "estTime": "PT2H",
+  "materialType": "PLA",
+  "materialUsage": "3",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-22T02:00:51.710Z",
+  "state": 0,
+  "notes": "",
+  "endUser": {
+    "firstname": "test",
+    "lastname": "test",
+    "email": "test"
+  },
+  "events": [
+    {
+      "type": "queued",
+      "timestamp": "2023-07-22T02:00:51.710Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64be98f127442f4cc28115d8"
+  },
+  "trayName": "PI_Colin_Hartigan_anotherstrat",
+  "printer": "right-stratasys",
+  "estTime": "PT0H50M",
+  "materialType": "ABS",
+  "materialUsage": "25",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-24T15:29:52.973Z",
+  "state": 0,
+  "notes": "",
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "queued",
+      "timestamp": "2023-07-24T15:29:52.973Z"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64c16b521d64326a32625206"
+  },
+  "trayName": "super duper long print :)",
+  "printer": "ultimaker-4",
+  "estTime": "PT60H20M",
+  "materialType": "PLA",
+  "materialUsage": "100",
+  "queuedBy": "Colin Hartigan",
+  "queuedAt": "2023-07-26T18:52:02.624Z",
+  "notes": "",
+  "state": 1,
+  "endUser": {
+    "firstname": "Colin",
+    "lastname": "Hartigan",
+    "email": "chartigan6"
+  },
+  "events": [
+    {
+      "type": "printing",
+      "timestamp": "2023-07-26T18:52:08.976Z"
+    },
+    {
+      "type": "queued",
+      "timestamp": "2023-07-26T18:52:02.624Z",
+      "notes": ""
+    }
+  ]
+}]

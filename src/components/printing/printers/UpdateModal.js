@@ -20,6 +20,7 @@ export default function UpdateModal({ isOpen, onClose, eventData, save }) {
     const [event, setEvent] = useState(eventData);
 
     useEffect(() => {
+        console.log('updating (allgedly)');
         setEvent(eventData);
     }, [eventData]);
 

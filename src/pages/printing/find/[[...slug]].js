@@ -54,8 +54,8 @@ export default function FindPrint(props) {
                 <PrintEditorModal
                     isOpen={isEditorOpen}
                     onClose={onEditorClose}
-                    printData={selectedPrintData}
-                ></PrintEditorModal>
+                    initialData={selectedPrintData}
+                />
             )}
             <Box
                 w="100%"

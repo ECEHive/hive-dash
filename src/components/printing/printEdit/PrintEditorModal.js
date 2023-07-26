@@ -45,7 +45,7 @@ import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import ReactMarkdown from 'react-markdown';
 
 import usePrintParser from '@/hooks/usePrintParser';
-import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+import usePrintUpdate from '@/hooks/usePrintUpdate';
 
 import iconSet from '@/util/icons';
 
@@ -58,40 +58,102 @@ import {
     UserInfo
 } from '@/components/printing/printEdit/EditorComponents';
 
-export default function PrintEditorModal({ isOpen, onClose, printData }) {
-    const { betterPrintData } = usePrintParser(printData);
+export default function PrintEditorModal({ isOpen, onClose, initialData }) {
+    const { betterPrintData } = usePrintParser(initialData);
 
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
+    const [printData, setPrintData] = useState(null);
+    const [saving, setSaving] = useState(false);
+
+    const { update: printUpdater, delete: printDeleter } = usePrintUpdate();
+
+    useEffect(() => {
+        setPrintData(initialData);
+    }, [initialData]);
+
+    function updatePrintData(newData) {
+        console.log(newData);
+        setPrintData((old) => {
+            return {
+                ...old,
+                ...newData
+            };
+        });
+    }
+
+    function save() {
+        setSaving(true);
+        printUpdater(printData._id, printData)
+            .then(() => {
+                setSaving(false);
+                onClose();
+            })
+            .catch(() => {
+                setSaving(false);
+            });
+    }
+
     const pages = [
         {
-            name: 'Print states',
-            component: <PrintState />,
-            icon: <Icon as={iconSet.toggles} />
-        },
-        {
             name: 'End user',
-            component: <UserInfo />,
+            component: (
+                <UserInfo
+                    printData={printData}
+                    update={updatePrintData}
+                />
+            ),
             icon: <Icon as={iconSet.smile} />
         },
         {
             name: 'Print info',
-            component: <PrintInfo />,
+            component: (
+                <PrintInfo
+                    printData={printData}
+                    update={updatePrintData}
+                />
+            ),
             icon: <Icon as={iconSet.printer} />
         },
         {
             name: 'Events',
-            component: <Events betterPrintData={betterPrintData} />,
+            component: (
+                <Events
+                    printData={printData}
+                    update={updatePrintData}
+                />
+            ),
             icon: <Icon as={iconSet.calendar} />
         },
         {
             name: 'Notes',
-            component: <Notes betterPrintData={betterPrintData} />,
+            component: (
+                <Notes
+                    printData={printData}
+                    update={updatePrintData}
+                />
+            ),
             icon: <Icon as={iconSet.note} />
         },
         {
+            name: 'Print states',
+            component: (
+                <PrintState
+                    printData={printData}
+                    update={updatePrintData}
+                />
+            ),
+            icon: <Icon as={iconSet.toggles} />
+        },
+        {
             name: 'Actions',
-            component: <DangerousActions />,
+            component: (
+                <DangerousActions
+                    printData={printData}
+                    update={updatePrintData}
+                    onClose={onClose}
+                />
+            ),
             icon: <Icon as={iconSet.settings} />,
             color: 'red'
         }
@@ -102,7 +164,7 @@ export default function PrintEditorModal({ isOpen, onClose, printData }) {
             isOpen={isOpen}
             onClose={onClose}
             isCentered
-            size="4xl"
+            size="3xl"
             scrollBehavior="inside"
         >
             <ModalOverlay />
@@ -112,7 +174,7 @@ export default function PrintEditorModal({ isOpen, onClose, printData }) {
                     <HStack
                         w="100%"
                         h="100%"
-                        spacing={10}
+                        spacing={6}
                     >
                         {/* navigation */}
                         <VStack
@@ -151,7 +213,8 @@ export default function PrintEditorModal({ isOpen, onClose, printData }) {
                             justify="start"
                             spacing={8}
                             overflow="auto"
-                            px={1}
+                            pr={3}
+                            pl={1}
                         >
                             {pages[currentPageIndex].component}
                         </VStack>
@@ -162,8 +225,9 @@ export default function PrintEditorModal({ isOpen, onClose, printData }) {
                         <Button onClick={onClose}>Cancel</Button>
                         <Button
                             colorScheme="blue"
-                            onClick={null}
-                            isLoading={false}
+                            onClick={save}
+                            isLoading={saving}
+                            leftIcon={<Icon as={iconSet.save} />}
                         >
                             Save
                         </Button>

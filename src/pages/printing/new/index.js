@@ -117,8 +117,8 @@ export default function NewPrint(props) {
             materialUsage: inputData.print.materialUsage,
             queuedBy: inputData.user.assistingPI,
             queuedAt: timestamp,
-            completed: false,
-            printing: false,
+            notes: '',
+            state: 0,
             endUser: {
                 firstname: inputData.user.firstname,
                 lastname: inputData.user.lastname,
@@ -127,7 +127,8 @@ export default function NewPrint(props) {
             events: [
                 {
                     type: 'queued',
-                    timestamp: timestamp
+                    timestamp: timestamp,
+                    notes: ''
                 }
             ]
         };

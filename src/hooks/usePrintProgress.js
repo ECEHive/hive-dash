@@ -26,7 +26,7 @@ export default function usePrintProgress(printData) {
             const total = endTime.diff(startTime);
             const elapsed = now.diff(startTime);
             const remaining = dayjs.duration(endTime.diff(now));
-            let remainingFormatted = remaining.add({ minutes: 1 }).format('HH:mm');
+            let remainingFormatted = remaining.add({ minutes: 1 }).format('D:HH:mm');
 
             let progress = Math.floor((elapsed / total) * 100);
 

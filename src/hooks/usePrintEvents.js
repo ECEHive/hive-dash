@@ -30,28 +30,32 @@ export default function usePrintEvents(print) {
 
     const detailedEvents = useMemo(() => {
         if (!print) return [];
-        return print.events.map((event) => {
-            return {
-                ...event,
-                description: eventNames[event.type],
-                formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
-                icon: (
-                    <Avatar
-                        size="sm"
-                        icon={eventIcons[event.type]}
-                        bgColor={eventColors[event.type]}
-                    >
-                        {event?.notes?.length > 0 && (
-                            <AvatarBadge
-                                bg="yellow.300"
-                                boxSize="1em"
-                                placement="top-end"
-                            />
-                        )}
-                    </Avatar>
-                )
-            };
-        });
+        return print.events
+            .map((event) => {
+                return {
+                    ...event,
+                    description: eventNames[event.type],
+                    formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
+                    icon: (
+                        <Avatar
+                            size="sm"
+                            icon={eventIcons[event.type]}
+                            bgColor={eventColors[event.type]}
+                        >
+                            {event?.notes?.length > 0 && (
+                                <AvatarBadge
+                                    bg="yellow.300"
+                                    boxSize="1em"
+                                    placement="top-end"
+                                />
+                            )}
+                        </Avatar>
+                    )
+                };
+            })
+            .sort((a, b) => {
+                return dayjs.utc(b.timestamp).diff(dayjs.utc(a.timestamp)); //sort so newest at top
+            });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [print?.events]); //ignore this warning, this is a safe memoized value
 

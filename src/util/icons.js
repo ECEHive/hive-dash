@@ -2,6 +2,7 @@ import {
     AddIcon,
     CheckIcon,
     CloseIcon,
+    DeleteIcon,
     ExternalLinkIcon,
     MoonIcon,
     SearchIcon,
@@ -13,6 +14,7 @@ import {
     FaCalendar,
     FaPlay,
     FaPrint,
+    FaSave,
     FaSitemap,
     FaSortNumericDown,
     FaStop,
@@ -44,7 +46,9 @@ const iconSet = {
     stop: FaStop,
     moon: MoonIcon,
     sun: SunIcon,
-    external: ExternalLinkIcon
+    external: ExternalLinkIcon,
+    delete: DeleteIcon,
+    save: FaSave
 };
 
 export default iconSet;
