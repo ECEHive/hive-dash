@@ -189,6 +189,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
                     spacing={3}
                     overflow="auto"
                     pt={3}
+                    pr={1}
                 >
                     {matchedPrints.length > 0 ? (
                         matchedPrints.map((print) => {

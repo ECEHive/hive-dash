@@ -197,6 +197,7 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                     alignItems="flex-start"
                     spacing={3}
                     overflow="auto"
+                    pr={1}
                 >
                     {printerTypes.map((type) => {
                         return (
