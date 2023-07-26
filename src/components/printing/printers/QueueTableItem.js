@@ -17,11 +17,13 @@ import {
 } from '@chakra-ui/react';
 
 import usePrintParser from '@/hooks/usePrintParser';
+import usePrintProgress from '@/hooks/usePrintProgress';
 
 import iconSet from '@/util/icons';
 
 export default function QueueTableItem({ printData, startPrint, canQueue }) {
-    const { expandedPrintData, progressMessage, progressColor } = usePrintParser(printData);
+    const { betterPrintData } = usePrintParser(printData);
+    const { progressMessage, progressColor } = usePrintProgress(printData);
 
     return (
         <Tr key={print._id}>
@@ -32,7 +34,7 @@ export default function QueueTableItem({ printData, startPrint, canQueue }) {
                     spacing={1}
                 >
                     <HStack>
-                        <Text fontSize="md">{expandedPrintData.trayName}</Text>
+                        <Text fontSize="md">{betterPrintData.trayName}</Text>
                         <Badge
                             variant="subtle"
                             colorScheme={progressColor}
@@ -44,12 +46,12 @@ export default function QueueTableItem({ printData, startPrint, canQueue }) {
                         fontSize="xs"
                         color="gray.500"
                     >
-                        {expandedPrintData.queuedAtExtendedFormatted}
+                        {betterPrintData.queuedAtExtendedFormatted}
                     </Text>
                 </VStack>
             </Td>
             <Td>
-                <Text fontSize="md">{expandedPrintData.estTimeFormatted}</Text>
+                <Text fontSize="md">{betterPrintData.estTimeFormatted}</Text>
             </Td>
             <Td>
                 <ButtonGroup size="sm">

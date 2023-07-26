@@ -40,7 +40,6 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrintParser from '@/hooks/usePrintParser';
 import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
@@ -56,8 +55,6 @@ export default function Printers(props) {
     const router = useRouter();
 
     const { printers, queue, printerTypes } = useContext(PrintingContext);
-
-    const printUpdater = usePrintUpdate();
 
     const [selectedPrinterData, setSelectedPrinterData] = useState(null);
 

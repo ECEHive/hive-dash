@@ -26,6 +26,7 @@ import { ChevronRightIcon, SearchIcon } from '@chakra-ui/icons';
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/usePrintParser';
+import usePrintProgress from '@/hooks/usePrintProgress';
 import usePrinterParser from '@/hooks/usePrinterParser';
 import useTextColor from '@/hooks/useTextColor';
 
@@ -34,7 +35,8 @@ import stateColors from '@/util/stateColors';
 
 function PrinterListItem({ data, onClick, isActive, queue }) {
     const { expandedPrinterData, currentPrintData, printerTypeData } = usePrinterParser(data);
-    const { expandedPrintData, timeLeft, progress } = usePrintParser(currentPrintData);
+    const { betterPrintData } = usePrintParser(currentPrintData);
+    const { timeLeft, progress } = usePrintProgress(currentPrintData);
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
     const cardColor = useColorModeValue('white.100', 'gray.700');
@@ -118,7 +120,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                                 fontWeight="medium"
                                                 lineHeight={1}
                                             >
-                                                {expandedPrintData.trayName}
+                                                {betterPrintData.trayName}
                                             </Text>
                                             <Text
                                                 fontSize="xs"

@@ -16,6 +16,7 @@ import {
 import NextLink from 'next/link';
 
 import usePrintParser from '@/hooks/usePrintParser';
+import usePrintProgress from '@/hooks/usePrintProgress';
 import usePrinterParser from '@/hooks/usePrinterParser';
 import useTextColor from '@/hooks/useTextColor';
 
@@ -24,8 +25,8 @@ import stateColors from '@/util/stateColors';
 
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
-    const { expandedPrintData, progress, timeLeft, progressColor, progressMessage, fixedProgress } =
-        usePrintParser(currentPrintData);
+    const { betterPrintData } = usePrintParser(currentPrintData);
+    const { progress, progressColor, progressMessage } = usePrintProgress(currentPrintData);
 
     const { secondary } = useTextColor();
 
@@ -81,7 +82,7 @@ export default function PrinterCard({ data }) {
                                 </HStack>
                             </VStack>
                             <Spacer />
-                            {expandedPrintData && (
+                            {betterPrintData && (
                                 <VStack
                                     justifyContent="center"
                                     spacing={1}
@@ -94,7 +95,7 @@ export default function PrinterCard({ data }) {
                                         overflow="hidden"
                                     >
                                         <Tooltip
-                                            label={expandedPrintData.trayName}
+                                            label={betterPrintData.trayName}
                                             placement="top"
                                         >
                                             <Text
@@ -105,9 +106,9 @@ export default function PrinterCard({ data }) {
                                             >
                                                 <Link
                                                     as={NextLink}
-                                                    href={`/printing/find/${expandedPrintData._id}`}
+                                                    href={`/printing/find/${betterPrintData._id}`}
                                                 >
-                                                    {expandedPrintData.trayName}
+                                                    {betterPrintData.trayName}
                                                 </Link>
                                             </Text>
                                         </Tooltip>
@@ -115,7 +116,7 @@ export default function PrinterCard({ data }) {
                                         <Badge variant="subtle">{progressMessage}</Badge>
                                     </HStack>
                                     <Progress
-                                        value={fixedProgress}
+                                        value={progress}
                                         size="sm"
                                         w="100%"
                                         borderRadius={5}

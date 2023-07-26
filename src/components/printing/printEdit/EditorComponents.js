@@ -1,5 +1,3 @@
-import ReactMarkdown from 'react-markdown';
-
 import {
     Box,
     Button,
@@ -27,12 +25,20 @@ import {
     Th,
     Thead,
     Tr,
-    VStack
+    VStack,
+    chakra,
+    useColorModeValue
 } from '@chakra-ui/react';
 
 import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
+import Editor from '@monaco-editor/react';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import ReactMarkdown from 'react-markdown';
+
+import usePrintEvents from '@/hooks/usePrintEvents';
+
+const ChakraEditor = chakra(Editor);
 
 function SectionHeader({ children }) {
     return (
@@ -192,7 +198,9 @@ function PrintInfo({}) {
     );
 }
 
-function Events({ expandedPrintData }) {
+function Events({ printData }) {
+    const { detailedEvents } = usePrintEvents(printData);
+
     return (
         <VStack
             align="start"
@@ -208,7 +216,7 @@ function Events({ expandedPrintData }) {
                         <ThColored>Actions</ThColored>
                     </Thead>
                     <Tbody>
-                        {expandedPrintData.detailedEvents.map((event) => {
+                        {detailedEvents.map((event) => {
                             return (
                                 <Tr key={event.timestamp}>
                                     <TdColored borderColor="gray.400">
@@ -304,11 +312,30 @@ function DangerousActions({}) {
         >
             <SectionHeader>Dangerous actions</SectionHeader>
 
-            <VStack>
+            <FormControl>
+                <FormLabel>Actions</FormLabel>
                 <ButtonGroup>
                     <Button colorScheme="red">Delete print</Button>
                 </ButtonGroup>
-            </VStack>
+            </FormControl>
+            <FormControl>
+                <FormLabel>Manually edit print JSON</FormLabel>
+                <InputGroup>
+                    <ChakraEditor
+                        height="300px"
+                        width="100%"
+                        language="json"
+                        theme={useColorModeValue('vs-light', 'vs-dark')}
+                        options={{}}
+                        value={null}
+                        onChange={null}
+                    />
+                </InputGroup>
+                <FormHelperText>
+                    Editing this is dangerous and should probably only be done as a last resort. Only edit this if you
+                    know what you&apos;re doing.
+                </FormHelperText>
+            </FormControl>
         </VStack>
     );
 }

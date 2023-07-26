@@ -1,4 +1,15 @@
 import {
+    AddIcon,
+    CheckIcon,
+    CloseIcon,
+    ExternalLinkIcon,
+    MoonIcon,
+    SearchIcon,
+    SettingsIcon,
+    SunIcon
+} from '@chakra-ui/icons';
+
+import {
     FaCalendar,
     FaPlay,
     FaPrint,
@@ -11,8 +22,6 @@ import {
     FaWrench
 } from 'react-icons/fa';
 import { FaFaceSmile, FaNoteSticky, FaPencil } from 'react-icons/fa6';
-
-import { AddIcon, CheckIcon, CloseIcon, SearchIcon, SettingsIcon } from '@chakra-ui/icons';
 
 const iconSet = {
     wrench: FaWrench,
@@ -32,7 +41,10 @@ const iconSet = {
     site: FaSitemap,
     toggles: FaToggleOn,
     note: FaNoteSticky,
-    stop: FaStop
+    stop: FaStop,
+    moon: MoonIcon,
+    sun: SunIcon,
+    external: ExternalLinkIcon
 };
 
 export default iconSet;

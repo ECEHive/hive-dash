@@ -1,10 +1,11 @@
 import { Badge, Card, CardBody, HStack, Progress, Spacer, Text, VStack, useColorModeValue } from '@chakra-ui/react';
 
 import usePrintParser from '@/hooks/usePrintParser';
+import usePrintProgress from '@/hooks/usePrintProgress';
 
 export default function PrintPreview({ actions, print }) {
-    const { expandedPrintData, progress, timeLeft, complete, progressColor, progressMessage, fixedProgress } =
-        usePrintParser(print);
+    const { betterPrintData } = usePrintParser(print);
+    const { progressColor, progressMessage, progress } = usePrintProgress(print);
 
     return (
         <Card
@@ -39,9 +40,9 @@ export default function PrintPreview({ actions, print }) {
                                         fontWeight="medium"
                                         lineHeight={1}
                                     >
-                                        {expandedPrintData.trayName}
+                                        {betterPrintData.trayName}
                                     </Text>
-                                    <Text fontSize="sm">Queued by: {expandedPrintData.queuedBy}</Text>
+                                    <Text fontSize="sm">Queued by: {betterPrintData.queuedBy}</Text>
                                 </VStack>
                                 <Spacer />
                                 <Badge
@@ -53,7 +54,7 @@ export default function PrintPreview({ actions, print }) {
                             </HStack>
                             <Progress
                                 w="100%"
-                                value={fixedProgress}
+                                value={progress}
                                 size="sm"
                                 borderRadius={5}
                                 colorScheme={progressColor}
@@ -75,7 +76,7 @@ export default function PrintPreview({ actions, print }) {
                                     fontWeight="semibold"
                                     lineHeight={1}
                                 >
-                                    {expandedPrintData.estTimeFormatted}
+                                    {betterPrintData.estTimeFormatted}
                                 </Text>
                                 <Text
                                     fontSize="md"
@@ -94,13 +95,13 @@ export default function PrintPreview({ actions, print }) {
                                         fontWeight="semibold"
                                         lineHeight={1}
                                     >
-                                        {expandedPrintData.materialUsage}
+                                        {betterPrintData.materialUsage}
                                     </Text>
                                     <Text
                                         fontSize="sm"
                                         alignSelf="flex-end"
                                     >
-                                        {expandedPrintData.materialSymbol}
+                                        {betterPrintData.materialSymbol}
                                     </Text>
                                 </HStack>
                                 <Text
@@ -119,7 +120,7 @@ export default function PrintPreview({ actions, print }) {
                                     fontWeight="semibold"
                                     lineHeight={1}
                                 >
-                                    {expandedPrintData.materialType}
+                                    {betterPrintData.materialType}
                                 </Text>
                                 <Text
                                     fontSize="md"

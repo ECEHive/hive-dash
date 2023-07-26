@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react';
-import ReactMarkdown from 'react-markdown';
 
 import {
     Box,
@@ -21,8 +20,9 @@ import {
 import { ArrowForwardIcon, ArrowRightIcon } from '@chakra-ui/icons';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import ReactMarkdown from 'react-markdown';
 
-import usePrintParser from '@/hooks/usePrintParser';
+import usePrintEvents from '@/hooks/usePrintEvents';
 
 function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
     return (
@@ -83,13 +83,13 @@ function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
 }
 
 export default function Timeline({ print }) {
-    const { expandedPrintData } = usePrintParser(print);
+    const { detailedEvents } = usePrintEvents(print);
 
     const lastElement = useRef(null);
 
     useEffect(() => {
         lastElement.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [expandedPrintData]);
+    }, [detailedEvents]);
 
     return (
         <>
@@ -107,7 +107,7 @@ export default function Timeline({ print }) {
                         h="100%"
                         spacing={2}
                     >
-                        {expandedPrintData.detailedEvents.reverse().map((event, i) => {
+                        {detailedEvents.reverse().map((event, i) => {
                             return (
                                 <>
                                     <HStack>
@@ -115,9 +115,9 @@ export default function Timeline({ print }) {
                                             key={i}
                                             event={event}
                                             isTopEnd={i == 0}
-                                            isBottomEnd={i == expandedPrintData.events.length - 1}
+                                            isBottomEnd={i == detailedEvents.length - 1}
                                         />
-                                        {i !== expandedPrintData.events.length - 1 ? (
+                                        {i !== detailedEvents.length - 1 ? (
                                             <ArrowForwardIcon fontSize="2xl" />
                                         ) : (
                                             <VStack

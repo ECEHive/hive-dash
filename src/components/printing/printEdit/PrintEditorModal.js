@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 
 import {
     Alert,
@@ -43,6 +42,8 @@ import {
 
 import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
+import ReactMarkdown from 'react-markdown';
+
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
@@ -58,7 +59,7 @@ import {
 } from '@/components/printing/printEdit/EditorComponents';
 
 export default function PrintEditorModal({ isOpen, onClose, printData }) {
-    const { expandedPrintData } = usePrintParser(printData);
+    const { betterPrintData } = usePrintParser(printData);
 
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
@@ -80,12 +81,12 @@ export default function PrintEditorModal({ isOpen, onClose, printData }) {
         },
         {
             name: 'Events',
-            component: <Events expandedPrintData={expandedPrintData} />,
+            component: <Events betterPrintData={betterPrintData} />,
             icon: <Icon as={iconSet.calendar} />
         },
         {
             name: 'Notes',
-            component: <Notes expandedPrintData={expandedPrintData} />,
+            component: <Notes betterPrintData={betterPrintData} />,
             icon: <Icon as={iconSet.note} />
         },
         {
@@ -106,7 +107,7 @@ export default function PrintEditorModal({ isOpen, onClose, printData }) {
         >
             <ModalOverlay />
             <ModalContent h="container.sm">
-                <ModalHeader>Print Editor - {expandedPrintData.trayName}</ModalHeader>
+                <ModalHeader>Print Editor - {betterPrintData.trayName}</ModalHeader>
                 <ModalBody h="100%">
                     <HStack
                         w="100%"

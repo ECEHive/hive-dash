@@ -1,43 +1,13 @@
 import { useContext, useMemo } from 'react';
 
-import { Avatar, AvatarBadge, Icon, useColorModeValue } from '@chakra-ui/react';
-
-import { AddIcon, CheckCircleIcon, CheckIcon, DownloadIcon, WarningIcon, WarningTwoIcon } from '@chakra-ui/icons';
-
 import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import iconSet from '@/util/icons';
-
-import usePrintProgress from './usePrintProgress';
+import States from '@/util/states';
 
 export default function usePrintParser(print) {
-    const eventIcons = {
-        queued: <Icon as={iconSet.pencil} />,
-        completed: <Icon as={iconSet.check} />,
-        failed: <Icon as={iconSet.stop} />,
-        printing: <Icon as={iconSet.play} />
-    };
-
-    const eventColors = {
-        queued: useColorModeValue('blue.600', 'blue.300'),
-        completed: useColorModeValue('green.600', 'green.300'),
-        failed: useColorModeValue('red.600', 'red.300'),
-        printing: useColorModeValue('green.600', 'green.300')
-    };
-
-    const eventNames = {
-        queued: 'Print queued',
-        completed: 'Print completed',
-        failed: 'Print failed',
-        printing: 'Print started'
-    };
-
     const { printers, printerTypes } = useContext(PrintingContext);
-
-    // maybe? MOVE PROGRESS TRACKING TO ITS OWN SEPARATE THING TO REDUCE OVERHEAD
-    const [progress, timeLeft, complete] = usePrintProgress(print);
 
     const printerData = useMemo(() => {
         if (!print) return null;
@@ -49,35 +19,11 @@ export default function usePrintParser(print) {
         return printerTypes.find((t) => t.id === printerData.type);
     }, [printerData, printerTypes]);
 
-    const expandedPrintData = useMemo(() => {
+    const betterPrintData = useMemo(() => {
         if (!print) return null;
         return {
             ...print,
-            //sprinkle in some useful data so i dont have to make it again later
-            detailedEvents: print.events.map((event) => {
-                return {
-                    ...event,
-                    description: eventNames[event.type],
-                    formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
-                    icon: (
-                        <Avatar
-                            size="sm"
-                            icon={eventIcons[event.type]}
-                            bgColor={eventColors[event.type]}
-                        >
-                            {event?.notes?.length > 0 && (
-                                <AvatarBadge
-                                    bg="yellow.300"
-                                    boxSize="1em"
-                                    placement="top-end"
-                                />
-                            )}
-                        </Avatar>
-                    )
-                };
-            }),
-            failed: print.events[0].type === 'failed',
-            latestEvent: print.events[0].type,
+            stateName: Object.keys(States).find((key) => States[key] === print.state),
             estTimeFormatted: dayjs.duration(print.estTime).format('HH:mm'),
             queuedAtExtendedFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY h:mm A'),
             queuedAtFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY'),
@@ -85,52 +31,9 @@ export default function usePrintParser(print) {
         };
     }, [print, printerTypeData]);
 
-    const fixedProgress = useMemo(() => {
-        if (!expandedPrintData) return 0;
-        return expandedPrintData.failed || expandedPrintData.completed ? 100 : progress;
-    }, [expandedPrintData, progress]);
-
-    const progressColor = useMemo(() => {
-        if (!expandedPrintData) return 'gray';
-        if (expandedPrintData.failed) {
-            return 'red';
-        } else if (print.completed) {
-            return 'green';
-        } else if (complete) {
-            return 'yellow';
-        } else if (print.printing) {
-            return 'blue';
-        } else if (expandedPrintData.latestEvent === 'queued') {
-            return 'gray';
-        } else {
-            return 'gray';
-        }
-    }, [print, expandedPrintData, complete]);
-
-    const progressMessage = useMemo(() => {
-        if (!expandedPrintData) return 'unknown';
-        if (expandedPrintData.failed) {
-            return 'failed';
-        } else if (complete && !expandedPrintData.completed) {
-            return 'waiting';
-        } else if (expandedPrintData.completed) {
-            return 'completed';
-        } else if (expandedPrintData.printing) {
-            return `${timeLeft} left`;
-        } else if (expandedPrintData.latestEvent === 'queued') {
-            return 'queued';
-        }
-    }, [complete, expandedPrintData, timeLeft]);
-
     return {
-        expandedPrintData,
+        betterPrintData,
         printerData,
-        printerTypeData,
-        progress,
-        fixedProgress,
-        timeLeft,
-        complete,
-        progressColor,
-        progressMessage
+        printerTypeData
     };
 }

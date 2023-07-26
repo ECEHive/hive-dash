@@ -32,13 +32,16 @@ import dayjs from '@/lib/time';
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/usePrintParser';
+import usePrintProgress from '@/hooks/usePrintProgress';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
 import stateColors from '@/util/stateColors';
+import States from '@/util/states';
 
 function PrintListItem({ data, isActive, onClick }) {
-    const { expandedPrintData, progressMessage, printerData, progress, timeLeft } = usePrintParser(data);
+    const { betterPrintData, printerData } = usePrintParser(data);
+    const { progressMessage, progress, timeLeft } = usePrintProgress(data);
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
     const { secondary } = useTextColor();
@@ -60,7 +63,7 @@ function PrintListItem({ data, isActive, onClick }) {
                     h="100%"
                 >
                     <HStack w="100%">
-                        <Tooltip label={expandedPrintData.trayName}>
+                        <Tooltip label={betterPrintData.trayName}>
                             <Heading
                                 size="md"
                                 fontWeight="medium"
@@ -69,15 +72,15 @@ function PrintListItem({ data, isActive, onClick }) {
                                 textOverflow="ellipsis"
                                 whiteSpace="nowrap"
                             >
-                                {expandedPrintData.trayName}
+                                {betterPrintData.trayName}
                             </Heading>
                         </Tooltip>
                         <Spacer />
                         <Badge
                             variant="subtle"
-                            colorScheme={stateColors[expandedPrintData.latestEvent]}
+                            colorScheme={stateColors[betterPrintData.stateName.toLowerCase()]}
                         >
-                            {expandedPrintData.latestEvent}
+                            {betterPrintData.stateName}
                         </Badge>
                     </HStack>
 
@@ -93,11 +96,11 @@ function PrintListItem({ data, isActive, onClick }) {
                         </HStack>
                         <HStack spacing={2}>
                             <Icon as={iconSet.calendar} />
-                            <Text fontWeight="normal">{expandedPrintData.queuedAtFormatted}</Text>
+                            <Text fontWeight="normal">{betterPrintData.queuedAtFormatted}</Text>
                         </HStack>
                     </HStack>
 
-                    {expandedPrintData.printing && (
+                    {betterPrintData.state === States.PRINTING && (
                         <>
                             <Divider />
 

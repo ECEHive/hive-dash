@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 import {
     Alert,
@@ -24,6 +23,7 @@ import {
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 import dayjs from '@/lib/time';
 
@@ -33,6 +33,7 @@ import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
+import States from '@/util/states';
 
 import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
@@ -77,7 +78,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
         (event) => {
             let data = {
                 ...activePrint,
-                printing: false,
+                state: event.type === 'completed' ? States.COMPLETED : States.FAILED,
                 completed: event.type === 'completed' || activePrint.completed,
                 events: [event, ...activePrint.events]
             };
@@ -167,7 +168,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                     <PrintPreview
                                         print={activePrint}
                                         actions={
-                                            activePrint.printing && (
+                                            activePrint.state === States.PRINTING && (
                                                 <ButtonGroup
                                                     variant="outline"
                                                     size="md"

@@ -23,11 +23,13 @@ import { SearchIcon } from '@chakra-ui/icons';
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/usePrintParser';
+import usePrintProgress from '@/hooks/usePrintProgress';
 
 import PrintingLayout from '@/layouts/printing/PrintingLayout';
 
 function LogItem({ printData }) {
-    const { expandedPrintData, progressMessage, progressColor, printerData } = usePrintParser(printData);
+    const { betterPrintData, printerData } = usePrintParser(printData);
+    const { progressMessage, progressColor } = usePrintProgress(printData);
 
     return (
         <Tr>
@@ -37,12 +39,12 @@ function LogItem({ printData }) {
                     justify="start"
                     spacing={1}
                 >
-                    <Text fontSize="md">{expandedPrintData.trayName}</Text>
+                    <Text fontSize="md">{betterPrintData.trayName}</Text>
                     <Text
                         fontSize="xs"
                         color="gray.500"
                     >
-                        {expandedPrintData.queuedAtExtendedFormatted}
+                        {betterPrintData.queuedAtExtendedFormatted}
                     </Text>
                 </VStack>
             </Td>
@@ -55,8 +57,8 @@ function LogItem({ printData }) {
                     {progressMessage}
                 </Badge>
             </Td>
-            <Td>{expandedPrintData.estTimeFormatted}</Td>
-            <Td>{expandedPrintData.queuedBy}</Td>
+            <Td>{betterPrintData.estTimeFormatted}</Td>
+            <Td>{betterPrintData.queuedBy}</Td>
         </Tr>
     );
 }

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 
 import {
     Box,
@@ -27,6 +26,7 @@ import {
 } from '@chakra-ui/react';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import ReactMarkdown from 'react-markdown';
 
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 

@@ -24,6 +24,8 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
+import States from '@/util/states';
+
 import QueueTableItem from './QueueTableItem';
 
 export default function QueueTable({ selectedPrinterData, activePrint }) {
@@ -43,7 +45,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     function startPrint(printData) {
         let newPrintData = {
             ...printData,
-            printing: true,
+            state: States.PRINTING,
             events: [
                 {
                     type: 'printing',

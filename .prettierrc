@@ -12,7 +12,7 @@
     "semi": true,
     "singleAttributePerLine": true,
     "importOrder": [
-        "^react",
+        "^react$",
         "^@chakra-ui/react",
         "^@chakra-ui/icons",
         "^react-icons/(.*)$",
