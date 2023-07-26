@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { FaPencilAlt, FaPlay, FaWrench } from 'react-icons/fa';
 
 import {
     Badge,

@@ -1,8 +1,6 @@
 import { useContext, useMemo } from 'react';
-import { BsCheck, BsPencilFill, BsPlayFill, BsStopFill } from 'react-icons/bs';
-import { FaPencilAlt } from 'react-icons/fa';
 
-import { Avatar, AvatarBadge, useColorModeValue } from '@chakra-ui/react';
+import { Avatar, AvatarBadge, Icon, useColorModeValue } from '@chakra-ui/react';
 
 import { AddIcon, CheckCircleIcon, CheckIcon, DownloadIcon, WarningIcon, WarningTwoIcon } from '@chakra-ui/icons';
 
@@ -10,14 +8,16 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
+import iconSet from '@/util/icons';
+
 import usePrintProgress from './usePrintProgress';
 
 export default function usePrintParser(print) {
     const eventIcons = {
-        queued: <BsPencilFill fontSize={14} />,
-        completed: <BsCheck fontSize={26} />,
-        failed: <BsStopFill fontSize={22} />,
-        printing: <BsPlayFill fontSize={22} />
+        queued: <Icon as={iconSet.pencil} />,
+        completed: <Icon as={iconSet.check} />,
+        failed: <Icon as={iconSet.stop} />,
+        printing: <Icon as={iconSet.play} />
     };
 
     const eventColors = {

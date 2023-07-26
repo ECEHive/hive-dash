@@ -1,5 +1,8 @@
 import { useMemo } from 'react';
-import { AiFillDashboard, AiFillPrinter, AiOutlinePlus, AiOutlineSearch, AiOutlineTable } from 'react-icons/ai';
+
+import { Icon } from '@chakra-ui/react';
+
+import iconSet from '@/util/icons';
 
 import SidebarTemplate from '@/components/SidebarTemplate';
 
@@ -9,7 +12,7 @@ export default function Navigation(props) {
             {
                 type: 'button',
                 name: 'New print',
-                icon: <AiOutlinePlus />,
+                icon: <Icon as={iconSet.add} />,
                 href: '/new',
                 colorScheme: 'green'
             },
@@ -21,25 +24,25 @@ export default function Navigation(props) {
             {
                 type: 'button',
                 name: 'Dashboard',
-                icon: <AiFillDashboard />,
+                icon: <Icon as={iconSet.dashboard} />,
                 href: '/dashboard'
             },
             {
                 type: 'button',
                 name: 'Printers',
-                icon: <AiFillPrinter />,
+                icon: <Icon as={iconSet.printer} />,
                 href: '/printers'
             },
             {
                 type: 'button',
                 name: 'Find a print',
-                icon: <AiOutlineSearch />,
+                icon: <Icon as={iconSet.search} />,
                 href: '/find'
             },
             {
                 type: 'button',
                 name: 'Print logs',
-                icon: <AiOutlineTable />,
+                icon: <Icon as={iconSet.table} />,
                 href: '/logs'
             },
 
@@ -50,7 +53,7 @@ export default function Navigation(props) {
             {
                 type: 'button',
                 name: 'Knowledge base',
-                icon: <AiOutlineSearch />,
+                icon: <Icon as={iconSet.search} />,
                 href: '/knowledge'
             }
         ],

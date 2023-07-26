@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { MdTimeline } from 'react-icons/md';
 
 import {
     Alert,

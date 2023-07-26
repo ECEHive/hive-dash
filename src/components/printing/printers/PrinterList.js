@@ -1,5 +1,4 @@
 import { useContext, useMemo, useState } from 'react';
-import { BsPrinterFill, BsSortNumericDown } from 'react-icons/bs';
 
 import {
     Badge,
@@ -10,6 +9,7 @@ import {
     Divider,
     HStack,
     Heading,
+    Icon,
     IconButton,
     Input,
     InputGroup,
@@ -27,7 +27,9 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrinterParser from '@/hooks/usePrinterParser';
+import useTextColor from '@/hooks/useTextColor';
 
+import iconSet from '@/util/icons';
 import stateColors from '@/util/stateColors';
 
 function PrinterListItem({ data, onClick, isActive, queue }) {
@@ -36,6 +38,8 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
     const cardColor = useColorModeValue('white.100', 'gray.700');
+
+    const { secondary } = useTextColor();
 
     return (
         <>
@@ -78,7 +82,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                 w="100%"
                                 justifyContent="flex-start"
                                 spacing={5}
-                                color="gray.300"
+                                color={secondary}
                             >
                                 {/* <HStack spacing={2}>
                                     <BsPrinterFill size={15} />
@@ -87,7 +91,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                     </Text>
                                 </HStack> */}
                                 <HStack spacing={2}>
-                                    <BsSortNumericDown size={15} />
+                                    <Icon as={iconSet.queue} />
                                     <Text fontWeight="normal">{expandedPrinterData?.queueLength} in queue</Text>
                                 </HStack>
                             </HStack>

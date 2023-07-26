@@ -1,11 +1,10 @@
-import { BsSortNumericDown } from 'react-icons/bs';
-
 import {
     Badge,
     Card,
     CardBody,
     HStack,
     Heading,
+    Icon,
     Link,
     Progress,
     Spacer,
@@ -18,13 +17,17 @@ import NextLink from 'next/link';
 
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrinterParser from '@/hooks/usePrinterParser';
+import useTextColor from '@/hooks/useTextColor';
 
+import iconSet from '@/util/icons';
 import stateColors from '@/util/stateColors';
 
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
     const { expandedPrintData, progress, timeLeft, progressColor, progressMessage, fixedProgress } =
         usePrintParser(currentPrintData);
+
+    const { secondary } = useTextColor();
 
     return (
         <>
@@ -71,9 +74,9 @@ export default function PrinterCard({ data }) {
                                 </HStack>
                                 <HStack
                                     spacing={2}
-                                    color="gray.300"
+                                    color={secondary}
                                 >
-                                    <BsSortNumericDown size={15} />
+                                    <Icon as={iconSet.queue} />
                                     <Text fontWeight="normal">{expandedPrinterData?.queueLength} in queue</Text>
                                 </HStack>
                             </VStack>

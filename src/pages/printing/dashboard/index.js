@@ -1,8 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
-import { FaWrench } from 'react-icons/fa';
-import { HiMiniQueueList } from 'react-icons/hi2';
 import 'react-resizable/css/styles.css';
 
 import { Box, SimpleGrid } from '@chakra-ui/react';

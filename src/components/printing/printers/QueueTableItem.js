@@ -1,10 +1,9 @@
-import { FaPencilAlt, FaPlay } from 'react-icons/fa';
-
 import {
     Badge,
     Button,
     ButtonGroup,
     HStack,
+    Icon,
     IconButton,
     Table,
     Tbody,
@@ -18,6 +17,8 @@ import {
 } from '@chakra-ui/react';
 
 import usePrintParser from '@/hooks/usePrintParser';
+
+import iconSet from '@/util/icons';
 
 export default function QueueTableItem({ printData, startPrint, canQueue }) {
     const { expandedPrintData, progressMessage, progressColor } = usePrintParser(printData);
@@ -53,7 +54,7 @@ export default function QueueTableItem({ printData, startPrint, canQueue }) {
             <Td>
                 <ButtonGroup size="sm">
                     <Button
-                        leftIcon={<FaPlay />}
+                        leftIcon={<Icon as={iconSet.play} />}
                         colorScheme="green"
                         variant="solid"
                         isDisabled={!canQueue}
@@ -62,7 +63,7 @@ export default function QueueTableItem({ printData, startPrint, canQueue }) {
                         Start
                     </Button>
                     <Button
-                        leftIcon={<FaPencilAlt />}
+                        leftIcon={<Icon as={iconSet.pencil} />}
                         colorScheme="orange"
                         variant="solid"
                     >

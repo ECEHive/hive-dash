@@ -1,5 +1,8 @@
 import { useMemo } from 'react';
-import { AiFillDashboard, AiFillPrinter, AiFillSmile, AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
+
+import { Icon } from '@chakra-ui/react';
+
+import iconSet from '@/util/icons';
 
 import SidebarTemplate from '@/components/SidebarTemplate';
 
@@ -9,19 +12,19 @@ export default function Navigation(props) {
             {
                 type: 'button',
                 name: 'Printers',
-                icon: <AiFillPrinter />,
+                icon: <Icon as={iconSet.printer} />,
                 href: '/printers'
             },
             {
                 type: 'button',
                 name: 'People',
-                icon: <AiFillSmile />,
+                icon: <Icon as={iconSet.smile} />,
                 href: '/people'
             },
             {
                 type: 'button',
                 name: 'Website',
-                icon: <AiFillDashboard />,
+                icon: <Icon as={iconSet.site} />,
                 href: '/website'
             }
         ],

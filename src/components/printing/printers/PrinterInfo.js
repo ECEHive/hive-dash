@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { FaWrench } from 'react-icons/fa';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 import {
@@ -14,6 +13,7 @@ import {
     CardBody,
     HStack,
     Heading,
+    Icon,
     IconButton,
     Spacer,
     Text,
@@ -30,6 +30,9 @@ import dayjs from '@/lib/time';
 import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterParser from '@/hooks/usePrinterParser';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+import useTextColor from '@/hooks/useTextColor';
+
+import iconSet from '@/util/icons';
 
 import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
@@ -40,6 +43,8 @@ import UpdateModal from '@/components/printing/printers/UpdateModal';
 export default function PrinterInfo({ selectedPrinterData }) {
     const printUpdater = usePrintUpdate();
     const printerUpdater = usePrinterUpdate();
+
+    const { secondary } = useTextColor();
 
     const { isOpen: isMaintenanceOpen, onOpen: onMaintenanceOpen, onClose: onMaintenanceClose } = useDisclosure();
     const { isOpen: isStatusOpen, onOpen: onStatusOpen, onClose: onStatusClose } = useDisclosure();
@@ -122,7 +127,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                 <Heading size="lg">{selectedPrinterData.displayName}</Heading>
                                 <Spacer />
                                 <IconButton
-                                    icon={<FaWrench />}
+                                    icon={<Icon as={iconSet.wrench} />}
                                     colorScheme="orange"
                                     onClick={onMaintenanceOpen}
                                 />
@@ -200,7 +205,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                             w="100%"
                             justify="center"
                         >
-                            <Text color="gray.400">select a printer</Text>
+                            <Text color={secondary}>select a printer</Text>
                         </VStack>
                     )}
                     {/* </Box> */}

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { BsCalendarFill, BsPrinterFill } from 'react-icons/bs';
 
 import {
     Badge,
@@ -11,6 +10,7 @@ import {
     Divider,
     HStack,
     Heading,
+    Icon,
     Input,
     InputGroup,
     InputLeftElement,
@@ -32,13 +32,16 @@ import dayjs from '@/lib/time';
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/usePrintParser';
+import useTextColor from '@/hooks/useTextColor';
 
+import iconSet from '@/util/icons';
 import stateColors from '@/util/stateColors';
 
 function PrintListItem({ data, isActive, onClick }) {
     const { expandedPrintData, progressMessage, printerData, progress, timeLeft } = usePrintParser(data);
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
+    const { secondary } = useTextColor();
 
     return (
         <Card
@@ -82,14 +85,14 @@ function PrintListItem({ data, isActive, onClick }) {
                         w="100%"
                         justifyContent="flex-start"
                         spacing={5}
-                        color="gray.300"
+                        color={secondary}
                     >
                         <HStack spacing={2}>
-                            <BsPrinterFill size={15} />
+                            <Icon as={iconSet.printer} />
                             <Text fontWeight="normal">{printerData?.displayName}</Text>
                         </HStack>
                         <HStack spacing={2}>
-                            <BsCalendarFill size={15} />
+                            <Icon as={iconSet.calendar} />
                             <Text fontWeight="normal">{expandedPrintData.queuedAtFormatted}</Text>
                         </HStack>
                     </HStack>

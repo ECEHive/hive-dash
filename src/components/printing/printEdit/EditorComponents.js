@@ -1,6 +1,3 @@
-import { AiFillPrinter, AiFillSetting } from 'react-icons/ai';
-import { BsCalendarFill, BsPerson, BsPersonFill, BsToggles } from 'react-icons/bs';
-import { FaNoteSticky } from 'react-icons/fa6';
 import ReactMarkdown from 'react-markdown';
 
 import {
@@ -95,7 +92,7 @@ function PrintStates({}) {
                 <InputGroup>
                     <Switch colorScheme="red" />
                 </InputGroup>
-                <FormHelperText>Mark the printer as cancelled</FormHelperText>
+                <FormHelperText>Mark the print as cancelled</FormHelperText>
             </FormControl>
             {/* </HStack> */}
         </VStack>

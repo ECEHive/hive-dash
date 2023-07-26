@@ -1,7 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { AiFillPrinter, AiFillSetting } from 'react-icons/ai';
-import { BsCalendarFill, BsPerson, BsPersonFill, BsToggles } from 'react-icons/bs';
-import { FaNoteSticky } from 'react-icons/fa6';
 import ReactMarkdown from 'react-markdown';
 
 import {
@@ -18,6 +15,7 @@ import {
     FormLabel,
     HStack,
     Heading,
+    Icon,
     IconButton,
     Input,
     InputGroup,
@@ -48,6 +46,8 @@ import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
+import iconSet from '@/util/icons';
+
 import {
     DangerousActions,
     Events,
@@ -66,32 +66,32 @@ export default function PrintEditorModal({ isOpen, onClose, printData }) {
         {
             name: 'Print states',
             component: <PrintStates />,
-            icon: <BsToggles />
+            icon: <Icon as={iconSet.toggles} />
         },
         {
             name: 'End user',
             component: <UserInfo />,
-            icon: <BsPersonFill />
+            icon: <Icon as={iconSet.smile} />
         },
         {
             name: 'Print info',
             component: <PrintInfo />,
-            icon: <AiFillPrinter />
+            icon: <Icon as={iconSet.printer} />
         },
         {
             name: 'Events',
             component: <Events expandedPrintData={expandedPrintData} />,
-            icon: <BsCalendarFill />
+            icon: <Icon as={iconSet.calendar} />
         },
         {
             name: 'Notes',
             component: <Notes expandedPrintData={expandedPrintData} />,
-            icon: <FaNoteSticky />
+            icon: <Icon as={iconSet.note} />
         },
         {
             name: 'Actions',
             component: <DangerousActions />,
-            icon: <AiFillSetting />,
+            icon: <Icon as={iconSet.settings} />,
             color: 'red'
         }
     ];
