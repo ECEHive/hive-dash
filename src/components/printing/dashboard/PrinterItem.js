@@ -21,12 +21,12 @@ import usePrinterParser from '@/hooks/usePrinterParser';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
-import stateColors from '@/util/stateColors';
+import { StateColors } from '@/util/states';
 
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
     const { betterPrintData } = usePrintParser(currentPrintData);
-    const { progress, progressColor, progressMessage } = usePrintProgress(currentPrintData);
+    const { progress, progressBarColor, progressMessage } = usePrintProgress(currentPrintData);
 
     const { secondary } = useTextColor();
 
@@ -68,7 +68,7 @@ export default function PrinterCard({ data }) {
                                     {/* <Spacer /> */}
                                     <Badge
                                         variant="subtle"
-                                        colorScheme={stateColors[expandedPrinterData.state]}
+                                        colorScheme={StateColors[expandedPrinterData.state]}
                                     >
                                         {expandedPrinterData.state}
                                     </Badge>
@@ -120,7 +120,7 @@ export default function PrinterCard({ data }) {
                                         size="sm"
                                         w="100%"
                                         borderRadius={5}
-                                        colorScheme={progressColor}
+                                        colorScheme={progressBarColor}
                                     />
                                 </VStack>
                             )}

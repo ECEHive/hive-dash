@@ -29,6 +29,7 @@ export default function usePrintEvents(print) {
     };
 
     const detailedEvents = useMemo(() => {
+        if (!print) return [];
         return print.events.map((event) => {
             return {
                 ...event,
@@ -52,7 +53,7 @@ export default function usePrintEvents(print) {
             };
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [print.events]); //ignore this warning, this is a safe memoized value
+    }, [print?.events]); //ignore this warning, this is a safe memoized value
 
     return { detailedEvents };
 }

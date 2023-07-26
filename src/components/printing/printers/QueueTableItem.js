@@ -23,7 +23,7 @@ import iconSet from '@/util/icons';
 
 export default function QueueTableItem({ printData, startPrint, canQueue }) {
     const { betterPrintData } = usePrintParser(printData);
-    const { progressMessage, progressColor } = usePrintProgress(printData);
+    const { progressMessage, progressMessageColor } = usePrintProgress(printData);
 
     return (
         <Tr key={print._id}>
@@ -37,7 +37,7 @@ export default function QueueTableItem({ printData, startPrint, canQueue }) {
                         <Text fontSize="md">{betterPrintData.trayName}</Text>
                         <Badge
                             variant="subtle"
-                            colorScheme={progressColor}
+                            colorScheme={progressMessageColor}
                         >
                             {progressMessage}
                         </Badge>

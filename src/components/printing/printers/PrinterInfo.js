@@ -33,7 +33,7 @@ import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
-import States from '@/util/states';
+import { PrintStates } from '@/util/states';
 
 import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
@@ -78,7 +78,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
         (event) => {
             let data = {
                 ...activePrint,
-                state: event.type === 'completed' ? States.COMPLETED : States.FAILED,
+                state: event.type === 'completed' ? PrintStates.COMPLETED : PrintStates.FAILED,
                 completed: event.type === 'completed' || activePrint.completed,
                 events: [event, ...activePrint.events]
             };
@@ -168,7 +168,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                     <PrintPreview
                                         print={activePrint}
                                         actions={
-                                            activePrint.state === States.PRINTING && (
+                                            activePrint.state === PrintStates.PRINTING && (
                                                 <ButtonGroup
                                                     variant="outline"
                                                     size="md"

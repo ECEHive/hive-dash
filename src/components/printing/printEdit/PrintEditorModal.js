@@ -54,7 +54,7 @@ import {
     Events,
     Notes,
     PrintInfo,
-    PrintStates,
+    PrintState,
     UserInfo
 } from '@/components/printing/printEdit/EditorComponents';
 
@@ -66,7 +66,7 @@ export default function PrintEditorModal({ isOpen, onClose, printData }) {
     const pages = [
         {
             name: 'Print states',
-            component: <PrintStates />,
+            component: <PrintState />,
             icon: <Icon as={iconSet.toggles} />
         },
         {

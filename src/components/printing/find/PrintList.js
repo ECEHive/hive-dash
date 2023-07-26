@@ -36,8 +36,7 @@ import usePrintProgress from '@/hooks/usePrintProgress';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
-import stateColors from '@/util/stateColors';
-import States from '@/util/states';
+import { PrintStates, StateColors } from '@/util/states';
 
 function PrintListItem({ data, isActive, onClick }) {
     const { betterPrintData, printerData } = usePrintParser(data);
@@ -78,7 +77,7 @@ function PrintListItem({ data, isActive, onClick }) {
                         <Spacer />
                         <Badge
                             variant="subtle"
-                            colorScheme={stateColors[betterPrintData.stateName.toLowerCase()]}
+                            colorScheme={StateColors[betterPrintData.state]}
                         >
                             {betterPrintData.stateName}
                         </Badge>
@@ -100,7 +99,7 @@ function PrintListItem({ data, isActive, onClick }) {
                         </HStack>
                     </HStack>
 
-                    {betterPrintData.state === States.PRINTING && (
+                    {betterPrintData.state === PrintStates.PRINTING && (
                         <>
                             <Divider />
 

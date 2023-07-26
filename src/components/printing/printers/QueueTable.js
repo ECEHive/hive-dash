@@ -24,7 +24,7 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
-import States from '@/util/states';
+import { PrintStates } from '@/util/states';
 
 import QueueTableItem from './QueueTableItem';
 
@@ -39,13 +39,13 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     }, [selectedPrinterData, queue]);
 
     const canQueue = useMemo(() => {
-        return !activePrint?.printing && selectedPrinterData?.enabled;
+        return activePrint?.state !== PrintStates.PRINTING && selectedPrinterData?.enabled;
     }, [activePrint, selectedPrinterData]);
 
     function startPrint(printData) {
         let newPrintData = {
             ...printData,
-            state: States.PRINTING,
+            state: PrintStates.PRINTING,
             events: [
                 {
                     type: 'printing',

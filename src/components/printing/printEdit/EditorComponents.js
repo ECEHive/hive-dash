@@ -38,6 +38,8 @@ import ReactMarkdown from 'react-markdown';
 
 import usePrintEvents from '@/hooks/usePrintEvents';
 
+import { PrintStates, StateColors } from '@/util/states';
+
 const ChakraEditor = chakra(Editor);
 
 function SectionHeader({ children }) {
@@ -70,14 +72,14 @@ function TdColored({ children }) {
     return <Td borderColor="gray.600">{children}</Td>;
 }
 
-function PrintStates({}) {
+function PrintState({}) {
     return (
         <VStack
             align="start"
             spacing={3}
-            maxW="460px"
+            maxW="full"
         >
-            <SectionHeader>Print status</SectionHeader>
+            <SectionHeader>Print state</SectionHeader>
 
             {/* <HStack
                 w="full"
@@ -85,20 +87,29 @@ function PrintStates({}) {
                 align="start"
             > */}
             <FormControl>
-                <FormLabel>Completed</FormLabel>
+                <FormLabel>State</FormLabel>
                 <InputGroup>
-                    <Switch colorScheme="green" />
+                    <ButtonGroup
+                        orientation="horizontal"
+                        isAttached
+                        variant="outline"
+                    >
+                        {Object.keys(PrintStates).map((state) => {
+                            let val = PrintStates[state];
+                            return (
+                                <Button
+                                    //colorScheme={StateColors[val]}
+                                    key={state}
+                                >
+                                    {state}
+                                </Button>
+                            );
+                        })}
+                    </ButtonGroup>
                 </InputGroup>
                 <FormHelperText>
-                    Mark the print as completed (done automatically on the printers (link) page)
+                    Change the print&apos;s state. This will not add an entry to the print&apos;s events history.
                 </FormHelperText>
-            </FormControl>
-            <FormControl>
-                <FormLabel>Cancelled</FormLabel>
-                <InputGroup>
-                    <Switch colorScheme="red" />
-                </InputGroup>
-                <FormHelperText>Mark the print as cancelled</FormHelperText>
             </FormControl>
             {/* </HStack> */}
         </VStack>
@@ -258,7 +269,7 @@ function Events({ printData }) {
     );
 }
 
-function Notes({ expandedPrintData }) {
+function Notes({ betterPrintData }) {
     return (
         <VStack
             align="start"
@@ -296,7 +307,7 @@ function Notes({ expandedPrintData }) {
                         components={ChakraUIRenderer()}
                         skipHtml
                     >
-                        {expandedPrintData.notes}
+                        {betterPrintData.notes}
                     </ReactMarkdown>
                 </CardBody>
             </Card>
@@ -340,4 +351,4 @@ function DangerousActions({}) {
     );
 }
 
-export { PrintStates, UserInfo, PrintInfo, Events, Notes, DangerousActions };
+export { PrintState, UserInfo, PrintInfo, Events, Notes, DangerousActions };

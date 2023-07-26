@@ -29,7 +29,7 @@ import PrintingLayout from '@/layouts/printing/PrintingLayout';
 
 function LogItem({ printData }) {
     const { betterPrintData, printerData } = usePrintParser(printData);
-    const { progressMessage, progressColor } = usePrintProgress(printData);
+    const { progressMessage, progressMessageColor } = usePrintProgress(printData);
 
     return (
         <Tr>
@@ -52,7 +52,7 @@ function LogItem({ printData }) {
             <Td>
                 <Badge
                     variant="subtle"
-                    colorScheme={progressColor}
+                    colorScheme={progressMessageColor}
                 >
                     {progressMessage}
                 </Badge>

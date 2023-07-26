@@ -5,7 +5,7 @@ import usePrintProgress from '@/hooks/usePrintProgress';
 
 export default function PrintPreview({ actions, print }) {
     const { betterPrintData } = usePrintParser(print);
-    const { progressColor, progressMessage, progress } = usePrintProgress(print);
+    const { progressBarColor, progressMessage, progress } = usePrintProgress(print);
 
     return (
         <Card
@@ -57,7 +57,7 @@ export default function PrintPreview({ actions, print }) {
                                 value={progress}
                                 size="sm"
                                 borderRadius={5}
-                                colorScheme={progressColor}
+                                colorScheme={progressBarColor}
                             />
                         </VStack>
 

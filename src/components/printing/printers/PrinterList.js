@@ -31,7 +31,7 @@ import usePrinterParser from '@/hooks/usePrinterParser';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
-import stateColors from '@/util/stateColors';
+import { StateColors } from '@/util/states';
 
 function PrinterListItem({ data, onClick, isActive, queue }) {
     const { expandedPrinterData, currentPrintData, printerTypeData } = usePrinterParser(data);
@@ -74,7 +74,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                 <Spacer />
                                 <Badge
                                     variant="subtle"
-                                    colorScheme={stateColors[expandedPrinterData.state]}
+                                    colorScheme={StateColors[expandedPrinterData.state]}
                                 >
                                     {expandedPrinterData.state}
                                 </Badge>

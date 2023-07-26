@@ -4,7 +4,7 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import States from '@/util/states';
+import { PrintStates } from '@/util/states';
 
 export default function usePrintParser(print) {
     const { printers, printerTypes } = useContext(PrintingContext);
@@ -23,7 +23,7 @@ export default function usePrintParser(print) {
         if (!print) return null;
         return {
             ...print,
-            stateName: Object.keys(States).find((key) => States[key] === print.state),
+            stateName: Object.keys(PrintStates).find((key) => PrintStates[key] === print.state),
             estTimeFormatted: dayjs.duration(print.estTime).format('HH:mm'),
             queuedAtExtendedFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY h:mm A'),
             queuedAtFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY'),

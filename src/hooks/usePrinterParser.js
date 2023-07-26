@@ -4,7 +4,7 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import States from '@/util/states';
+import { PrintStates } from '@/util/states';
 
 export default function usePrinterParser(printer) {
     const { queue, printerTypes } = useContext(PrintingContext);
@@ -25,7 +25,7 @@ export default function usePrinterParser(printer) {
         let state = 'idle';
         if (!printer.enabled) {
             state = 'down';
-        } else if (currentPrintData?.state === States.PRINTING) {
+        } else if (currentPrintData?.state === PrintStates.PRINTING) {
             state = 'printing';
         }
 

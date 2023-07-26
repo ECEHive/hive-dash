@@ -19,7 +19,7 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrinterParser from '@/hooks/usePrinterParser';
 
-import stateColors from '@/util/stateColors';
+import { StateColors } from '@/util/states';
 
 function PrinterItem({ data, onClick, isActive }) {
     const { expandedPrinterData } = usePrinterParser(data);
@@ -58,7 +58,7 @@ function PrinterItem({ data, onClick, isActive }) {
                             </Heading>
                             <Spacer />
                             <Badge
-                                colorScheme={stateColors[expandedPrinterData.state]}
+                                colorScheme={StateColors[expandedPrinterData.state]}
                                 variant="subtle"
                             >
                                 {expandedPrinterData.state}
