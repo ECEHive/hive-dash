@@ -36,7 +36,7 @@ import { StateColors } from '@/util/states';
 function PrinterListItem({ data, onClick, isActive, queue }) {
     const { expandedPrinterData, currentPrintData, printerTypeData } = usePrinterParser(data);
     const { betterPrintData } = usePrintParser(currentPrintData);
-    const { timeLeft, progress } = usePrintProgress(currentPrintData);
+    const { timeLeftHumanized, progress } = usePrintProgress(currentPrintData);
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
     const cardColor = useColorModeValue('white.100', 'gray.700');
@@ -128,7 +128,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                                 color="gray.400"
                                                 lineHeight={1}
                                             >
-                                                {timeLeft}
+                                                {timeLeftHumanized}
                                             </Text>
                                         </VStack>
                                     </HStack>

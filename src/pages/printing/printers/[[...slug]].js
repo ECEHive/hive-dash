@@ -34,6 +34,7 @@ import {
 
 import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
 
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import dayjs from '@/lib/time';
@@ -42,6 +43,8 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+
+import SquareLogo from '@/assets/square_logo.png';
 
 import TopLayout from '@/layouts/printing/PrintingLayout';
 
@@ -76,6 +79,38 @@ export default function Printers(props) {
 
     return (
         <>
+            <Head>
+                <title>{selectedPrinterData.displayName} @ The HIVE</title>
+
+                {selectedPrinterData && (
+                    <>
+                        <meta
+                            name="og:site_name"
+                            content={'The HIVE'}
+                        />
+                        <meta
+                            name="og:title"
+                            content={'{selectedPrinterData.displayName} @ The HIVE'}
+                        />
+                        <meta
+                            name="og:url"
+                            content={`https://hive.utrgv.edu/printing/printers/${selectedPrinterData.id}`}
+                        />
+                        <meta
+                            name="og:type"
+                            content="website"
+                        />
+                        <meta
+                            name="og:image"
+                            content={SquareLogo}
+                        />
+                        <meta
+                            name="og:description"
+                            content={`${selectedPrinterData.displayName} is a 3D printer at The HIVE makerspace.`}
+                        />
+                    </>
+                )}
+            </Head>
             {/* <CompleteConfirm /> */}
             <Box
                 w="100%"

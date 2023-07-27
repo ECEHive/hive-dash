@@ -136,7 +136,7 @@ export default function PrintEditorModal({ isOpen, onClose, initialData }) {
             icon: <Icon as={iconSet.note} />
         },
         {
-            name: 'Print states',
+            name: 'Print state',
             component: (
                 <PrintState
                     printData={printData}
@@ -146,7 +146,7 @@ export default function PrintEditorModal({ isOpen, onClose, initialData }) {
             icon: <Icon as={iconSet.toggles} />
         },
         {
-            name: 'Actions',
+            name: 'Danger zone',
             component: (
                 <DangerousActions
                     printData={printData}

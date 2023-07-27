@@ -7,6 +7,7 @@ import { PrintStates } from '@/util/states';
 export default function usePrintProgress(printData) {
     const [trueProgress, setTrueProgress] = useState(0);
     const [timeLeft, setTimeLeft] = useState(0);
+    const [timeLeftHumanized, setTimeLeftHumanized] = useState('');
     const [complete, setComplete] = useState(false);
 
     const startTime = useMemo(() => {
@@ -26,7 +27,10 @@ export default function usePrintProgress(printData) {
             const total = endTime.diff(startTime);
             const elapsed = now.diff(startTime);
             const remaining = dayjs.duration(endTime.diff(now));
-            let remainingFormatted = remaining.add({ minutes: 1 }).format('D:HH:mm');
+
+            const remainingToFormat = remaining.add({ minutes: 1 });
+            let remainingHumanized = remaining.humanize(true);
+            let remainingFormatted = remaining.format(remaining.get('days') > 0 ? 'D:HH:mm' : 'HH:mm');
 
             let progress = Math.floor((elapsed / total) * 100);
 
@@ -40,6 +44,7 @@ export default function usePrintProgress(printData) {
 
             setTrueProgress(progress);
             setTimeLeft(remainingFormatted);
+            setTimeLeftHumanized(remainingHumanized);
         }
     }, [startTime, endTime]);
 
@@ -108,5 +113,5 @@ export default function usePrintProgress(printData) {
         }
     }, [complete, printData, timeLeft]);
 
-    return { progress, timeLeft, complete, progressBarColor, progressMessage, progressMessageColor };
+    return { progress, timeLeft, timeLeftHumanized, complete, progressBarColor, progressMessage, progressMessageColor };
 }
