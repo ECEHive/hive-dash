@@ -21,9 +21,10 @@ import {
     FaTable,
     FaTachometerAlt,
     FaToggleOn,
+    FaUser,
     FaWrench
 } from 'react-icons/fa';
-import { FaFaceSmile, FaNoteSticky, FaPencil } from 'react-icons/fa6';
+import { FaFaceSmile, FaNoteSticky, FaPencil, FaPerson } from 'react-icons/fa6';
 
 const iconSet = {
     wrench: FaWrench,
@@ -48,7 +49,8 @@ const iconSet = {
     sun: SunIcon,
     external: ExternalLinkIcon,
     delete: DeleteIcon,
-    save: FaSave
+    save: FaSave,
+    person: FaUser
 };
 
 export default iconSet;

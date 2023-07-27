@@ -88,6 +88,7 @@ function PrintListItem({ data, isActive, onClick }) {
                         justifyContent="flex-start"
                         spacing={5}
                         color={secondary}
+                        fontSize="md"
                     >
                         <HStack spacing={2}>
                             <Icon as={iconSet.printer} />

@@ -27,6 +27,7 @@ export default function usePrintParser(print) {
             estTimeFormatted: dayjs.duration(print.estTime).format('HH:mm'),
             queuedAtExtendedFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY h:mm A'),
             queuedAtFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY'),
+            queuedDurationHumanized: dayjs.duration(dayjs.utc(print.queuedAt).diff(dayjs().utc())).humanize(true),
             materialSymbol: printerTypeData?.materialUnits.symbol
         };
     }, [print, printerTypeData]);

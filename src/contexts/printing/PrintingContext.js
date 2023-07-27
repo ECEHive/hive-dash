@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 
-import { useToast } from '@chakra-ui/react';
+import { Box, HStack, Spinner, Text, VStack, useToast } from '@chakra-ui/react';
 
 import useFocus from '@/hooks/useFocus';
 
@@ -100,7 +100,20 @@ function PrintingProvider({ children }) {
 
     return (
         <PrintingContext.Provider value={{ queue, printers, printerTypes, refreshData }}>
-            {queue && printers && printerTypes ? <>{children}</> : null}
+            {queue && printers && printerTypes ? (
+                <>{children}</>
+            ) : (
+                <HStack
+                    w="100%"
+                    h="100vh"
+                    justify="center"
+                    align="center"
+                    spacing={3}
+                >
+                    <Spinner />
+                    <Text>Fetching data...</Text>
+                </HStack>
+            )}
         </PrintingContext.Provider>
     );
 }

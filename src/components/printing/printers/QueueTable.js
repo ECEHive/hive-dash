@@ -5,15 +5,19 @@ import {
     Box,
     Button,
     ButtonGroup,
+    HStack,
+    Icon,
     IconButton,
     Table,
     TableContainer,
     Tbody,
     Td,
+    Text,
     Th,
     Thead,
     Tooltip,
     Tr,
+    VStack,
     useToast
 } from '@chakra-ui/react';
 
@@ -21,12 +25,69 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
+import usePrintParser from '@/hooks/usePrintParser';
+import usePrintProgress from '@/hooks/usePrintProgress';
 import usePrintUpdate from '@/hooks/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 
+import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
 
-import QueueTableItem from './QueueTableItem';
+function QueueTableItem({ printData, startPrint, canQueue }) {
+    const { betterPrintData } = usePrintParser(printData);
+    const { progressMessage, progressMessageColor } = usePrintProgress(printData);
+
+    return (
+        <Tr key={print._id}>
+            <Td>
+                <VStack
+                    align="start"
+                    justify="start"
+                    spacing={1}
+                >
+                    <HStack>
+                        <Text fontSize="md">{betterPrintData.trayName}</Text>
+                        <Badge
+                            variant="subtle"
+                            colorScheme={progressMessageColor}
+                        >
+                            {progressMessage}
+                        </Badge>
+                    </HStack>
+                    <Text
+                        fontSize="xs"
+                        color="gray.500"
+                    >
+                        {betterPrintData.queuedDurationHumanized}
+                    </Text>
+                </VStack>
+            </Td>
+            <Td>
+                <Text fontSize="md">{betterPrintData.estTimeFormatted}</Text>
+            </Td>
+            <Td>
+                <ButtonGroup size="sm">
+                    <Button
+                        leftIcon={<Icon as={iconSet.play} />}
+                        colorScheme="green"
+                        variant="solid"
+                        isDisabled={!canQueue}
+                        onClick={() => startPrint(printData)}
+                    >
+                        Start
+                    </Button>
+                    <Button
+                        leftIcon={<Icon as={iconSet.pencil} />}
+                        colorScheme="orange"
+                        variant="solid"
+                    >
+                        Edit
+                    </Button>
+                </ButtonGroup>
+            </Td>
+        </Tr>
+    );
+}
 
 export default function QueueTable({ selectedPrinterData, activePrint }) {
     const { update: printUpdater } = usePrintUpdate();

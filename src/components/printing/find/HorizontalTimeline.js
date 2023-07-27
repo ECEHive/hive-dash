@@ -13,6 +13,7 @@ import {
     PopoverHeader,
     PopoverTrigger,
     Portal,
+    Spacer,
     Text,
     VStack
 } from '@chakra-ui/react';
@@ -27,19 +28,6 @@ import usePrintEvents from '@/hooks/usePrintEvents';
 function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
     return (
         <>
-            {/* <HStack spacing={0}> */}
-            {/* <VStack
-                w="100%"
-                h="auto"
-            >
-                <HStack w="100%"> */}
-            {/* <Box
-                        w="50%"
-                        h="2px"
-                        bgColor="gray.400"
-                        borderRightRadius={10}
-                        visibility={isTopEnd ? 'hidden' : 'visible'}
-                    /> */}
             <Popover preventOverflow>
                 <PopoverTrigger>
                     <Box cursor="pointer">{event.icon}</Box>
@@ -67,23 +55,12 @@ function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
                     </PopoverContent>
                 </Portal>
             </Popover>
-
-            {/* <Box
-                        w="50%"
-                        h="2px"
-                        bgColor="gray.400"
-                        borderLeftRadius={10}
-                        visibility={isBottomEnd ? 'hidden' : 'visible'}
-                    /> */}
-            {/* </HStack>
-            </VStack> */}
-            {/* </HStack> */}
         </>
     );
 }
 
 export default function Timeline({ print }) {
-    const { detailedEvents } = usePrintEvents(print);
+    const { detailedEvents, expectedEvents } = usePrintEvents(print);
 
     const lastElement = useRef(null);
 
@@ -103,7 +80,7 @@ export default function Timeline({ print }) {
                     overflow="auto"
                 >
                     <HStack
-                        w="min-content"
+                        w="full"
                         h="100%"
                         spacing={2}
                     >
@@ -141,6 +118,26 @@ export default function Timeline({ print }) {
                                                 </Text>
                                             </VStack>
                                         )}
+                                    </HStack>
+                                </>
+                            );
+                        })}
+
+                        <Spacer />
+                        <ArrowForwardIcon fontSize="2xl" />
+
+                        {expectedEvents.map((event, i) => {
+                            return (
+                                <>
+                                    <HStack>
+                                        <TimelineEvent
+                                            key={i}
+                                            event={event}
+                                            isFuture
+                                            //isTopEnd={i == 0}
+                                            //isBottomEnd={i == detailedEvents.length - 1}
+                                        />
+                                        {i !== expectedEvents.length - 1 && <ArrowForwardIcon fontSize="2xl" />}
                                     </HStack>
                                 </>
                             );

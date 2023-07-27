@@ -1,142 +1,102 @@
-import { Badge, Card, CardBody, HStack, Progress, Spacer, Text, VStack, useColorModeValue } from '@chakra-ui/react';
+import {
+    Badge,
+    Box,
+    Card,
+    CardBody,
+    CircularProgress,
+    CircularProgressLabel,
+    Divider,
+    HStack,
+    Icon,
+    Progress,
+    Spacer,
+    Text,
+    VStack,
+    useColorModeValue
+} from '@chakra-ui/react';
 
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrintProgress from '@/hooks/usePrintProgress';
+
+import iconSet from '@/util/icons';
 
 export default function PrintPreview({ actions, print }) {
     const { betterPrintData } = usePrintParser(print);
     const { progressBarColor, progressMessage, progress } = usePrintProgress(print);
 
     return (
-        <Card
-            w="100%"
+        // <Card
+        //     w="100%"
+        //     h="auto"
+        //     variant="filled"
+        //     background="transparent"
+        //     border="none"
+        //     //bgColor={useColorModeValue('gray.200', 'gray.600')}
+        // >
+        //     <CardBody>
+        <VStack
+            w="full"
             h="auto"
-            variant="outline"
-            background="transparent"
-            //bgColor={useColorModeValue('gray.200', 'gray.600')}
+            align="start"
+            justify="start"
+            spacing={3}
+            p={3}
         >
-            <CardBody>
-                <HStack
-                    w="100%"
-                    spacing={5}
+            <HStack>
+                <CircularProgress
+                    size={16}
+                    thickness={6}
+                    value={progress}
+                    color={useColorModeValue(`${progressBarColor}.500`, `${progressBarColor}.200`)}
+                    trackColor={useColorModeValue('gray.100', 'gray.700')}
+                />
+                <VStack
+                    align="start"
+                    justify="start"
+                    spacing={1}
                 >
-                    <VStack
-                        w="100%"
-                        spacing={4}
+                    <Text
+                        fontSize="2xl"
+                        lineHeight={1}
                     >
-                        <VStack
-                            w="100%"
-                            spacing={2}
-                        >
-                            <HStack w="100%">
-                                <VStack
-                                    alignItems="flex-start"
-                                    h="100%"
-                                    w="100%"
-                                    spacing={0}
-                                >
-                                    <Text
-                                        fontSize="xl"
-                                        fontWeight="medium"
-                                        lineHeight={1}
-                                    >
-                                        {betterPrintData.trayName}
-                                    </Text>
-                                    <Text fontSize="sm">Queued by: {betterPrintData.queuedBy}</Text>
-                                </VStack>
-                                <Spacer />
-                                <Badge
-                                    variant="subtle"
-                                    alignSelf="flex-end"
-                                >
-                                    {progressMessage}
-                                </Badge>
-                            </HStack>
-                            <Progress
-                                w="100%"
-                                value={progress}
-                                size="sm"
-                                borderRadius={5}
-                                colorScheme={progressBarColor}
-                            />
-                        </VStack>
-
-                        <HStack
-                            justifyContent="flex-start"
-                            alignItems="flex-end"
-                            w="100%"
-                            spacing={6}
-                        >
-                            <VStack
-                                alignItems="flex-start"
-                                spacing={0}
-                            >
-                                <Text
-                                    fontSize="3xl"
-                                    fontWeight="semibold"
-                                    lineHeight={1}
-                                >
-                                    {betterPrintData.estTimeFormatted}
-                                </Text>
-                                <Text
-                                    fontSize="md"
-                                    fontWeight="normal"
-                                >
-                                    est. print time
-                                </Text>
-                            </VStack>
-                            <VStack
-                                alignItems="flex-start"
-                                spacing={0}
-                            >
-                                <HStack spacing={1}>
-                                    <Text
-                                        fontSize="3xl"
-                                        fontWeight="semibold"
-                                        lineHeight={1}
-                                    >
-                                        {betterPrintData.materialUsage}
-                                    </Text>
-                                    <Text
-                                        fontSize="sm"
-                                        alignSelf="flex-end"
-                                    >
-                                        {betterPrintData.materialSymbol}
-                                    </Text>
-                                </HStack>
-                                <Text
-                                    fontSize="md"
-                                    fontWeight="normal"
-                                >
-                                    est. material
-                                </Text>
-                            </VStack>
-                            <VStack
-                                alignItems="flex-start"
-                                spacing={0}
-                            >
-                                <Text
-                                    fontSize="3xl"
-                                    fontWeight="semibold"
-                                    lineHeight={1}
-                                >
-                                    {betterPrintData.materialType}
-                                </Text>
-                                <Text
-                                    fontSize="md"
-                                    fontWeight="normal"
-                                >
-                                    material type
-                                </Text>
-                            </VStack>
-
-                            <Spacer />
-
-                            {actions}
-                        </HStack>
-                    </VStack>
-                </HStack>
-            </CardBody>
-        </Card>
+                        {betterPrintData.trayName}
+                    </Text>
+                    <Text fontSize="sm">in 7 hours</Text>
+                    {/* <HStack
+                        w="full"
+                        align="center"
+                        justify="start"
+                        fontSize="sm"
+                    >
+                        <Icon as={iconSet.person} />
+                        <Text fontSize="sm">Colin Hartigan</Text>
+                    </HStack> */}
+                </VStack>
+            </HStack>
+            <Divider />
+            <HStack
+                w="full"
+                align="start"
+                justify="start"
+            >
+                <VStack
+                    spacing={0}
+                    align="start"
+                >
+                    <HStack fontSize="sm">
+                        <Icon as={iconSet.printer} />
+                        <Text>Printer</Text>
+                    </HStack>
+                    <Text
+                        fontSize="2xl"
+                        fontWeight="semibold"
+                    >
+                        Left stratasys
+                    </Text>
+                </VStack>
+            </HStack>
+        </VStack>
+        //     </CardBody>
+        // </Card>
     );
 }

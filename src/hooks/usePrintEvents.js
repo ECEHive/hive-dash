@@ -1,17 +1,18 @@
 import { useMemo } from 'react';
 
-import { Avatar, AvatarBadge, Icon, useColorModeValue } from '@chakra-ui/react';
+import { Avatar, AvatarBadge, Icon, useColorMode, useColorModeValue } from '@chakra-ui/react';
 
 import dayjs from '@/lib/time';
 
 import iconSet from '@/util/icons';
+import { PrintStates } from '@/util/states';
 
 export default function usePrintEvents(print) {
     const eventIcons = {
-        queued: <Icon as={iconSet.pencil} />,
-        completed: <Icon as={iconSet.check} />,
-        failed: <Icon as={iconSet.stop} />,
-        printing: <Icon as={iconSet.play} />
+        queued: iconSet.pencil,
+        completed: iconSet.check,
+        failed: iconSet.stop,
+        printing: iconSet.play
     };
 
     const eventColors = {
@@ -28,6 +29,17 @@ export default function usePrintEvents(print) {
         printing: 'Print started'
     };
 
+    const eventOrder = {
+        [PrintStates.QUEUED]: ['printing', 'completed'],
+        [PrintStates.PRINTING]: ['completed'],
+        [PrintStates.FAILED]: ['printing', 'completed'],
+        [PrintStates.COMPLETED]: [],
+        [PrintStates.CANCELLED]: []
+    };
+
+    const expectedIconColor = useColorModeValue('black', 'white');
+    const colorMode = useColorMode();
+
     const detailedEvents = useMemo(() => {
         if (!print) return [];
         return print.events
@@ -39,7 +51,7 @@ export default function usePrintEvents(print) {
                     icon: (
                         <Avatar
                             size="sm"
-                            icon={eventIcons[event.type]}
+                            icon={<Icon as={eventIcons[event.type]} />}
                             bgColor={eventColors[event.type]}
                         >
                             {event?.notes?.length > 0 && (
@@ -56,8 +68,35 @@ export default function usePrintEvents(print) {
             .sort((a, b) => {
                 return dayjs.utc(b.timestamp).diff(dayjs.utc(a.timestamp)); //sort so newest at top
             });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [print?.events]); //ignore this warning, this is a safe memoized value
 
-    return { detailedEvents };
+    const expectedEvents = useMemo(() => {
+        if (!print) return [];
+        console.log(expectedIconColor);
+        return eventOrder[print.state].map((type) => {
+            return {
+                type,
+                description: eventNames[type],
+                icon: (
+                    <Avatar
+                        size="sm"
+                        icon={
+                            <Icon
+                                as={eventIcons[type]}
+                                color={expectedIconColor}
+                            />
+                        }
+                        bgColor="transparent"
+                        borderColor={eventColors[type]}
+                        borderWidth={2}
+                    />
+                )
+            };
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [print, colorMode]);
+
+    return { expectedEvents, detailedEvents };
 }
