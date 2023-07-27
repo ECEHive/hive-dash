@@ -1,8 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightAddon, VStack } from '@chakra-ui/react';
+import {
+    FormControl,
+    FormLabel,
+    HStack,
+    Heading,
+    Input,
+    InputGroup,
+    InputRightAddon,
+    Select,
+    VStack
+} from '@chakra-ui/react';
 
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from '@choc-ui/chakra-autocomplete';
+import { Select as ComplexSelect } from 'chakra-react-select';
 
 export default function UserInfo({ set, data, setNext }) {
     const PIList = useMemo(() => ['Colin Hartigan', 'Someone else'], []);
@@ -99,24 +109,18 @@ export default function UserInfo({ set, data, setNext }) {
                 </FormControl>
                 <FormControl>
                     <FormLabel>Assisting PI</FormLabel>
-                    <AutoComplete
-                        openOnFocus
-                        defaultValue={data.user.assistingPI}
-                        value={data.user.assistingPI}
-                        onChange={(e) => update('assistingPI', e)}
-                    >
-                        <AutoCompleteInput />
-                        <AutoCompleteList>
-                            {PIList.map((person, idx) => (
-                                <AutoCompleteItem
-                                    key={`PI-${idx}`}
-                                    value={person}
-                                >
-                                    {person}
-                                </AutoCompleteItem>
-                            ))}
-                        </AutoCompleteList>
-                    </AutoComplete>
+                    <ComplexSelect
+                        value={{
+                            label: data.user.assistingPI,
+                            value: data.user.assistingPI
+                        }}
+                        onChange={(e) => update('assistingPI', e.value)}
+                        options={PIList.map((person) => ({
+                            label: person,
+                            value: person
+                        }))}
+                        selectedOptionStyle="check"
+                    />
                 </FormControl>
             </VStack>
         </>

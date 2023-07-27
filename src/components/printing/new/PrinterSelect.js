@@ -27,11 +27,11 @@ function PrinterItem({ data, onClick, isActive }) {
     return (
         <Card
             as={Button}
-            variant="filled"
+            variant="outline"
             h="auto"
             w="100%"
             p={0}
-            bgColor={useColorModeValue('gray.200', 'gray.600')}
+            bgColor="transparent"
             onClick={onClick}
             isActive={isActive}
         >
@@ -81,11 +81,11 @@ function PrinterType({ data, onClick, isActive }) {
     return (
         <Card
             as={Button}
-            variant="filled"
+            variant="outline"
             h="auto"
             w="300px"
             p={0}
-            bgColor={useColorModeValue('gray.200', 'gray.600')}
+            bgColor="transparent"
             onClick={onClick}
             isActive={isActive}
         >

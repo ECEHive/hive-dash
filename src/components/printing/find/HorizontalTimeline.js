@@ -124,6 +124,8 @@ export default function Timeline({ print }) {
                         })}
 
                         <Spacer />
+
+                        <Text fontSize="md">Upcoming</Text>
                         <ArrowForwardIcon fontSize="2xl" />
 
                         {expectedEvents.map((event, i) => {

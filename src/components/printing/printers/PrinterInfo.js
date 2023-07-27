@@ -110,13 +110,26 @@ export default function PrinterInfo({ selectedPrinterData }) {
                     />
                 </>
             )}
-            <Card
-                h="100%"
+
+            <HStack
                 flexGrow={1}
-                variant="outline"
-                borderRadius={10}
+                h="full"
+                justify="center"
             >
-                <CardBody>
+                <Box
+                    h="full"
+                    w="full"
+                    maxW="1000px"
+                    overflow="hidden"
+                    //pr="260px" //centers in the viewport
+                >
+                    {/* <Card
+                    h="100%"
+                    flexGrow={1}
+                    variant="outline"
+                    borderRadius={10}
+                >
+                    <CardBody> */}
                     {/* <Box w="auto" h="100%" p={2}> */}
                     {selectedPrinterData ? (
                         <>
@@ -210,8 +223,10 @@ export default function PrinterInfo({ selectedPrinterData }) {
                         </VStack>
                     )}
                     {/* </Box> */}
-                </CardBody>
-            </Card>
+                    {/* </CardBody>
+                </Card> */}
+                </Box>
+            </HStack>
         </>
     );
 }

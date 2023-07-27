@@ -75,16 +75,29 @@ export default function FindPrint(props) {
                         setSelectedPrintData={setSelectedPrintData}
                     />
 
-                    <Card
-                        h="100%"
+                    <HStack
                         flexGrow={1}
-                        variant="outline"
-                        borderRadius={10}
-                        overflow="hidden"
+                        h="full"
+                        justify="center"
                     >
-                        <CardBody
-                            w="100%"
+                        {/* <Card
                             h="100%"
+                            maxW="1000px"
+                            flexGrow={1}
+                            variant="outline"
+                            borderRadius={10}
+                            overflow="hidden"
+                        >
+                            <CardBody
+                                w="100%"
+                                h="100%"
+                            > */}
+                        <Box
+                            h="full"
+                            w="full"
+                            maxW="1000px"
+                            overflow="hidden"
+                            //pr="260px" //centers in the viewport
                         >
                             {selectedPrintData ? (
                                 <VStack
@@ -143,8 +156,10 @@ export default function FindPrint(props) {
                                     <Text color="gray.400">select a print</Text>
                                 </VStack>
                             )}
-                        </CardBody>
-                    </Card>
+                            {/* </CardBody>
+                        </Card> */}
+                        </Box>
+                    </HStack>
                 </HStack>
             </Box>
         </>
