@@ -79,38 +79,6 @@ export default function Printers(props) {
 
     return (
         <>
-            <Head>
-                {selectedPrinterData && (
-                    <>
-                        <title>{selectedPrinterData.displayName} @ The HIVE</title>
-
-                        <meta
-                            name="og:site_name"
-                            content={'The HIVE'}
-                        />
-                        <meta
-                            name="og:title"
-                            content={`${selectedPrinterData.displayName} @ The HIVE`}
-                        />
-                        <meta
-                            name="og:url"
-                            content={`https://hive.utrgv.edu/printing/printers/${selectedPrinterData.id}`}
-                        />
-                        <meta
-                            name="og:type"
-                            content="website"
-                        />
-                        <meta
-                            name="og:image"
-                            content={SquareLogo}
-                        />
-                        <meta
-                            name="og:description"
-                            content={`${selectedPrinterData.displayName} is a 3D printer at The HIVE makerspace.`}
-                        />
-                    </>
-                )}
-            </Head>
             {/* <CompleteConfirm /> */}
             <Box
                 w="100%"
