@@ -80,17 +80,17 @@ export default function Printers(props) {
     return (
         <>
             <Head>
-                <title>{selectedPrinterData.displayName} @ The HIVE</title>
-
                 {selectedPrinterData && (
                     <>
+                        <title>{selectedPrinterData.displayName} @ The HIVE</title>
+
                         <meta
                             name="og:site_name"
                             content={'The HIVE'}
                         />
                         <meta
                             name="og:title"
-                            content={'{selectedPrinterData.displayName} @ The HIVE'}
+                            content={`${selectedPrinterData.displayName} @ The HIVE`}
                         />
                         <meta
                             name="og:url"
