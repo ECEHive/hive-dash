@@ -24,10 +24,15 @@ export default function usePrintParser(print) {
         return {
             ...print,
             stateName: Object.keys(PrintStates).find((key) => PrintStates[key] === print.state),
+
+            updatedAtHumanized: dayjs.duration(dayjs.utc(print.updatedAt).diff(dayjs().utc())).humanize(true),
+
             estTimeFormatted: dayjs.duration(print.estTime).format('HH:mm'),
+
             queuedAtExtendedFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY h:mm A'),
             queuedAtFormatted: dayjs.utc(print.queuedAt).local().format('MM/DD/YYYY'),
-            queuedDurationHumanized: dayjs.duration(dayjs.utc(print.queuedAt).diff(dayjs().utc())).humanize(true),
+            queuedAtHumanized: dayjs.duration(dayjs.utc(print.queuedAt).diff(dayjs().utc())).humanize(true),
+
             materialSymbol: printerTypeData?.materialUnits.symbol
         };
     }, [print, printerTypeData]);

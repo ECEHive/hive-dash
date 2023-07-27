@@ -6,6 +6,7 @@ import {
     AlertIcon,
     Box,
     Button,
+    ButtonGroup,
     Card,
     CardBody,
     HStack,
@@ -141,10 +142,9 @@ export default function FindPrint(props) {
                                         {/* <Timeline print={selectedPrintData} /> */}
                                         <HorizontalTimeline print={selectedPrintData} />
 
-                                        <HStack>
-                                            <Button>Move to printer</Button>
+                                        <ButtonGroup>
                                             <Button onClick={onEditorOpen}>Advanced edit</Button>
-                                        </HStack>
+                                        </ButtonGroup>
                                     </VStack>
                                 </VStack>
                             ) : (

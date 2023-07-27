@@ -25,7 +25,7 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
             <Flex
                 direction="column"
                 w="260px"
-                h="calc(100% - 80px - 2rem)"
+                h="calc(100% - 80px - 1.5rem)"
                 top="80px"
                 position="fixed"
                 borderRight="1px solid"

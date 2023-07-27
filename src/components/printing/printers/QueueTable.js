@@ -58,7 +58,7 @@ function QueueTableItem({ printData, startPrint, canQueue }) {
                         fontSize="xs"
                         color="gray.500"
                     >
-                        {betterPrintData.queuedDurationHumanized}
+                        {betterPrintData.queuedAtHumanized}
                     </Text>
                 </VStack>
             </Td>

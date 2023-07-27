@@ -28,7 +28,7 @@ export default function PrintingLayout({ children }) {
                     <PrintingNavigation />
                     <VStack
                         w="calc(100% - 260px)"
-                        h="calc(100% - 80px - 2rem)"
+                        h="calc(100% - 80px - 1.5rem)"
                         left="260px"
                         top="80px"
                         pos="relative"

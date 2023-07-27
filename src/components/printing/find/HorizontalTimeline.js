@@ -129,37 +129,41 @@ export default function Timeline({ print }) {
                             );
                         })}
 
-                        <Spacer />
+                        {expectedEvents.length > 0 && (
+                            <>
+                                <Spacer />
 
-                        <Text
-                            fontSize="md"
-                            color={secondary}
-                        >
-                            Upcoming
-                        </Text>
-                        <ArrowForwardIcon fontSize="2xl" />
+                                <Text
+                                    fontSize="md"
+                                    color={secondary}
+                                >
+                                    Upcoming
+                                </Text>
+                                <ArrowForwardIcon fontSize="2xl" />
 
-                        {expectedEvents.map((event, i) => {
-                            return (
-                                <>
-                                    <HStack>
-                                        <TimelineEvent
-                                            key={i}
-                                            event={event}
-                                            isFuture
-                                            //isTopEnd={i == 0}
-                                            //isBottomEnd={i == detailedEvents.length - 1}
-                                        />
-                                        {i !== expectedEvents.length - 1 && <ArrowForwardIcon fontSize="2xl" />}
-                                    </HStack>
-                                </>
-                            );
-                        })}
-                        {/* <Box
+                                {expectedEvents.map((event, i) => {
+                                    return (
+                                        <>
+                                            <HStack>
+                                                <TimelineEvent
+                                                    key={i}
+                                                    event={event}
+                                                    isFuture
+                                                    //isTopEnd={i == 0}
+                                                    //isBottomEnd={i == detailedEvents.length - 1}
+                                                />
+                                                {i !== expectedEvents.length - 1 && <ArrowForwardIcon fontSize="2xl" />}
+                                            </HStack>
+                                        </>
+                                    );
+                                })}
+                                {/* <Box
                             ref={lastElement}
                             minW="40%"
                             h="100%"
                         /> */}
+                            </>
+                        )}
                     </HStack>
                 </CardBody>
             </Card>

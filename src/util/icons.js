@@ -5,6 +5,7 @@ import {
     DeleteIcon,
     ExternalLinkIcon,
     MoonIcon,
+    RepeatIcon,
     SearchIcon,
     SettingsIcon,
     SunIcon,
@@ -13,6 +14,7 @@ import {
 
 import {
     FaCalendar,
+    FaCodeBranch,
     FaCube,
     FaCubes,
     FaDatabase,
@@ -58,7 +60,9 @@ const iconSet = {
     person: FaUser,
     peerInstructor: FaUserCog,
     clock: TimeIcon,
-    material: FaCubes
+    material: FaCubes,
+    refresh: RepeatIcon,
+    branch: FaCodeBranch
 };
 
 export default iconSet;
