@@ -40,7 +40,7 @@ import { PrintStates, StateColors } from '@/util/states';
 
 function PrintListItem({ data, isActive, onClick }) {
     const { betterPrintData, printerData } = usePrintParser(data);
-    const { progressMessage, progress, timeLeftHumanized } = usePrintProgress(data);
+    const { progressMessage, progress, timeLeftHumanizedDetailed } = usePrintProgress(data);
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
     const { secondary } = useTextColor();
@@ -122,7 +122,7 @@ function PrintListItem({ data, isActive, onClick }) {
                                         fontWeight="medium"
                                         lineHeight={1}
                                     >
-                                        {timeLeftHumanized}
+                                        {timeLeftHumanizedDetailed}
                                     </Text>
                                 </VStack>
                             </HStack>

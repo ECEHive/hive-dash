@@ -15,9 +15,7 @@ import {
 import {
     FaCalendar,
     FaCodeBranch,
-    FaCube,
     FaCubes,
-    FaDatabase,
     FaPlay,
     FaPrint,
     FaSave,
@@ -31,7 +29,7 @@ import {
     FaUserCog,
     FaWrench
 } from 'react-icons/fa';
-import { FaFaceSmile, FaNoteSticky, FaPencil, FaPerson } from 'react-icons/fa6';
+import { FaFaceSmile, FaNoteSticky, FaPencil } from 'react-icons/fa6';
 
 const iconSet = {
     wrench: FaWrench,

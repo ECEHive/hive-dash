@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Spacer, Text } from '@chakra-ui/react';
+import { Box, Flex, Icon, Link, Spacer, Text } from '@chakra-ui/react';
 
 import useTextColor from '@/hooks/useTextColor';
 
@@ -23,10 +23,13 @@ export default function Footer() {
             fontSize="2xs"
             color={secondary}
         >
-            <Text>
+            <Link
+                href={'https://github.com/colinhartigan/hive-dash'}
+                target="_blank"
+            >
                 <Icon as={iconSet.branch} /> {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || 'dev'} (
                 {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF || 'dev'})
-            </Text>
+            </Link>
             <Spacer />
             <Text>made with ❤️ by the HIVE peer instructors</Text>
         </Flex>
