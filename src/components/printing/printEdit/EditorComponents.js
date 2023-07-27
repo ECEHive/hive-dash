@@ -17,7 +17,6 @@ import {
     Input,
     InputGroup,
     InputRightAddon,
-    Select,
     Switch,
     Table,
     TableContainer,
@@ -37,6 +36,7 @@ import {
 import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 import Editor from '@monaco-editor/react';
+import { Select } from 'chakra-react-select';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import ReactMarkdown from 'react-markdown';
 
@@ -52,6 +52,8 @@ import { PrintStates, StateColors } from '@/util/states';
 
 import DeleteDialog from '@/components/DeleteDIalog';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
+
+const FancySelect = chakra(Select);
 
 const ChakraEditor = chakra(Editor);
 
@@ -167,36 +169,60 @@ function PrintInfo({ printData, update }) {
             </FormControl>
             <FormControl>
                 <FormLabel>Queued by</FormLabel>
-                <InputGroup>
-                    <Input
-                        placeholder="PI name"
-                        value={printData.queuedBy}
-                        onChange={(e) => {
-                            update({ queuedBy: e.target.value });
-                        }}
-                    />
-                </InputGroup>
-                <FormHelperText>make this an autocomplete @colin</FormHelperText>
+
+                <FancySelect
+                    menuPortalTarget={document.body}
+                    styles={{
+                        menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
+                    }}
+                    w="full"
+                    value={{
+                        label: printData.queuedBy,
+                        value: printData.queuedBy
+                    }}
+                    onChange={(e) => {
+                        update({ queuedBy: e.value });
+                    }}
+                    options={[
+                        { label: 'Colin Hartigan', value: 'Colin Hartigan' },
+                        { label: 'Someone else', value: 'Someone else' }
+                    ]}
+                    placeholder="PI name"
+                    closeMenuOnSelect={true}
+                    selectedOptionStyle="check"
+                />
             </FormControl>
             <FormControl>
                 <FormLabel>Printer</FormLabel>
-                <InputGroup>
-                    <Select
-                        value={printData.printer}
-                        onChange={(e) => {
-                            update({ printer: e.target.value });
-                        }}
-                    >
-                        {printers.map((printer) => (
-                            <option
-                                value={printer.id}
-                                key={printer.id}
-                            >
-                                {printer.displayName} ({printer.type})
-                            </option>
-                        ))}
-                    </Select>
-                </InputGroup>
+                <FancySelect
+                    menuPortalTarget={document.body}
+                    styles={{
+                        menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
+                    }}
+                    w="full"
+                    value={{
+                        label: printers.find((p) => p.id === printData.printer)?.displayName,
+                        value: printData.printer
+                    }}
+                    onChange={(e) => {
+                        update({ printer: e.value });
+                    }}
+                    options={printerTypes.map((type) => {
+                        return {
+                            label: type.displayName,
+                            options: printers
+                                .filter((p) => p.type === type.id)
+                                .map((p) => {
+                                    return {
+                                        label: `${p.displayName} (${p.id})`,
+                                        value: p.id
+                                    };
+                                })
+                        };
+                    })}
+                    closeMenuOnSelect={true}
+                    selectedOptionStyle="check"
+                />
                 <FormHelperText>i feel like some helper text will be useful here</FormHelperText>
             </FormControl>
 
@@ -206,23 +232,25 @@ function PrintInfo({ printData, update }) {
             >
                 <FormControl>
                     <FormLabel>Material type</FormLabel>
-                    <InputGroup>
-                        <Select
-                            value={printData.materialTyoe}
-                            onChange={(e) => {
-                                update({ materialType: e.target.value });
-                            }}
-                        >
-                            {selectedPrinterTypeData?.materials?.map((material) => (
-                                <option
-                                    value={material}
-                                    key={material}
-                                >
-                                    {material}
-                                </option>
-                            ))}
-                        </Select>
-                    </InputGroup>
+                    <FancySelect
+                        menuPortalTarget={document.body}
+                        styles={{
+                            menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
+                        }}
+                        w="full"
+                        value={{
+                            label: printData.materialType,
+                            value: printData.materialType
+                        }}
+                        onChange={(e) => {
+                            update({ materialType: e.value });
+                        }}
+                        options={selectedPrinterTypeData?.materials?.map((material) => {
+                            return { label: material, value: material };
+                        })}
+                        closeMenuOnSelect={true}
+                        selectedOptionStyle="check"
+                    />
                 </FormControl>
                 <FormControl>
                     <FormLabel>Material usage</FormLabel>

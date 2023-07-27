@@ -7,11 +7,15 @@ import {
     MoonIcon,
     SearchIcon,
     SettingsIcon,
-    SunIcon
+    SunIcon,
+    TimeIcon
 } from '@chakra-ui/icons';
 
 import {
     FaCalendar,
+    FaCube,
+    FaCubes,
+    FaDatabase,
     FaPlay,
     FaPrint,
     FaSave,
@@ -22,6 +26,7 @@ import {
     FaTachometerAlt,
     FaToggleOn,
     FaUser,
+    FaUserCog,
     FaWrench
 } from 'react-icons/fa';
 import { FaFaceSmile, FaNoteSticky, FaPencil, FaPerson } from 'react-icons/fa6';
@@ -50,7 +55,10 @@ const iconSet = {
     external: ExternalLinkIcon,
     delete: DeleteIcon,
     save: FaSave,
-    person: FaUser
+    person: FaUser,
+    peerInstructor: FaUserCog,
+    clock: TimeIcon,
+    material: FaCubes
 };
 
 export default iconSet;

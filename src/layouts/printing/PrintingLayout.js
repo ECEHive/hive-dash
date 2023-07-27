@@ -4,6 +4,7 @@ import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex, VStack, useD
 
 import { PrintingProvider } from '@/contexts/printing/PrintingContext';
 
+import Footer from '@/components/Footer';
 import TopBar from '@/components/TopBarNavigation';
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
 import NewPrintModal from '@/components/printing/new/NewPrintModal';
@@ -27,7 +28,7 @@ export default function PrintingLayout({ children }) {
                     <PrintingNavigation />
                     <VStack
                         w="calc(100% - 260px)"
-                        h="calc(100% - 80px)"
+                        h="calc(100% - 80px - 2rem)"
                         left="260px"
                         top="80px"
                         pos="relative"
@@ -53,6 +54,7 @@ export default function PrintingLayout({ children }) {
                             {children}
                         </Box>
                     </VStack>
+                    <Footer />
                 </Box>
             </PrintingProvider>
         </>

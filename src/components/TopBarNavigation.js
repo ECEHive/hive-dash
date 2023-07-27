@@ -41,7 +41,7 @@ export default function TopBarNavigation(props) {
             h="80px"
             position="fixed"
             borderBottom="1px solid"
-            borderColor={useColorModeValue('gray.200', 'gray.700')}
+            borderColor="chakra-border-color"
         >
             {/* intersection of sidebar/topbar */}
             <HStack
@@ -52,7 +52,7 @@ export default function TopBarNavigation(props) {
                 justifyContent="center"
                 spacing={2}
                 // borderRight="1px solid"
-                borderColor={useColorModeValue('gray.200', 'gray.700')}
+                borderColor="chakra-border-color"
             >
                 <NextImage
                     alt="HIVE logo"

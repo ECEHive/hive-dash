@@ -25,11 +25,11 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
             <Flex
                 direction="column"
                 w="260px"
-                h="calc(100% - 80px)"
+                h="calc(100% - 80px - 2rem)"
                 top="80px"
                 position="fixed"
                 borderRight="1px solid"
-                borderColor={useColorModeValue('gray.200', 'gray.700')}
+                borderColor="chakra-border-color"
                 zIndex={500}
                 bgColor={useColorModeValue('white', 'gray.800')}
             >

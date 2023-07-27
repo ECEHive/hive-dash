@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import {
     Badge,
     Box,
@@ -17,12 +19,42 @@ import {
 
 import usePrintParser from '@/hooks/usePrintParser';
 import usePrintProgress from '@/hooks/usePrintProgress';
+import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
 
 export default function PrintPreview({ actions, print }) {
-    const { betterPrintData } = usePrintParser(print);
-    const { progressBarColor, progressMessage, progress } = usePrintProgress(print);
+    const { betterPrintData, printerData } = usePrintParser(print);
+    const {
+        progressBarColor,
+        progressMessage,
+        progress,
+        progressMessageColor,
+        timeLeftHumanized,
+        timeLeftHumanizedDetailed
+    } = usePrintProgress(print);
+
+    const { secondaryAlt, secondary } = useTextColor();
+
+    const dataFields = useMemo(() => {
+        return [
+            {
+                label: 'Printer',
+                icon: iconSet.printer,
+                value: printerData.displayName
+            },
+            {
+                label: 'Material',
+                icon: iconSet.material,
+                value: betterPrintData.materialType
+            },
+            {
+                label: 'Est. time',
+                icon: iconSet.clock,
+                value: betterPrintData.estTimeFormatted
+            }
+        ];
+    }, [printerData, betterPrintData]);
 
     return (
         <Card
@@ -30,7 +62,6 @@ export default function PrintPreview({ actions, print }) {
             h="auto"
             variant="outline"
             background="transparent"
-
             //bgColor={useColorModeValue('gray.200', 'gray.600')}
         >
             <CardBody>
@@ -42,7 +73,7 @@ export default function PrintPreview({ actions, print }) {
                     spacing={3}
                     // p={3}
                 >
-                    <HStack>
+                    <HStack w="full">
                         <CircularProgress
                             size={16}
                             thickness={6}
@@ -55,45 +86,88 @@ export default function PrintPreview({ actions, print }) {
                             justify="start"
                             spacing={1}
                         >
-                            <Text
-                                fontSize="2xl"
-                                lineHeight={1}
+                            <HStack>
+                                <Text
+                                    fontSize="2xl"
+                                    lineHeight={1}
+                                >
+                                    {betterPrintData.trayName}
+                                </Text>
+                                {/* <Badge
+                                    fontSize="sm"
+                                    colorScheme={progressMessageColor}
+                                >
+                                    {progressMessage}
+                                </Badge> */}
+                            </HStack>
+                            <HStack
+                                fontSize="sm"
+                                color={secondaryAlt}
                             >
-                                {betterPrintData.trayName}
-                            </Text>
-                            <Text fontSize="sm">in 7 hours</Text>
-                            {/* <HStack
-                        w="full"
-                        align="center"
-                        justify="start"
-                        fontSize="sm"
-                    >
-                        <Icon as={iconSet.person} />
-                        <Text fontSize="sm">Colin Hartigan</Text>
-                    </HStack> */}
+                                <Icon as={iconSet.clock} />
+                                <Text fontSize="sm">{timeLeftHumanizedDetailed}</Text>
+                            </HStack>
+                        </VStack>
+                        <Spacer />
+                        <VStack
+                            spacing={1}
+                            color={secondary}
+                        >
+                            <HStack
+                                w="full"
+                                align="center"
+                                justify="start"
+                                fontSize="sm"
+                            >
+                                <Icon as={iconSet.person} />
+                                <Text fontSize="sm">
+                                    {betterPrintData.endUser.firstname} {betterPrintData.endUser.lastname}
+                                </Text>
+                            </HStack>
+                            <HStack
+                                w="full"
+                                align="center"
+                                justify="start"
+                                fontSize="sm"
+                            >
+                                <Icon as={iconSet.peerInstructor} />
+                                <Text fontSize="sm">{betterPrintData.queuedBy}</Text>
+                            </HStack>
                         </VStack>
                     </HStack>
-                    <Divider />
+                    <Divider w="full" />
                     <HStack
                         w="full"
-                        align="start"
+                        h="auto"
+                        align="center"
                         justify="start"
+                        spacing={6}
                     >
-                        <VStack
-                            spacing={0}
-                            align="start"
-                        >
-                            <HStack fontSize="sm">
-                                <Icon as={iconSet.printer} />
-                                <Text>Printer</Text>
-                            </HStack>
-                            <Text
-                                fontSize="2xl"
-                                fontWeight="semibold"
-                            >
-                                Left stratasys
-                            </Text>
-                        </VStack>
+                        {dataFields.map((field, i) => {
+                            return (
+                                <>
+                                    <VStack
+                                        spacing={0}
+                                        align="start"
+                                    >
+                                        <HStack fontSize="sm">
+                                            <Icon as={field.icon} />
+                                            <Text>{field.label}</Text>
+                                        </HStack>
+                                        <Text
+                                            fontSize="2xl"
+                                            fontWeight="semibold"
+                                        >
+                                            {field.value}
+                                        </Text>
+                                    </VStack>
+                                    <Divider
+                                        orientation="vertical"
+                                        h="50px"
+                                    />
+                                </>
+                            );
+                        })}
                     </HStack>
                 </VStack>
             </CardBody>

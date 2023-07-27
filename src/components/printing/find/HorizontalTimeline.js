@@ -15,7 +15,8 @@ import {
     Portal,
     Spacer,
     Text,
-    VStack
+    VStack,
+    useColorModeValue
 } from '@chakra-ui/react';
 
 import { ArrowForwardIcon, ArrowRightIcon } from '@chakra-ui/icons';
@@ -24,6 +25,7 @@ import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import ReactMarkdown from 'react-markdown';
 
 import usePrintEvents from '@/hooks/usePrintEvents';
+import useTextColor from '@/hooks/useTextColor';
 
 function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
     return (
@@ -68,12 +70,16 @@ export default function Timeline({ print }) {
         lastElement.current?.scrollIntoView({ behavior: 'smooth' });
     }, [detailedEvents]);
 
+    const { secondary } = useTextColor();
+
     return (
         <>
             <Card
                 w="100%"
                 h="auto"
                 variant="filled"
+                border="1px"
+                borderColor="chakra-border-color"
             >
                 <CardBody
                     w="full"
@@ -112,9 +118,9 @@ export default function Timeline({ print }) {
                                                 </Text>
                                                 <Text
                                                     fontSize="xs"
-                                                    color="gray.400"
+                                                    color={secondary}
                                                 >
-                                                    {event.formattedTimestamp}
+                                                    {event.humanizedTimestamp}
                                                 </Text>
                                             </VStack>
                                         )}
@@ -125,7 +131,12 @@ export default function Timeline({ print }) {
 
                         <Spacer />
 
-                        <Text fontSize="md">Upcoming</Text>
+                        <Text
+                            fontSize="md"
+                            color={secondary}
+                        >
+                            Upcoming
+                        </Text>
                         <ArrowForwardIcon fontSize="2xl" />
 
                         {expectedEvents.map((event, i) => {

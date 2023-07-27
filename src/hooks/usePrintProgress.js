@@ -15,6 +15,16 @@ export default function usePrintProgress(printData) {
         return dayjs.utc(printData.events.find((e) => e.type === 'printing')?.timestamp);
     }, [printData]);
 
+    const completedTime = useMemo(() => {
+        if (!printData) return null;
+        return dayjs.utc(printData.events.find((e) => e.type === 'completed')?.timestamp);
+    }, [printData]);
+
+    const failTime = useMemo(() => {
+        if (!printData) return null;
+        return dayjs.utc(printData.events.find((e) => e.type === 'failed')?.timestamp);
+    }, [printData]);
+
     const endTime = useMemo(() => {
         if (!startTime) return null;
         let end = startTime.add(dayjs.duration(printData.estTime));
@@ -22,15 +32,15 @@ export default function usePrintProgress(printData) {
     }, [printData, startTime]);
 
     const update = useCallback(() => {
-        if (startTime) {
+        if (printData.state === PrintStates.PRINTING) {
             const now = dayjs.utc();
             const total = endTime.diff(startTime);
             const elapsed = now.diff(startTime);
             const remaining = dayjs.duration(endTime.diff(now));
 
             const remainingToFormat = remaining.add({ minutes: 1 });
-            let remainingHumanized = remaining.humanize(true);
-            let remainingFormatted = remaining.format(remaining.get('days') > 0 ? 'D:HH:mm' : 'HH:mm');
+            const remainingHumanized = remainingToFormat.humanize(true);
+            let remainingFormatted = remainingToFormat.format(remaining.get('days') > 0 ? 'D:HH:mm' : 'HH:mm');
 
             let progress = Math.floor((elapsed / total) * 100);
 
@@ -45,23 +55,60 @@ export default function usePrintProgress(printData) {
             setTrueProgress(progress);
             setTimeLeft(remainingFormatted);
             setTimeLeftHumanized(remainingHumanized);
+        } else if (printData.state === PrintStates.FAILED) {
+            const elapsed = dayjs.duration(failTime.diff(dayjs.utc()));
+
+            setComplete(false);
+            setTrueProgress(100);
+            setTimeLeft('00:00');
+            setTimeLeftHumanized(elapsed.humanize(true));
+        } else if (printData.state === PrintStates.QUEUED) {
+            const elapsed = dayjs.duration(dayjs.utc(printData.queuedAt).diff(dayjs.utc()));
+
+            setComplete(false);
+            setTrueProgress(0);
+            setTimeLeft('00:00');
+            setTimeLeftHumanized(elapsed.humanize(true));
+        } else if (printData.state === PrintStates.COMPLETED) {
+            const elapsed = dayjs.duration(completedTime.diff(dayjs.utc()));
+
+            setComplete(false);
+            setTrueProgress(100);
+            setTimeLeft('00:00');
+            setTimeLeftHumanized(elapsed.humanize(true));
         }
-    }, [startTime, endTime]);
+    }, [startTime, endTime, failTime, printData, completedTime]);
 
     useEffect(() => {
         if (!printData) return;
-        if (printData.state === PrintStates.PRINTING) {
+        update();
+        const interval = setInterval(() => {
             update();
-            const interval = setInterval(() => {
-                update();
-            }, 1000);
-            return () => clearInterval(interval);
-        } else {
-            setTrueProgress(0);
-            setTimeLeft(0);
-            setComplete(false);
-        }
+        }, 1000);
+        return () => clearInterval(interval);
+
+        // } else {
+        //     setTimeLeftHumanized('');
+        //     setTrueProgress(0);
+        //     setTimeLeft(0);
+        //     setComplete(false);
+        // }
     }, [update, printData]);
+
+    const timeLeftHumanizedDetailed = useMemo(() => {
+        if (!printData) return 'unknown';
+        if (printData.state === PrintStates.FAILED) {
+            return `failed ${timeLeftHumanized}`;
+        } else if (complete && printData.state !== PrintStates.COMPLETED) {
+            return `expected ${timeLeftHumanized}`;
+        } else if (printData.state === PrintStates.COMPLETED) {
+            return `completed ${timeLeftHumanized}`;
+        } else if (printData.state === PrintStates.PRINTING) {
+            return `expected ${timeLeftHumanized}`;
+        } else if (printData.state === PrintStates.QUEUED) {
+            return `queued ${timeLeftHumanized}`;
+        }
+    }, [timeLeftHumanized, complete, printData]);
 
     const progress = useMemo(() => {
         if (!printData) return 0;
@@ -113,5 +160,14 @@ export default function usePrintProgress(printData) {
         }
     }, [complete, printData, timeLeft]);
 
-    return { progress, timeLeft, timeLeftHumanized, complete, progressBarColor, progressMessage, progressMessageColor };
+    return {
+        progress,
+        timeLeft,
+        timeLeftHumanized,
+        timeLeftHumanizedDetailed,
+        complete,
+        progressBarColor,
+        progressMessage,
+        progressMessageColor
+    };
 }
