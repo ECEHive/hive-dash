@@ -75,6 +75,7 @@ export default function NewPrint(props) {
     });
     const [enableNext, setEnableNext] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [queuePos, setQueuePos] = useState(0);
 
     const steps = useMemo(
         () => [
@@ -142,6 +143,7 @@ export default function NewPrint(props) {
         })
             .then((res) => res.json())
             .then((res) => {
+                setQueuePos(res.queueLength);
                 refreshData();
                 setSubmitting(false);
             })
@@ -271,7 +273,9 @@ export default function NewPrint(props) {
                                                 >
                                                     Print submitted
                                                 </AlertTitle>
-                                                <AlertDescription maxWidth="sm">Position in queue: 5</AlertDescription>
+                                                <AlertDescription maxWidth="sm">
+                                                    Position in queue: {queuePos}
+                                                </AlertDescription>
                                                 <AlertDescription maxWidth="sm">
                                                     The end user can check the status of their print on this website
                                                 </AlertDescription>
