@@ -88,6 +88,7 @@ export default function TopBarNavigation(props) {
                 <IconButton
                     as={NextLink}
                     href="/config"
+                    isActive={pathSection === 'config'}
                 >
                     <Icon as={iconSet.settings} />
                 </IconButton>
