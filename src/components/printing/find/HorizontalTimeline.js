@@ -83,12 +83,14 @@ export default function Timeline({ print }) {
             >
                 <CardBody
                     w="full"
-                    overflow="auto"
+                    p={0}
                 >
                     <HStack
-                        w="auto"
+                        w="full"
                         h="100%"
                         spacing={2}
+                        overflow="auto"
+                        p={5}
                     >
                         {detailedEvents.reverse().map((event, i) => {
                             return (
@@ -131,7 +133,7 @@ export default function Timeline({ print }) {
 
                         {expectedEvents.length > 0 && (
                             <>
-                                <Spacer />
+                                <Spacer minW="30px" />
 
                                 <Text
                                     fontSize="md"
@@ -157,11 +159,6 @@ export default function Timeline({ print }) {
                                         </>
                                     );
                                 })}
-                                {/* <Box
-                            ref={lastElement}
-                            minW="40%"
-                            h="100%"
-                        /> */}
                             </>
                         )}
                     </HStack>

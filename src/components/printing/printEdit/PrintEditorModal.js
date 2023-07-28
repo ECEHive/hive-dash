@@ -160,80 +160,84 @@ export default function PrintEditorModal({ isOpen, onClose, initialData }) {
     ];
 
     return (
-        <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            isCentered
-            size="3xl"
-            scrollBehavior="inside"
-        >
-            <ModalOverlay />
-            <ModalContent h="container.sm">
-                <ModalHeader>Print Editor - {betterPrintData.trayName}</ModalHeader>
-                <ModalBody h="100%">
-                    <HStack
-                        w="100%"
-                        h="100%"
-                        spacing={6}
-                    >
-                        {/* navigation */}
-                        <VStack
-                            w="175px"
-                            h="100%"
-                            spacing={1}
-                            justify="start"
-                            align="start"
-                        >
-                            <ButtonGroup
-                                orientation="vertical"
-                                w="175px"
+        <>
+            {printData && (
+                <Modal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    isCentered
+                    size="3xl"
+                    scrollBehavior="inside"
+                >
+                    <ModalOverlay />
+                    <ModalContent h="container.sm">
+                        <ModalHeader>Print Editor - {betterPrintData.trayName}</ModalHeader>
+                        <ModalBody h="100%">
+                            <HStack
+                                w="100%"
+                                h="100%"
+                                spacing={6}
                             >
-                                {pages.map((page, index) => (
-                                    <Button
-                                        key={index}
-                                        w="100%"
-                                        variant="ghost"
-                                        justifyContent="flex-start"
-                                        isActive={currentPageIndex === index}
-                                        leftIcon={page.icon}
-                                        colorScheme={page.color || 'gray'}
-                                        onClick={() => setCurrentPageIndex(index)}
+                                {/* navigation */}
+                                <VStack
+                                    w="175px"
+                                    h="100%"
+                                    spacing={1}
+                                    justify="start"
+                                    align="start"
+                                >
+                                    <ButtonGroup
+                                        orientation="vertical"
+                                        w="175px"
                                     >
-                                        {page.name}
-                                    </Button>
-                                ))}
-                            </ButtonGroup>
-                        </VStack>
+                                        {pages.map((page, index) => (
+                                            <Button
+                                                key={index}
+                                                w="100%"
+                                                variant="ghost"
+                                                justifyContent="flex-start"
+                                                isActive={currentPageIndex === index}
+                                                leftIcon={page.icon}
+                                                colorScheme={page.color || 'gray'}
+                                                onClick={() => setCurrentPageIndex(index)}
+                                            >
+                                                {page.name}
+                                            </Button>
+                                        ))}
+                                    </ButtonGroup>
+                                </VStack>
 
-                        {/* contnet */}
-                        <VStack
-                            w="100%"
-                            h="100%"
-                            align="start"
-                            justify="start"
-                            spacing={8}
-                            overflow="auto"
-                            pr={3}
-                            pl={1}
-                        >
-                            {pages[currentPageIndex].component}
-                        </VStack>
-                    </HStack>
-                </ModalBody>
-                <ModalFooter spacing={3}>
-                    <HStack spacing={3}>
-                        <Button onClick={onClose}>Cancel</Button>
-                        <Button
-                            colorScheme="blue"
-                            onClick={save}
-                            isLoading={saving}
-                            leftIcon={<Icon as={iconSet.save} />}
-                        >
-                            Save
-                        </Button>
-                    </HStack>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+                                {/* contnet */}
+                                <VStack
+                                    w="100%"
+                                    h="100%"
+                                    align="start"
+                                    justify="start"
+                                    spacing={8}
+                                    overflow="auto"
+                                    pr={3}
+                                    pl={1}
+                                >
+                                    {pages[currentPageIndex].component}
+                                </VStack>
+                            </HStack>
+                        </ModalBody>
+                        <ModalFooter spacing={3}>
+                            <HStack spacing={3}>
+                                <Button onClick={onClose}>Cancel</Button>
+                                <Button
+                                    colorScheme="blue"
+                                    onClick={save}
+                                    isLoading={saving}
+                                    leftIcon={<Icon as={iconSet.save} />}
+                                >
+                                    Save
+                                </Button>
+                            </HStack>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+            )}
+        </>
     );
 }

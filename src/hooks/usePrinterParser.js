@@ -32,7 +32,8 @@ export default function usePrinterParser(printer) {
         return {
             ...printer,
             state: state,
-            queueLength: queue.filter((print) => print.printer === printer.id && !print.completed).length
+            queueLength: queue.filter((print) => print.printer === printer.id && print.state === PrintStates.QUEUED)
+                .length
         };
     }, [printer, currentPrintData, queue]);
 
