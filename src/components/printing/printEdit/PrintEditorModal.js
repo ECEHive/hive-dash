@@ -66,7 +66,7 @@ export default function PrintEditorModal({ isOpen, onClose, initialData }) {
     const [printData, setPrintData] = useState(null);
     const [saving, setSaving] = useState(false);
 
-    const { update: printUpdater, delete: printDeleter } = usePrintUpdate();
+    const { update: printUpdater } = usePrintUpdate();
 
     useEffect(() => {
         setPrintData(initialData);

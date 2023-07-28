@@ -85,7 +85,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                 justifyContent="flex-start"
                                 spacing={5}
                                 color={secondary}
-                                fontSize="md"
+                                fontSize="sm"
                             >
                                 {/* <HStack spacing={2}>
                                     <BsPrinterFill size={15} />
@@ -169,7 +169,7 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                 <IconButton icon={<ChevronRightIcon />} />
             </VStack> */}
             <VStack
-                w="400px"
+                minW="375px"
                 h="100%"
                 spacing={3}
                 alignItems="flex-start"

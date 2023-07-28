@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 
 import {
     Badge,
@@ -18,6 +18,7 @@ import {
     Tooltip,
     Tr,
     VStack,
+    useDisclosure,
     useToast
 } from '@chakra-ui/react';
 
@@ -33,7 +34,11 @@ import usePrinterUpdate from '@/hooks/usePrinterUpdate';
 import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
 
-function QueueTableItem({ printData, startPrint, canQueue }) {
+import UpdateModal from '@/components/printing/printers/UpdateModal';
+
+import PrintEditorModal from '../printEdit/PrintEditorModal';
+
+function QueueTableItem({ printData, startPrint, canQueue, update, editCallback }) {
     const { betterPrintData } = usePrintParser(printData);
     const { progressMessage, progressMessageColor } = usePrintProgress(printData);
 
@@ -66,24 +71,46 @@ function QueueTableItem({ printData, startPrint, canQueue }) {
                 <Text fontSize="md">{betterPrintData.estTimeFormatted}</Text>
             </Td>
             <Td>
-                <ButtonGroup size="sm">
-                    <Button
-                        leftIcon={<Icon as={iconSet.play} />}
-                        colorScheme="green"
-                        variant="solid"
-                        isDisabled={!canQueue}
-                        onClick={() => startPrint(printData)}
-                    >
-                        Start
-                    </Button>
-                    <Button
-                        leftIcon={<Icon as={iconSet.pencil} />}
-                        colorScheme="orange"
-                        variant="solid"
-                    >
-                        Edit
-                    </Button>
-                </ButtonGroup>
+                {betterPrintData.state === PrintStates.PRINTING ? (
+                    <ButtonGroup size="sm">
+                        <Button
+                            leftIcon={<Icon as={iconSet.check} />}
+                            colorScheme="green"
+                            variant="solid"
+                            onClick={() => update(true)}
+                        >
+                            Completed
+                        </Button>
+                        <Button
+                            leftIcon={<Icon as={iconSet.x} />}
+                            colorScheme="red"
+                            variant="solid"
+                            onClick={() => update(false)}
+                        >
+                            Failed
+                        </Button>
+                    </ButtonGroup>
+                ) : (
+                    <ButtonGroup size="sm">
+                        <Button
+                            leftIcon={<Icon as={iconSet.play} />}
+                            colorScheme="green"
+                            variant="solid"
+                            isDisabled={!canQueue}
+                            onClick={() => startPrint(printData)}
+                        >
+                            Start
+                        </Button>
+                        <Button
+                            leftIcon={<Icon as={iconSet.pencil} />}
+                            colorScheme="orange"
+                            variant="solid"
+                            onClick={editCallback}
+                        >
+                            Edit
+                        </Button>
+                    </ButtonGroup>
+                )}
             </Td>
         </Tr>
     );
@@ -95,8 +122,18 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
 
     const { queue } = useContext(PrintingContext);
 
+    const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
+    const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onClose: onUpdateClose } = useDisclosure();
+    const [nextEventData, setNextEventData] = useState(null);
+    const [printToEdit, setPrintToEdit] = useState(null);
+
     const printerQueue = useMemo(() => {
-        return queue.filter((print) => print.printer === selectedPrinterData?.id && !print.completed);
+        return queue.filter(
+            (print) =>
+                print.printer === selectedPrinterData?.id &&
+                print.state !== PrintStates.COMPLETED &&
+                print.state !== PrintStates.CANCELLED
+        );
     }, [selectedPrinterData, queue]);
 
     const canQueue = useMemo(() => {
@@ -125,37 +162,91 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
         printUpdater(printData._id, newPrintData);
     }
 
+    function completePrint(completed) {
+        let eventData;
+        if (completed) {
+            eventData = {
+                type: 'completed',
+                timestamp: dayjs.utc().toISOString(),
+                notes: ''
+            };
+        } else {
+            eventData = {
+                type: 'failed',
+                timestamp: dayjs.utc().toISOString(),
+                notes: ''
+            };
+        }
+        setNextEventData(eventData);
+        onUpdateOpen();
+    }
+
+    const confirmUpdate = useCallback(
+        (event) => {
+            let data = {
+                ...activePrint,
+                state: event.type === 'completed' ? PrintStates.COMPLETED : PrintStates.FAILED,
+                completed: event.type === 'completed' || activePrint.completed,
+                events: [event, ...activePrint.events]
+            };
+            printUpdater(activePrint._id, data);
+            onUpdateClose();
+        },
+        [activePrint, printUpdater, onUpdateClose]
+    );
+
     return (
-        <Box
-            w="100%"
-            h="auto"
-        >
-            <TableContainer maxW="100%">
-                <Table
-                    variant="simple"
-                    size="sm"
-                >
-                    <Thead>
-                        <Tr>
-                            <Th>Print info</Th>
-                            <Th>Est. time</Th>
-                            <Th>Actions</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {printerQueue.map((print) => {
-                            return (
-                                <QueueTableItem
-                                    key={print._id}
-                                    printData={print}
-                                    startPrint={startPrint}
-                                    canQueue={canQueue}
-                                />
-                            );
-                        })}
-                    </Tbody>
-                </Table>
-            </TableContainer>
-        </Box>
+        <>
+            <UpdateModal
+                isOpen={isUpdateOpen}
+                onClose={onUpdateClose}
+                eventData={nextEventData}
+                save={confirmUpdate}
+            />
+            {printToEdit && (
+                <PrintEditorModal
+                    isOpen={isEditorOpen}
+                    onClose={onEditorClose}
+                    initialData={printToEdit}
+                />
+            )}
+
+            <Box
+                w="100%"
+                h="auto"
+            >
+                <TableContainer maxW="100%">
+                    <Table
+                        variant="simple"
+                        size="sm"
+                    >
+                        <Thead>
+                            <Tr>
+                                <Th>Print info</Th>
+                                <Th>Est. time</Th>
+                                <Th>Actions</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {printerQueue.map((print) => {
+                                return (
+                                    <QueueTableItem
+                                        key={print._id}
+                                        printData={print}
+                                        startPrint={startPrint}
+                                        canQueue={canQueue}
+                                        update={completePrint}
+                                        editCallback={() => {
+                                            setPrintToEdit(print);
+                                            onEditorOpen();
+                                        }}
+                                    />
+                                );
+                            })}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            </Box>
+        </>
     );
 }

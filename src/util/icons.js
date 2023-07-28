@@ -1,5 +1,6 @@
 import {
     AddIcon,
+    ArrowForwardIcon,
     CheckIcon,
     CloseIcon,
     DeleteIcon,
@@ -14,6 +15,7 @@ import {
 
 import {
     FaCalendar,
+    FaCalendarPlus,
     FaCodeBranch,
     FaCubes,
     FaPlay,
@@ -39,6 +41,7 @@ const iconSet = {
     printer: FaPrint,
     queue: FaSortNumericDown,
     calendar: FaCalendar,
+    calendarAdd: FaCalendarPlus,
     search: SearchIcon,
     settings: SettingsIcon,
     dashboard: FaTachometerAlt,
@@ -60,7 +63,8 @@ const iconSet = {
     clock: TimeIcon,
     material: FaCubes,
     refresh: RepeatIcon,
-    branch: FaCodeBranch
+    branch: FaCodeBranch,
+    rightArrow: ArrowForwardIcon
 };
 
 export default iconSet;

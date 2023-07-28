@@ -62,7 +62,7 @@ export default function FindPrint(props) {
                 w="100%"
                 h="100%"
                 p={5}
-                overflow="auto"
+                overflow="hidden"
             >
                 <HStack
                     w="100%"
@@ -80,19 +80,8 @@ export default function FindPrint(props) {
                         flexGrow={1}
                         h="full"
                         justify="center"
+                        overflow="hidden"
                     >
-                        {/* <Card
-                            h="100%"
-                            maxW="1000px"
-                            flexGrow={1}
-                            variant="outline"
-                            borderRadius={10}
-                            overflow="hidden"
-                        >
-                            <CardBody
-                                w="100%"
-                                h="100%"
-                            > */}
                         <Box
                             h="full"
                             w="full"
@@ -107,7 +96,7 @@ export default function FindPrint(props) {
                                     justify="start"
                                     align="start"
                                     spacing={3}
-                                    overflow="auto"
+                                    overflow="hidden"
                                 >
                                     {printerData.type === 'stratasys' && (
                                         <Box

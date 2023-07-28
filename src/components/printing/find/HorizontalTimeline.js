@@ -86,7 +86,7 @@ export default function Timeline({ print }) {
                     overflow="auto"
                 >
                     <HStack
-                        w="full"
+                        w="auto"
                         h="100%"
                         spacing={2}
                     >

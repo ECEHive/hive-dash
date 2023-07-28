@@ -49,44 +49,8 @@ export default function PrinterInfo({ selectedPrinterData }) {
 
     const { isOpen: isMaintenanceOpen, onOpen: onMaintenanceOpen, onClose: onMaintenanceClose } = useDisclosure();
     const { isOpen: isStatusOpen, onOpen: onStatusOpen, onClose: onStatusClose } = useDisclosure();
-    const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onClose: onUpdateClose } = useDisclosure();
 
     const { currentPrintData: activePrint } = usePrinterParser(selectedPrinterData);
-
-    const [nextEventData, setNextEventData] = useState(null);
-
-    function completePrint(completed) {
-        let eventData;
-        if (completed) {
-            eventData = {
-                type: 'completed',
-                timestamp: dayjs.utc().toISOString(),
-                notes: ''
-            };
-        } else {
-            eventData = {
-                type: 'failed',
-                timestamp: dayjs.utc().toISOString(),
-                notes: ''
-            };
-        }
-        setNextEventData(eventData);
-        onUpdateOpen();
-    }
-
-    const confirmUpdate = useCallback(
-        (event) => {
-            let data = {
-                ...activePrint,
-                state: event.type === 'completed' ? PrintStates.COMPLETED : PrintStates.FAILED,
-                completed: event.type === 'completed' || activePrint.completed,
-                events: [event, ...activePrint.events]
-            };
-            printUpdater(activePrint._id, data);
-            onUpdateClose();
-        },
-        [activePrint, printUpdater, onUpdateClose]
-    );
 
     return (
         <>
@@ -102,12 +66,6 @@ export default function PrinterInfo({ selectedPrinterData }) {
                         onClose={onStatusClose}
                         printerData={selectedPrinterData}
                     />
-                    <UpdateModal
-                        isOpen={isUpdateOpen}
-                        onClose={onUpdateClose}
-                        eventData={nextEventData}
-                        save={confirmUpdate}
-                    />
                 </>
             )}
 
@@ -115,6 +73,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                 flexGrow={1}
                 h="full"
                 justify="center"
+                overflow="hidden"
             >
                 <Box
                     h="full"
@@ -138,7 +97,12 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                 mb={4}
                                 alignItems="center"
                             >
-                                <Heading size="lg">{selectedPrinterData.displayName}</Heading>
+                                <Heading
+                                    size="lg"
+                                    fontWeight="semibold"
+                                >
+                                    {selectedPrinterData.displayName}
+                                </Heading>
                                 <Spacer />
                                 <IconButton
                                     icon={<Icon as={iconSet.wrench} />}
@@ -176,35 +140,9 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                         </Alert>
                                     </Box>
                                 )}
+
                                 {/* current print */}
-                                {activePrint && (
-                                    <PrintPreview
-                                        print={activePrint}
-                                        actions={
-                                            activePrint.state === PrintStates.PRINTING && (
-                                                <ButtonGroup
-                                                    variant="outline"
-                                                    size="md"
-                                                >
-                                                    <Button
-                                                        colorScheme="red"
-                                                        leftIcon={<CloseIcon />}
-                                                        onClick={() => completePrint(false)}
-                                                    >
-                                                        Failed
-                                                    </Button>
-                                                    <Button
-                                                        colorScheme="green"
-                                                        leftIcon={<CheckIcon />}
-                                                        onClick={() => completePrint(true)}
-                                                    >
-                                                        Completed
-                                                    </Button>
-                                                </ButtonGroup>
-                                            )
-                                        }
-                                    />
-                                )}
+                                {activePrint && <PrintPreview print={activePrint} />}
 
                                 {/* queue */}
                                 <QueueTable

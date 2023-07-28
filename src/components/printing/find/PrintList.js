@@ -83,22 +83,29 @@ function PrintListItem({ data, isActive, onClick }) {
                         </Badge>
                     </HStack>
 
-                    <HStack
+                    <VStack
                         w="100%"
-                        justifyContent="flex-start"
-                        spacing={5}
+                        justify="start"
+                        align="start"
+                        spacing={2}
                         color={secondary}
-                        fontSize="md"
+                        fontSize="sm"
                     >
-                        <HStack spacing={2}>
+                        <HStack
+                            spacing={2}
+                            align="center"
+                        >
                             <Icon as={iconSet.printer} />
                             <Text fontWeight="normal">{printerData?.displayName}</Text>
                         </HStack>
-                        <HStack spacing={2}>
-                            <Icon as={iconSet.calendar} />
-                            <Text fontWeight="normal">{betterPrintData.queuedAtFormatted}</Text>
+                        <HStack
+                            spacing={2}
+                            align="center"
+                        >
+                            <Icon as={iconSet.refresh} />
+                            <Text fontWeight="normal">{betterPrintData.updatedAtHumanized}</Text>
                         </HStack>
-                    </HStack>
+                    </VStack>
 
                     {betterPrintData.state === PrintStates.PRINTING && (
                         <>
@@ -161,7 +168,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
     return (
         <>
             <VStack
-                w="400px"
+                w="375px"
                 h="100%"
                 spacing={3}
                 alignItems="flex-start"

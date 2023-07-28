@@ -83,7 +83,7 @@ export default function Printers(props) {
             <Box
                 w="100%"
                 h="100%"
-                overflow="auto"
+                overflow="hidden"
                 p={5}
             >
                 <HStack
