@@ -13,9 +13,11 @@ import {
     TimeIcon
 } from '@chakra-ui/icons';
 
+import { BsDot } from 'react-icons/bs';
 import {
     FaCalendar,
     FaCalendarPlus,
+    FaCircle,
     FaCodeBranch,
     FaCubes,
     FaPlay,
@@ -64,7 +66,8 @@ const iconSet = {
     material: FaCubes,
     refresh: RepeatIcon,
     branch: FaCodeBranch,
-    rightArrow: ArrowForwardIcon
+    rightArrow: ArrowForwardIcon,
+    dot: BsDot
 };
 
 export default iconSet;

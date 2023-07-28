@@ -74,150 +74,158 @@ export default function PrintPreview({ print }) {
         >
             <CardBody
                 p={0}
+                h="auto"
                 w="full"
                 overflow="hidden"
             >
-                <Box
+                {/* <Box
                     p={5}
                     pb={3}
                     maxW="full"
+                > */}
+                <VStack
+                    w="full"
+                    h="auto"
+                    align="start"
+                    justify="start"
+                    oveflow="hidden"
+                    spacing={0}
                 >
-                    <VStack
+                    <HStack
                         w="full"
-                        h="auto"
-                        align="start"
-                        justify="start"
-                        spacing={3}
-                        oveflow="hidden"
+                        p={5}
+                        borderBottom="1px"
+                        borderColor="chakra-border-color"
                     >
-                        <HStack w="full">
-                            <CircularProgress
-                                size={16}
-                                thickness={6}
-                                value={progress}
-                                color={useColorModeValue(`${progressBarColor}.500`, `${progressBarColor}.200`)}
-                                trackColor={useColorModeValue('gray.100', 'gray.700')}
-                            />
-                            <VStack
-                                align="start"
-                                justify="start"
-                                spacing={1}
+                        <CircularProgress
+                            size={16}
+                            thickness={6}
+                            value={progress}
+                            color={useColorModeValue(`${progressBarColor}.500`, `${progressBarColor}.200`)}
+                            trackColor={useColorModeValue('gray.100', 'gray.700')}
+                        />
+                        <VStack
+                            align="start"
+                            justify="start"
+                            spacing={1}
+                        >
+                            <HStack>
+                                <Text
+                                    fontSize="2xl"
+                                    lineHeight={1}
+                                    fontWeight="medium"
+                                >
+                                    {betterPrintData.trayName}
+                                </Text>
+                            </HStack>
+                            <HStack
+                                fontSize="md"
+                                color={secondaryAlt}
+                                spacing={2}
                             >
-                                <HStack>
-                                    <Text
-                                        fontSize="2xl"
-                                        lineHeight={1}
-                                        fontWeight="medium"
-                                    >
-                                        {betterPrintData.trayName}
-                                    </Text>
-                                </HStack>
-                                <HStack
-                                    fontSize="md"
-                                    color={secondaryAlt}
-                                    spacing={2}
-                                >
-                                    <Icon as={iconSet.clock} />
-                                    <Text fontSize="sm">{timeLeftHumanizedDetailed}</Text>
-                                </HStack>
-                            </VStack>
-                            <Spacer />
-                            <VStack
-                                spacing={1}
-                                color={secondary}
-                                justify="center"
-                                h="full"
-                            >
-                                <HStack
-                                    h="full"
-                                    w="full"
-                                    align="center"
-                                    justify="start"
-                                    fontSize="sm"
-                                >
-                                    <Icon as={iconSet.calendarAdd} />
-                                    <Text>{betterPrintData.queuedAtFormatted}</Text>
-                                </HStack>
-                                <HStack
-                                    h="full"
-                                    w="full"
-                                    align="center"
-                                    justify="start"
-                                    fontSize="sm"
-                                >
-                                    <Icon as={iconSet.person} />
-                                    <Text>
-                                        {betterPrintData.endUser.firstname} {betterPrintData.endUser.lastname}
-                                    </Text>
-                                </HStack>
-                            </VStack>
-                        </HStack>
-                        <Divider w="full" />
-
-                        <HStack
-                            w="full"
-                            h="auto"
+                                <Icon as={iconSet.clock} />
+                                <Text fontSize="sm">{timeLeftHumanizedDetailed}</Text>
+                            </HStack>
+                        </VStack>
+                        <Spacer />
+                        <VStack
+                            spacing={1}
+                            color={secondary}
+                            justify="center"
+                            h="full"
                         >
                             <HStack
-                                w="auto"
-                                h="auto"
+                                h="full"
+                                w="full"
                                 align="center"
                                 justify="start"
-                                pb={2}
-                                spacing={6}
-                                overflow="auto"
-                                whiteSpace="nowrap"
-                                // borderRight={actions && '1px'}
-                                // borderRightColor={actions && 'chakra-border-color'}
+                                fontSize="sm"
                             >
-                                {dataFields.map((field, i) => {
-                                    return (
-                                        <>
-                                            <VStack
-                                                spacing={1}
-                                                align="start"
-                                            >
-                                                <HStack
-                                                    fontSize="sm"
-                                                    color={secondaryAlt}
-                                                >
-                                                    <Icon as={field.icon} />
-                                                    <Text>{field.label}</Text>
-                                                </HStack>
-                                                <HStack
-                                                    alignItems="end"
-                                                    spacing={1}
-                                                >
-                                                    <Text
-                                                        fontSize="2xl"
-                                                        fontWeight="semibold"
-                                                        lineHeight={1}
-                                                    >
-                                                        {field.value}
-                                                    </Text>
-                                                    {field.suffix && <Text fontSize="sm">{field.suffix}</Text>}
-                                                </HStack>
-                                            </VStack>
-                                            {i < dataFields.length - 1 && (
-                                                <Divider
-                                                    orientation="vertical"
-                                                    h="50px"
-                                                />
-                                            )}
-                                        </>
-                                    );
-                                })}
+                                <Icon as={iconSet.calendarAdd} />
+                                <Text>{betterPrintData.queuedAtFormatted}</Text>
                             </HStack>
-                            {/* <Spacer />
+                            <HStack
+                                h="full"
+                                w="full"
+                                align="center"
+                                justify="start"
+                                fontSize="sm"
+                            >
+                                <Icon as={iconSet.person} />
+                                <Text>
+                                    {betterPrintData.endUser.firstname} {betterPrintData.endUser.lastname}
+                                </Text>
+                            </HStack>
+                        </VStack>
+                    </HStack>
+
+                    <HStack
+                        w="full"
+                        h="auto"
+                        px={5}
+                        py={3}
+                    >
+                        <HStack
+                            w="auto"
+                            h="auto"
+                            align="center"
+                            justify="start"
+                            pb={2}
+                            spacing={3}
+                            overflow="auto"
+                            whiteSpace="nowrap"
+                            // borderRight={actions && '1px'}
+                            // borderRightColor={actions && 'chakra-border-color'}
+                        >
+                            {dataFields.map((field, i) => {
+                                return (
+                                    <>
+                                        <VStack
+                                            spacing={1}
+                                            align="start"
+                                        >
+                                            <HStack
+                                                fontSize="sm"
+                                                color={secondaryAlt}
+                                            >
+                                                <Icon as={field.icon} />
+                                                <Text>{field.label}</Text>
+                                            </HStack>
+                                            <HStack
+                                                alignItems="end"
+                                                spacing={1}
+                                            >
+                                                <Text
+                                                    fontSize="2xl"
+                                                    fontWeight="semibold"
+                                                    lineHeight={1}
+                                                >
+                                                    {field.value}
+                                                </Text>
+                                                {field.suffix && <Text fontSize="sm">{field.suffix}</Text>}
+                                            </HStack>
+                                        </VStack>
+                                        {i < dataFields.length - 1 && (
+                                            <Icon
+                                                color={secondary}
+                                                fontSize="sm"
+                                                as={iconSet.dot}
+                                            />
+                                        )}
+                                    </>
+                                );
+                            })}
+                        </HStack>
+                        {/* <Spacer />
                             <VStack
                                 h="full"
                                 justify="end"
                             >
                                 {actions}
                             </VStack> */}
-                        </HStack>
-                    </VStack>
-                </Box>
+                    </HStack>
+                </VStack>
+                {/* </Box> */}
                 <Flex
                     w="full"
                     h="auto"
