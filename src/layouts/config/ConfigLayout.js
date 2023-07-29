@@ -1,5 +1,6 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex } from '@chakra-ui/react';
 
+import Footer from '@/components/Footer';
 import TopBar from '@/components/TopBarNavigation';
 import ConfigNavigation from '@/components/config/SidebarNavigation';
 
@@ -15,7 +16,7 @@ export default function PrimaryLayout({ children }) {
                 <ConfigNavigation />
                 <Box
                     w="calc(100% - 260px)"
-                    h="calc(100% - 80px)"
+                    h="calc(100% - 80px - 1.5rem)"
                     left="260px"
                     top="80px"
                     pos="relative"
@@ -31,6 +32,7 @@ export default function PrimaryLayout({ children }) {
                     </Alert> */}
                     {children}
                 </Box>
+                <Footer />
             </Box>
         </>
     );

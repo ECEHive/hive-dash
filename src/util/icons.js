@@ -33,7 +33,8 @@ import {
     FaUserCog,
     FaWrench
 } from 'react-icons/fa';
-import { FaFaceSmile, FaNoteSticky, FaPencil } from 'react-icons/fa6';
+import { FaBarsProgress, FaFaceSmile, FaNoteSticky, FaPencil } from 'react-icons/fa6';
+import { GiFilmSpool } from 'react-icons/gi';
 
 const iconSet = {
     wrench: FaWrench,
@@ -64,6 +65,7 @@ const iconSet = {
     peerInstructor: FaUserCog,
     clock: TimeIcon,
     material: FaCubes,
+    materialAmount: FaBarsProgress,
     refresh: RepeatIcon,
     branch: FaCodeBranch,
     rightArrow: ArrowForwardIcon,

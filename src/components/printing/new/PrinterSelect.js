@@ -17,7 +17,7 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrinterParser from '@/hooks/usePrinterParser';
+import usePrinterParser from '@/hooks/printing/usePrinterParser';
 
 import { StateColors } from '@/util/states';
 

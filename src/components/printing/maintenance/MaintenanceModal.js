@@ -28,7 +28,7 @@ import {
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import ReactMarkdown from 'react-markdown';
 
-import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
 
 export default function MaintenanceModal({ isOpen, onClose, printerData }) {
     const [data, setData] = useState(printerData);

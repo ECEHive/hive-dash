@@ -41,9 +41,6 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrintUpdate from '@/hooks/usePrintUpdate';
-import usePrinterUpdate from '@/hooks/usePrinterUpdate';
-
 import SquareLogo from '@/assets/square_logo.png';
 
 import TopLayout from '@/layouts/printing/PrintingLayout';

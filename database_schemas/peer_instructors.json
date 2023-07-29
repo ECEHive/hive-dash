@@ -1,5 +1,10 @@
 [
     {
-        "name": "Colin Hartigan"
+        "name": "Colin Hartigan",
+        "type": 0
+    },
+    {
+        "name": "Someone cooler",
+        "type": 1
     }
 ]

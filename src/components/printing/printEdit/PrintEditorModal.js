@@ -44,8 +44,8 @@ import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 import ReactMarkdown from 'react-markdown';
 
-import usePrintParser from '@/hooks/usePrintParser';
-import usePrintUpdate from '@/hooks/usePrintUpdate';
+import usePrintParser from '@/hooks/printing/usePrintParser';
+import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 
 import iconSet from '@/util/icons';
 

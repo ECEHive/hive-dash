@@ -44,8 +44,8 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrintEvents from '@/hooks/usePrintEvents';
-import usePrintUpdate from '@/hooks/usePrintUpdate';
+import usePrintEvents from '@/hooks/printing/usePrintEvents';
+import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
@@ -54,7 +54,6 @@ import DeleteDialog from '@/components/DeleteDIalog';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 
 const FancySelect = chakra(Select);
-
 const ChakraEditor = chakra(Editor);
 
 function SectionHeader({ children }) {

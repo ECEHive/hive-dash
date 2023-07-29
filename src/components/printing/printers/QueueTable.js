@@ -26,10 +26,10 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrintParser from '@/hooks/usePrintParser';
-import usePrintProgress from '@/hooks/usePrintProgress';
-import usePrintUpdate from '@/hooks/usePrintUpdate';
-import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+import usePrintParser from '@/hooks/printing/usePrintParser';
+import usePrintProgress from '@/hooks/printing/usePrintProgress';
+import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
+import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
 
 import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';

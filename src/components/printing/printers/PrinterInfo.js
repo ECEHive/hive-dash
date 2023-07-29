@@ -27,9 +27,9 @@ import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 import dayjs from '@/lib/time';
 
-import usePrintUpdate from '@/hooks/usePrintUpdate';
-import usePrinterParser from '@/hooks/usePrinterParser';
-import usePrinterUpdate from '@/hooks/usePrinterUpdate';
+import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
+import usePrinterParser from '@/hooks/printing/usePrinterParser';
+import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
@@ -78,7 +78,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                 <Box
                     h="full"
                     w="full"
-                    maxW="1000px"
+                    maxW="4xl"
                     overflow="hidden"
                     //pr="260px" //centers in the viewport
                 >

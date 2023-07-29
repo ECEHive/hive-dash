@@ -18,8 +18,8 @@ import {
     useColorModeValue
 } from '@chakra-ui/react';
 
-import usePrintParser from '@/hooks/usePrintParser';
-import usePrintProgress from '@/hooks/usePrintProgress';
+import usePrintParser from '@/hooks/printing/usePrintParser';
+import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
@@ -51,7 +51,7 @@ export default function PrintPreview({ print }) {
             },
             {
                 label: 'Est. material',
-                icon: iconSet.material,
+                icon: iconSet.materialAmount,
                 value: betterPrintData.materialUsage,
                 suffix: betterPrintData.materialSymbol
             },

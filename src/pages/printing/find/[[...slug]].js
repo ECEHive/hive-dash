@@ -22,7 +22,7 @@ import { useRouter } from 'next/router';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrintParser from '@/hooks/usePrintParser';
+import usePrintParser from '@/hooks/printing/usePrintParser';
 
 import Layout from '@/layouts/printing/PrintingLayout';
 

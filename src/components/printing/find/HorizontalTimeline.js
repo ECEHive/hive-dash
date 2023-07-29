@@ -24,7 +24,7 @@ import { ArrowForwardIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import ReactMarkdown from 'react-markdown';
 
-import usePrintEvents from '@/hooks/usePrintEvents';
+import usePrintEvents from '@/hooks/printing/usePrintEvents';
 import useTextColor from '@/hooks/useTextColor';
 
 function TimelineEvent({ event, isTopEnd, isBottomEnd }) {

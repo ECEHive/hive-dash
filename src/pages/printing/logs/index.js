@@ -22,8 +22,8 @@ import { SearchIcon } from '@chakra-ui/icons';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrintParser from '@/hooks/usePrintParser';
-import usePrintProgress from '@/hooks/usePrintProgress';
+import usePrintParser from '@/hooks/printing/usePrintParser';
+import usePrintProgress from '@/hooks/printing/usePrintProgress';
 
 import PrintingLayout from '@/layouts/printing/PrintingLayout';
 

@@ -25,9 +25,9 @@ import { ChevronRightIcon, SearchIcon } from '@chakra-ui/icons';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrintParser from '@/hooks/usePrintParser';
-import usePrintProgress from '@/hooks/usePrintProgress';
-import usePrinterParser from '@/hooks/usePrinterParser';
+import usePrintParser from '@/hooks/printing/usePrintParser';
+import usePrintProgress from '@/hooks/printing/usePrintProgress';
+import usePrinterParser from '@/hooks/printing/usePrinterParser';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';

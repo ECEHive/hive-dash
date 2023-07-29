@@ -31,8 +31,8 @@ import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import usePrintParser from '@/hooks/usePrintParser';
-import usePrintProgress from '@/hooks/usePrintProgress';
+import usePrintParser from '@/hooks/printing/usePrintParser';
+import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';

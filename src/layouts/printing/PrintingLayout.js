@@ -1,10 +1,14 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex, VStack, useDisclosure } from '@chakra-ui/react';
+
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 import { PrintingProvider } from '@/contexts/printing/PrintingContext';
 
 import Footer from '@/components/Footer';
+import SiteBanner from '@/components/SiteBanner';
 import TopBar from '@/components/TopBarNavigation';
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
 import NewPrintModal from '@/components/printing/new/NewPrintModal';
@@ -34,18 +38,9 @@ export default function PrintingLayout({ children }) {
                         pos="relative"
                         justify="start"
                         align="start"
+                        spacing={0}
                     >
-                        {/* <Alert status="error">
-                            <AlertIcon />
-                            <Box>
-                                <AlertTitle>End of semester</AlertTitle>
-                                <AlertDescription>
-                                    3D Printing queues will be longer than
-                                    expected leading up to the end of the
-                                    semester.
-                                </AlertDescription>
-                            </Box>
-                        </Alert> */}
+                        <SiteBanner />
                         <Box
                             w="100%"
                             h="100%"
