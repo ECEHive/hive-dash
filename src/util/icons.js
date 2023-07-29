@@ -31,6 +31,8 @@ import {
     FaToggleOn,
     FaUser,
     FaUserCog,
+    FaUserPlus,
+    FaUsers,
     FaWrench
 } from 'react-icons/fa';
 import { FaBarsProgress, FaFaceSmile, FaNoteSticky, FaPencil } from 'react-icons/fa6';
@@ -62,6 +64,8 @@ const iconSet = {
     delete: DeleteIcon,
     save: FaSave,
     person: FaUser,
+    people: FaUsers,
+    personPlus: FaUserPlus,
     peerInstructor: FaUserCog,
     clock: TimeIcon,
     material: FaCubes,
