@@ -26,6 +26,7 @@ import {
     InputLeftAddon,
     InputLeftElement,
     InputRightAddon,
+    Spacer,
     Switch,
     Table,
     TableContainer,
@@ -58,7 +59,138 @@ import NewPIModal from '@/components/config/people/NewPIModal';
 
 const ChakraEditor = chakra(Editor);
 
-export default function WebsiteSettings(props) {
+function PIEditor({ initialData, refresh }) {
+    const [name, setName] = useState('');
+    const [role, setRole] = useState(null);
+    const [email, setEmail] = useState('');
+
+    const [saving, setSaving] = useState(false);
+
+    useEffect(() => {
+        if (initialData) {
+            setName(initialData.name);
+            setRole(initialData.type);
+            setEmail(initialData.email);
+        }
+    }, [initialData]);
+
+    const save = useCallback(() => {
+        setSaving(true);
+        fetch(`/api/peerInstructors/${initialData._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                type: role,
+                email: email
+            })
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                refresh();
+                setSaving(false);
+            });
+    }, [name, role, email]);
+
+    return (
+        <Card
+            variant="outline"
+            w="50%"
+            h="full"
+            overflow="hidden"
+        >
+            <CardBody overflow="hidden">
+                {initialData && (
+                    <>
+                        <VStack
+                            spacing={5}
+                            w="full"
+                            h="full"
+                            align="start"
+                        >
+                            <Heading
+                                size="md"
+                                fontFamily="body"
+                            >
+                                Edit PI
+                            </Heading>
+                            <VStack
+                                w="full"
+                                h="auto"
+                                flexGrow={1}
+                                align="start"
+                                spacing={3}
+                                overflow="auto"
+                                px={1}
+                            >
+                                <FormControl>
+                                    <FormLabel>Name</FormLabel>
+                                    <InputGroup>
+                                        <Input
+                                            value={name}
+                                            onChange={(e) => {
+                                                setName(e.target.value);
+                                            }}
+                                        />
+                                    </InputGroup>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Email</FormLabel>
+                                    <InputGroup>
+                                        <Input
+                                            value={email}
+                                            onChange={(e) => {
+                                                setEmail(e.target.value);
+                                            }}
+                                        />
+                                        <InputRightAddon>@gatech.edu</InputRightAddon>
+                                    </InputGroup>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Role</FormLabel>
+                                    <Select
+                                        menuPortalTarget={document.body}
+                                        styles={{
+                                            menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
+                                        }}
+                                        value={{
+                                            label: Object.keys(PITypes).find((key) => PITypes[key] === role),
+                                            value: role
+                                        }}
+                                        options={Object.keys(PITypes).map((key) => ({
+                                            label: key,
+                                            value: PITypes[key]
+                                        }))}
+                                        onChange={(e) => {
+                                            setRole(e.value);
+                                        }}
+                                    />
+                                </FormControl>
+                            </VStack>
+
+                            <HStack>
+                                <ButtonGroup>
+                                    <Button
+                                        colorScheme="blue"
+                                        isLoading={saving}
+                                        leftIcon={<Icon as={iconSet.save} />}
+                                        onClick={save}
+                                    >
+                                        Save
+                                    </Button>
+                                </ButtonGroup>
+                            </HStack>
+                        </VStack>
+                    </>
+                )}
+            </CardBody>
+        </Card>
+    );
+}
+
+export default function People(props) {
     const [PIs, setPIs] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [editingPI, setEditingPI] = useState(null);
@@ -76,24 +208,6 @@ export default function WebsiteSettings(props) {
             });
     }, []);
 
-    const save = useCallback(() => {
-        setSaving(true);
-        fetch('/api/config/website', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(PIs)
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                refresh();
-            })
-            .finally(() => {
-                setSaving(false);
-            });
-    }, [PIs, refresh]);
-
     useEffect(() => {
         refresh();
     }, [refresh]);
@@ -102,17 +216,9 @@ export default function WebsiteSettings(props) {
         <>
             <NewPIModal
                 isOpen={isNewPIOpen}
-                onClose={onNewPIClose}
-                save={(name, email, role) => {
-                    setPIs((old) => [
-                        ...old,
-                        {
-                            name: name,
-                            email: email,
-                            type: role
-                        }
-                    ]);
+                onClose={() => {
                     onNewPIClose();
+                    refresh();
                 }}
             />
             <Flex
@@ -217,7 +323,7 @@ export default function WebsiteSettings(props) {
                                                             <Button
                                                                 leftIcon={<Icon as={iconSet.pencil} />}
                                                                 onClick={() => {
-                                                                    setEditingPI(pi.email);
+                                                                    setEditingPI(pi);
                                                                 }}
                                                             >
                                                                 Edit
@@ -235,93 +341,14 @@ export default function WebsiteSettings(props) {
                             )}
                         </VStack>
 
-                        <Card
-                            variant="outline"
-                            w="50%"
-                            h="full"
-                            overflow="hidden"
-                        >
-                            <CardBody>
-                                {editingPI && (
-                                    <>
-                                        <Heading
-                                            size="md"
-                                            fontFamily="body"
-                                        >
-                                            Edit PI
-                                        </Heading>
-                                        <VStack
-                                            mt={5}
-                                            w="full"
-                                            h="full"
-                                            align="start"
-                                            spacing={3}
-                                        >
-                                            <FormControl>
-                                                <FormLabel>Peer instructor name</FormLabel>
-                                                <InputGroup>
-                                                    <Input
-                                                        value={PIs.find((pi) => pi.email === editingPI).name}
-                                                        onChange={(e) => {
-                                                            setPIs((old) => {
-                                                                const newPIs = [...old];
-                                                                newPIs.find((pi) => pi.email === editingPI).name =
-                                                                    e.target.value;
-                                                                return newPIs;
-                                                            });
-                                                        }}
-                                                    />
-                                                </InputGroup>
-                                            </FormControl>
-                                            <FormControl>
-                                                <FormLabel>Peer instructor email</FormLabel>
-                                                <InputGroup>
-                                                    <Input
-                                                        value={PIs.find((pi) => pi.email === editingPI).email}
-                                                        onChange={(e) => {
-                                                            setPIs((old) => {
-                                                                const newPIs = [...old];
-                                                                newPIs.find((pi) => pi.email === editingPI).email =
-                                                                    e.target.value;
-                                                                return newPIs;
-                                                            });
-                                                        }}
-                                                    />
-                                                    <InputRightAddon>@gatech.edu</InputRightAddon>
-                                                </InputGroup>
-                                            </FormControl>
-                                            <FormControl>
-                                                <FormLabel>Role</FormLabel>
-                                                <Select
-                                                    value={{
-                                                        label: Object.keys(PITypes).find(
-                                                            (key) =>
-                                                                PITypes[key] ===
-                                                                PIs.find((pi) => pi.email === editingPI).type
-                                                        ),
-                                                        value: PIs.find((pi) => pi.email === editingPI).type
-                                                    }}
-                                                    options={Object.keys(PITypes).map((key) => ({
-                                                        label: key,
-                                                        value: PITypes[key]
-                                                    }))}
-                                                    onChange={(e) => {
-                                                        setPIs((old) => {
-                                                            const newPIs = [...old];
-                                                            newPIs.find((pi) => pi.email === editingPI).type = e.value;
-                                                            return newPIs;
-                                                        });
-                                                    }}
-                                                />
-                                            </FormControl>
-                                        </VStack>
-                                    </>
-                                )}
-                            </CardBody>
-                        </Card>
+                        <PIEditor
+                            initialData={editingPI}
+                            refresh={refresh}
+                        />
                     </HStack>
                 </VStack>
-                <HStack
+
+                {/* <HStack
                     w="full"
                     h="auto"
                     justify="cetner"
@@ -336,10 +363,10 @@ export default function WebsiteSettings(props) {
                             Save
                         </Button>
                     </ButtonGroup>
-                </HStack>
+                </HStack> */}
             </Flex>
         </>
     );
 }
 
-WebsiteSettings.getLayout = (page) => <ConfigLayout>{page}</ConfigLayout>;
+People.getLayout = (page) => <ConfigLayout>{page}</ConfigLayout>;

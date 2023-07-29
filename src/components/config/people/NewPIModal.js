@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
     Button,
@@ -22,10 +22,28 @@ import { Select } from 'chakra-react-select';
 
 import { PITypes } from '@/util/roles';
 
-export default function NewPIModal({ isOpen, onClose, save }) {
+export default function NewPIModal({ isOpen, onClose }) {
     const [name, setName] = useState('');
     const [role, setRole] = useState(null);
     const [email, setEmail] = useState('');
+
+    const submit = useCallback(() => {
+        fetch('/api/peerInstructors/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                type: role,
+                email: email
+            })
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                onClose();
+            });
+    }, [name, role, email, onClose]);
 
     return (
         <>
@@ -82,13 +100,7 @@ export default function NewPIModal({ isOpen, onClose, save }) {
                         <Button onClick={onClose}>Cancel</Button>
                         <Button
                             colorScheme="blue"
-                            onClick={() => {
-                                save(name, email, role);
-                                onClose();
-                                setName('');
-                                setEmail('');
-                                setRole(null);
-                            }}
+                            onClick={submit}
                         >
                             Confirm
                         </Button>
