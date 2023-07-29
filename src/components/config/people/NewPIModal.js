@@ -34,9 +34,12 @@ export default function NewPIModal({ isOpen, onClose }) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: name,
-                type: role,
-                email: email
+                type: 'single',
+                data: {
+                    name: name,
+                    type: role,
+                    email: email
+                }
             })
         })
             .then((res) => res.json())

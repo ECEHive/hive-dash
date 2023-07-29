@@ -55,6 +55,8 @@ import { PITypes } from '@/util/roles';
 
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
+import DeleteDialog from '@/components/DeleteDIalog';
+import BatchAddModal from '@/components/config/people/BatchAddModal';
 import NewPIModal from '@/components/config/people/NewPIModal';
 
 const ChakraEditor = chakra(Editor);
@@ -196,8 +198,9 @@ export default function People(props) {
     const [editingPI, setEditingPI] = useState(null);
 
     const { isOpen: isNewPIOpen, onOpen: onNewPIOpen, onClose: onNewPIClose } = useDisclosure();
+    const { isOpen: isBatchAddOpen, onOpen: onBatchAddOpen, onClose: onBatchAddClose } = useDisclosure();
+    const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
 
-    const editorTheme = useColorModeValue('vs-light', 'vs-dark');
     const { secondary } = useTextColor();
 
     const refresh = useCallback(() => {
@@ -208,12 +211,43 @@ export default function People(props) {
             });
     }, []);
 
+    const deletePI = useCallback(
+        (entry) => {
+            fetch(`/api/peerInstructors/${entry._id}`, {
+                method: 'DELETE'
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    refresh();
+                });
+        },
+        [refresh]
+    );
+
     useEffect(() => {
         refresh();
     }, [refresh]);
 
     return (
         <>
+            <DeleteDialog
+                isOpen={isDeleteOpen}
+                onClose={onDeleteClose}
+                onDelete={() => {
+                    deletePI(editingPI);
+                    onDeleteClose();
+                }}
+                header="Delete PI"
+                message={`Are you sure you want to delete ${editingPI?.name}? This action cannot be undone.`}
+            />
+            <BatchAddModal
+                isOpen={isBatchAddOpen}
+                onClose={() => {
+                    onBatchAddClose();
+                    refresh();
+                }}
+            />
+
             <NewPIModal
                 isOpen={isNewPIOpen}
                 onClose={() => {
@@ -286,7 +320,12 @@ export default function People(props) {
                                     >
                                         Add PI
                                     </Button>
-                                    <Button leftIcon={<Icon as={iconSet.people} />}>Batch add PIs</Button>
+                                    <Button
+                                        leftIcon={<Icon as={iconSet.people} />}
+                                        onClick={onBatchAddOpen}
+                                    >
+                                        Batch add PIs
+                                    </Button>
                                 </ButtonGroup>
                             </VStack>
                             {PIs && (
@@ -328,7 +367,13 @@ export default function People(props) {
                                                             >
                                                                 Edit
                                                             </Button>
-                                                            <IconButton colorScheme="red">
+                                                            <IconButton
+                                                                colorScheme="red"
+                                                                onClick={() => {
+                                                                    setEditingPI(pi);
+                                                                    onDeleteOpen();
+                                                                }}
+                                                            >
                                                                 <Icon as={iconSet.delete} />
                                                             </IconButton>
                                                         </ButtonGroup>

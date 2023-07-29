@@ -14,8 +14,14 @@ import {
 
 import { Select as ComplexSelect } from 'chakra-react-select';
 
+import usePIs from '@/hooks/config/usePIs';
+
 export default function UserInfo({ set, data, setNext }) {
-    const PIList = useMemo(() => ['Colin Hartigan', 'Someone else'], []);
+    const PIList = usePIs();
+
+    useEffect(() => {
+        console.log(PIList);
+    }, [PIList]);
 
     const update = useCallback(
         (field, value) => {
@@ -109,18 +115,28 @@ export default function UserInfo({ set, data, setNext }) {
                 </FormControl>
                 <FormControl>
                     <FormLabel>Assisting PI</FormLabel>
-                    <ComplexSelect
-                        value={{
-                            label: data.user.assistingPI,
-                            value: data.user.assistingPI
-                        }}
-                        onChange={(e) => update('assistingPI', e.value)}
-                        options={PIList.map((person) => ({
-                            label: person,
-                            value: person
-                        }))}
-                        selectedOptionStyle="check"
-                    />
+                    {PIList && (
+                        <ComplexSelect
+                            menuPortalTarget={document.body}
+                            styles={{
+                                menuPortal: (base) => ({
+                                    ...base,
+                                    zIndex: 9999
+                                })
+                            }}
+                            menuPlacement="auto"
+                            value={{
+                                label: data.user.assistingPI,
+                                value: data.user.assistingPI
+                            }}
+                            onChange={(e) => update('assistingPI', e.value)}
+                            options={PIList.map((person) => ({
+                                label: person.name,
+                                value: person.name
+                            }))}
+                            selectedOptionStyle="check"
+                        />
+                    )}
                 </FormControl>
             </VStack>
         </>
