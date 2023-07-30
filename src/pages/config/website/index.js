@@ -18,6 +18,7 @@ import {
     Icon,
     Input,
     InputGroup,
+    Spacer,
     Switch,
     Text,
     Textarea,
@@ -95,7 +96,7 @@ export default function WebsiteSettings(props) {
                 overflow="auto"
             >
                 <VStack
-                    w="xl"
+                    maxW="xl"
                     h="full"
                     spacing={3}
                     align="flex-start"
@@ -190,11 +191,11 @@ export default function WebsiteSettings(props) {
                     </VStack>
                 </VStack>
             </Center>
-
+            <Spacer />
             <HStack
                 w="full"
                 h="auto"
-                justify="cetner"
+                justify="end"
             >
                 <ButtonGroup w="auto">
                     <Button

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
     Button,
@@ -22,31 +22,66 @@ import { Select } from 'chakra-react-select';
 
 import { PITypes } from '@/util/roles';
 
-export default function NewPIModal({ isOpen, onClose }) {
+export default function NewPIModal({ isOpen, onClose, initialData }) {
     const [name, setName] = useState('');
     const [role, setRole] = useState(null);
     const [email, setEmail] = useState('');
 
+    const [saving, setSaving] = useState(false);
+
+    useEffect(() => {
+        if (initialData) {
+            setName(initialData.name);
+            setRole(initialData.type);
+            setEmail(initialData.email);
+        } else {
+            setName('');
+            setRole(null);
+            setEmail('');
+        }
+    }, [initialData]);
+
     const submit = useCallback(() => {
-        fetch('/api/peerInstructors/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                type: 'single',
-                data: {
+        setSaving(true);
+        if (!initialData) {
+            fetch('/api/peerInstructors/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    type: 'single',
+                    data: {
+                        name: name,
+                        type: role,
+                        email: email
+                    }
+                })
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    onClose();
+                    setSaving(false);
+                });
+        } else {
+            fetch(`/api/peerInstructors/${initialData._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
                     name: name,
                     type: role,
                     email: email
-                }
+                })
             })
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                onClose();
-            });
-    }, [name, role, email, onClose]);
+                .then((res) => res.json())
+                .then((data) => {
+                    onClose();
+                    setSaving(false);
+                });
+        }
+    }, [name, role, email, onClose, initialData]);
 
     return (
         <>
@@ -104,6 +139,7 @@ export default function NewPIModal({ isOpen, onClose }) {
                         <Button
                             colorScheme="blue"
                             onClick={submit}
+                            isLoading={saving}
                         >
                             Confirm
                         </Button>

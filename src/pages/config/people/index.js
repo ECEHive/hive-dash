@@ -59,139 +59,6 @@ import DeleteDialog from '@/components/DeleteDIalog';
 import BatchAddModal from '@/components/config/people/BatchAddModal';
 import NewPIModal from '@/components/config/people/NewPIModal';
 
-const ChakraEditor = chakra(Editor);
-
-function PIEditor({ initialData, refresh }) {
-    const [name, setName] = useState('');
-    const [role, setRole] = useState(null);
-    const [email, setEmail] = useState('');
-
-    const [saving, setSaving] = useState(false);
-
-    useEffect(() => {
-        if (initialData) {
-            setName(initialData.name);
-            setRole(initialData.type);
-            setEmail(initialData.email);
-        }
-    }, [initialData]);
-
-    const save = useCallback(() => {
-        setSaving(true);
-        fetch(`/api/peerInstructors/${initialData._id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                type: role,
-                email: email
-            })
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                refresh();
-                setSaving(false);
-            });
-    }, [name, role, email]);
-
-    return (
-        <Card
-            variant="outline"
-            w="50%"
-            h="full"
-            overflow="hidden"
-        >
-            <CardBody overflow="hidden">
-                {initialData && (
-                    <>
-                        <VStack
-                            spacing={5}
-                            w="full"
-                            h="full"
-                            align="start"
-                        >
-                            <Heading
-                                size="md"
-                                fontFamily="body"
-                            >
-                                Edit PI
-                            </Heading>
-                            <VStack
-                                w="full"
-                                h="auto"
-                                flexGrow={1}
-                                align="start"
-                                spacing={3}
-                                overflow="auto"
-                                px={1}
-                            >
-                                <FormControl>
-                                    <FormLabel>Name</FormLabel>
-                                    <InputGroup>
-                                        <Input
-                                            value={name}
-                                            onChange={(e) => {
-                                                setName(e.target.value);
-                                            }}
-                                        />
-                                    </InputGroup>
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Email</FormLabel>
-                                    <InputGroup>
-                                        <Input
-                                            value={email}
-                                            onChange={(e) => {
-                                                setEmail(e.target.value);
-                                            }}
-                                        />
-                                        <InputRightAddon>@gatech.edu</InputRightAddon>
-                                    </InputGroup>
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Role</FormLabel>
-                                    <Select
-                                        menuPortalTarget={document.body}
-                                        styles={{
-                                            menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
-                                        }}
-                                        value={{
-                                            label: Object.keys(PITypes).find((key) => PITypes[key] === role),
-                                            value: role
-                                        }}
-                                        options={Object.keys(PITypes).map((key) => ({
-                                            label: key,
-                                            value: PITypes[key]
-                                        }))}
-                                        onChange={(e) => {
-                                            setRole(e.value);
-                                        }}
-                                    />
-                                </FormControl>
-                            </VStack>
-
-                            <HStack>
-                                <ButtonGroup>
-                                    <Button
-                                        colorScheme="blue"
-                                        isLoading={saving}
-                                        leftIcon={<Icon as={iconSet.save} />}
-                                        onClick={save}
-                                    >
-                                        Save
-                                    </Button>
-                                </ButtonGroup>
-                            </HStack>
-                        </VStack>
-                    </>
-                )}
-            </CardBody>
-        </Card>
-    );
-}
-
 export default function People(props) {
     const [PIs, setPIs] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
@@ -254,6 +121,7 @@ export default function People(props) {
                     onNewPIClose();
                     refresh();
                 }}
+                initialData={editingPI}
             />
             <Flex
                 w="full"
@@ -266,7 +134,7 @@ export default function People(props) {
             >
                 <VStack
                     w="full"
-                    maxW="6xl"
+                    maxW="xl"
                     h="full"
                     spacing={3}
                     align="start"
@@ -280,135 +148,107 @@ export default function People(props) {
                     </Heading>
 
                     {/* editor stuff */}
-                    <HStack
+                    <VStack
                         w="full"
                         h="full"
                         align="start"
-                        justify="start"
-                        spacing={5}
-                        overflow="hidden"
-                        p={1}
+                        spacing={3}
                     >
                         <VStack
-                            w="50%"
-                            h="full"
+                            w="auto"
+                            h="auto"
                             align="start"
-                            spacing={3}
                         >
-                            <VStack
-                                w="auto"
-                                h="auto"
-                                align="start"
-                            >
-                                <InputGroup>
-                                    <InputLeftElement>
-                                        <Icon as={iconSet.search} />
-                                    </InputLeftElement>
-                                    <Input
-                                        placeholder="Search for a PI"
-                                        type="text"
-                                        value={searchTerm}
-                                        onChange={(e) => {
-                                            setSearchTerm(e.target.value.toLowerCase());
-                                        }}
-                                    />
-                                </InputGroup>
-                                <ButtonGroup>
-                                    <Button
-                                        leftIcon={<Icon as={iconSet.personPlus} />}
-                                        onClick={onNewPIOpen}
-                                    >
-                                        Add PI
-                                    </Button>
-                                    <Button
-                                        leftIcon={<Icon as={iconSet.people} />}
-                                        onClick={onBatchAddOpen}
-                                    >
-                                        Batch add PIs
-                                    </Button>
-                                </ButtonGroup>
-                            </VStack>
-                            {PIs && (
-                                <TableContainer
-                                    w="full"
-                                    h="auto"
-                                    overflow="scroll"
+                            <InputGroup>
+                                <InputLeftElement>
+                                    <Icon as={iconSet.search} />
+                                </InputLeftElement>
+                                <Input
+                                    placeholder="Search for a PI"
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={(e) => {
+                                        setSearchTerm(e.target.value.toLowerCase());
+                                    }}
+                                />
+                            </InputGroup>
+                            <ButtonGroup>
+                                <Button
+                                    leftIcon={<Icon as={iconSet.personPlus} />}
+                                    onClick={() => {
+                                        setEditingPI(null);
+                                        onNewPIOpen();
+                                    }}
                                 >
-                                    <Table size="sm">
-                                        <Thead>
-                                            <Tr>
-                                                <Th>Peer instructor</Th>
-                                                <Th>Actions</Th>
-                                            </Tr>
-                                        </Thead>
-                                        <Tbody>
-                                            {PIs.map((pi, i) => (
-                                                <Tr key={i}>
-                                                    <Td>
-                                                        <HStack>
-                                                            <Text fontSize="md">{pi.name}</Text>
-                                                            <Badge
-                                                                fontSize="xs"
-                                                                colorScheme="blue"
-                                                            >
-                                                                {Object.keys(PITypes).find(
-                                                                    (key) => PITypes[key] === pi.type
-                                                                )}
-                                                            </Badge>
-                                                        </HStack>
-                                                    </Td>
-                                                    <Td>
-                                                        <ButtonGroup size="sm">
-                                                            <Button
-                                                                leftIcon={<Icon as={iconSet.pencil} />}
-                                                                onClick={() => {
-                                                                    setEditingPI(pi);
-                                                                }}
-                                                            >
-                                                                Edit
-                                                            </Button>
-                                                            <IconButton
-                                                                colorScheme="red"
-                                                                onClick={() => {
-                                                                    setEditingPI(pi);
-                                                                    onDeleteOpen();
-                                                                }}
-                                                            >
-                                                                <Icon as={iconSet.delete} />
-                                                            </IconButton>
-                                                        </ButtonGroup>
-                                                    </Td>
-                                                </Tr>
-                                            ))}
-                                        </Tbody>
-                                    </Table>
-                                </TableContainer>
-                            )}
+                                    Add PI
+                                </Button>
+                                <Button
+                                    leftIcon={<Icon as={iconSet.people} />}
+                                    onClick={onBatchAddOpen}
+                                >
+                                    Batch add PIs
+                                </Button>
+                            </ButtonGroup>
                         </VStack>
-
-                        <PIEditor
-                            initialData={editingPI}
-                            refresh={refresh}
-                        />
-                    </HStack>
+                        {PIs && (
+                            <TableContainer
+                                w="full"
+                                h="auto"
+                                overflow="scroll"
+                            >
+                                <Table size="sm">
+                                    <Thead>
+                                        <Tr>
+                                            <Th>Peer instructor</Th>
+                                            <Th>Actions</Th>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        {PIs.map((pi, i) => (
+                                            <Tr key={i}>
+                                                <Td>
+                                                    <HStack>
+                                                        <Text fontSize="md">{pi.name}</Text>
+                                                        <Badge
+                                                            fontSize="xs"
+                                                            colorScheme="blue"
+                                                        >
+                                                            {Object.keys(PITypes).find(
+                                                                (key) => PITypes[key] === pi.type
+                                                            )}
+                                                        </Badge>
+                                                    </HStack>
+                                                </Td>
+                                                <Td>
+                                                    <ButtonGroup size="sm">
+                                                        <Button
+                                                            leftIcon={<Icon as={iconSet.pencil} />}
+                                                            onClick={() => {
+                                                                setEditingPI(pi);
+                                                                onNewPIOpen();
+                                                            }}
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                        <IconButton
+                                                            colorScheme="red"
+                                                            onClick={() => {
+                                                                setEditingPI(pi);
+                                                                onDeleteOpen();
+                                                            }}
+                                                        >
+                                                            <Icon as={iconSet.delete} />
+                                                        </IconButton>
+                                                    </ButtonGroup>
+                                                </Td>
+                                            </Tr>
+                                        ))}
+                                    </Tbody>
+                                </Table>
+                            </TableContainer>
+                        )}
+                    </VStack>
                 </VStack>
-
-                {/* <HStack
-                    w="full"
-                    h="auto"
-                    justify="cetner"
-                >
-                    <ButtonGroup w="auto">
-                        <Button
-                            colorScheme="blue"
-                            isLoading={null}
-                            leftIcon={<Icon as={iconSet.save} />}
-                            onClick={null}
-                        >
-                            Save
-                        </Button>
-                    </ButtonGroup>
-                </HStack> */}
             </Flex>
         </>
     );
