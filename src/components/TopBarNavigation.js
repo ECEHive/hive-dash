@@ -1,18 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import {
-    Button,
-    Flex,
-    HStack,
-    Icon,
-    IconButton,
-    Image,
-    Spacer,
-    useColorMode,
-    useColorModeValue
-} from '@chakra-ui/react';
-
-import { MoonIcon, SettingsIcon, SunIcon } from '@chakra-ui/icons';
+import { Button, Flex, HStack, Icon, IconButton, Spacer, useColorMode } from '@chakra-ui/react';
 
 import NextImage from 'next/image';
 import NextLink from 'next/link';

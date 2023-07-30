@@ -1,15 +1,9 @@
-import { useCallback, useState } from 'react';
-
 import {
     Alert,
-    AlertDescription,
     AlertIcon,
     AlertTitle,
     Box,
     Button,
-    ButtonGroup,
-    Card,
-    CardBody,
     HStack,
     Heading,
     Icon,
@@ -20,26 +14,17 @@ import {
     useDisclosure
 } from '@chakra-ui/react';
 
-import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
-
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-
-import dayjs from '@/lib/time';
-
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
 import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
 import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
-import { PrintStates } from '@/util/states';
 
 import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import StatusModal from '@/components/printing/maintenance/StatusModal';
 import QueueTable from '@/components/printing/printers/QueueTable';
-import UpdateModal from '@/components/printing/printers/UpdateModal';
 
 export default function PrinterInfo({ selectedPrinterData }) {
     const { update: printUpdater } = usePrintUpdate();

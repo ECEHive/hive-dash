@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import {
     Box,
@@ -15,11 +15,10 @@ import {
     Portal,
     Spacer,
     Text,
-    VStack,
-    useColorModeValue
+    VStack
 } from '@chakra-ui/react';
 
-import { ArrowForwardIcon, ArrowRightIcon } from '@chakra-ui/icons';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import ReactMarkdown from 'react-markdown';

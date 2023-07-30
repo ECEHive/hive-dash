@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 
-import { Box, HStack, Spinner, Text, VStack, useToast } from '@chakra-ui/react';
+import { HStack, Spinner, Text, useToast } from '@chakra-ui/react';
 
 import useFocus from '@/hooks/useFocus';
 

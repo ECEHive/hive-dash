@@ -10,18 +10,16 @@ import {
     HStack,
     Heading,
     Icon,
-    IconButton,
     Input,
     InputGroup,
     InputLeftElement,
     Spacer,
     Text,
     VStack,
-    VisuallyHidden,
     useColorModeValue
 } from '@chakra-ui/react';
 
-import { ChevronRightIcon, SearchIcon } from '@chakra-ui/icons';
+import { SearchIcon } from '@chakra-ui/icons';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 

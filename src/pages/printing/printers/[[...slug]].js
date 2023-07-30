@@ -1,55 +1,15 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import {
-    Badge,
-    Box,
-    Button,
-    ButtonGroup,
-    Card,
-    CardBody,
-    CircularProgress,
-    Flex,
-    HStack,
-    Heading,
-    IconButton,
-    Input,
-    InputGroup,
-    InputLeftElement,
-    Progress,
-    Spacer,
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
-    Text,
-    Th,
-    Thead,
-    Tooltip,
-    Tr,
-    VStack,
-    useColorModeValue,
-    useDisclosure,
-    useToast
-} from '@chakra-ui/react';
+import { Box, HStack } from '@chakra-ui/react';
 
-import { CheckIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
-
-import Head from 'next/head';
 import { useRouter } from 'next/router';
-
-import dayjs from '@/lib/time';
 
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
-import SquareLogo from '@/assets/square_logo.png';
-
 import TopLayout from '@/layouts/printing/PrintingLayout';
 
-import PrintPreview from '@/components/printing/PrintPreview';
-import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import PrinterInfo from '@/components/printing/printers/PrinterInfo';
 import PrinterList from '@/components/printing/printers/PrinterList';
-import QueueTable from '@/components/printing/printers/QueueTable';
 
 export default function Printers(props) {
     const router = useRouter();

@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Link, Spacer, Text } from '@chakra-ui/react';
+import { Flex, Icon, Link, Spacer, Text } from '@chakra-ui/react';
 
 import useTextColor from '@/hooks/useTextColor';
 

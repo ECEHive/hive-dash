@@ -1,48 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
-    Alert,
-    AlertDescription,
-    AlertIcon,
-    Box,
     Button,
     ButtonGroup,
-    Card,
-    CardBody,
-    FormControl,
-    FormHelperText,
-    FormLabel,
     HStack,
-    Heading,
     Icon,
-    IconButton,
-    Input,
-    InputGroup,
-    InputLeftAddon,
-    InputRightAddon,
     Modal,
     ModalBody,
     ModalContent,
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Select,
-    Switch,
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
-    Text,
-    Textarea,
-    Th,
-    Thead,
-    Tr,
     VStack
 } from '@chakra-ui/react';
-
-import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-
-import ReactMarkdown from 'react-markdown';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';

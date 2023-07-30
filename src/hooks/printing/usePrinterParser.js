@@ -1,7 +1,5 @@
 import { useContext, useMemo } from 'react';
 
-import dayjs from '@/lib/time';
-
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import { PrintStates } from '@/util/states';

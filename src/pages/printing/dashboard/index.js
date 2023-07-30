@@ -1,10 +1,7 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { Box, SimpleGrid } from '@chakra-ui/react';
 
-import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
-
-import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 

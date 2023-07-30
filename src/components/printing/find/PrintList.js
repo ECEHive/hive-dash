@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 import {
     Badge,
@@ -14,8 +14,6 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
-    InputRightAddon,
-    List,
     ListItem,
     Spacer,
     Text,

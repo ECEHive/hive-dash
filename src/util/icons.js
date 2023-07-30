@@ -18,7 +18,6 @@ import { BsDot } from 'react-icons/bs';
 import {
     FaCalendar,
     FaCalendarPlus,
-    FaCircle,
     FaCodeBranch,
     FaCubes,
     FaPlay,
@@ -37,7 +36,6 @@ import {
     FaWrench
 } from 'react-icons/fa';
 import { FaBarsProgress, FaFaceSmile, FaNoteSticky, FaPencil } from 'react-icons/fa6';
-import { GiFilmSpool } from 'react-icons/gi';
 
 const iconSet = {
     wrench: FaWrench,

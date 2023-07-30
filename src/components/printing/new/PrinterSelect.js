@@ -1,17 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
-import {
-    Badge,
-    Button,
-    Card,
-    CardBody,
-    HStack,
-    Heading,
-    Spacer,
-    Text,
-    VStack,
-    useColorModeValue
-} from '@chakra-ui/react';
+import { Badge, Button, Card, CardBody, HStack, Heading, Spacer, Text, VStack } from '@chakra-ui/react';
 
 import { ChevronRightIcon } from '@chakra-ui/icons';
 

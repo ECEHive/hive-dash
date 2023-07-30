@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import {
     Alert,
@@ -7,16 +7,11 @@ import {
     Box,
     Button,
     ButtonGroup,
-    Card,
-    CardBody,
     HStack,
     Text,
     VStack,
-    useColorModeValue,
     useDisclosure
 } from '@chakra-ui/react';
-
-import { InfoIcon, SearchIcon } from '@chakra-ui/icons';
 
 import { useRouter } from 'next/router';
 

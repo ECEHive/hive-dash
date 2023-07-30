@@ -3,20 +3,14 @@ import { useCallback, useState } from 'react';
 import {
     Button,
     FormControl,
-    FormHelperText,
     FormLabel,
     Icon,
-    Input,
-    InputGroup,
-    InputRightAddon,
     Modal,
     ModalBody,
     ModalContent,
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Text,
-    Textarea,
     VStack,
     chakra,
     useColorModeValue,
@@ -24,10 +18,8 @@ import {
 } from '@chakra-ui/react';
 
 import Editor from '@monaco-editor/react';
-import { Select } from 'chakra-react-select';
 
 import iconSet from '@/util/icons';
-import { PITypes } from '@/util/roles';
 
 const ChakraEditor = chakra(Editor);
 

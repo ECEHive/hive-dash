@@ -1,9 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
-
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex, VStack, useDisclosure } from '@chakra-ui/react';
-
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { Box, VStack, useDisclosure } from '@chakra-ui/react';
 
 import { PrintingProvider } from '@/contexts/printing/PrintingContext';
 
@@ -11,7 +6,6 @@ import Footer from '@/components/Footer';
 import SiteBanner from '@/components/SiteBanner';
 import TopBar from '@/components/TopBarNavigation';
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
-import NewPrintModal from '@/components/printing/new/NewPrintModal';
 
 export default function PrintingLayout({ children }) {
     const { isOpen: isNewPrintOpen, onOpen: onNewPrintOpen, onClose: onNewPrintClose } = useDisclosure();

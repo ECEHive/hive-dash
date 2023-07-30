@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
 import Footer from '@/components/Footer';
 import TopBar from '@/components/TopBarNavigation';

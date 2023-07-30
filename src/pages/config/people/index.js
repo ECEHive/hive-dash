@@ -1,52 +1,28 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import {
-    Alert,
-    AlertDescription,
-    AlertIcon,
-    AlertTitle,
     Badge,
-    Box,
     Button,
     ButtonGroup,
-    Card,
-    CardBody,
-    Center,
-    Code,
     Flex,
-    FormControl,
-    FormHelperText,
-    FormLabel,
     HStack,
     Heading,
     Icon,
     IconButton,
     Input,
     InputGroup,
-    InputLeftAddon,
     InputLeftElement,
-    InputRightAddon,
-    Spacer,
-    Switch,
     Table,
     TableContainer,
     Tbody,
     Td,
     Text,
-    Textarea,
     Th,
     Thead,
     Tr,
     VStack,
-    chakra,
-    useColorModeValue,
     useDisclosure
 } from '@chakra-ui/react';
-
-import Editor from '@monaco-editor/react';
-import { Select } from 'chakra-react-select';
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import ReactMarkdown from 'react-markdown';
 
 import useTextColor from '@/hooks/useTextColor';
 
