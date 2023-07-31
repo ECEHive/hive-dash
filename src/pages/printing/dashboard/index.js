@@ -30,6 +30,7 @@ export default function Dashboard(props) {
                     spacing={4}
                     columns={3}
                     w="100%"
+                    maxW="6xl"
                     h="auto"
                 >
                     {printers.map((printer) => {
