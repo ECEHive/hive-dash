@@ -86,6 +86,7 @@ export default function NewPIModal({ isOpen, onClose, initialData }) {
             <Modal
                 isOpen={isOpen}
                 isCentered
+                size="lg"
             >
                 <ModalOverlay />
                 <ModalContent>

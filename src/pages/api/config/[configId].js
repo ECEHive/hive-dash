@@ -16,8 +16,6 @@ export default async function handler(req, res) {
 
         delete body._id;
 
-        console.log(body);
-
         const data = await mongoClient
             .db('global-config')
             .collection('website')

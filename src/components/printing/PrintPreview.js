@@ -20,7 +20,7 @@ import useTextColor from '@/hooks/useTextColor';
 import iconSet from '@/util/icons';
 
 export default function PrintPreview({ print }) {
-    const { betterPrintData, printerData, updatedAtHumanized, printerTypeData } = usePrintParser(print);
+    const { betterPrintData, printerData } = usePrintParser(print);
     const {
         progressBarColor,
         progressMessage,
@@ -37,7 +37,7 @@ export default function PrintPreview({ print }) {
             {
                 label: 'Printer',
                 icon: iconSet.printer,
-                value: printerData.displayName
+                value: printerData?.displayName || betterPrintData.printer
             },
             {
                 label: 'Material',

@@ -8,6 +8,8 @@ import {
     Box,
     Button,
     ButtonGroup,
+    Card,
+    CardBody,
     Center,
     Flex,
     FormControl,
@@ -18,7 +20,6 @@ import {
     Icon,
     Input,
     InputGroup,
-    Spacer,
     Switch,
     Text,
     Textarea,
@@ -96,118 +97,145 @@ export default function WebsiteSettings(props) {
                 overflow="auto"
             >
                 <VStack
-                    maxW="xl"
+                    w="full"
+                    maxW="2xl"
                     h="full"
                     spacing={3}
                     align="flex-start"
                     justify="start"
+                    px={1}
                 >
                     <Heading
                         size="lg"
                         fontFamily="body"
                     >
-                        Banner configuration
+                        Website global configuration
                     </Heading>
 
-                    <FormControl>
-                        <FormLabel>Banner enabled</FormLabel>
-                        <InputGroup>
-                            <Switch
-                                isChecked={config?.banner?.enabled}
-                                onChange={(e) => {
-                                    update('banner', { enabled: e.target.checked });
-                                }}
-                            />
-                        </InputGroup>
-                        <FormHelperText>Show the banner on all pages on the website.</FormHelperText>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Banner type</FormLabel>
-                        <Select
-                            value={{
-                                value: config?.banner?.type,
-                                label: config?.banner?.type
-                            }}
-                            options={[
-                                { value: 'info', label: 'Info' },
-                                { value: 'warning', label: 'Warning' },
-                                { value: 'success', label: 'Success' },
-                                { value: 'error', label: 'Error' }
-                            ]}
-                            onChange={(e) => {
-                                update('banner', { type: e.value });
-                            }}
-                        />
-                        <FormHelperText>Controls the color/icon on the banner</FormHelperText>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Banner title</FormLabel>
-                        <InputGroup>
-                            <Input
-                                value={config?.banner?.title}
-                                onChange={(e) => {
-                                    update('banner', { title: e.target.value });
-                                }}
-                            />
-                        </InputGroup>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Banner description</FormLabel>
-                        <InputGroup>
-                            <Textarea
-                                value={config?.banner?.subtitle}
-                                onChange={(e) => {
-                                    update('banner', { subtitle: e.target.value });
-                                }}
-                            />
-                        </InputGroup>
-                        <FormHelperText>Markdown is supported.</FormHelperText>
-                    </FormControl>
-
-                    <VStack
-                        w="100%"
-                        h="auto"
-                        align="start"
+                    <Card
+                        variant="outline"
+                        w="full"
                     >
-                        <Text>Banner preview</Text>
-                        <Alert
-                            status={config?.banner?.type}
-                            w="100%"
-                            h="auto"
-                        >
-                            <AlertIcon />
-                            <Box>
-                                <AlertTitle>{config?.banner?.title}</AlertTitle>
-                                <AlertDescription>
-                                    <ReactMarkdown
-                                        components={ChakraUIRenderer()}
-                                        skipHtml
+                        <CardBody p={0}>
+                            <VStack
+                                spacing={3}
+                                align="start"
+                                w="full"
+                                p={5}
+                            >
+                                <Text
+                                    fontSize="2xl"
+                                    fontWeight="semibold"
+                                    fontFamily="body"
+                                >
+                                    Banner
+                                </Text>
+                                <FormControl>
+                                    <FormLabel>Banner enabled</FormLabel>
+                                    <InputGroup>
+                                        <Switch
+                                            isChecked={config?.banner?.enabled}
+                                            onChange={(e) => {
+                                                update('banner', { enabled: e.target.checked });
+                                            }}
+                                        />
+                                    </InputGroup>
+                                    <FormHelperText>Show the banner on all pages on the website.</FormHelperText>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Banner type</FormLabel>
+                                    <Select
+                                        value={{
+                                            value: config?.banner?.type,
+                                            label: config?.banner?.type
+                                        }}
+                                        options={[
+                                            { value: 'info', label: 'Info' },
+                                            { value: 'warning', label: 'Warning' },
+                                            { value: 'success', label: 'Success' },
+                                            { value: 'error', label: 'Error' }
+                                        ]}
+                                        onChange={(e) => {
+                                            update('banner', { type: e.value });
+                                        }}
+                                    />
+                                    <FormHelperText>Controls the color/icon on the banner</FormHelperText>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Banner title</FormLabel>
+                                    <InputGroup>
+                                        <Input
+                                            value={config?.banner?.title}
+                                            onChange={(e) => {
+                                                update('banner', { title: e.target.value });
+                                            }}
+                                        />
+                                    </InputGroup>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Banner description</FormLabel>
+                                    <InputGroup>
+                                        <Textarea
+                                            value={config?.banner?.subtitle}
+                                            onChange={(e) => {
+                                                update('banner', { subtitle: e.target.value });
+                                            }}
+                                        />
+                                    </InputGroup>
+                                    <FormHelperText>Markdown is supported.</FormHelperText>
+                                </FormControl>
+
+                                <VStack
+                                    w="100%"
+                                    h="auto"
+                                    align="start"
+                                >
+                                    <Text>Banner preview</Text>
+                                    <Alert
+                                        status={config?.banner?.type}
+                                        w="100%"
+                                        h="auto"
                                     >
-                                        {config?.banner?.subtitle}
-                                    </ReactMarkdown>
-                                </AlertDescription>
-                            </Box>
-                        </Alert>
-                    </VStack>
+                                        <AlertIcon />
+                                        <Box>
+                                            <AlertTitle>{config?.banner?.title}</AlertTitle>
+                                            <AlertDescription>
+                                                <ReactMarkdown
+                                                    components={ChakraUIRenderer()}
+                                                    skipHtml
+                                                >
+                                                    {config?.banner?.subtitle}
+                                                </ReactMarkdown>
+                                            </AlertDescription>
+                                        </Box>
+                                    </Alert>
+                                </VStack>
+                            </VStack>
+
+                            <HStack
+                                w="full"
+                                h="auto"
+                                justify="end"
+                                borderTop="1px"
+                                borderColor="chakra-border-color"
+                                py={3}
+                                px={5}
+                            >
+                                <ButtonGroup w="auto">
+                                    <Button
+                                        colorScheme="blue"
+                                        isLoading={saving}
+                                        leftIcon={<Icon as={iconSet.save} />}
+                                        onClick={save}
+                                    >
+                                        Save
+                                    </Button>
+                                </ButtonGroup>
+                            </HStack>
+                        </CardBody>
+                    </Card>
                 </VStack>
             </Center>
-            <Spacer />
-            <HStack
-                w="full"
-                h="auto"
-                justify="end"
-            >
-                <ButtonGroup w="auto">
-                    <Button
-                        colorScheme="blue"
-                        isLoading={saving}
-                        leftIcon={<Icon as={iconSet.save} />}
-                        onClick={save}
-                    >
-                        Save
-                    </Button>
-                </ButtonGroup>
-            </HStack>
         </Flex>
     );
 }

@@ -40,6 +40,8 @@ export default function People(props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [editingPI, setEditingPI] = useState(null);
 
+    const [filteredPIs, setFilteredPIs] = useState(null);
+
     const { isOpen: isNewPIOpen, onOpen: onNewPIOpen, onClose: onNewPIClose } = useDisclosure();
     const { isOpen: isBatchAddOpen, onOpen: onBatchAddOpen, onClose: onBatchAddClose } = useDisclosure();
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
@@ -70,6 +72,14 @@ export default function People(props) {
     useEffect(() => {
         refresh();
     }, [refresh]);
+
+    useEffect(() => {
+        if (searchTerm.length > 0) {
+            setFilteredPIs(PIs.filter((pi) => pi.name.toLowerCase().includes(searchTerm)));
+        } else {
+            setFilteredPIs(PIs);
+        }
+    }, [searchTerm, PIs]);
 
     return (
         <>
@@ -110,11 +120,12 @@ export default function People(props) {
             >
                 <VStack
                     w="full"
-                    maxW="xl"
+                    maxW="2xl"
                     h="full"
                     spacing={3}
                     align="start"
                     overflow="hidden"
+                    px={1}
                 >
                     <Heading
                         size="lg"
@@ -166,7 +177,7 @@ export default function People(props) {
                                 </Button>
                             </ButtonGroup>
                         </VStack>
-                        {PIs && (
+                        {filteredPIs && (
                             <TableContainer
                                 w="full"
                                 h="auto"
@@ -180,7 +191,7 @@ export default function People(props) {
                                         </Tr>
                                     </Thead>
                                     <Tbody>
-                                        {PIs.map((pi, i) => (
+                                        {filteredPIs.map((pi, i) => (
                                             <Tr key={i}>
                                                 <Td>
                                                     <HStack>

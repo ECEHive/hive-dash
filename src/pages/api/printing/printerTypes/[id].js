@@ -4,7 +4,7 @@ import clientPromise from '@/lib/mongodb';
 
 export default async function handler(req, res) {
     const mongoClient = await clientPromise;
-    const { printerId } = req.query;
+    const { id } = req.query;
 
     if (req.method === 'PUT') {
         const body = req.body;
@@ -13,10 +13,10 @@ export default async function handler(req, res) {
 
         const data = await mongoClient
             .db('printing')
-            .collection('printers')
+            .collection('printer-types')
             .updateOne(
                 {
-                    _id: new ObjectId(printerId)
+                    _id: new ObjectId(id)
                 },
                 {
                     $set: {
@@ -29,9 +29,9 @@ export default async function handler(req, res) {
     } else if (req.method === 'DELETE') {
         const data = await mongoClient
             .db('printing')
-            .collection('printers')
+            .collection('printer-types')
             .deleteOne({
-                _id: new ObjectId(printerId)
+                _id: new ObjectId(id)
             });
 
         res.status(200).json(data);

@@ -14,14 +14,10 @@ export default async function handler(req, res) {
 
         delete body._id;
 
-        console.log(body);
-
         const data = await mongoClient
             .db('global-config')
             .collection('website')
             .updateOne({ id: 'website' }, { $set: { ...body } });
-
-        console.log(data);
 
         res.status(200).json({ data });
     }

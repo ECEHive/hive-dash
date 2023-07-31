@@ -85,52 +85,54 @@ export default function FindPrint(props) {
                             //pr="260px" //centers in the viewport
                         >
                             {selectedPrintData ? (
-                                <VStack
-                                    w="100%"
-                                    h="100%"
-                                    justify="start"
-                                    align="start"
-                                    spacing={3}
-                                    overflow="hidden"
-                                >
-                                    {printerData.type === 'stratasys' && (
-                                        <Box
-                                            w="100%"
-                                            h="auto"
-                                        >
-                                            <Alert
-                                                status="warning"
-                                                borderRadius={5}
-                                            >
-                                                <AlertIcon />
-                                                <AlertDescription>
-                                                    This print uses QSR supports, which we will remove for you. Expect
-                                                    it to be ready one business day later than the print completion
-                                                    date.
-                                                </AlertDescription>
-                                            </Alert>
-                                        </Box>
-                                    )}
-
-                                    <PrintPreview print={selectedPrintData} />
-
-                                    {/* timeline */}
+                                <>
                                     <VStack
                                         w="100%"
-                                        h="auto"
-                                        flexGrow={1}
-                                        spacing={3}
-                                        overflow="auto"
+                                        h="100%"
+                                        justify="start"
                                         align="start"
+                                        spacing={3}
+                                        overflow="hidden"
                                     >
-                                        {/* <Timeline print={selectedPrintData} /> */}
-                                        <HorizontalTimeline print={selectedPrintData} />
+                                        {printerData?.type === 'stratasys' && (
+                                            <Box
+                                                w="100%"
+                                                h="auto"
+                                            >
+                                                <Alert
+                                                    status="warning"
+                                                    borderRadius={5}
+                                                >
+                                                    <AlertIcon />
+                                                    <AlertDescription>
+                                                        This print uses QSR supports, which we will remove for you.
+                                                        Expect it to be ready one business day later than the print
+                                                        completion date.
+                                                    </AlertDescription>
+                                                </Alert>
+                                            </Box>
+                                        )}
 
-                                        <ButtonGroup>
-                                            <Button onClick={onEditorOpen}>Advanced edit</Button>
-                                        </ButtonGroup>
+                                        <PrintPreview print={selectedPrintData} />
+
+                                        {/* timeline */}
+                                        <VStack
+                                            w="100%"
+                                            h="auto"
+                                            flexGrow={1}
+                                            spacing={3}
+                                            overflow="auto"
+                                            align="start"
+                                        >
+                                            {/* <Timeline print={selectedPrintData} /> */}
+                                            <HorizontalTimeline print={selectedPrintData} />
+
+                                            <ButtonGroup>
+                                                <Button onClick={onEditorOpen}>Advanced edit</Button>
+                                            </ButtonGroup>
+                                        </VStack>
                                     </VStack>
-                                </VStack>
+                                </>
                             ) : (
                                 <VStack
                                     h="100%"

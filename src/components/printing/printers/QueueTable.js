@@ -100,7 +100,7 @@ function QueueTableItem({ printData, startPrint, canQueue, update, editCallback 
                         </Button>
                         <Button
                             leftIcon={<Icon as={iconSet.pencil} />}
-                            colorScheme="orange"
+                            colorScheme="gray"
                             variant="solid"
                             onClick={editCallback}
                         >

@@ -4,6 +4,7 @@ import {
     AlertTitle,
     Box,
     Button,
+    ButtonGroup,
     HStack,
     Heading,
     Icon,
@@ -89,11 +90,18 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                     {selectedPrinterData.displayName}
                                 </Heading>
                                 <Spacer />
-                                <IconButton
-                                    icon={<Icon as={iconSet.wrench} />}
-                                    colorScheme="orange"
-                                    onClick={onMaintenanceOpen}
-                                />
+                                <ButtonGroup>
+                                    <IconButton
+                                        icon={<Icon as={iconSet.note} />}
+                                        colorScheme="blue"
+                                        onClick={onStatusOpen}
+                                    />
+                                    <IconButton
+                                        icon={<Icon as={iconSet.wrench} />}
+                                        colorScheme="orange"
+                                        onClick={onMaintenanceOpen}
+                                    />
+                                </ButtonGroup>
                             </HStack>
                             <VStack
                                 alignItems="flex-start"
