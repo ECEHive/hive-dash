@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
+    Avatar,
     Button,
     ButtonGroup,
     Card,
@@ -111,6 +112,7 @@ export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
     const template = useMemo(
         () => ({
             displayName: '',
+            color: '',
             id: '',
             description: '',
             materials: [],
@@ -123,6 +125,46 @@ export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
     );
 
     const [data, setData] = useState(template);
+
+    const colors = [
+        {
+            label: 'red',
+            value: useColorModeValue('red.500', 'red.300')
+        },
+        {
+            label: 'orange',
+            value: useColorModeValue('orange.500', 'orange.300')
+        },
+        {
+            label: 'yellow',
+
+            value: useColorModeValue('yellow.500', 'yellow.300')
+        },
+        {
+            label: 'green',
+            value: useColorModeValue('green.500', 'green.300')
+        },
+        {
+            label: 'teal',
+            value: useColorModeValue('teal.500', 'teal.300')
+        },
+        {
+            label: 'blue',
+            value: useColorModeValue('blue.500', 'blue.300')
+        },
+        {
+            label: 'cyan',
+            value: useColorModeValue('cyan.500', 'cyan.300')
+        },
+        {
+            label: 'purple',
+            value: useColorModeValue('purple.500', 'purple.300')
+        },
+        {
+            label: 'pink',
+            value: useColorModeValue('pink.500', 'pink.300')
+        }
+    ];
 
     const update = useCallback((field, value) => {
         setData((old) => {
@@ -186,29 +228,70 @@ export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
                     <ModalHeader>{initialData ? 'Edit' : 'Add'} printer type</ModalHeader>
                     <ModalBody>
                         <VStack spacing={3}>
-                            <FormControl>
-                                <FormLabel>Type name</FormLabel>
-                                <InputGroup>
-                                    <Input
-                                        value={data.displayName}
-                                        onChange={(e) => {
-                                            update('displayName', e.target.value);
-                                        }}
-                                    />
-                                </InputGroup>
-                            </FormControl>
+                            <HStack
+                                spacing={3}
+                                w="full"
+                                align="start"
+                            >
+                                <FormControl>
+                                    <FormLabel>Type name</FormLabel>
+                                    <InputGroup>
+                                        <Input
+                                            value={data.displayName}
+                                            onChange={(e) => {
+                                                update('displayName', e.target.value);
+                                            }}
+                                        />
+                                    </InputGroup>
+                                </FormControl>
 
-                            <FormControl>
-                                <FormLabel>Type ID</FormLabel>
-                                <InputGroup>
-                                    <Input
-                                        value={data.id}
-                                        onChange={(e) => {
-                                            update('id', e.target.value.replace(/\s/g, ''));
-                                        }}
-                                    />
-                                </InputGroup>
-                                <FormHelperText>Used to link printers to this type.</FormHelperText>
+                                <FormControl>
+                                    <FormLabel>Type ID</FormLabel>
+                                    <InputGroup>
+                                        <Input
+                                            fontFamily="mono"
+                                            value={data.id}
+                                            onChange={(e) => {
+                                                update('id', e.target.value.replace(/\s/g, ''));
+                                            }}
+                                        />
+                                    </InputGroup>
+                                    <FormHelperText>Used to link printers to this type.</FormHelperText>
+                                </FormControl>
+                            </HStack>
+
+                            <FormControl h="auto">
+                                <FormLabel>Type color</FormLabel>
+                                <Select
+                                    menuPortalTarget={document.body}
+                                    styles={{
+                                        menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
+                                    }}
+                                    options={colors}
+                                    formatOptionLabel={(option) => {
+                                        console.log(option);
+                                        return (
+                                            <>
+                                                <HStack spacing={3}>
+                                                    <Avatar
+                                                        icon={<></>}
+                                                        size="2xs"
+                                                        bgColor={colors.find((c) => c.value === option.value)?.value}
+                                                    />
+                                                    <Text>{option.label}</Text>
+                                                </HStack>
+                                            </>
+                                        );
+                                    }}
+                                    value={{
+                                        label: data.color,
+                                        value: colors.find((c) => c.label === data.color)?.value
+                                    }}
+                                    onChange={(e) => {
+                                        update('color', e.label);
+                                    }}
+                                    selectedOptionStyle="check"
+                                />
                             </FormControl>
 
                             <FormControl>

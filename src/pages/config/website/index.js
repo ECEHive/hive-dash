@@ -23,7 +23,8 @@ import {
     Switch,
     Text,
     Textarea,
-    VStack
+    VStack,
+    useToast
 } from '@chakra-ui/react';
 
 import { Select } from 'chakra-react-select';
@@ -37,6 +38,8 @@ import ConfigLayout from '@/layouts/config/ConfigLayout';
 export default function WebsiteSettings(props) {
     const [config, setConfig] = useState({});
     const [saving, setSaving] = useState(false);
+
+    const toast = useToast();
 
     const refresh = useCallback(() => {
         fetch('/api/config/website')
@@ -59,11 +62,16 @@ export default function WebsiteSettings(props) {
             .then((res) => res.json())
             .then((data) => {
                 refresh();
+                toast({
+                    description: 'Saved banner',
+                    status: 'success',
+                    duration: 5000
+                });
             })
             .finally(() => {
                 setSaving(false);
             });
-    }, [config, refresh]);
+    }, [config, refresh, toast]);
 
     useEffect(() => {
         refresh();

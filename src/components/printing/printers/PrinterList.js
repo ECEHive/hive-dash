@@ -21,6 +21,8 @@ import {
 
 import { SearchIcon } from '@chakra-ui/icons';
 
+import { useRouter } from 'next/router';
+
 import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
@@ -142,6 +144,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
 }
 
 export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
+    const { push } = useRouter();
     const { printers, printerTypes, queue } = useContext(PrintingContext);
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -219,6 +222,7 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                                                 queue={queue}
                                                 onClick={() => {
                                                     setSelectedPrinter(printer);
+                                                    //push('/printing/printers/' + printer.id);
                                                 }}
                                                 isActive={printer.id === selectedPrinter?.id}
                                             />

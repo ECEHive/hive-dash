@@ -31,7 +31,7 @@ import DeleteDialog from '@/components/DeleteDIalog';
 import PrinterModal from '@/components/config/printers/PrinterModal';
 import PrinterTypeModal from '@/components/config/printers/PrinterTypeModal';
 
-export default function People(props) {
+export default function Printers(props) {
     const [printers, setPrinters] = useState(null);
     const [printerTypes, setPrinterTypes] = useState(null);
 
@@ -88,25 +88,31 @@ export default function People(props) {
 
     return (
         <>
-            <PrinterTypeModal
-                isOpen={isNewTypeOpen}
-                onClose={() => {
-                    setEditingTypeData(null);
-                    onNewTypeClose();
-                    refresh();
-                }}
-                initialData={editingTypeData}
-            />
-            <PrinterModal
-                isOpen={isNewPrinterOpen}
-                onClose={() => {
-                    setEditingPrinterData(null);
-                    onNewPrinterClose();
-                    refresh();
-                }}
-                printerTypes={printerTypes}
-                initialData={editingPrinterData}
-            />
+            {/* for some reason this stuff breaks without this conditional render. somthing with the select component */}
+            {printers && (
+                <>
+                    <PrinterTypeModal
+                        isOpen={isNewTypeOpen}
+                        onClose={() => {
+                            setEditingTypeData(null);
+                            onNewTypeClose();
+                            refresh();
+                        }}
+                        initialData={editingTypeData}
+                    />
+                    <PrinterModal
+                        isOpen={isNewPrinterOpen}
+                        onClose={() => {
+                            setEditingPrinterData(null);
+                            onNewPrinterClose();
+                            refresh();
+                        }}
+                        printerTypes={printerTypes}
+                        initialData={editingPrinterData}
+                    />
+                </>
+            )}
+
             <DeleteDialog
                 isOpen={isDeleteOpen}
                 onClose={() => {
@@ -207,7 +213,12 @@ export default function People(props) {
                                                             <Text fontSize="md">{type.displayName}</Text>
                                                         </Td>
                                                         <Td>
-                                                            <Code fontSize="md">{type.id}</Code>
+                                                            <Code
+                                                                fontSize="md"
+                                                                colorScheme={type.color}
+                                                            >
+                                                                {type.id}
+                                                            </Code>
                                                         </Td>
                                                         <Td>
                                                             <ButtonGroup size="sm">
@@ -292,7 +303,15 @@ export default function People(props) {
                                                             </VStack>
                                                         </Td>
                                                         <Td>
-                                                            <Code fontSize="md">{printer.type}</Code>
+                                                            <Code
+                                                                fontSize="md"
+                                                                colorScheme={
+                                                                    printerTypes.find((t) => t.id === printer.type)
+                                                                        ?.color
+                                                                }
+                                                            >
+                                                                {printer.type}
+                                                            </Code>
                                                         </Td>
                                                         <Td>
                                                             <ButtonGroup size="sm">
@@ -347,4 +366,4 @@ export default function People(props) {
     );
 }
 
-People.getLayout = (page) => <ConfigLayout>{page}</ConfigLayout>;
+Printers.getLayout = (page) => <ConfigLayout>{page}</ConfigLayout>;

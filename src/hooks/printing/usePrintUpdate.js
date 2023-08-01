@@ -27,7 +27,6 @@ export default function usePrintUpdate(silent = false) {
                     refreshData();
                     if (!silent) {
                         toast({
-                            title: 'Success',
                             description: 'Print updated',
                             status: 'success',
                             duration: 5000
@@ -37,7 +36,6 @@ export default function usePrintUpdate(silent = false) {
                 })
                 .catch((err) => {
                     toast({
-                        title: 'Error',
                         description: `Couldn't update print: ${err}`,
                         status: 'error',
                         duration: 5000
@@ -57,7 +55,6 @@ export default function usePrintUpdate(silent = false) {
                     refreshData();
                     if (!silent) {
                         toast({
-                            title: 'Success',
                             description: 'Print deleted',
                             status: 'success',
                             duration: 5000
@@ -67,7 +64,6 @@ export default function usePrintUpdate(silent = false) {
                 })
                 .catch((err) => {
                     toast({
-                        title: 'Error',
                         description: `Couldn't delete print: ${err}`,
                         status: 'error',
                         duration: 5000

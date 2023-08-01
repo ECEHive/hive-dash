@@ -117,6 +117,7 @@ export default function PrinterModal({ isOpen, onClose, initialData, printerType
                                 <FormLabel>Printer ID</FormLabel>
                                 <InputGroup>
                                     <Input
+                                        fontFamily="mono"
                                         value={data.id}
                                         onChange={(e) => {
                                             update('id', e.target.value.replace(/\s/g, ''));
