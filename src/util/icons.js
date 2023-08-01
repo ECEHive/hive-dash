@@ -35,7 +35,7 @@ import {
     FaUsers,
     FaWrench
 } from 'react-icons/fa';
-import { FaBarsProgress, FaFaceSmile, FaNoteSticky, FaPencil } from 'react-icons/fa6';
+import { FaBarsProgress, FaFaceSmile, FaNoteSticky, FaPencil, FaTableCellsLarge, FaTableList } from 'react-icons/fa6';
 
 const iconSet = {
     wrench: FaWrench,
@@ -73,7 +73,9 @@ const iconSet = {
     refresh: RepeatIcon,
     branch: FaCodeBranch,
     rightArrow: ArrowForwardIcon,
-    dot: BsDot
+    dot: BsDot,
+    list: FaTableList,
+    grid: FaTableCellsLarge
 };
 
 export default iconSet;

@@ -9,7 +9,7 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 export default function usePrintUpdate(silent = false) {
     const toast = useToast();
 
-    const { refreshData } = useContext(PrintingContext);
+    const { refreshDynamicData } = useContext(PrintingContext);
 
     function update(printId, data) {
         data['updatedAt'] = dayjs().utc().toISOString();
@@ -24,7 +24,7 @@ export default function usePrintUpdate(silent = false) {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    refreshData();
+                    refreshDynamicData();
                     if (!silent) {
                         toast({
                             description: 'Print updated',
@@ -52,7 +52,7 @@ export default function usePrintUpdate(silent = false) {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    refreshData();
+                    refreshDynamicData();
                     if (!silent) {
                         toast({
                             description: 'Print deleted',

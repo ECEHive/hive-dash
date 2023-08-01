@@ -28,7 +28,6 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
-import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
 import { StateColors } from '@/util/states';
@@ -40,8 +39,6 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
     const cardColor = useColorModeValue('white.100', 'gray.700');
-
-    const { secondary } = useTextColor();
 
     return (
         <>
@@ -84,7 +81,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                 w="100%"
                                 justifyContent="flex-start"
                                 spacing={5}
-                                color={secondary}
+                                color="secondaryText"
                                 fontSize="sm"
                             >
                                 {/* <HStack spacing={2}>
@@ -126,7 +123,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                             <Text
                                                 fontSize="xs"
                                                 fontWeight="normal"
-                                                color="gray.400"
+                                                color="secondaryText"
                                                 lineHeight={1}
                                             >
                                                 {timeLeftHumanized}

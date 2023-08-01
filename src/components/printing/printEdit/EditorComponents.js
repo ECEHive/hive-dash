@@ -133,7 +133,7 @@ function UserInfo({ printData, update }) {
 }
 
 function PrintInfo({ printData, update }) {
-    const { printers, printerTypes } = useContext(PrintingContext);
+    const { printers, printerTypes, peerInstructors } = useContext(PrintingContext);
 
     const selectedPrinterData = useMemo(() => {
         return printers.find((p) => p.id === printData.printer);
@@ -166,27 +166,32 @@ function PrintInfo({ printData, update }) {
             <FormControl>
                 <FormLabel>Queued by</FormLabel>
 
-                <FancySelect
-                    menuPortalTarget={document.body}
-                    styles={{
-                        menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
-                    }}
-                    w="full"
-                    value={{
-                        label: printData.queuedBy,
-                        value: printData.queuedBy
-                    }}
-                    onChange={(e) => {
-                        update({ queuedBy: e.value });
-                    }}
-                    options={[
-                        { label: 'Colin Hartigan', value: 'Colin Hartigan' },
-                        { label: 'Someone else', value: 'Someone else' }
-                    ]}
-                    placeholder="PI name"
-                    closeMenuOnSelect={true}
-                    selectedOptionStyle="check"
-                />
+                {peerInstructors && (
+                    <FancySelect
+                        placeholder="PI name"
+                        closeMenuOnSelect={true}
+                        selectedOptionStyle="check"
+                        menuPortalTarget={document.body}
+                        styles={{
+                            menuPortal: (base) => ({
+                                ...base,
+                                zIndex: 9999
+                            })
+                        }}
+                        menuPlacement="auto"
+                        value={{
+                            label: printData.queuedBy,
+                            value: printData.queuedBy
+                        }}
+                        onChange={(e) => {
+                            update({ queuedBy: e.value });
+                        }}
+                        options={peerInstructors.map((person) => ({
+                            label: person.name,
+                            value: person.name
+                        }))}
+                    />
+                )}
             </FormControl>
             <FormControl>
                 <FormLabel>Printer</FormLabel>

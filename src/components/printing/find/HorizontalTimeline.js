@@ -24,7 +24,6 @@ import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import ReactMarkdown from 'react-markdown';
 
 import usePrintEvents from '@/hooks/printing/usePrintEvents';
-import useTextColor from '@/hooks/useTextColor';
 
 function TimelineEvent({ event, isTopEnd, isBottomEnd }) {
     return (
@@ -68,8 +67,6 @@ export default function Timeline({ print }) {
     useEffect(() => {
         lastElement.current?.scrollIntoView({ behavior: 'smooth' });
     }, [detailedEvents]);
-
-    const { secondary } = useTextColor();
 
     return (
         <>
@@ -119,7 +116,7 @@ export default function Timeline({ print }) {
                                                 </Text>
                                                 <Text
                                                     fontSize="xs"
-                                                    color={secondary}
+                                                    color="secondaryText"
                                                 >
                                                     {event.humanizedTimestamp}
                                                 </Text>
@@ -136,7 +133,7 @@ export default function Timeline({ print }) {
 
                                 <Text
                                     fontSize="md"
-                                    color={secondary}
+                                    color="secondaryText"
                                 >
                                     Upcoming
                                 </Text>

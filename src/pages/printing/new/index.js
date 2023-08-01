@@ -38,7 +38,7 @@ import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
 
 export default function NewPrint(props) {
-    const { refreshData } = useContext(PrintingContext);
+    const { refreshDynamicData } = useContext(PrintingContext);
     const toast = useToast();
 
     const [inputData, setInputData] = useState({
@@ -131,7 +131,7 @@ export default function NewPrint(props) {
             .then((res) => res.json())
             .then((res) => {
                 setQueuePos(res.queueLength);
-                refreshData();
+                refreshDynamicData();
                 setSubmitting(false);
             })
             .catch((err) => {
@@ -142,7 +142,7 @@ export default function NewPrint(props) {
                     duration: 5000
                 });
             });
-    }, [inputData, toast, refreshData]);
+    }, [inputData, toast, refreshDynamicData]);
 
     useEffect(() => {
         if (activeStep === 3) {

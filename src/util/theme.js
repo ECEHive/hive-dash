@@ -7,8 +7,20 @@ const config = {
 
 const theme = extendTheme({
     config,
+    semanticTokens: {
+        colors: {
+            secondaryText: {
+                default: 'gray.500',
+                _dark: 'gray.400'
+            },
+            secondaryTextAlt: {
+                default: 'gray.600',
+                _dark: 'gray.300'
+            }
+        }
+    },
     fonts: {
-        heading: `'Rubik', sans-serif`,
+        heading: `'Inter', sans-serif`,
         body: `'Inter', sans-serif`
     },
     breakpoints: {

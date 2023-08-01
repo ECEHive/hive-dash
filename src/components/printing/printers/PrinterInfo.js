@@ -18,7 +18,6 @@ import {
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
 import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
-import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
 
@@ -30,8 +29,6 @@ import QueueTable from '@/components/printing/printers/QueueTable';
 export default function PrinterInfo({ selectedPrinterData }) {
     const { update: printUpdater } = usePrintUpdate();
     const printerUpdater = usePrinterUpdate();
-
-    const { secondary } = useTextColor();
 
     const { isOpen: isMaintenanceOpen, onOpen: onMaintenanceOpen, onClose: onMaintenanceClose } = useDisclosure();
     const { isOpen: isStatusOpen, onOpen: onStatusOpen, onClose: onStatusClose } = useDisclosure();
@@ -150,7 +147,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                             w="100%"
                             justify="center"
                         >
-                            <Text color={secondary}>select a printer</Text>
+                            <Text color="secondaryText">select a printer</Text>
                         </VStack>
                     )}
                     {/* </Box> */}

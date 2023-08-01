@@ -18,7 +18,6 @@ import NextLink from 'next/link';
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
-import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
 import { StateColors } from '@/util/states';
@@ -27,8 +26,6 @@ export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
     const { betterPrintData } = usePrintParser(currentPrintData);
     const { progress, progressBarColor, progressMessage } = usePrintProgress(currentPrintData);
-
-    const { secondary } = useTextColor();
 
     return (
         <>
@@ -75,7 +72,7 @@ export default function PrinterCard({ data }) {
                                 </HStack>
                                 <HStack
                                     spacing={2}
-                                    color={secondary}
+                                    color="secondaryText"
                                 >
                                     <Icon as={iconSet.queue} />
                                     <Text fontWeight="normal">{expandedPrinterData?.queueLength} in queue</Text>

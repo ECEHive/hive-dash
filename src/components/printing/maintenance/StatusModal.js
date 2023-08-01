@@ -13,7 +13,7 @@ import {
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import ReactMarkdown from 'react-markdown';
 
-export default function MaintenanceModal({ isOpen, onClose, printerData }) {
+export default function StatusModal({ isOpen, onClose, printerData }) {
     return (
         <Modal
             isOpen={isOpen}

@@ -31,7 +31,6 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
-import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
@@ -41,7 +40,6 @@ function PrintListItem({ data, isActive, onClick }) {
     const { progressMessage, progress, timeLeftHumanizedDetailed } = usePrintProgress(data);
 
     const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
-    const { secondary } = useTextColor();
 
     return (
         <Card
@@ -86,7 +84,7 @@ function PrintListItem({ data, isActive, onClick }) {
                         justify="start"
                         align="start"
                         spacing={2}
-                        color={secondary}
+                        color="secondaryText"
                         fontSize="sm"
                     >
                         <HStack

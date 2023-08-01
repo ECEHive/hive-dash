@@ -65,6 +65,7 @@ export default function TopBarNavigation(props) {
                     variant="ghost"
                     as={NextLink}
                     href="/printing"
+                    size="md"
                     isActive={pathSection === 'printing'}
                 >
                     3D Printing

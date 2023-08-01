@@ -30,6 +30,7 @@ import ConfigLayout from '@/layouts/config/ConfigLayout';
 import DeleteDialog from '@/components/DeleteDIalog';
 import PrinterModal from '@/components/config/printers/PrinterModal';
 import PrinterTypeModal from '@/components/config/printers/PrinterTypeModal';
+import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 
 export default function Printers(props) {
     const [printers, setPrinters] = useState(null);
@@ -41,6 +42,7 @@ export default function Printers(props) {
     const { isOpen: isNewTypeOpen, onClose: onNewTypeClose, onOpen: onNewTypeOpen } = useDisclosure();
     const { isOpen: isNewPrinterOpen, onClose: onNewPrinterClose, onOpen: onNewPrinterOpen } = useDisclosure();
     const { isOpen: isDeleteOpen, onClose: onDeleteClose, onOpen: onDeleteOpen } = useDisclosure();
+    const { isOpen: isMaintenanceOpen, onClose: onMaintenanceClose, onOpen: onMaintenanceOpen } = useDisclosure();
 
     const refresh = useCallback(() => {
         fetch('/api/printing/printers')
@@ -110,6 +112,15 @@ export default function Printers(props) {
                         printerTypes={printerTypes}
                         initialData={editingPrinterData}
                     />
+                    <MaintenanceModal
+                        isOpen={isMaintenanceOpen}
+                        onClose={() => {
+                            setEditingPrinterData(null);
+                            onMaintenanceClose();
+                            refresh();
+                        }}
+                        printerData={editingPrinterData}
+                    />
                 </>
             )}
 
@@ -143,7 +154,7 @@ export default function Printers(props) {
                 p={5}
                 overflow="hidden"
                 direction="column"
-                justify="center"
+                justify="start"
                 align="center"
             >
                 <Center
@@ -306,7 +317,7 @@ export default function Printers(props) {
                                                             <Code
                                                                 fontSize="md"
                                                                 colorScheme={
-                                                                    printerTypes.find((t) => t.id === printer.type)
+                                                                    printerTypes?.find((t) => t.id === printer.type)
                                                                         ?.color
                                                                 }
                                                             >
@@ -320,9 +331,19 @@ export default function Printers(props) {
                                                                         setEditingPrinterData(printer);
                                                                         onNewPrinterOpen();
                                                                     }}
+                                                                    leftIcon={<Icon as={iconSet.pencil} />}
                                                                 >
                                                                     Edit
                                                                 </Button>
+                                                                <IconButton
+                                                                    colorScheme="orange"
+                                                                    onClick={() => {
+                                                                        setEditingPrinterData(printer);
+                                                                        onMaintenanceOpen();
+                                                                    }}
+                                                                >
+                                                                    <Icon as={iconSet.wrench} />
+                                                                </IconButton>
                                                                 <IconButton
                                                                     colorScheme="red"
                                                                     onClick={() => {

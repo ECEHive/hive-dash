@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
+    Avatar,
     Button,
     FormControl,
     FormLabel,
+    HStack,
     Input,
     InputGroup,
     Modal,
@@ -12,7 +14,9 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    VStack
+    Text,
+    VStack,
+    useColorMode
 } from '@chakra-ui/react';
 
 import { Select } from 'chakra-react-select';
@@ -21,6 +25,8 @@ import dayjs from '@/lib/time';
 
 export default function PrinterModal({ isOpen, onClose, initialData, printerTypes }) {
     const [saving, setSaving] = useState(false);
+
+    const isDark = useColorMode().colorMode === 'dark';
 
     const template = useMemo(
         () => ({
@@ -137,6 +143,21 @@ export default function PrinterModal({ isOpen, onClose, initialData, printerType
                                         value: data.type,
                                         label: data.type
                                     }}
+                                    formatOptionLabel={(option) => {
+                                        let color = printerTypes.find((type) => type.id === option.value)?.color;
+                                        return (
+                                            <>
+                                                <HStack spacing={3}>
+                                                    <Avatar
+                                                        icon={<></>}
+                                                        size="2xs"
+                                                        bgColor={isDark ? `${color}.300` : `${color}.500}`}
+                                                    />
+                                                    <Text>{option.label}</Text>
+                                                </HStack>
+                                            </>
+                                        );
+                                    }}
                                     options={printerTypes?.map((type) => {
                                         return {
                                             value: type.id,
@@ -146,6 +167,7 @@ export default function PrinterModal({ isOpen, onClose, initialData, printerType
                                     onChange={(e) => {
                                         update('type', e.value);
                                     }}
+                                    selectedOptionStyle="check"
                                 />
                             </FormControl>
                         </VStack>

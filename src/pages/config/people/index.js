@@ -24,8 +24,6 @@ import {
     useDisclosure
 } from '@chakra-ui/react';
 
-import useTextColor from '@/hooks/useTextColor';
-
 import iconSet from '@/util/icons';
 import { PITypes } from '@/util/roles';
 
@@ -45,8 +43,6 @@ export default function People(props) {
     const { isOpen: isNewPIOpen, onOpen: onNewPIOpen, onClose: onNewPIClose } = useDisclosure();
     const { isOpen: isBatchAddOpen, onOpen: onBatchAddOpen, onClose: onBatchAddClose } = useDisclosure();
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
-
-    const { secondary } = useTextColor();
 
     const refresh = useCallback(() => {
         fetch('/api/peerInstructors')

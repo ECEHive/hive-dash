@@ -1,17 +1,13 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightAddon, VStack } from '@chakra-ui/react';
 
 import { Select as ComplexSelect } from 'chakra-react-select';
 
-import usePIs from '@/hooks/config/usePIs';
+import PrintingContext from '@/contexts/printing/PrintingContext';
 
 export default function UserInfo({ set, data, setNext }) {
-    const PIList = usePIs();
-
-    useEffect(() => {
-        console.log(PIList);
-    }, [PIList]);
+    const { peerInstructors } = useContext(PrintingContext);
 
     const update = useCallback(
         (field, value) => {
@@ -105,7 +101,7 @@ export default function UserInfo({ set, data, setNext }) {
                 </FormControl>
                 <FormControl>
                     <FormLabel>Assisting PI</FormLabel>
-                    {PIList && (
+                    {peerInstructors && (
                         <ComplexSelect
                             menuPortalTarget={document.body}
                             styles={{
@@ -120,7 +116,7 @@ export default function UserInfo({ set, data, setNext }) {
                                 value: data.user.assistingPI
                             }}
                             onChange={(e) => update('assistingPI', e.value)}
-                            options={PIList.map((person) => ({
+                            options={peerInstructors.map((person) => ({
                                 label: person.name,
                                 value: person.name
                             }))}

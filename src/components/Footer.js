@@ -1,12 +1,8 @@
 import { Flex, Icon, Link, Spacer, Text } from '@chakra-ui/react';
 
-import useTextColor from '@/hooks/useTextColor';
-
 import iconSet from '@/util/icons';
 
 export default function Footer() {
-    const { secondary } = useTextColor();
-
     return (
         <Flex
             as="footer"
@@ -21,7 +17,7 @@ export default function Footer() {
             justify="end"
             px={4}
             fontSize="2xs"
-            color={secondary}
+            color="secondaryText"
         >
             <Link
                 href={'https://github.com/colinhartigan/hive-dash'}

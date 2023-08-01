@@ -11,10 +11,12 @@ function PrintingProvider({ children }) {
     const [printers, setPrinters] = useState(null);
     const [printerTypes, setPrinterTypes] = useState(null);
 
+    const [peerInstructors, setPeerInstructors] = useState(null);
+
     const toast = useToast();
     const focus = useFocus();
 
-    const refreshData = useCallback(() => {
+    const refreshDynamicData = useCallback(() => {
         if (!focus) return;
         console.log('REFRESHING DATA');
         fetch('/api/printing/printerTypes', {
@@ -87,19 +89,38 @@ function PrintingProvider({ children }) {
             });
     }, [toast, focus]);
 
+    const refreshStaticData = useCallback(() => {
+        fetch('/api/peerInstructors', {
+            method: 'GET'
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setPeerInstructors(data.peerInstructors);
+            })
+            .catch((err) => {
+                toast({
+                    title: 'Fetch error',
+                    description: `Couldn't fetch peer instructors: ${err.message}`,
+                    status: 'error',
+                    duration: 5000
+                });
+            });
+    }, [toast]);
+
     useEffect(() => {
-        refreshData();
+        refreshStaticData();
+        refreshDynamicData();
         const int = setInterval(() => {
-            refreshData();
+            refreshDynamicData();
         }, 2000);
 
         return () => {
             clearInterval(int);
         };
-    }, [refreshData]);
+    }, [refreshDynamicData, refreshStaticData]);
 
     return (
-        <PrintingContext.Provider value={{ queue, printers, printerTypes, refreshData }}>
+        <PrintingContext.Provider value={{ queue, printers, printerTypes, refreshDynamicData, peerInstructors }}>
             {queue && printers && printerTypes ? (
                 <>{children}</>
             ) : (

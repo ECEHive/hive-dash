@@ -15,7 +15,6 @@ import {
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
-import useTextColor from '@/hooks/useTextColor';
 
 import iconSet from '@/util/icons';
 
@@ -29,8 +28,6 @@ export default function PrintPreview({ print }) {
         timeLeftHumanized,
         timeLeftHumanizedDetailed
     } = usePrintProgress(print);
-
-    const { secondaryAlt, secondary } = useTextColor();
 
     const dataFields = useMemo(() => {
         return [
@@ -115,7 +112,7 @@ export default function PrintPreview({ print }) {
                             </HStack>
                             <HStack
                                 fontSize="md"
-                                color={secondaryAlt}
+                                color="secondaryTextAlt"
                                 spacing={2}
                             >
                                 <Icon as={iconSet.clock} />
@@ -125,7 +122,7 @@ export default function PrintPreview({ print }) {
                         <Spacer />
                         <VStack
                             spacing={1}
-                            color={secondary}
+                            color="secondaryText"
                             justify="center"
                             h="full"
                         >
@@ -181,7 +178,7 @@ export default function PrintPreview({ print }) {
                                         >
                                             <HStack
                                                 fontSize="sm"
-                                                color={secondaryAlt}
+                                                color="secondaryTextAlt"
                                             >
                                                 <Icon as={field.icon} />
                                                 <Text>{field.label}</Text>
@@ -202,7 +199,7 @@ export default function PrintPreview({ print }) {
                                         </VStack>
                                         {i < dataFields.length - 1 && (
                                             <Icon
-                                                color={secondary}
+                                                color="secondaryText"
                                                 fontSize="sm"
                                                 as={iconSet.dot}
                                             />
@@ -232,12 +229,13 @@ export default function PrintPreview({ print }) {
                     borderTop="1px"
                     borderColor="chakra-border-color"
                     gap={3}
+                    bgColor={useColorModeValue('gray.100', 'gray.700')}
                 >
                     {/* <Badge fontSize="2xs">{progressMessage}</Badge>
                     <Spacer /> */}
                     <HStack
                         fontSize="xs"
-                        color={secondary}
+                        color="secondaryText"
                         spacing={1}
                     >
                         <Icon as={iconSet.peerInstructor} />
@@ -245,7 +243,7 @@ export default function PrintPreview({ print }) {
                     </HStack>
                     <HStack
                         fontSize="xs"
-                        color={secondary}
+                        color="secondaryText"
                         spacing={1}
                     >
                         <Icon as={iconSet.refresh} />

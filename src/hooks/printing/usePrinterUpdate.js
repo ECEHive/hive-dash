@@ -7,7 +7,7 @@ import PrintingContext from '@/contexts/printing/PrintingContext';
 export default function usePrinterUpdate(silent = false) {
     const toast = useToast();
 
-    const { refreshData } = useContext(PrintingContext);
+    const { refreshDynamicData } = useContext(PrintingContext);
 
     function update(printerId, printerData) {
         return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ export default function usePrinterUpdate(silent = false) {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    refreshData();
+                    refreshDynamicData();
                     if (!silent) {
                         toast({
                             title: `${printerData.displayName} updated`,
