@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { ButtonGroup, HStack, Heading, Icon, IconButton, SimpleGrid, Spacer, VStack } from '@chakra-ui/react';
 
@@ -7,7 +7,7 @@ import 'react-resizable/css/styles.css';
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
@@ -18,7 +18,7 @@ import PrinterCard from '@/components/printing/dashboard/PrinterGridItem';
 import Statistic from '@/components/printing/dashboard/Statistic';
 
 export default function Dashboard(props) {
-    const { printers, queue } = useContext(PrintingContext);
+    const { printers, queue } = usePrinting();
 
     useEffect(() => {
         console.log(printers);
@@ -84,15 +84,16 @@ export default function Dashboard(props) {
                 overflow="auto"
                 p={5}
                 spacing={8}
-                align="start"
+                align="center"
             >
                 <VStack
                     w="full"
-                    align="start"
+                    maxW="8xl"
                 >
                     <Heading
                         size="lg"
                         mb={3}
+                        alignSelf="start"
                     >
                         Statistics
                     </Heading>
@@ -101,7 +102,6 @@ export default function Dashboard(props) {
                         spacing={4}
                         columns={3}
                         w="100%"
-                        maxW="6xl"
                         h="auto"
                     >
                         {metrics.map((metric) => {
@@ -117,7 +117,10 @@ export default function Dashboard(props) {
                 </VStack>
 
                 {/* printers */}
-                <VStack w="full">
+                <VStack
+                    w="full"
+                    maxW="8xl"
+                >
                     <HStack
                         w="full"
                         mb={3}
@@ -141,7 +144,6 @@ export default function Dashboard(props) {
                         spacing={4}
                         columns={3}
                         w="100%"
-                        maxW="6xl"
                         h="auto"
                     >
                         {printers.map((printer) => {

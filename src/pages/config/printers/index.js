@@ -27,7 +27,7 @@ import iconSet from '@/util/icons';
 
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
-import DeleteDialog from '@/components/DeleteDIalog';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import PrinterModal from '@/components/config/printers/PrinterModal';
 import PrinterTypeModal from '@/components/config/printers/PrinterTypeModal';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
@@ -124,7 +124,7 @@ export default function Printers(props) {
                 </>
             )}
 
-            <DeleteDialog
+            <ConfirmDialog
                 isOpen={isDeleteOpen}
                 onClose={() => {
                     setEditingPrinterData(null);

@@ -1,10 +1,8 @@
-import { useContext, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
     Button,
     ButtonGroup,
-    Card,
-    CardBody,
     FormControl,
     FormHelperText,
     FormLabel,
@@ -34,12 +32,10 @@ import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 import Editor from '@monaco-editor/react';
 import { Select } from 'chakra-react-select';
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import ReactMarkdown from 'react-markdown';
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintEvents from '@/hooks/printing/usePrintEvents';
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
@@ -47,7 +43,7 @@ import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
 
-import DeleteDialog from '@/components/DeleteDIalog';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 
 const FancySelect = chakra(Select);
@@ -133,7 +129,7 @@ function UserInfo({ printData, update }) {
 }
 
 function PrintInfo({ printData, update }) {
-    const { printers, printerTypes, peerInstructors } = useContext(PrintingContext);
+    const { printers, printerTypes, peerInstructors } = usePrinting();
 
     const selectedPrinterData = useMemo(() => {
         return printers.find((p) => p.id === printData.printer);
@@ -301,7 +297,7 @@ function Events({ printData, update }) {
 
     return (
         <>
-            <DeleteDialog
+            <ConfirmDialog
                 isOpen={isDeleteOpen}
                 onClose={onDeleteClose}
                 onDelete={() => {
@@ -403,7 +399,7 @@ function Notes({ printData, update }) {
         >
             <SectionHeader>Print notes</SectionHeader>
             <FormControl
-                h="240px"
+                minH="300px"
                 display="flex"
                 flexDir="column"
             >
@@ -422,7 +418,7 @@ function Notes({ printData, update }) {
                 </FormHelperText>
             </FormControl>
 
-            <Card
+            {/* <Card
                 variant="outline"
                 bgColor="transparent"
                 w="full"
@@ -440,7 +436,7 @@ function Notes({ printData, update }) {
                         {printData.notes}
                     </ReactMarkdown>
                 </CardBody>
-            </Card>
+            </Card> */}
         </VStack>
     );
 }
@@ -514,7 +510,7 @@ function DangerousActions({ printData, update, onClose }) {
 
     return (
         <>
-            <DeleteDialog
+            <ConfirmDialog
                 isOpen={isDeleteOpen}
                 onClose={onDeleteClose}
                 onDelete={deletePrint}

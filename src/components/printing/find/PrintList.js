@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
     Badge,
@@ -27,7 +27,7 @@ import { SearchIcon } from '@chakra-ui/icons';
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
@@ -138,7 +138,7 @@ function PrintListItem({ data, isActive, onClick }) {
 }
 
 export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
-    const { printers, printerTypes, queue } = useContext(PrintingContext);
+    const { printers, printerTypes, queue } = usePrinting();
 
     const [searchTerm, setSearchTerm] = useState('ch');
 

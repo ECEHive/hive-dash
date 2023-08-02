@@ -1,13 +1,13 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightAddon, VStack } from '@chakra-ui/react';
 
 import { Select as ComplexSelect } from 'chakra-react-select';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 export default function UserInfo({ set, data, setNext }) {
-    const { peerInstructors } = useContext(PrintingContext);
+    const { peerInstructors } = usePrinting();
 
     const update = useCallback(
         (field, value) => {

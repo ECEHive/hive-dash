@@ -1,10 +1,10 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { Badge, Button, Card, CardBody, HStack, Heading, Spacer, Text, VStack } from '@chakra-ui/react';
 
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
 
@@ -111,7 +111,7 @@ function PrinterType({ data, onClick, isActive }) {
 }
 
 export default function PrinterSelect({ set, data, setNext }) {
-    const { printerTypes, printers } = useContext(PrintingContext);
+    const { printerTypes, printers } = usePrinting();
 
     useEffect(() => {
         if (data.printer.type !== '' && data.printer.name !== '') {

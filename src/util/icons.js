@@ -20,6 +20,7 @@ import {
     FaCalendarPlus,
     FaCodeBranch,
     FaCubes,
+    FaMinusCircle,
     FaPlay,
     FaPrint,
     FaSave,
@@ -75,7 +76,8 @@ const iconSet = {
     rightArrow: ArrowForwardIcon,
     dot: BsDot,
     list: FaTableList,
-    grid: FaTableCellsLarge
+    grid: FaTableCellsLarge,
+    minus: FaMinusCircle
 };
 
 export default iconSet;

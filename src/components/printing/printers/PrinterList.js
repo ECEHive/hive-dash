@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
     Badge,
@@ -23,7 +23,7 @@ import { SearchIcon } from '@chakra-ui/icons';
 
 import { useRouter } from 'next/router';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
@@ -142,7 +142,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
 
 export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
     const { push } = useRouter();
-    const { printers, printerTypes, queue } = useContext(PrintingContext);
+    const { printers, printerTypes, queue } = usePrinting();
 
     const [searchTerm, setSearchTerm] = useState('');
 

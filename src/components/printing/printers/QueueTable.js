@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import {
     Badge,
@@ -21,7 +21,7 @@ import {
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
@@ -117,7 +117,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     const { update: printUpdater } = usePrintUpdate();
     const printerUpdater = usePrinterUpdate(true);
 
-    const { queue } = useContext(PrintingContext);
+    const { queue } = usePrinting();
 
     const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
     const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onClose: onUpdateClose } = useDisclosure();

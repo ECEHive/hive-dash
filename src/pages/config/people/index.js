@@ -29,7 +29,7 @@ import { PITypes } from '@/util/roles';
 
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
-import DeleteDialog from '@/components/DeleteDIalog';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import BatchAddModal from '@/components/config/people/BatchAddModal';
 import NewPIModal from '@/components/config/people/NewPIModal';
 
@@ -79,7 +79,7 @@ export default function People(props) {
 
     return (
         <>
-            <DeleteDialog
+            <ConfirmDialog
                 isOpen={isDeleteOpen}
                 onClose={onDeleteClose}
                 onDelete={() => {

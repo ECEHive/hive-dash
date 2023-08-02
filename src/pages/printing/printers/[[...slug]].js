@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, HStack } from '@chakra-ui/react';
 
 import { useRouter } from 'next/router';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import TopLayout from '@/layouts/printing/PrintingLayout';
 
@@ -14,7 +14,7 @@ import PrinterList from '@/components/printing/printers/PrinterList';
 export default function Printers(props) {
     const router = useRouter();
 
-    const { printers, queue, printerTypes } = useContext(PrintingContext);
+    const { printers, queue, printerTypes } = usePrinting();
 
     const [selectedPrinterData, setSelectedPrinterData] = useState(null);
 

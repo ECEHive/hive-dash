@@ -1,11 +1,11 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import { PrintStates } from '@/util/states';
 
 export default function usePrinterParser(printer) {
-    const { queue, printerTypes } = useContext(PrintingContext);
+    const { queue, printerTypes } = usePrinting();
 
     const printerTypeData = useMemo(() => {
         if (!printer) return null;

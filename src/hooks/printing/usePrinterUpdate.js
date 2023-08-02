@@ -1,13 +1,11 @@
-import { useContext } from 'react';
-
 import { useToast } from '@chakra-ui/react';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 export default function usePrinterUpdate(silent = false) {
     const toast = useToast();
 
-    const { refreshDynamicData } = useContext(PrintingContext);
+    const { refreshDynamicData } = usePrinting();
 
     function update(printerId, printerData) {
         return new Promise((resolve, reject) => {

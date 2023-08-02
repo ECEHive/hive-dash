@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-
 import {
     Badge,
     Box,
@@ -20,7 +18,7 @@ import {
 
 import { SearchIcon } from '@chakra-ui/icons';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
@@ -64,7 +62,7 @@ function LogItem({ printData }) {
 }
 
 export default function PrintLogs(props) {
-    const { queue } = useContext(PrintingContext);
+    const { queue } = usePrinting();
 
     const sortedQueue = queue.sort((a, b) => {
         return new Date(b.queuedAt) - new Date(a.queuedAt);

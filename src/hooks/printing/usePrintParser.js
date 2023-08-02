@@ -1,13 +1,13 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import { PrintStates } from '@/util/states';
 
 export default function usePrintParser(print) {
-    const { printers, printerTypes } = useContext(PrintingContext);
+    const { printers, printerTypes } = usePrinting();
 
     const printerData = useMemo(() => {
         if (!print) return null;

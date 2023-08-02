@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
     Alert,
@@ -29,7 +29,7 @@ import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 
 import dayjs from '@/lib/time';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import Layout from '@/layouts/printing/PrintingLayout';
 
@@ -38,7 +38,7 @@ import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
 
 export default function NewPrint(props) {
-    const { refreshDynamicData } = useContext(PrintingContext);
+    const { refreshDynamicData } = usePrinting();
     const toast = useToast();
 
     const [inputData, setInputData] = useState({

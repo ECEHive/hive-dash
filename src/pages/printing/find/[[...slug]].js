@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
     Alert,
@@ -8,16 +8,26 @@ import {
     Button,
     ButtonGroup,
     HStack,
+    Icon,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
     Text,
     VStack,
     useDisclosure
 } from '@chakra-ui/react';
 
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { useRouter } from 'next/router';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
+
+import iconSet from '@/util/icons';
 
 import Layout from '@/layouts/printing/PrintingLayout';
 
@@ -27,7 +37,7 @@ import PrintList from '@/components/printing/find/PrintList';
 import PrintEditorModal from '@/components/printing/printEdit/PrintEditorModal';
 
 export default function FindPrint(props) {
-    const { queue } = useContext(PrintingContext);
+    const { queue } = usePrinting();
     const router = useRouter();
 
     const [selectedPrintData, setSelectedPrintData] = useState(null);
@@ -80,8 +90,8 @@ export default function FindPrint(props) {
                         <Box
                             h="full"
                             w="full"
-                            maxW="1000px"
-                            overflow="hidden"
+                            maxW="4xl"
+                            overflowY="hidden"
                             //pr="260px" //centers in the viewport
                         >
                             {selectedPrintData ? (
@@ -93,6 +103,7 @@ export default function FindPrint(props) {
                                         align="start"
                                         spacing={3}
                                         overflow="hidden"
+                                        px={1}
                                     >
                                         {printerData?.type === 'stratasys' && (
                                             <Box
@@ -115,22 +126,55 @@ export default function FindPrint(props) {
 
                                         <PrintPreview print={selectedPrintData} />
 
-                                        {/* timeline */}
-                                        <VStack
-                                            w="100%"
-                                            h="auto"
-                                            flexGrow={1}
-                                            spacing={3}
-                                            overflow="auto"
-                                            align="start"
-                                        >
-                                            {/* <Timeline print={selectedPrintData} /> */}
-                                            <HorizontalTimeline print={selectedPrintData} />
+                                        <HorizontalTimeline print={selectedPrintData} />
 
-                                            <ButtonGroup>
-                                                <Button onClick={onEditorOpen}>Advanced edit</Button>
-                                            </ButtonGroup>
-                                        </VStack>
+                                        {/* tabs */}
+                                        <Tabs
+                                            w="full"
+                                            flexGrow={1}
+                                            mt={5}
+                                        >
+                                            <TabList>
+                                                <Tab>Notes</Tab>
+                                                <Tab>Actions</Tab>
+                                            </TabList>
+
+                                            <TabPanels>
+                                                {/* notes */}
+                                                <TabPanel>
+                                                    {selectedPrintData.notes?.length > 0 ? (
+                                                        <ReactMarkdown
+                                                            components={ChakraUIRenderer()}
+                                                            skipHtml
+                                                        >
+                                                            {selectedPrintData.notes}
+                                                        </ReactMarkdown>
+                                                    ) : (
+                                                        <Text color={'secondaryText'}>
+                                                            No notes are attached to this print.
+                                                        </Text>
+                                                    )}
+                                                </TabPanel>
+                                                <TabPanel>
+                                                    <ButtonGroup>
+                                                        <Button
+                                                            onClick={onEditorOpen}
+                                                            leftIcon={<Icon as={iconSet.minus} />}
+                                                            colorScheme="red"
+                                                        >
+                                                            Cancel print
+                                                        </Button>
+                                                        <Button
+                                                            onClick={onEditorOpen}
+                                                            leftIcon={<Icon as={iconSet.pencil} />}
+                                                            colorScheme="orange"
+                                                        >
+                                                            Edit print
+                                                        </Button>
+                                                    </ButtonGroup>
+                                                </TabPanel>
+                                            </TabPanels>
+                                        </Tabs>
                                     </VStack>
                                 </>
                             ) : (

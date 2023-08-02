@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import {
     Button,
@@ -13,10 +13,10 @@ import {
     VStack
 } from '@chakra-ui/react';
 
-import PrintingContext from '@/contexts/printing/PrintingContext';
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 export default function PrintInfo({ data, set, setNext }) {
-    const { printerTypes } = useContext(PrintingContext);
+    const { printerTypes } = usePrinting();
 
     const selectedPrinterTypeData = useMemo(() => {
         return printerTypes.find((p) => p.id === data.printer.type);

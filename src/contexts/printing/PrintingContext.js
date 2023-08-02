@@ -1,10 +1,14 @@
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import { HStack, Spinner, Text, useToast } from '@chakra-ui/react';
 
 import useFocus from '@/hooks/useFocus';
 
 const PrintingContext = createContext({});
+
+function usePrinting() {
+    return useContext(PrintingContext);
+}
 
 function PrintingProvider({ children }) {
     const [queue, setQueue] = useState(null);
@@ -139,5 +143,5 @@ function PrintingProvider({ children }) {
     );
 }
 
-export default PrintingContext;
+export default usePrinting;
 export { PrintingProvider };

@@ -9,7 +9,7 @@ import {
     HStack
 } from '@chakra-ui/react';
 
-export default function DeleteDialog({ isOpen, onClose, onDelete, header, message }) {
+export default function ConfirmDialog({ isOpen, onClose, onDelete, header, message }) {
     return (
         <AlertDialog
             isOpen={isOpen}
