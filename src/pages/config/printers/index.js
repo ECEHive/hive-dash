@@ -23,11 +23,12 @@ import {
     useDisclosure
 } from '@chakra-ui/react';
 
+import useConfirmation from '@/contexts/ConfirmDialogContext';
+
 import iconSet from '@/util/icons';
 
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
-import ConfirmDialog from '@/components/ConfirmDialog';
 import PrinterModal from '@/components/config/printers/PrinterModal';
 import PrinterTypeModal from '@/components/config/printers/PrinterTypeModal';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
@@ -41,8 +42,9 @@ export default function Printers(props) {
 
     const { isOpen: isNewTypeOpen, onClose: onNewTypeClose, onOpen: onNewTypeOpen } = useDisclosure();
     const { isOpen: isNewPrinterOpen, onClose: onNewPrinterClose, onOpen: onNewPrinterOpen } = useDisclosure();
-    const { isOpen: isDeleteOpen, onClose: onDeleteClose, onOpen: onDeleteOpen } = useDisclosure();
     const { isOpen: isMaintenanceOpen, onClose: onMaintenanceClose, onOpen: onMaintenanceOpen } = useDisclosure();
+
+    const confirm = useConfirmation();
 
     const refresh = useCallback(() => {
         fetch('/api/printing/printers')
@@ -82,6 +84,30 @@ export default function Printers(props) {
                 });
         },
         [refresh]
+    );
+
+    const initDelete = useCallback(
+        (data, isType) => {
+            confirm({
+                onClose: () => {
+                    refresh();
+                },
+                onConfirm: () => {
+                    if (isType) {
+                        deleteType(data);
+                    } else {
+                        deletePrinter(data);
+                    }
+                },
+                header: `Delete ${isType ? data?.displayName + ' type' : data?.displayName + ' printer'}`,
+                message: `Are you sure you want to delete ${
+                    isType ? data?.displayName : data?.displayName
+                }? This action cannot be undone.`,
+                confirmButtonText: 'Delete',
+                confirmButtonColor: 'red'
+            });
+        },
+        [confirm, deletePrinter, deleteType, refresh]
     );
 
     useEffect(() => {
@@ -124,30 +150,6 @@ export default function Printers(props) {
                 </>
             )}
 
-            <ConfirmDialog
-                isOpen={isDeleteOpen}
-                onClose={() => {
-                    setEditingPrinterData(null);
-                    setEditingTypeData(null);
-                    onDeleteClose();
-                }}
-                onDelete={() => {
-                    if (editingTypeData) {
-                        deleteType(editingTypeData);
-                    } else if (editingPrinterData) {
-                        deletePrinter(editingPrinterData);
-                    }
-                    onDeleteClose();
-                }}
-                header={`Delete ${
-                    editingTypeData
-                        ? editingTypeData?.displayName + ' type'
-                        : editingPrinterData?.displayName + ' printer'
-                }`}
-                message={`Are you sure you want to delete ${
-                    editingTypeData ? editingTypeData?.displayName : editingPrinterData?.displayName
-                }? This action cannot be undone.`}
-            />
             <Flex
                 w="full"
                 h="full"
@@ -235,8 +237,7 @@ export default function Printers(props) {
                                                             <ButtonGroup size="sm">
                                                                 <Button
                                                                     onClick={() => {
-                                                                        setEditingTypeData(type);
-                                                                        onNewTypeOpen();
+                                                                        onNewTypeOpen(type, true);
                                                                     }}
                                                                 >
                                                                     Edit
@@ -244,8 +245,7 @@ export default function Printers(props) {
                                                                 <IconButton
                                                                     colorScheme="red"
                                                                     onClick={() => {
-                                                                        setEditingTypeData(type);
-                                                                        onDeleteOpen();
+                                                                        initDelete(type, true);
                                                                     }}
                                                                 >
                                                                     <Icon as={iconSet.delete} />
@@ -347,8 +347,7 @@ export default function Printers(props) {
                                                                 <IconButton
                                                                     colorScheme="red"
                                                                     onClick={() => {
-                                                                        setEditingPrinterData(printer);
-                                                                        onDeleteOpen();
+                                                                        initDelete(printer, false);
                                                                     }}
                                                                 >
                                                                     <Icon as={iconSet.delete} />

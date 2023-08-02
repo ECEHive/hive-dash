@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import {
     Button,
@@ -35,6 +35,7 @@ import { Select } from 'chakra-react-select';
 
 import dayjs from '@/lib/time';
 
+import useConfirmation from '@/contexts/ConfirmDialogContext';
 import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintEvents from '@/hooks/printing/usePrintEvents';
@@ -291,23 +292,30 @@ function PrintInfo({ printData, update }) {
 function Events({ printData, update }) {
     const { detailedEvents } = usePrintEvents(printData);
 
-    const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
+    const confirm = useConfirmation();
+
     const { isOpen: isNotesOpen, onOpen: onNotesOpen, onClose: onNotesClose } = useDisclosure();
     const [selectedEventData, setSelectedEventData] = useState(null);
 
+    const initDelete = useCallback(
+        (event) => {
+            confirm({
+                onClose: () => {},
+                onConfirm: () => {
+                    let newEvents = [...printData.events.filter((e) => e.timestamp !== event.timestamp)];
+                    update({ events: newEvents });
+                },
+                header: 'Delete event',
+                message: 'Are you sure you want to delete this event? This action cannot be undone.',
+                confirmButtonText: 'Delete',
+                confirmButtonColor: 'red'
+            });
+        },
+        [confirm, printData.events, update]
+    );
+
     return (
         <>
-            <ConfirmDialog
-                isOpen={isDeleteOpen}
-                onClose={onDeleteClose}
-                onDelete={() => {
-                    let newEvents = [...printData.events.filter((e) => e.timestamp !== selectedEventData.timestamp)];
-                    update({ events: newEvents });
-                }}
-                header="Delete event"
-                message="Are you sure you want to delete this event? This action cannot be undone."
-            />
-
             <UpdateModal
                 isOpen={isNotesOpen}
                 onClose={onNotesClose}
@@ -370,8 +378,7 @@ function Events({ printData, update }) {
                                                 <IconButton
                                                     colorScheme="red"
                                                     onClick={() => {
-                                                        setSelectedEventData(event);
-                                                        onDeleteOpen();
+                                                        initDelete(event);
                                                     }}
                                                 >
                                                     <DeleteIcon />
