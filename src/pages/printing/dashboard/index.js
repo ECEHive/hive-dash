@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 
-import { ButtonGroup, Divider, Icon, IconButton, SimpleGrid, VStack } from '@chakra-ui/react';
+import { ButtonGroup, HStack, Heading, Icon, IconButton, SimpleGrid, Spacer, VStack } from '@chakra-ui/react';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
@@ -47,7 +47,7 @@ export default function Dashboard(props) {
             }
         },
         {
-            name: 'Average lead time',
+            name: 'Average lead time (est.)',
             value: () => {
                 let total = dayjs.duration(0, 'seconds');
 
@@ -83,43 +83,52 @@ export default function Dashboard(props) {
                 w="100%"
                 overflow="auto"
                 p={5}
-                spacing={4}
+                spacing={8}
+                align="start"
             >
-                {/* statistics */}
-                <SimpleGrid
-                    spacing={4}
-                    columns={3}
-                    w="100%"
-                    maxW="6xl"
-                    h="auto"
+                <VStack
+                    w="full"
+                    align="start"
                 >
-                    {metrics.map((metric) => {
-                        return (
-                            <Statistic
-                                key={metric.name}
-                                name={metric.name}
-                                value={typeof metric.value === 'function' ? metric.value() : metric.value}
-                            />
-                        );
-                    })}
-                </SimpleGrid>
-
-                <Divider w="70%" />
+                    <Heading size="lg">Statistics</Heading>
+                    {/* statistics */}
+                    <SimpleGrid
+                        spacing={4}
+                        columns={3}
+                        w="100%"
+                        maxW="6xl"
+                        h="auto"
+                    >
+                        {metrics.map((metric) => {
+                            return (
+                                <Statistic
+                                    key={metric.name}
+                                    name={metric.name}
+                                    value={typeof metric.value === 'function' ? metric.value() : metric.value}
+                                />
+                            );
+                        })}
+                    </SimpleGrid>
+                </VStack>
 
                 {/* printers */}
-                <VStack>
-                    <ButtonGroup
-                        size="sm"
-                        alignSelf="end"
-                        isAttached
-                    >
-                        <IconButton>
-                            <Icon as={iconSet.list} />
-                        </IconButton>
-                        <IconButton>
-                            <Icon as={iconSet.grid} />
-                        </IconButton>
-                    </ButtonGroup>
+                <VStack w="full">
+                    <HStack w="full">
+                        <Heading size="lg">Printers</Heading>
+                        <Spacer />
+                        <ButtonGroup
+                            size="sm"
+                            alignSelf="end"
+                            isAttached
+                        >
+                            <IconButton>
+                                <Icon as={iconSet.list} />
+                            </IconButton>
+                            <IconButton>
+                                <Icon as={iconSet.grid} />
+                            </IconButton>
+                        </ButtonGroup>
+                    </HStack>
                     <SimpleGrid
                         spacing={4}
                         columns={3}
