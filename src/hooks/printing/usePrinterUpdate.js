@@ -1,5 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 
+import dayjs from '@/lib/time';
+
 import usePrinting from '@/contexts/printing/PrintingContext';
 
 export default function usePrinterUpdate(silent = false) {
@@ -8,6 +10,8 @@ export default function usePrinterUpdate(silent = false) {
     const { refreshDynamicData } = usePrinting();
 
     function update(printerId, printerData) {
+        printerData['updatedAt'] = dayjs().utc().toISOString();
+
         return new Promise((resolve, reject) => {
             fetch(`/api/printing/printers/${printerId}`, {
                 method: 'PUT',

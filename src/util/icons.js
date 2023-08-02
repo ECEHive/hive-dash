@@ -16,6 +16,7 @@ import {
 
 import { BsDot } from 'react-icons/bs';
 import {
+    FaBoxOpen,
     FaCalendar,
     FaCalendarPlus,
     FaCodeBranch,
@@ -77,7 +78,8 @@ const iconSet = {
     dot: BsDot,
     list: FaTableList,
     grid: FaTableCellsLarge,
-    minus: FaMinusCircle
+    minus: FaMinusCircle,
+    boxes: FaBoxOpen
 };
 
 export default iconSet;

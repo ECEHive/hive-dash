@@ -1,6 +1,6 @@
-import { Card, CardBody, Text, VStack } from '@chakra-ui/react';
+import { Card, CardBody, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 
-export default function Statistic({ name, value }) {
+export default function Statistic({ name, value, icon }) {
     return (
         <Card
             variant="outline"
@@ -17,7 +17,13 @@ export default function Statistic({ name, value }) {
                     align="start"
                     spacing={1}
                 >
-                    <Text fontWeight="medium">{name}</Text>
+                    <HStack
+                        fontSize="md"
+                        color="secondaryText"
+                    >
+                        <Icon as={icon} />
+                        <Text fontWeight="medium">{name}</Text>
+                    </HStack>
                     <Text
                         fontWeight="semibold"
                         fontSize="3xl"

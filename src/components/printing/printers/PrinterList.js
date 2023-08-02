@@ -104,7 +104,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                         <CircularProgress
                                             value={progress}
                                             color="green.200"
-                                            size={7}
+                                            size={8}
                                             thickness={8}
                                             trackColor={progressTrackColor}
                                         />

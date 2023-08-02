@@ -62,7 +62,7 @@ export default function PrinterCard({ data }) {
                                             {expandedPrinterData.displayName}
                                         </Link>
                                     </Heading>
-                                    {/* <Spacer /> */}
+                                    <Spacer />
                                     <Badge
                                         variant="subtle"
                                         colorScheme={StateColors[expandedPrinterData.state]}

@@ -40,16 +40,17 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
                     {pageData &&
                         pageData.map((element, index) => {
                             if (element.type === 'button') {
+                                const active = pathPage === element.href.replace('/', '');
                                 return (
                                     <Button
-                                        variant="ghost"
+                                        variant={active ? 'outline' : 'ghost'}
                                         w="100%"
                                         size="md"
                                         justifyContent="flex-start"
-                                        colorScheme={element?.colorScheme || 'gray'}
+                                        colorScheme={element?.colorScheme}
                                         as={NextLink}
                                         href={baseUrl + element.href}
-                                        isActive={pathPage === element.href.replace('/', '')}
+                                        isActive={active}
                                         leftIcon={element.icon}
                                         key={element.name}
                                     >

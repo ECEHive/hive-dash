@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import dayjs from '@/lib/time';
+
 import usePrinting from '@/contexts/printing/PrintingContext';
 
 import { PrintStates } from '@/util/states';
@@ -30,6 +32,7 @@ export default function usePrinterParser(printer) {
         return {
             ...printer,
             state: state,
+            updatedAtHumanized: dayjs.duration(dayjs.utc(printer.updatedAt).diff(dayjs().utc())).humanize(true),
             queueLength: queue.filter(
                 (print) =>
                     print.printer === printer.id &&
