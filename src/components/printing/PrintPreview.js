@@ -94,7 +94,7 @@ export default function PrintPreview({ print }) {
                             thickness={6}
                             value={progress}
                             color={useColorModeValue(`${progressBarColor}.500`, `${progressBarColor}.200`)}
-                            trackColor={useColorModeValue('gray.100', 'gray.700')}
+                            trackColor="progressTrackAlt"
                         />
                         <VStack
                             align="start"

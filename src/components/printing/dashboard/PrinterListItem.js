@@ -52,40 +52,40 @@ export default function PrinterListItem({ data }) {
                 <Text>{expandedPrinterData.queueLength}</Text>
             </Td>
             <Td>
-                {betterPrintData.state === PrintStates.PRINTING ? (
-                    <HStack spacing={1.5}>
-                        <CircularProgress
-                            value={progress}
-                            color="green.200"
-                            size={8}
-                            thickness={8}
-                            trackColor={progressTrackColor}
-                        />
-                        <VStack
-                            align="start"
-                            justify="start"
-                            spacing={1}
+                {/* {betterPrintData.state === PrintStates.PRINTING ? ( */}
+                <HStack spacing={1.5}>
+                    <CircularProgress
+                        value={progress}
+                        color={useColorModeValue(`${progressBarColor}.500`, `${progressBarColor}.200`)}
+                        size={8}
+                        thickness={8}
+                        trackColor="progressTrackAlt"
+                    />
+                    <VStack
+                        align="start"
+                        justify="start"
+                        spacing={1}
+                    >
+                        <Text
+                            fontSize="md"
+                            fontWeight="medium"
+                            lineHeight={1}
                         >
-                            <Text
-                                fontSize="md"
-                                fontWeight="medium"
-                                lineHeight={1}
-                            >
-                                {betterPrintData.trayName}
-                            </Text>
-                            <Text
-                                fontSize="xs"
-                                fontWeight="normal"
-                                color="secondaryText"
-                                lineHeight={1}
-                            >
-                                {timeLeftHumanized}
-                            </Text>
-                        </VStack>
-                    </HStack>
-                ) : (
+                            {betterPrintData.trayName}
+                        </Text>
+                        <Text
+                            fontSize="xs"
+                            fontWeight="normal"
+                            color="secondaryText"
+                            lineHeight={1}
+                        >
+                            {timeLeftHumanized}
+                        </Text>
+                    </VStack>
+                </HStack>
+                {/* ) : (
                     <Text>N/A</Text>
-                )}
+                )} */}
             </Td>
             <Td>
                 <Text>{expandedPrinterData.updatedAtHumanized}</Text>

@@ -16,6 +16,14 @@ const theme = extendTheme({
             secondaryTextAlt: {
                 default: 'gray.600',
                 _dark: 'gray.300'
+            },
+            progressTrack: {
+                default: 'gray.200',
+                _dark: 'gray.500'
+            },
+            progressTrackAlt: {
+                default: 'gray.100',
+                _dark: 'gray.700'
             }
         }
     },

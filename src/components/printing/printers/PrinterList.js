@@ -106,7 +106,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                             color="green.200"
                                             size={8}
                                             thickness={8}
-                                            trackColor={progressTrackColor}
+                                            trackColor="progressTrack"
                                         />
                                         <VStack
                                             align="start"
