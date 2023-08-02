@@ -90,7 +90,12 @@ export default function Dashboard(props) {
                     w="full"
                     align="start"
                 >
-                    <Heading size="lg">Statistics</Heading>
+                    <Heading
+                        size="lg"
+                        mb={3}
+                    >
+                        Statistics
+                    </Heading>
                     {/* statistics */}
                     <SimpleGrid
                         spacing={4}
@@ -113,7 +118,10 @@ export default function Dashboard(props) {
 
                 {/* printers */}
                 <VStack w="full">
-                    <HStack w="full">
+                    <HStack
+                        w="full"
+                        mb={3}
+                    >
                         <Heading size="lg">Printers</Heading>
                         <Spacer />
                         <ButtonGroup
