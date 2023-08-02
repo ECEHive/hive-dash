@@ -193,7 +193,10 @@ export default function Dashboard(props) {
                         </SimpleGrid>
                     ) : (
                         <TableContainer w="full">
-                            <Table size="md">
+                            <Table
+                                size="md"
+                                variant="striped"
+                            >
                                 <Thead>
                                     <Tr>
                                         <Th>Printer</Th>
