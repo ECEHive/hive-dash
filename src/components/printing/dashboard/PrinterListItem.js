@@ -11,6 +11,8 @@ import {
     useColorModeValue
 } from '@chakra-ui/react';
 
+import { push } from 'next/router';
+
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
@@ -98,8 +100,20 @@ export default function PrinterListItem({ data }) {
                     w="full"
                     alignItems="flex-end"
                 >
-                    <Button colorScheme="blue">View printer</Button>
-                    <Button visibility={betterPrintData.state === PrintStates.PRINTING ? 'visibile' : 'hidden'}>
+                    <Button
+                        colorScheme="blue"
+                        onClick={() => {
+                            push(`/printing/printers/${expandedPrinterData.id}`);
+                        }}
+                    >
+                        View printer
+                    </Button>
+                    <Button
+                        visibility={betterPrintData.state === PrintStates.PRINTING ? 'visibile' : 'hidden'}
+                        onClick={() => {
+                            push(`/printing/find/${betterPrintData._id}`);
+                        }}
+                    >
                         View print
                     </Button>
                 </ButtonGroup>

@@ -37,8 +37,8 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
     const { betterPrintData } = usePrintParser(currentPrintData);
     const { timeLeftHumanized, progress } = usePrintProgress(currentPrintData);
 
-    const progressTrackColor = useColorModeValue('gray.200', 'gray.500');
-    const cardColor = useColorModeValue('white.100', 'gray.700');
+    const progressColor = useColorModeValue('green.500', 'green.200');
+    //const cardColor = useColorModeValue('white.100', 'gray.700');
 
     return (
         <>
@@ -49,10 +49,10 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                     h="auto"
                     as={Button}
                     p={0}
-                    variant="filled"
+                    variant="outline"
                     onClick={onClick}
                     isActive={isActive}
-                    bgColor={cardColor}
+                    bgColor="chakra-subtle-bg"
                 >
                     <CardBody w="100%">
                         <VStack
@@ -103,7 +103,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                     <HStack spacing={1.5}>
                                         <CircularProgress
                                             value={progress}
-                                            color="green.200"
+                                            color={progressColor}
                                             size={8}
                                             thickness={8}
                                             trackColor="progressTrack"

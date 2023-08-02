@@ -114,7 +114,7 @@ export default function PrintLogs(props) {
                                 {sortedQueue.map((print) => {
                                     return (
                                         <LogItem
-                                            key={print.id}
+                                            key={print._id}
                                             printData={print}
                                         />
                                     );

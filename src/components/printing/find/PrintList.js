@@ -19,7 +19,8 @@ import {
     Text,
     Tooltip,
     UnorderedList,
-    VStack
+    VStack,
+    useColorModeValue
 } from '@chakra-ui/react';
 
 import { SearchIcon } from '@chakra-ui/icons';
@@ -38,15 +39,18 @@ function PrintListItem({ data, isActive, onClick }) {
     const { betterPrintData, printerData } = usePrintParser(data);
     const { progressMessage, progress, timeLeftHumanizedDetailed } = usePrintProgress(data);
 
+    const progressColor = useColorModeValue('green.500', 'green.200');
+
     return (
         <Card
             w="100%"
             h="auto"
             as={Button}
             p={0}
-            variant="filled"
+            variant="outline"
             isActive={isActive}
             onClick={onClick}
+            bgColor="chakra-subtle-bg"
         >
             <CardBody w="100%">
                 <VStack
@@ -107,7 +111,7 @@ function PrintListItem({ data, isActive, onClick }) {
                             <HStack spacing={1.5}>
                                 <CircularProgress
                                     value={progress}
-                                    color="green.200"
+                                    color={progressColor}
                                     size={5}
                                     thickness={8}
                                     trackColor="progressTrack"
