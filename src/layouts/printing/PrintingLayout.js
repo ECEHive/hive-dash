@@ -1,4 +1,4 @@
-import { Box, VStack, useDisclosure } from '@chakra-ui/react';
+import { Box, Grid, GridItem, VStack } from '@chakra-ui/react';
 
 import { PrintingProvider } from '@/contexts/printing/PrintingContext';
 
@@ -8,43 +8,56 @@ import TopBar from '@/components/TopBarNavigation';
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
 
 export default function PrintingLayout({ children }) {
-    const { isOpen: isNewPrintOpen, onOpen: onNewPrintOpen, onClose: onNewPrintClose } = useDisclosure();
-
     return (
         <>
             <PrintingProvider>
-                {/* <NewPrintModal
-                    isOpen={isNewPrintOpen}
-                    onClose={onNewPrintClose}
-                /> */}
-                <Box
-                    w="100vw"
+                <Grid
+                    templateAreas={`"header header"
+                        "nav main"
+                        "footer footer"`}
+                    gridTemplateColumns="260px 1fr"
+                    gridTemplateRows="80px 1fr 1.5rem"
                     h="100vh"
-                    pos="fixed"
+                    maxH="100vh"
+                    w="full"
+                    overflow="hidden"
                 >
-                    <TopBar />
-                    <PrintingNavigation />
-                    <VStack
-                        w="calc(100% - 260px)"
-                        h="calc(100% - 80px - 1.5rem)"
-                        left="260px"
-                        top="80px"
-                        pos="relative"
-                        justify="start"
-                        align="start"
-                        spacing={0}
+                    <GridItem area="header">
+                        <TopBar />
+                    </GridItem>
+
+                    <GridItem area="nav">
+                        <PrintingNavigation />
+                    </GridItem>
+
+                    <GridItem
+                        area="main"
+                        overflow="hidden"
                     >
-                        <SiteBanner />
-                        <Box
-                            w="100%"
-                            h="100%"
+                        <VStack
+                            w="full"
+                            h="full"
+                            pos="relative"
+                            justify="start"
+                            align="start"
+                            spacing={0}
                             overflow="hidden"
                         >
-                            {children}
-                        </Box>
-                    </VStack>
-                    <Footer />
-                </Box>
+                            <SiteBanner />
+                            <Box
+                                w="100%"
+                                h="100%"
+                                overflow="hidden"
+                            >
+                                {children}
+                            </Box>
+                        </VStack>
+                    </GridItem>
+
+                    <GridItem area="footer">
+                        <Footer />
+                    </GridItem>
+                </Grid>
             </PrintingProvider>
         </>
     );

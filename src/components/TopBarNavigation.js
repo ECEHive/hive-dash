@@ -26,8 +26,7 @@ export default function TopBarNavigation(props) {
         <Flex
             direction="row"
             w="100%"
-            h="80px"
-            position="fixed"
+            h="full"
             borderBottom="1px solid"
             borderColor="chakra-border-color"
         >

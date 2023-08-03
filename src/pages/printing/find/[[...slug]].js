@@ -140,18 +140,17 @@ export default function FindPrint(props) {
                             h="full"
                             w="full"
                             maxW="4xl"
-                            overflowY="hidden"
-                            //pr="260px" //centers in the viewport
+                            overflowY="auto"
+                            px={1}
                         >
                             {selectedPrintData ? (
                                 <>
                                     <VStack
                                         w="100%"
-                                        h="100%"
+                                        h="auto"
                                         justify="start"
                                         align="start"
                                         spacing={3}
-                                        overflow="hidden"
                                         px={1}
                                     >
                                         {printerData?.type === 'stratasys' &&

@@ -62,8 +62,8 @@ export default function PrinterInfo({ selectedPrinterData }) {
                     h="full"
                     w="full"
                     maxW="4xl"
-                    overflow="hidden"
-                    //pr="260px" //centers in the viewport
+                    overflow="auto"
+                    px={1}
                 >
                     {/* <Card
                     h="100%"

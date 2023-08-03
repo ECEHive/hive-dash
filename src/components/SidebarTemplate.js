@@ -24,10 +24,8 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
         <>
             <Flex
                 direction="column"
-                w="260px"
-                h="calc(100% - 80px - 1.5rem)"
-                top="80px"
-                position="fixed"
+                w="full"
+                h="full"
                 borderRight="1px solid"
                 borderColor="chakra-border-color"
                 zIndex={500}

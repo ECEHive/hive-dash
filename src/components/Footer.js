@@ -6,9 +6,7 @@ export default function Footer() {
     return (
         <Flex
             as="footer"
-            position="fixed"
-            bottom={0}
-            h="1.5rem"
+            h="full"
             w="100%"
             borderTop="1px"
             borderTopColor="chakra-border-color"

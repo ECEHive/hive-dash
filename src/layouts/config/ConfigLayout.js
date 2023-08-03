@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Grid, GridItem } from '@chakra-ui/react';
 
 import Footer from '@/components/Footer';
 import TopBar from '@/components/TopBarNavigation';
@@ -7,33 +7,41 @@ import ConfigNavigation from '@/components/config/SidebarNavigation';
 export default function PrimaryLayout({ children }) {
     return (
         <>
-            <Box
-                w="100vw"
+            <Grid
+                templateAreas={`"header header"
+                        "nav main"
+                        "footer footer"`}
+                gridTemplateColumns="260px 1fr"
+                gridTemplateRows="80px 1fr 1.5rem"
                 h="100vh"
-                pos="fixed"
+                maxH="100vh"
+                w="full"
+                overflow="hidden"
             >
-                <TopBar />
-                <ConfigNavigation />
-                <Box
-                    w="calc(100% - 260px)"
-                    h="calc(100% - 80px - 1.5rem)"
-                    left="260px"
-                    top="80px"
-                    pos="relative"
+                <GridItem area="header">
+                    <TopBar />
+                </GridItem>
+
+                <GridItem area="nav">
+                    <ConfigNavigation />
+                </GridItem>
+
+                <GridItem
+                    area="main"
+                    overflow="hidden"
                 >
-                    {/* <Alert status="error">
-                        <AlertIcon />
-                        <AlertTitle>
-                            End of semester
-                        </AlertTitle>
-                        <AlertDescription>
-                            3D Printing queues will be longer than expected leading up to the end of the semester.
-                        </AlertDescription>
-                    </Alert> */}
-                    {children}
-                </Box>
-                <Footer />
-            </Box>
+                    <Box
+                        w="full"
+                        h="full"
+                    >
+                        {children}
+                    </Box>
+                </GridItem>
+
+                <GridItem area="footer">
+                    <Footer />
+                </GridItem>
+            </Grid>
         </>
     );
 }
