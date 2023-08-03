@@ -31,6 +31,8 @@ import dayjs from '@/lib/time';
 
 import usePrinting from '@/contexts/printing/PrintingContext';
 
+import { PrintStates } from '@/util/states';
+
 import Layout from '@/layouts/printing/PrintingLayout';
 
 import PrintInfo from '@/components/printing/new/PrintInfo';
@@ -106,7 +108,7 @@ export default function NewPrint(props) {
             queuedBy: inputData.user.assistingPI,
             queuedAt: timestamp,
             notes: '',
-            state: 0,
+            state: PrintStates.QUEUED,
             endUser: {
                 firstname: inputData.user.firstname,
                 lastname: inputData.user.lastname,
@@ -114,7 +116,7 @@ export default function NewPrint(props) {
             },
             events: [
                 {
-                    type: 'queued',
+                    type: PrintStates.QUEUED,
                     timestamp: timestamp,
                     notes: ''
                 }

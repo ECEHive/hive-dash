@@ -73,7 +73,7 @@ export default function FindPrint(props) {
 
     const cancelPrint = useCallback(() => {
         setCancelEventData({
-            type: 'canceled',
+            type: PrintStates.CANCELED,
             notes: '',
             timestamp: dayjs.utc().toISOString()
         });

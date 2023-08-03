@@ -143,7 +143,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
             state: PrintStates.PRINTING,
             events: [
                 {
-                    type: 'printing',
+                    type: PrintStates.PRINTING,
                     timestamp: dayjs.utc()
                 },
                 ...printData.events
@@ -163,13 +163,13 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
         let eventData;
         if (completed) {
             eventData = {
-                type: 'completed',
+                type: PrintStates.COMPLETED,
                 timestamp: dayjs.utc().toISOString(),
                 notes: ''
             };
         } else {
             eventData = {
-                type: 'failed',
+                type: PrintStates.FAILED,
                 timestamp: dayjs.utc().toISOString(),
                 notes: ''
             };
@@ -182,7 +182,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
         (event) => {
             let data = {
                 ...activePrint,
-                state: event.type === 'completed' ? PrintStates.COMPLETED : PrintStates.FAILED,
+                state: event.type,
                 events: [event, ...activePrint.events]
             };
             printUpdater(activePrint._id, data);

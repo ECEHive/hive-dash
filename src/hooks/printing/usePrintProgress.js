@@ -14,22 +14,22 @@ export default function usePrintProgress(printData) {
 
     const startTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(printData.events.find((e) => e.type === 'printing')?.timestamp);
+        return dayjs.utc(printData.events.find((e) => e.type === PrintStates.PRINTING)?.timestamp);
     }, [printData]);
 
     const completedTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(printData.events.find((e) => e.type === 'completed')?.timestamp);
+        return dayjs.utc(printData.events.find((e) => e.type === PrintStates.COMPLETED)?.timestamp);
     }, [printData]);
 
     const failTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(printData.events.find((e) => e.type === 'failed')?.timestamp);
+        return dayjs.utc(printData.events.find((e) => e.type === PrintStates.FAILED)?.timestamp);
     }, [printData]);
 
     const cancelTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(printData.events.find((e) => e.type === 'canceled')?.timestamp);
+        return dayjs.utc(printData.events.find((e) => e.type === PrintStates.CANCELED)?.timestamp);
     }, [printData]);
 
     const endTime = useMemo(() => {

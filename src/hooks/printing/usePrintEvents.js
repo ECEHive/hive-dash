@@ -9,33 +9,33 @@ import { PrintStates } from '@/util/states';
 
 export default function usePrintEvents(print) {
     const eventIcons = {
-        queued: iconSet.pencil,
-        completed: iconSet.check,
-        failed: iconSet.stop,
-        printing: iconSet.play,
-        canceled: iconSet.minus
+        [PrintStates.QUEUED]: iconSet.pencil,
+        [PrintStates.COMPLETED]: iconSet.check,
+        [PrintStates.FAILED]: iconSet.stop,
+        [PrintStates.PRINTING]: iconSet.play,
+        [PrintStates.CANCELED]: iconSet.minus
     };
 
     const eventColors = {
-        queued: useColorModeValue('blue.600', 'blue.300'),
-        completed: useColorModeValue('green.600', 'green.300'),
-        failed: useColorModeValue('red.600', 'red.300'),
-        printing: useColorModeValue('green.600', 'green.300'),
-        canceled: useColorModeValue('red.600', 'red.300')
+        [PrintStates.QUEUED]: useColorModeValue('blue.600', 'blue.300'),
+        [PrintStates.COMPLETED]: useColorModeValue('green.600', 'green.300'),
+        [PrintStates.FAILED]: useColorModeValue('red.600', 'red.300'),
+        [PrintStates.PRINTING]: useColorModeValue('green.600', 'green.300'),
+        [PrintStates.CANCELED]: useColorModeValue('red.600', 'red.300')
     };
 
     const eventNames = {
-        queued: 'Print queued',
-        completed: 'Print completed',
-        failed: 'Print failed',
-        printing: 'Print started',
-        canceled: 'Print canceled'
+        [PrintStates.QUEUED]: 'Print queued',
+        [PrintStates.COMPLETED]: 'Print completed',
+        [PrintStates.FAILED]: 'Print failed',
+        [PrintStates.PRINTING]: 'Print started',
+        [PrintStates.CANCELED]: 'Print canceled'
     };
 
     const eventOrder = {
-        [PrintStates.QUEUED]: ['printing', 'completed'],
-        [PrintStates.PRINTING]: ['completed'],
-        [PrintStates.FAILED]: ['printing', 'completed'],
+        [PrintStates.QUEUED]: [PrintStates.PRINTING, PrintStates.COMPLETED],
+        [PrintStates.PRINTING]: [PrintStates.COMPLETED],
+        [PrintStates.FAILED]: [PrintStates.PRINTING, PrintStates.COMPLETED],
         [PrintStates.COMPLETED]: [],
         [PrintStates.CANCELED]: []
     };

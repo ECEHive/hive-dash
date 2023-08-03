@@ -87,7 +87,7 @@ def main():
         new_struct["queuedAt"] = time
 
         new_struct["events"].append({
-            "type": "queued",
+            "type": 0,
             "timestamp": time
         })
 
