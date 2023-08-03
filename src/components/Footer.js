@@ -1,8 +1,14 @@
+import { useMemo } from 'react';
+
 import { Flex, Icon, Link, Spacer, Text } from '@chakra-ui/react';
 
 import iconSet from '@/util/icons';
 
 export default function Footer() {
+    const isDev = useMemo(() => {
+        return process.env.NODE_ENV === 'development';
+    }, []);
+
     return (
         <Flex
             as="footer"
@@ -18,7 +24,11 @@ export default function Footer() {
             color="secondaryText"
         >
             <Link
-                href={'https://github.com/colinhartigan/hive-dash'}
+                href={
+                    isDev
+                        ? 'https://github.com/colinhartigan/hive-dash'
+                        : `https://github.com/colinhartigan/hive-dash/tree/${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}`
+                }
                 target="_blank"
             >
                 <Icon as={iconSet.branch} /> {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || 'dev'} (
