@@ -15,8 +15,7 @@ import {
     InputLeftElement,
     Spacer,
     Text,
-    VStack,
-    useColorModeValue
+    VStack
 } from '@chakra-ui/react';
 
 import { SearchIcon } from '@chakra-ui/icons';
@@ -35,9 +34,8 @@ import { StateColors } from '@/util/states';
 function PrinterListItem({ data, onClick, isActive, queue }) {
     const { expandedPrinterData, currentPrintData, printerTypeData } = usePrinterParser(data);
     const { betterPrintData } = usePrintParser(currentPrintData);
-    const { timeLeftHumanized, progress } = usePrintProgress(currentPrintData);
+    const { timeLeftHumanized, progress, progressCircleColor } = usePrintProgress(currentPrintData);
 
-    const progressColor = useColorModeValue('green.500', 'green.200');
     //const cardColor = useColorModeValue('white.100', 'gray.700');
 
     return (
@@ -103,7 +101,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                     <HStack spacing={1.5}>
                                         <CircularProgress
                                             value={progress}
-                                            color={progressColor}
+                                            color={progressCircleColor}
                                             size={8}
                                             thickness={8}
                                             trackColor="progressTrack"

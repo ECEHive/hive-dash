@@ -138,7 +138,7 @@ function PrintListItem({ data, isActive, onClick }) {
     );
 }
 
-export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
+export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
     const { printers, printerTypes, queue } = usePrinting();
 
     const [searchTerm, setSearchTerm] = useState('ch');
@@ -203,7 +203,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintData }) {
                                     key={print._id}
                                     data={print}
                                     onClick={() => {
-                                        setSelectedPrintData(print);
+                                        setSelectedPrintId(print._id);
                                     }}
                                     isActive={selectedPrintData?._id === print._id}
                                 />

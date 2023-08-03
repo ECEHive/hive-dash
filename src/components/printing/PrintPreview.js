@@ -24,6 +24,7 @@ export default function PrintPreview({ print }) {
         progressBarColor,
         progressMessage,
         progress,
+        progressCircleColor,
         progressMessageColor,
         timeLeftHumanized,
         timeLeftHumanizedDetailed
@@ -93,7 +94,7 @@ export default function PrintPreview({ print }) {
                             size={16}
                             thickness={6}
                             value={progress}
-                            color={useColorModeValue(`${progressBarColor}.500`, `${progressBarColor}.200`)}
+                            color={progressCircleColor}
                             trackColor="progressTrackAlt"
                         />
                         <VStack

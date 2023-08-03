@@ -3,7 +3,7 @@ const PrintStates = {
     PRINTING: 1,
     FAILED: 2,
     COMPLETED: 3,
-    CANCELLED: 4
+    CANCELED: 4
 };
 
 const StateColors = {
@@ -11,7 +11,7 @@ const StateColors = {
     [PrintStates.PRINTING]: 'green',
     [PrintStates.FAILED]: 'red',
     [PrintStates.COMPLETED]: 'green',
-    [PrintStates.CANCELLED]: 'red',
+    [PrintStates.CANCELED]: 'red',
     printing: 'green',
     idle: 'yellow',
     down: 'red'

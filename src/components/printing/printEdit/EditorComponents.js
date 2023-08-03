@@ -44,7 +44,6 @@ import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
 
-import ConfirmDialog from '@/components/ConfirmDialog';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 
 const FancySelect = chakra(Select);
@@ -502,29 +501,38 @@ function DangerousActions({ printData, update, onClose }) {
 
     const [deleting, setDeleting] = useState(false);
     const { remove } = usePrintUpdate();
+    const confirm = useConfirmation();
 
-    function deletePrint() {
+    const deletePrint = useCallback(() => {
         setDeleting(true);
         remove(printData._id)
             .then(() => {
                 setDeleting(false);
-                onClose();
             })
             .catch(() => {
                 setDeleting(false);
             });
-    }
+    }, [printData._id, remove]);
+
+    const initDelete = useCallback(
+        (event) => {
+            confirm({
+                onClose: () => {},
+                onConfirm: () => {
+                    deletePrint();
+                    onClose();
+                },
+                header: 'Delete print',
+                message: 'Are you sure you want to delete this print? This action cannot be undone.',
+                confirmButtonText: 'Delete',
+                confirmButtonColor: 'red'
+            });
+        },
+        [deletePrint, confirm, onClose]
+    );
 
     return (
         <>
-            <ConfirmDialog
-                isOpen={isDeleteOpen}
-                onClose={onDeleteClose}
-                onDelete={deletePrint}
-                header="Delete print"
-                message="Are you sure you want to delete this print? This action cannot be undone."
-            />
-
             <VStack
                 align="start"
                 spacing={3}
@@ -537,7 +545,7 @@ function DangerousActions({ printData, update, onClose }) {
                         <Button
                             colorScheme="red"
                             leftIcon={<Icon as={iconSet.delete} />}
-                            onClick={onDeleteOpen}
+                            onClick={initDelete}
                             isLoading={deleting}
                         >
                             Delete print

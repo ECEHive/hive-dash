@@ -237,7 +237,8 @@ export default function Printers(props) {
                                                             <ButtonGroup size="sm">
                                                                 <Button
                                                                     onClick={() => {
-                                                                        onNewTypeOpen(type, true);
+                                                                        setEditingTypeData(type);
+                                                                        onNewTypeOpen();
                                                                     }}
                                                                 >
                                                                     Edit

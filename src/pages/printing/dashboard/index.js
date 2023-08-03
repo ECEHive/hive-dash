@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import {
     ButtonGroup,
@@ -39,10 +39,6 @@ export default function Dashboard(props) {
     const { printers, queue } = usePrinting();
     const [layout, setLayout] = useLocalStorage('dashboardLayout', 'grid');
 
-    useEffect(() => {
-        console.log(printers);
-    }, [printers]);
-
     const metrics = useMemo(() => {
         return [
             {
@@ -57,7 +53,11 @@ export default function Dashboard(props) {
                     let longestPrinter = null;
 
                     printers.forEach((printer) => {
-                        let length = queue.filter((print) => print.printer === printer.id).length;
+                        let length = queue.filter(
+                            (print) =>
+                                print.printer === printer.id &&
+                                (print.state === PrintStates.FAILED || print.state === PrintStates.QUEUED)
+                        ).length;
                         if (length > longest) {
                             longest = length;
                             longestPrinter = printer.displayName;
@@ -74,25 +74,26 @@ export default function Dashboard(props) {
                     let total = dayjs.duration(0, 'seconds');
 
                     printers.forEach((printer) => {
-                        let printerPrints = queue.filter((print) => print.printer === printer.id);
+                        let printerPrints = queue.filter(
+                            (print) =>
+                                print.printer === printer.id &&
+                                (print.state === PrintStates.FAILED || print.state === PrintStates.QUEUED)
+                        );
 
                         let printerTotal = dayjs.duration(0, 'seconds');
 
                         printerPrints.forEach((print) => {
-                            if (print.state === PrintStates.QUEUED || print.state === PrintStates.FAILED) {
-                                printerTotal = printerTotal.add(dayjs.duration(print.estTime));
-                            }
+                            printerTotal = printerTotal.add(dayjs.duration(print.estTime));
                         });
-                        //console.log(dayjs.duration(printerTotal, 'seconds').humanize());
-                        total = total.add(
-                            dayjs.duration(
-                                printerTotal.asSeconds() / queue.filter((print) => print.printer === printer.id).length,
-                                'seconds'
-                            )
-                        );
-                    });
 
-                    return total.humanize();
+                        if (printerTotal.asSeconds() > 0) {
+                            total = total.add(
+                                dayjs.duration(printerTotal.asSeconds() / printerPrints.length, 'seconds')
+                            );
+                        }
+                    });
+                    //console.log(total);
+                    return dayjs.duration(total.asSeconds() / printers.length, 'seconds').humanize();
                 },
                 icon: iconSet.clock
             }
@@ -195,7 +196,7 @@ export default function Dashboard(props) {
                         <TableContainer w="full">
                             <Table
                                 size="md"
-                                variant="striped"
+                                // variant="striped"
                             >
                                 <Thead>
                                     <Tr>
@@ -203,7 +204,6 @@ export default function Dashboard(props) {
                                         <Th>Status</Th>
                                         <Th># Queue</Th>
                                         <Th>Current print</Th>
-                                        <Th>Updated</Th>
                                         <Th>Actions</Th>
                                     </Tr>
                                 </Thead>

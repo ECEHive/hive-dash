@@ -12,21 +12,24 @@ export default function usePrintEvents(print) {
         queued: iconSet.pencil,
         completed: iconSet.check,
         failed: iconSet.stop,
-        printing: iconSet.play
+        printing: iconSet.play,
+        canceled: iconSet.minus
     };
 
     const eventColors = {
         queued: useColorModeValue('blue.600', 'blue.300'),
         completed: useColorModeValue('green.600', 'green.300'),
         failed: useColorModeValue('red.600', 'red.300'),
-        printing: useColorModeValue('green.600', 'green.300')
+        printing: useColorModeValue('green.600', 'green.300'),
+        canceled: useColorModeValue('red.600', 'red.300')
     };
 
     const eventNames = {
         queued: 'Print queued',
         completed: 'Print completed',
         failed: 'Print failed',
-        printing: 'Print started'
+        printing: 'Print started',
+        canceled: 'Print canceled'
     };
 
     const eventOrder = {
@@ -34,7 +37,7 @@ export default function usePrintEvents(print) {
         [PrintStates.PRINTING]: ['completed'],
         [PrintStates.FAILED]: ['printing', 'completed'],
         [PrintStates.COMPLETED]: [],
-        [PrintStates.CANCELLED]: []
+        [PrintStates.CANCELED]: []
     };
 
     const expectedIconColor = useColorModeValue('black', 'white');

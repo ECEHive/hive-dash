@@ -60,7 +60,7 @@ function QueueTableItem({ printData, startPrint, canQueue, update, editCallback 
                         fontSize="xs"
                         color="gray.500"
                     >
-                        {betterPrintData.queuedAtHumanized}
+                        queued {betterPrintData.queuedAtHumanized}
                     </Text>
                 </VStack>
             </Td>
@@ -129,7 +129,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
             (print) =>
                 print.printer === selectedPrinterData?.id &&
                 print.state !== PrintStates.COMPLETED &&
-                print.state !== PrintStates.CANCELLED
+                print.state !== PrintStates.CANCELED
         );
     }, [selectedPrinterData, queue]);
 
@@ -183,7 +183,6 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
             let data = {
                 ...activePrint,
                 state: event.type === 'completed' ? PrintStates.COMPLETED : PrintStates.FAILED,
-                completed: event.type === 'completed' || activePrint.completed,
                 events: [event, ...activePrint.events]
             };
             printUpdater(activePrint._id, data);

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { useColorModeValue } from '@chakra-ui/react';
+
 import dayjs from '@/lib/time';
 
 import { PrintStates } from '@/util/states';
@@ -23,6 +25,11 @@ export default function usePrintProgress(printData) {
     const failTime = useMemo(() => {
         if (!printData) return null;
         return dayjs.utc(printData.events.find((e) => e.type === 'failed')?.timestamp);
+    }, [printData]);
+
+    const cancelTime = useMemo(() => {
+        if (!printData) return null;
+        return dayjs.utc(printData.events.find((e) => e.type === 'canceled')?.timestamp);
     }, [printData]);
 
     const endTime = useMemo(() => {
@@ -76,8 +83,15 @@ export default function usePrintProgress(printData) {
             setTrueProgress(100);
             setTimeLeft('00:00');
             setTimeLeftHumanized(elapsed.humanize(true));
+        } else if (printData.state === PrintStates.CANCELED) {
+            const elapsed = dayjs.duration(cancelTime.diff(dayjs.utc()));
+
+            setComplete(false);
+            setTrueProgress(100);
+            setTimeLeft('00:00');
+            setTimeLeftHumanized(elapsed.humanize(true));
         }
-    }, [startTime, endTime, failTime, printData, completedTime]);
+    }, [startTime, endTime, failTime, printData, completedTime, cancelTime]);
 
     useEffect(() => {
         if (!printData) return;
@@ -107,17 +121,23 @@ export default function usePrintProgress(printData) {
             return `expected ${timeLeftHumanized}`;
         } else if (printData.state === PrintStates.QUEUED) {
             return `queued ${timeLeftHumanized}`;
+        } else if (printData.state === PrintStates.CANCELED) {
+            return `canceled ${timeLeftHumanized}`;
         }
     }, [timeLeftHumanized, complete, printData]);
 
     const progress = useMemo(() => {
         if (!printData) return 0;
-        return printData.state === PrintStates.FAILED || printData.state === PrintStates.COMPLETED ? 100 : trueProgress;
+        return printData.state === PrintStates.FAILED ||
+            printData.state === PrintStates.COMPLETED ||
+            printData.state === PrintStates.CANCELED
+            ? 100
+            : trueProgress;
     }, [printData, trueProgress]);
 
     const progressBarColor = useMemo(() => {
         if (!printData) return 'gray';
-        if (printData.state === PrintStates.FAILED) {
+        if (printData.state === PrintStates.FAILED || printData.state === PrintStates.CANCELED) {
             return 'red';
         } else if (printData.state === PrintStates.COMPLETED) {
             return 'green';
@@ -132,7 +152,7 @@ export default function usePrintProgress(printData) {
 
     const progressMessageColor = useMemo(() => {
         if (!printData) return 'gray';
-        if (printData.state === PrintStates.FAILED) {
+        if (printData.state === PrintStates.FAILED || printData.state === PrintStates.CANCELED) {
             return 'red';
         } else if (printData.state === PrintStates.COMPLETED) {
             return 'green';
@@ -149,6 +169,8 @@ export default function usePrintProgress(printData) {
         if (!printData) return 'unknown';
         if (printData.state === PrintStates.FAILED) {
             return 'failed';
+        } else if (printData.state === PrintStates.CANCELED) {
+            return 'canceled';
         } else if (complete && printData.state !== PrintStates.COMPLETED) {
             return 'waiting';
         } else if (printData.state === PrintStates.COMPLETED) {
@@ -160,6 +182,8 @@ export default function usePrintProgress(printData) {
         }
     }, [complete, printData, timeLeft]);
 
+    const progressCircleColor = useColorModeValue(`${progressBarColor}.500`, `${progressBarColor}.200`);
+
     return {
         progress,
         timeLeft,
@@ -167,6 +191,7 @@ export default function usePrintProgress(printData) {
         timeLeftHumanizedDetailed,
         complete,
         progressBarColor,
+        progressCircleColor,
         progressMessage,
         progressMessageColor
     };

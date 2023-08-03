@@ -86,6 +86,11 @@ def main():
         time = datetime.replace(microsecond=0).isoformat()
         new_struct["queuedAt"] = time
 
+        new_struct["events"].append({
+            "type": "queued",
+            "timestamp": time
+        })
+
         output.append(new_struct)
 
     print(json.dumps(output))
