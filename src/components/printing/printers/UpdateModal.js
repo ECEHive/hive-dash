@@ -16,11 +16,19 @@ import {
     VStack
 } from '@chakra-ui/react';
 
+import { PrintStates } from '@/util/states';
+
+const types = {
+    [PrintStates.FAILED]: 'failed',
+    [PrintStates.COMPLETED]: 'completed',
+    [PrintStates.CANCELED]: 'canceled',
+    [PrintStates.PRINTING]: 'printing'
+};
+
 export default function UpdateModal({ isOpen, onClose, eventData, save }) {
     const [event, setEvent] = useState(eventData);
 
     useEffect(() => {
-        console.log('updating (allgedly)');
         setEvent(eventData);
     }, [eventData]);
 
@@ -33,7 +41,7 @@ export default function UpdateModal({ isOpen, onClose, eventData, save }) {
                 >
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>Print {event.type}</ModalHeader>
+                        <ModalHeader>Print {types[event.type]}</ModalHeader>
 
                         <ModalBody>
                             <VStack>

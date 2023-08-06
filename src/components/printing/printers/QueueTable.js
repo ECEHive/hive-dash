@@ -56,12 +56,22 @@ function QueueTableItem({ printData, startPrint, canQueue, update, editCallback 
                             {progressMessage}
                         </Badge>
                     </HStack>
-                    <Text
+                    <HStack
+                        color="secondaryText"
                         fontSize="xs"
-                        color="gray.500"
+                        spacing={1.5}
                     >
-                        queued {betterPrintData.queuedAtHumanized}
-                    </Text>
+                        <Icon
+                            as={iconSet.clock}
+                            fontSize="2xs"
+                        />
+                        <Text
+                            fontSize="xs"
+                            color="gray.500"
+                        >
+                            {betterPrintData.queuedAtHumanized}
+                        </Text>
+                    </HStack>
                 </VStack>
             </Td>
             <Td>
@@ -218,7 +228,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                     >
                         <Thead>
                             <Tr>
-                                <Th>Print info</Th>
+                                <Th>Print (oldest first)</Th>
                                 <Th>Est. time</Th>
                                 <Th>Actions</Th>
                             </Tr>
