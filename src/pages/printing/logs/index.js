@@ -64,7 +64,7 @@ function LogItem({ printData }) {
 export default function PrintLogs(props) {
     const { queue } = usePrinting();
 
-    const sortedQueue = queue.sort((a, b) => {
+    const sortedQueue = [...queue].sort((a, b) => {
         return new Date(b.queuedAt) - new Date(a.queuedAt);
     });
 

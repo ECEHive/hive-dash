@@ -67,7 +67,7 @@ def main():
         # set the PI name
         # set the email
         new_struct["endUser"]["email"] = first.lower()[0] + "" + \
-            last.lower() + str(random.randrange(0, 15))
+            last.lower() + str(random.randrange(0, 10))
         # set the tray name
         new_struct["trayName"] = first + "_" + \
             last + "_" + r.get_random_word()
@@ -79,8 +79,8 @@ def main():
         new_struct["printer"] = printer_name
         new_struct["materialType"] = materials[printer_type][random.randrange(
             len(materials[printer_type]))]
-        new_struct["materialUsage"] = random.randrange(0, 100)
-        new_struct["estTime"] = f"PT{random.randrange(0, 10)}H{random.randrange(0, 60)}M"
+        new_struct["materialUsage"] = random.randrange(5, 100)
+        new_struct["estTime"] = f"PT{random.randrange(1, 10)}H{random.randrange(0, 60)}M"
 
         datetime = fake.date_time_between(start_date='-30d', end_date='now')
         time = datetime.replace(microsecond=0).isoformat()

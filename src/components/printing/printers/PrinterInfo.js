@@ -54,15 +54,15 @@ export default function PrinterInfo({ selectedPrinterData }) {
 
             <HStack
                 flexGrow={1}
-                h="full"
+                h="auto"
+                w="full"
                 justify="center"
-                overflow="hidden"
             >
                 <Box
                     h="full"
                     w="full"
                     maxW="4xl"
-                    overflow="auto"
+                    overflow="hidden"
                     px={1}
                 >
                     {/* <Card

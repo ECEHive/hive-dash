@@ -47,6 +47,7 @@ export default function Printers(props) {
                     spacing={4}
                     alignItems="flex-start"
                     justifyContent="flex-start"
+                    overflow="hidden"
                 >
                     <PrinterList
                         selectedPrinter={selectedPrinterData}
@@ -54,7 +55,14 @@ export default function Printers(props) {
                     />
 
                     {/* {selectedPrinterData && ( */}
-                    <PrinterInfo selectedPrinterData={selectedPrinterData} />
+                    <Box
+                        w="full"
+                        h="full"
+                        flexGrow={1}
+                        overflow="auto"
+                    >
+                        <PrinterInfo selectedPrinterData={selectedPrinterData} />
+                    </Box>
                     {/* )} */}
                 </HStack>
             </Box>

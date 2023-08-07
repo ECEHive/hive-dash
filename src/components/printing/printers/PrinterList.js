@@ -75,10 +75,11 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                 </Badge>
                             </HStack>
 
-                            <HStack
+                            <VStack
                                 w="100%"
-                                justifyContent="flex-start"
-                                spacing={5}
+                                justify="start"
+                                align="start"
+                                spacing={2}
                                 color="secondaryText"
                                 fontSize="sm"
                             >
@@ -92,7 +93,14 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                     <Icon as={iconSet.queue} />
                                     <Text fontWeight="normal">{expandedPrinterData?.queueLength} in queue</Text>
                                 </HStack>
-                            </HStack>
+                                {/* <HStack
+                                    spacing={2}
+                                    align="center"
+                                >
+                                    <Icon as={iconSet.refresh} />
+                                    <Text fontWeight="normal">{expandedPrinterData.updatedAtHumanized}</Text>
+                                </HStack> */}
+                            </VStack>
 
                             {expandedPrinterData.state === 'printing' && (
                                 <>

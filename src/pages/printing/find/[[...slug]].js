@@ -132,20 +132,20 @@ export default function FindPrint(props) {
                         flexGrow={1}
                         h="full"
                         justify="center"
-                        overflow="hidden"
+                        overflow="auto"
+                        align="start"
                     >
                         <Box
-                            h="full"
+                            h="auto"
                             w="full"
                             maxW="4xl"
-                            overflowY="auto"
                             px={1}
                         >
                             {selectedPrintData ? (
                                 <>
                                     <VStack
                                         w="100%"
-                                        h="auto"
+                                        h="full"
                                         justify="start"
                                         align="start"
                                         spacing={3}
