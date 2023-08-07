@@ -38,13 +38,14 @@ export default function TopBarNavigation(props) {
                 alignItems="center"
                 justifyContent="center"
                 spacing={2}
+                py={3}
                 // borderRight="1px solid"
                 borderColor="chakra-border-color"
             >
                 <NextImage
                     alt="HIVE logo"
                     src={colorMode === 'dark' ? logoDark : logoLight}
-                    height={45}
+                    height={44}
                     placeholder="blur"
                     priority
                 />
@@ -61,7 +62,7 @@ export default function TopBarNavigation(props) {
                 p={3}
             >
                 <Button
-                    variant="ghost"
+                    variant="outline"
                     as={NextLink}
                     href="/printing"
                     size="md"

@@ -19,11 +19,9 @@ export default function Printers(props) {
     const [selectedPrinterData, setSelectedPrinterData] = useState(null);
 
     useEffect(() => {
-        if (!selectedPrinterData) {
-            if (router.query.slug) {
-                let data = printers.find((printer) => printer.id === router.query.slug[0]);
-                setSelectedPrinterData(data);
-            }
+        if (router.query.slug) {
+            let data = printers.find((printer) => printer.id === router.query.slug[0]);
+            setSelectedPrinterData(data);
         }
     }, [router.query, selectedPrinterData, printers]);
 

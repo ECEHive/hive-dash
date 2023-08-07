@@ -22,6 +22,7 @@ function HiveDash({ Component, pageProps }) {
                     options={{
                         showSpinner: false
                     }}
+                    showOnShallow={false}
                 />
                 <AuthProvider>
                     <ConfirmDialogProvider>{getLayout(<Component {...pageProps} />)}</ConfirmDialogProvider>

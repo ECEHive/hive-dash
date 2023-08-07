@@ -25,6 +25,8 @@ import {
 
 import { SearchIcon } from '@chakra-ui/icons';
 
+import { useRouter } from 'next/router';
+
 import dayjs from '@/lib/time';
 
 import usePrinting from '@/contexts/printing/PrintingContext';
@@ -140,6 +142,7 @@ function PrintListItem({ data, isActive, onClick }) {
 
 export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
     const { printers, printerTypes, queue } = usePrinting();
+    const { push } = useRouter();
 
     const [searchTerm, setSearchTerm] = useState('ch');
 
@@ -203,7 +206,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                                     key={print._id}
                                     data={print}
                                     onClick={() => {
-                                        setSelectedPrintId(print._id);
+                                        push(`/printing/find/${print._id}`, undefined, { shallow: true });
                                     }}
                                     isActive={selectedPrintData?._id === print._id}
                                 />

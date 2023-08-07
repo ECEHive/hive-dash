@@ -138,7 +138,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
     );
 }
 
-export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
+export default function PrinterList({ selectedPrinter }) {
     const { push } = useRouter();
     const { printers, printerTypes, queue } = usePrinting();
 
@@ -216,8 +216,9 @@ export default function PrinterList({ selectedPrinter, setSelectedPrinter }) {
                                                 data={printer}
                                                 queue={queue}
                                                 onClick={() => {
-                                                    setSelectedPrinter(printer);
-                                                    //push('/printing/printers/' + printer.id);
+                                                    push('/printing/printers/' + printer.id, undefined, {
+                                                        shallow: true
+                                                    });
                                                 }}
                                                 isActive={printer.id === selectedPrinter?.id}
                                             />

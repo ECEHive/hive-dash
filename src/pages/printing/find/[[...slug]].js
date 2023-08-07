@@ -62,10 +62,8 @@ export default function FindPrint(props) {
     const { isOpen: isCancelOpen, onOpen: onCancelOpen, onClose: onCancelClose } = useDisclosure();
 
     useEffect(() => {
-        if (!selectedPrintData) {
-            if (router.query.slug) {
-                setSelectedPrintId(router.query.slug[0]);
-            }
+        if (router.query.slug) {
+            setSelectedPrintId(router.query.slug[0]);
         }
     }, [router.query, selectedPrintData, queue]);
 

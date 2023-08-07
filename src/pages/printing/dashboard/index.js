@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import {
+    Box,
     ButtonGroup,
     HStack,
     Heading,
@@ -102,126 +103,134 @@ export default function Dashboard(props) {
 
     return (
         <>
-            <VStack
-                h="100%"
-                w="100%"
-                overflow="auto"
+            <Box
+                overflow="hidden"
+                w="full"
+                h="full"
                 p={5}
-                spacing={8}
-                align="center"
             >
                 <VStack
-                    w="full"
-                    maxW="8xl"
+                    spacing={8}
+                    h="100%"
+                    w="100%"
+                    overflow="auto"
+                    align="center"
                 >
-                    <Heading
-                        size="lg"
-                        mb={3}
-                        alignSelf="start"
-                    >
-                        Statistics
-                    </Heading>
-                    {/* statistics */}
-                    <SimpleGrid
-                        spacing={4}
-                        columns={3}
-                        w="100%"
-                        h="auto"
-                    >
-                        {metrics.map((metric) => {
-                            return (
-                                <Statistic
-                                    key={metric.name}
-                                    name={metric.name}
-                                    icon={metric.icon}
-                                    value={typeof metric.value === 'function' ? metric.value() : metric.value}
-                                />
-                            );
-                        })}
-                    </SimpleGrid>
-                </VStack>
-
-                {/* printers */}
-                <VStack
-                    w="full"
-                    maxW="8xl"
-                >
-                    <HStack
+                    <VStack
                         w="full"
-                        mb={3}
+                        h="auto"
+                        maxW="8xl"
                     >
-                        <Heading size="lg">Printers</Heading>
-                        <Spacer />
-                        <ButtonGroup
-                            size="sm"
-                            alignSelf="end"
-                            isAttached
+                        <Heading
+                            size="lg"
+                            mb={3}
+                            alignSelf="start"
                         >
-                            <IconButton
-                                isActive={layout === 'list'}
-                                onClick={() => {
-                                    setLayout('list');
-                                }}
-                            >
-                                <Icon as={iconSet.list} />
-                            </IconButton>
-                            <IconButton
-                                isActive={layout === 'grid'}
-                                onClick={() => {
-                                    setLayout('grid');
-                                }}
-                            >
-                                <Icon as={iconSet.grid} />
-                            </IconButton>
-                        </ButtonGroup>
-                    </HStack>
-
-                    {layout === 'grid' ? (
+                            Statistics
+                        </Heading>
+                        {/* statistics */}
                         <SimpleGrid
                             spacing={4}
                             columns={3}
                             w="100%"
                             h="auto"
                         >
-                            {printers.map((printer) => {
+                            {metrics.map((metric) => {
                                 return (
-                                    <PrinterCard
-                                        key={printer.id}
-                                        data={printer}
+                                    <Statistic
+                                        key={metric.name}
+                                        name={metric.name}
+                                        icon={metric.icon}
+                                        value={typeof metric.value === 'function' ? metric.value() : metric.value}
                                     />
                                 );
                             })}
                         </SimpleGrid>
-                    ) : (
-                        <TableContainer w="full">
-                            <Table
-                                size="md"
-                                // variant="striped"
+                    </VStack>
+
+                    {/* printers */}
+                    <VStack
+                        w="full"
+                        h="auto"
+                        maxW="8xl"
+                    >
+                        <HStack
+                            w="full"
+                            mb={3}
+                        >
+                            <Heading size="lg">Printers</Heading>
+                            <Spacer />
+                            <ButtonGroup
+                                size="sm"
+                                alignSelf="end"
+                                isAttached
                             >
-                                <Thead>
-                                    <Tr>
-                                        <Th>Printer</Th>
-                                        <Th>Status</Th>
-                                        <Th># Queue</Th>
-                                        <Th>Current print</Th>
-                                        <Th>Actions</Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {printers.map((printer) => {
-                                        return (
-                                            <PrinterListItem
-                                                key={printer.id}
-                                                data={printer}
-                                            />
-                                        );
-                                    })}
-                                </Tbody>
-                            </Table>
-                        </TableContainer>
-                    )}
+                                <IconButton
+                                    isActive={layout === 'list'}
+                                    onClick={() => {
+                                        setLayout('list');
+                                    }}
+                                >
+                                    <Icon as={iconSet.list} />
+                                </IconButton>
+                                <IconButton
+                                    isActive={layout === 'grid'}
+                                    onClick={() => {
+                                        setLayout('grid');
+                                    }}
+                                >
+                                    <Icon as={iconSet.grid} />
+                                </IconButton>
+                            </ButtonGroup>
+                        </HStack>
+
+                        {layout === 'grid' ? (
+                            <SimpleGrid
+                                spacing={4}
+                                columns={3}
+                                w="100%"
+                                h="auto"
+                            >
+                                {printers.map((printer) => {
+                                    return (
+                                        <PrinterCard
+                                            key={printer.id}
+                                            data={printer}
+                                        />
+                                    );
+                                })}
+                            </SimpleGrid>
+                        ) : (
+                            <TableContainer w="full">
+                                <Table
+                                    size="md"
+                                    // variant="striped"
+                                >
+                                    <Thead>
+                                        <Tr>
+                                            <Th>Printer</Th>
+                                            <Th>Status</Th>
+                                            <Th># Queue</Th>
+                                            <Th>Current print</Th>
+                                            <Th>Actions</Th>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        {printers.map((printer) => {
+                                            return (
+                                                <PrinterListItem
+                                                    key={printer.id}
+                                                    data={printer}
+                                                />
+                                            );
+                                        })}
+                                    </Tbody>
+                                </Table>
+                            </TableContainer>
+                        )}
+                    </VStack>
                 </VStack>
-            </VStack>
+            </Box>
         </>
     );
 }

@@ -7,6 +7,7 @@ import {
     ButtonGroup,
     HStack,
     Icon,
+    Link,
     Table,
     TableContainer,
     Tbody,
@@ -18,6 +19,8 @@ import {
     VStack,
     useDisclosure
 } from '@chakra-ui/react';
+
+import NextLink from 'next/link';
 
 import dayjs from '@/lib/time';
 
@@ -48,7 +51,13 @@ function QueueTableItem({ printData, startPrint, canQueue, update, editCallback 
                     spacing={1}
                 >
                     <HStack>
-                        <Text fontSize="md">{betterPrintData.trayName}</Text>
+                        <Link
+                            fontSize="md"
+                            as={NextLink}
+                            href={`/printing/find/${betterPrintData._id}`}
+                        >
+                            {betterPrintData.trayName}
+                        </Link>
                         <Badge
                             variant="subtle"
                             colorScheme={progressMessageColor}
@@ -221,37 +230,53 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                 w="100%"
                 h="auto"
             >
-                <TableContainer maxW="100%">
-                    <Table
-                        variant="simple"
-                        size="sm"
-                    >
-                        <Thead>
-                            <Tr>
-                                <Th>Print (oldest first)</Th>
-                                <Th>Est. time</Th>
-                                <Th>Actions</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {printerQueue.map((print) => {
-                                return (
-                                    <QueueTableItem
-                                        key={print._id}
-                                        printData={print}
-                                        startPrint={startPrint}
-                                        canQueue={canQueue}
-                                        update={completePrint}
-                                        editCallback={() => {
-                                            setPrintToEdit(print);
-                                            onEditorOpen();
-                                        }}
-                                    />
-                                );
-                            })}
-                        </Tbody>
-                    </Table>
-                </TableContainer>
+                {printerQueue.length > 0 ? (
+                    <TableContainer maxW="100%">
+                        <Table
+                            variant="simple"
+                            size="sm"
+                        >
+                            <Thead>
+                                <Tr>
+                                    <Th>Print (oldest first)</Th>
+                                    <Th>Est. time</Th>
+                                    <Th>Actions</Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {printerQueue.map((print) => {
+                                    return (
+                                        <QueueTableItem
+                                            key={print._id}
+                                            printData={print}
+                                            startPrint={startPrint}
+                                            canQueue={canQueue}
+                                            update={completePrint}
+                                            editCallback={() => {
+                                                setPrintToEdit(print);
+                                                onEditorOpen();
+                                            }}
+                                        />
+                                    );
+                                })}
+                            </Tbody>
+                        </Table>
+                    </TableContainer>
+                ) : (
+                    <>
+                        <HStack
+                            w="full"
+                            justify="center"
+                        >
+                            <Text
+                                fontSize="lg"
+                                color="secondaryText"
+                            >
+                                No queue!
+                            </Text>
+                        </HStack>
+                    </>
+                )}
             </Box>
         </>
     );
