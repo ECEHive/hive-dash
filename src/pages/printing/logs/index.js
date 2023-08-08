@@ -46,7 +46,7 @@ function LogItem({ printData }) {
                     </Text>
                 </VStack>
             </Td>
-            <Td>{printerData.displayName}</Td>
+            <Td>{printerData?.displayName || betterPrintData.printer}</Td>
             <Td>
                 <Badge
                     variant="subtle"
