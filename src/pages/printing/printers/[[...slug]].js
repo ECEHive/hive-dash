@@ -47,7 +47,6 @@ export default function Printers(props) {
                     spacing={4}
                     alignItems="flex-start"
                     justifyContent="flex-start"
-                    overflow="hidden"
                 >
                     <PrinterList
                         selectedPrinter={selectedPrinterData}

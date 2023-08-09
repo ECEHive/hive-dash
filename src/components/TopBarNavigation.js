@@ -62,7 +62,7 @@ export default function TopBarNavigation(props) {
                 p={3}
             >
                 <Button
-                    variant="outline"
+                    variant="ghost"
                     as={NextLink}
                     href="/printing"
                     size="md"

@@ -1,19 +1,28 @@
+import { useEffect, useState } from 'react';
+
 import {
     Alert,
+    AlertDescription,
     AlertIcon,
-    AlertTitle,
     Box,
-    Button,
     ButtonGroup,
     HStack,
     Heading,
     Icon,
     IconButton,
     Spacer,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
     Text,
     VStack,
     useDisclosure
 } from '@chakra-ui/react';
+
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import ReactMarkdown from 'react-markdown';
 
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
@@ -23,17 +32,21 @@ import iconSet from '@/util/icons';
 
 import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
-import StatusModal from '@/components/printing/maintenance/StatusModal';
 import QueueTable from '@/components/printing/printers/QueueTable';
 
 export default function PrinterInfo({ selectedPrinterData }) {
     const { update: printUpdater } = usePrintUpdate();
     const printerUpdater = usePrinterUpdate();
 
+    const [tabIndex, setTabIndex] = useState(0);
+
     const { isOpen: isMaintenanceOpen, onOpen: onMaintenanceOpen, onClose: onMaintenanceClose } = useDisclosure();
-    const { isOpen: isStatusOpen, onOpen: onStatusOpen, onClose: onStatusClose } = useDisclosure();
 
     const { currentPrintData: activePrint } = usePrinterParser(selectedPrinterData);
+
+    useEffect(() => {
+        setTabIndex(0);
+    }, [selectedPrinterData]);
 
     return (
         <>
@@ -42,11 +55,6 @@ export default function PrinterInfo({ selectedPrinterData }) {
                     <MaintenanceModal
                         isOpen={isMaintenanceOpen}
                         onClose={onMaintenanceClose}
-                        printerData={selectedPrinterData}
-                    />
-                    <StatusModal
-                        isOpen={isStatusOpen}
-                        onClose={onStatusClose}
                         printerData={selectedPrinterData}
                     />
                 </>
@@ -89,11 +97,6 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                 <Spacer />
                                 <ButtonGroup>
                                     <IconButton
-                                        icon={<Icon as={iconSet.note} />}
-                                        colorScheme="blue"
-                                        onClick={onStatusOpen}
-                                    />
-                                    <IconButton
                                         icon={<Icon as={iconSet.wrench} />}
                                         colorScheme="orange"
                                         onClick={onMaintenanceOpen}
@@ -118,14 +121,16 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                         >
                                             <AlertIcon />
                                             <HStack w="100%">
-                                                <AlertTitle>This printer is down.</AlertTitle>
-                                                <Spacer />
+                                                <AlertDescription>
+                                                    This printer is down. Check the notes tab for more details
+                                                </AlertDescription>
+                                                {/* <Spacer />
                                                 <Button
                                                     size="sm"
                                                     onClick={onStatusOpen}
                                                 >
                                                     Read more
-                                                </Button>
+                                                </Button> */}
                                             </HStack>
                                         </Alert>
                                     </Box>
@@ -134,11 +139,43 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                 {/* current print */}
                                 {activePrint && <PrintPreview print={activePrint} />}
 
-                                {/* queue */}
-                                <QueueTable
-                                    activePrint={activePrint}
-                                    selectedPrinterData={selectedPrinterData}
-                                />
+                                <Tabs
+                                    w="full"
+                                    flexGrow={1}
+                                    index={tabIndex}
+                                    onChange={(index) => {
+                                        setTabIndex(index);
+                                    }}
+                                >
+                                    <TabList>
+                                        <Tab>Queue</Tab>
+                                        <Tab>Printer notes</Tab>
+                                    </TabList>
+
+                                    <TabPanels w="full">
+                                        {/* notes */}
+                                        <TabPanel px={0}>
+                                            <QueueTable
+                                                activePrint={activePrint}
+                                                selectedPrinterData={selectedPrinterData}
+                                            />
+                                        </TabPanel>
+                                        <TabPanel px={0}>
+                                            {selectedPrinterData.maintenance.notes?.length > 0 ? (
+                                                <ReactMarkdown
+                                                    components={ChakraUIRenderer()}
+                                                    skipHtml
+                                                >
+                                                    {selectedPrinterData.maintenance.notes}
+                                                </ReactMarkdown>
+                                            ) : (
+                                                <Text color={'secondaryText'}>
+                                                    No notes are attached to this print.
+                                                </Text>
+                                            )}
+                                        </TabPanel>
+                                    </TabPanels>
+                                </Tabs>
                             </VStack>
                         </>
                     ) : (

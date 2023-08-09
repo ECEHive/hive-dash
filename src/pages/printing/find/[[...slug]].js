@@ -46,6 +46,7 @@ export default function FindPrint(props) {
     const router = useRouter();
 
     const [selectedPrintId, setSelectedPrintId] = useState(null);
+    const [tabIndex, setTabIndex] = useState(0);
 
     const selectedPrintData = useMemo(() => {
         if (!selectedPrintId) return null;
@@ -63,6 +64,7 @@ export default function FindPrint(props) {
 
     useEffect(() => {
         if (router.query.slug) {
+            setTabIndex(0);
             setSelectedPrintId(router.query.slug[0]);
         }
     }, [router.query, selectedPrintData, queue]);
@@ -195,6 +197,10 @@ export default function FindPrint(props) {
                                             w="full"
                                             flexGrow={1}
                                             mt={5}
+                                            index={tabIndex}
+                                            onChange={(index) => {
+                                                setTabIndex(index);
+                                            }}
                                         >
                                             <TabList>
                                                 <Tab>Notes</Tab>
@@ -203,7 +209,7 @@ export default function FindPrint(props) {
 
                                             <TabPanels>
                                                 {/* notes */}
-                                                <TabPanel>
+                                                <TabPanel px={0}>
                                                     {selectedPrintData.notes?.length > 0 ? (
                                                         <ReactMarkdown
                                                             components={ChakraUIRenderer()}
@@ -217,7 +223,7 @@ export default function FindPrint(props) {
                                                         </Text>
                                                     )}
                                                 </TabPanel>
-                                                <TabPanel>
+                                                <TabPanel px={0}>
                                                     <ButtonGroup>
                                                         <Button
                                                             onClick={cancelPrint}

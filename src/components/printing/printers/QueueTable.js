@@ -266,13 +266,13 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                     <>
                         <HStack
                             w="full"
-                            justify="center"
+                            justify="start"
                         >
                             <Text
-                                fontSize="lg"
+                                fontSize="md"
                                 color="secondaryText"
                             >
-                                No queue!
+                                This printer&apos;s queue is empty.
                             </Text>
                         </HStack>
                     </>

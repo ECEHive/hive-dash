@@ -41,7 +41,8 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
                                 const active = pathPage === element.href.replace('/', '');
                                 return (
                                     <Button
-                                        variant={active ? 'outline' : 'ghost'}
+                                        // variant={active ? 'outline' : 'ghost'}
+                                        variant="ghost"
                                         w="100%"
                                         size="md"
                                         justifyContent="flex-start"

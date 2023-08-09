@@ -115,6 +115,7 @@ export default function Dashboard(props) {
                     w="100%"
                     overflow="auto"
                     align="center"
+                    px={1}
                 >
                     <VStack
                         w="full"
