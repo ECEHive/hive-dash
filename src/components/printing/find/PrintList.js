@@ -174,7 +174,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
             let match = true;
             searchTerms.forEach((term) => {
                 const type = term.split(':')[0];
-                const value = term.split(':')[1];
+                const value = term.split(':')[1].toLowerCase();
 
                 if (type === 'email') {
                     if (!print.endUser.email.toLowerCase().includes(value)) {
@@ -203,7 +203,6 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
 
     const search = useCallback(
         (inputValue, callback) => {
-            console.log(inputValue);
             if (inputValue.length < 1) {
                 return callback([]);
             }
@@ -217,9 +216,9 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
 
             let newResults = [];
 
-            let emails = currentResults.map((print) => print.endUser.email.toLowerCase());
+            let emails = currentResults.map((print) => print.endUser.email);
             // search for email
-            let emailResults = emails.filter((email) => email.includes(inputValue));
+            let emailResults = emails.filter((email) => email.toLowerCase().includes(inputValue.toLowerCase()));
             emailResults = [...new Set(emailResults)]; //removes duplicates
             newResults.push({
                 label: 'Email',
@@ -229,9 +228,9 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                 }))
             });
 
-            let trays = currentResults.map((print) => print.trayName.toLowerCase());
+            let trays = currentResults.map((print) => print.trayName);
             // search for email
-            let traysResults = trays.filter((tray) => tray.includes(inputValue));
+            let traysResults = trays.filter((tray) => tray.toLowerCase().includes(inputValue.toLowerCase()));
             traysResults = [...new Set(traysResults)]; //removes duplicates
             newResults.push({
                 label: 'Tray',
@@ -307,7 +306,9 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                                       }))
                                     : null
                             }
-                            noOptionsMessage={() => 'Search for something!'}
+                            noOptionsMessage={(e) => {
+                                return e.inputValue.length === 0 ? 'Search for something!' : 'No results';
+                            }}
                         />
                     </InputGroup>
                 </FormControl>
