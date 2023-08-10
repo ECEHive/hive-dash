@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import {
     Badge,
@@ -6,28 +6,26 @@ import {
     Card,
     CardBody,
     CircularProgress,
-    Code,
     Divider,
+    FormControl,
     HStack,
     Heading,
     Icon,
-    Input,
     InputGroup,
-    InputLeftElement,
     ListItem,
     Spacer,
     Text,
     Tooltip,
     UnorderedList,
     VStack,
+    chakra,
     useColorModeValue
 } from '@chakra-ui/react';
 
 import { SearchIcon } from '@chakra-ui/icons';
 
+import { AsyncSelect } from 'chakra-react-select';
 import { useRouter } from 'next/router';
-
-import dayjs from '@/lib/time';
 
 import usePrinting from '@/contexts/printing/PrintingContext';
 
@@ -36,6 +34,8 @@ import usePrintProgress from '@/hooks/printing/usePrintProgress';
 
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
+
+const ChakraAsyncSelect = chakra(AsyncSelect);
 
 function PrintListItem({ data, isActive, onClick }) {
     const { betterPrintData, printerData } = usePrintParser(data);
@@ -144,26 +144,122 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
     const { printers, printerTypes, queue } = usePrinting();
     const { push } = useRouter();
 
-    const [searchTerm, setSearchTerm] = useState('ch');
+    const [searchTerms, setSearchTerms] = useState([]);
+    // const [matchedPrints, setMatchedPrints] = useState([]);
+
+    // const matchedPrints = useMemo(() => {
+    //     if (searchTerm.length > 0) {
+    //         return queue
+    //             .filter(
+    //                 (print) =>
+    //                     print.endUser.email.toLowerCase().includes(searchTerm) ||
+    //                     (print.endUser.firstname || '').toLowerCase().includes(searchTerm) ||
+    //                     (print.endUser.lastname || '').toLowerCase().includes(searchTerm) ||
+    //                     print.trayName.toLowerCase().includes(searchTerm) ||
+    //                     dayjs(print.queuedAt).local().format('MM/DD/YYYY').includes(searchTerm)
+    //             )
+    //             .sort((a, b) => {
+    //                 return dayjs.utc(b.queuedAt) - dayjs.utc(a.queuedAt);
+    //             });
+    //     } else {
+    //         return [];
+    //     }
+    // }, [queue, searchTerm]);
 
     const matchedPrints = useMemo(() => {
-        if (searchTerm.length > 0) {
-            return queue
-                .filter(
-                    (print) =>
-                        print.endUser.email.toLowerCase().includes(searchTerm) ||
-                        (print.endUser.firstname || '').toLowerCase().includes(searchTerm) ||
-                        (print.endUser.lastname || '').toLowerCase().includes(searchTerm) ||
-                        print.trayName.toLowerCase().includes(searchTerm) ||
-                        dayjs(print.queuedAt).local().format('MM/DD/YYYY').includes(searchTerm)
-                )
-                .sort((a, b) => {
-                    return dayjs.utc(b.queuedAt) - dayjs.utc(a.queuedAt);
-                });
-        } else {
+        if (searchTerms.length < 1) {
             return [];
         }
-    }, [queue, searchTerm]);
+        const matches = queue.filter((print) => {
+            let match = true;
+            searchTerms.forEach((term) => {
+                const type = term.split(':')[0];
+                const value = term.split(':')[1];
+
+                if (type === 'email') {
+                    if (!print.endUser.email.toLowerCase().includes(value)) {
+                        match = false;
+                    }
+                } else if (type === 'name') {
+                    if (
+                        !(
+                            (print.endUser.firstname || '').toLowerCase().includes(value) ||
+                            (print.endUser.lastname || '').toLowerCase().includes(value)
+                        )
+                    ) {
+                        match = false;
+                    }
+                } else if (type === 'tray') {
+                    if (!print.trayName.toLowerCase().includes(value)) {
+                        match = false;
+                    }
+                }
+            });
+            return match;
+        });
+
+        return matches;
+    }, [searchTerms, queue]);
+
+    const search = useCallback(
+        (inputValue, callback) => {
+            console.log(inputValue);
+            if (inputValue.length < 1) {
+                return callback([]);
+            }
+
+            let currentResults;
+            if (matchedPrints.length > 0) {
+                currentResults = [...matchedPrints];
+            } else {
+                currentResults = [...queue];
+            }
+
+            let newResults = [];
+
+            let emails = currentResults.map((print) => print.endUser.email.toLowerCase());
+            // search for email
+            let emailResults = emails.filter((email) => email.includes(inputValue));
+            emailResults = [...new Set(emailResults)]; //removes duplicates
+            newResults.push({
+                label: 'Email',
+                options: emailResults.map((email) => ({
+                    label: email,
+                    value: `email:${email}`
+                }))
+            });
+
+            let trays = currentResults.map((print) => print.trayName.toLowerCase());
+            // search for email
+            let traysResults = trays.filter((tray) => tray.includes(inputValue));
+            traysResults = [...new Set(traysResults)]; //removes duplicates
+            newResults.push({
+                label: 'Tray',
+                options: traysResults.map((tray) => ({
+                    label: tray,
+                    value: `tray:${tray}`
+                }))
+            });
+
+            // //search for name
+            // let nameResults = queue.filter(
+            //     (print) =>
+            //         (print.endUser.firstname || '').toLowerCase().includes(inputValue) ||
+            //         (print.endUser.lastname || '').toLowerCase().includes(inputValue)
+            // );
+            // nameResults = [...new Set(nameResults)]; //removes duplicates
+            // results.push({
+            //     label: 'Name',
+            //     options: nameResults.map((print) => ({
+            //         label: `${print.endUser.firstname} ${print.endUser.lastname}`,
+            //         value: `name:${print.endUser.firstname} ${print.endUser.lastname}`
+            //     }))
+            // });
+
+            return callback(newResults);
+        },
+        [queue, matchedPrints]
+    );
 
     return (
         <>
@@ -174,22 +270,47 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                 alignItems="flex-start"
                 justifyContent="flex-start"
             >
-                <InputGroup w="100%">
-                    <InputLeftElement>
-                        <SearchIcon />
-                    </InputLeftElement>
-                    <Input
-                        placeholder="Search for a print"
-                        type="text"
-                        //onBlur={search}
-                        // value={searchEmail}
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
-                        // onKeyDown={(e) => {
-                        //     if (e.key === 'Enter') search();
-                        // }}
-                    />
-                </InputGroup>
+                <FormControl>
+                    <InputGroup w="100%">
+                        <ChakraAsyncSelect
+                            w="100%"
+                            menuPortalTarget={document.body}
+                            styles={{
+                                menuPortal: (base) => ({
+                                    ...base,
+                                    zIndex: 9999
+                                })
+                            }}
+                            menuPlacement="auto"
+                            isMulti
+                            isClearable
+                            placeholder={
+                                <HStack spacing={2}>
+                                    <SearchIcon />
+                                    <Text>Search for a print</Text>
+                                </HStack>
+                            }
+                            selectedOptionStyle="check"
+                            loadOptions={search}
+                            onChange={(value) => {
+                                if (value) {
+                                    setSearchTerms(value.map((term) => term.value));
+                                } else {
+                                    setSearchTerms([]);
+                                }
+                            }}
+                            value={
+                                searchTerms.length > 0
+                                    ? searchTerms.map((term) => ({
+                                          label: `${term.split(':')[0]}: ${term.split(':')[1]}`,
+                                          value: term
+                                      }))
+                                    : null
+                            }
+                            noOptionsMessage={() => 'Search for something!'}
+                        />
+                    </InputGroup>
+                </FormControl>
 
                 <VStack
                     w="100%"
@@ -221,10 +342,6 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                             <UnorderedList>
                                 <ListItem>Your @gatech.edu email</ListItem>
                                 <ListItem>The print&apos;s name</ListItem>
-                                <ListItem>
-                                    The date you queued it (in&nbsp;
-                                    <Code>MM/DD/YYYY</Code>&nbsp;format)
-                                </ListItem>
                             </UnorderedList>
                         </VStack>
                     )}
