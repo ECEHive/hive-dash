@@ -149,6 +149,42 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
 
     const [searchTerms, setSearchTerms] = useState([]);
 
+    const searchTypes = useMemo(
+        () => [
+            {
+                label: 'Email',
+                id: 'email',
+                format: (print) => {
+                    return print.endUser.email;
+                },
+                match: (print, value) => {
+                    return print.endUser.email.toLowerCase().includes(value);
+                }
+            },
+            {
+                label: 'Tray name',
+                id: 'tray',
+                format: (print) => {
+                    return print.trayName;
+                },
+                match: (print, value) => {
+                    return print.trayName.toLowerCase().includes(value);
+                }
+            },
+            {
+                label: 'Date',
+                id: 'date',
+                format: (print) => {
+                    return dayjs(print.queuedAt).local().format('MM/DD/YYYY');
+                },
+                match: (print, value) => {
+                    return dayjs(print.queuedAt).local().format('MM/DD/YYYY').includes(value);
+                }
+            }
+        ],
+        []
+    );
+
     const matchedPrints = useMemo(() => {
         if (searchTerms.length < 1) {
             return [];
@@ -156,30 +192,13 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
         let matches = queue.filter((print) => {
             let match = true;
             searchTerms.forEach((term) => {
-                const type = term.split(':')[0];
+                const type = searchTypes.find((type) => type.id === term.split(':')[0]);
                 const value = term.split(':')[1].toLowerCase();
 
-                if (type === 'email') {
-                    if (!print.endUser.email.toLowerCase().includes(value)) {
-                        match = false;
-                    }
-                } else if (type === 'name') {
-                    if (
-                        !(
-                            (print.endUser.firstname || '').toLowerCase().includes(value) ||
-                            (print.endUser.lastname || '').toLowerCase().includes(value)
-                        )
-                    ) {
-                        match = false;
-                    }
-                } else if (type === 'tray') {
-                    if (!print.trayName.toLowerCase().includes(value)) {
-                        match = false;
-                    }
-                } else if (type === 'date') {
-                    if (!dayjs(print.queuedAt).local().format('MM/DD/YYYY').includes(value)) {
-                        match = false;
-                    }
+                let result = type.match(print, value);
+
+                if (!result) {
+                    match = false;
                 }
             });
             return match;
@@ -199,34 +218,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
         });
 
         return matches;
-    }, [searchTerms, queue]);
-
-    const searchTypes = useMemo(
-        () => [
-            {
-                label: 'Email',
-                id: 'email',
-                format: (print) => {
-                    return print.endUser.email;
-                }
-            },
-            {
-                label: 'Tray name',
-                id: 'tray',
-                format: (print) => {
-                    return print.trayName;
-                }
-            },
-            {
-                label: 'Date',
-                id: 'date',
-                format: (print) => {
-                    return dayjs(print.queuedAt).local().format('MM/DD/YYYY');
-                }
-            }
-        ],
-        []
-    );
+    }, [searchTerms, queue, searchTypes]);
 
     const search = useCallback(
         (inputValue, callback) => {
