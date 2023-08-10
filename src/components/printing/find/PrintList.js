@@ -201,6 +201,33 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
         return matches;
     }, [searchTerms, queue]);
 
+    const searchTypes = useMemo(
+        () => [
+            {
+                label: 'Email',
+                id: 'email',
+                format: (print) => {
+                    return print.endUser.email;
+                }
+            },
+            {
+                label: 'Tray name',
+                id: 'tray',
+                format: (print) => {
+                    return print.trayName;
+                }
+            },
+            {
+                label: 'Date',
+                id: 'date',
+                format: (print) => {
+                    return dayjs(print.queuedAt).local().format('MM/DD/YYYY');
+                }
+            }
+        ],
+        []
+    );
+
     const search = useCallback(
         (inputValue, callback) => {
             if (inputValue.length < 1) {
@@ -216,45 +243,22 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
 
             let newResults = [];
 
-            let emails = currentResults.map((print) => print.endUser.email);
-            // search for email
-            let emailResults = emails.filter((email) => email.toLowerCase().includes(inputValue.toLowerCase()));
-            emailResults = [...new Set(emailResults)]; //removes duplicates
-            newResults.push({
-                label: 'Email',
-                options: emailResults.map((email) => ({
-                    label: email,
-                    value: `email:${email}`
-                }))
-            });
-
-            let trays = currentResults.map((print) => print.trayName);
-            // search for tray name
-            let traysResults = trays.filter((tray) => tray.toLowerCase().includes(inputValue.toLowerCase()));
-            traysResults = [...new Set(traysResults)]; //removes duplicates
-            newResults.push({
-                label: 'Tray',
-                options: traysResults.map((tray) => ({
-                    label: tray,
-                    value: `tray:${tray}`
-                }))
-            });
-
-            let dates = currentResults.map((print) => dayjs(print.queuedAt).local().format('MM/DD/YYYY'));
-            // search for date
-            let dateResults = dates.filter((date) => date.toLowerCase().includes(inputValue.toLowerCase()));
-            dateResults = [...new Set(dateResults)]; //removes duplicates
-            newResults.push({
-                label: 'Date',
-                options: dateResults.map((date) => ({
-                    label: date,
-                    value: `date:${date}`
-                }))
-            });
+            for (const type of searchTypes) {
+                let targets = currentResults.map((print) => type.format(print));
+                let results = targets.filter((thing) => thing.toLowerCase().includes(inputValue.toLowerCase()));
+                results = [...new Set(results)]; //removes duplicates
+                newResults.push({
+                    label: type.label,
+                    options: results.map((item) => ({
+                        label: item,
+                        value: `${type.id}:${item}`
+                    }))
+                });
+            }
 
             return callback(newResults);
         },
-        [queue, matchedPrints]
+        [queue, matchedPrints, searchTypes]
     );
 
     return (
