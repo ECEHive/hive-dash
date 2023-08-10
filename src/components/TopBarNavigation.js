@@ -1,10 +1,23 @@
-import { useEffect, useState } from 'react';
-
-import { Button, Flex, HStack, Icon, IconButton, Spacer, useColorMode } from '@chakra-ui/react';
+import {
+    Button,
+    Flex,
+    HStack,
+    Icon,
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuGroup,
+    MenuItem,
+    MenuList,
+    Spacer,
+    useColorMode
+} from '@chakra-ui/react';
 
 import NextImage from 'next/image';
 import NextLink from 'next/link';
-import { usePathname } from 'next/navigation';
+
+import useNav from '@/contexts/NavContext';
 
 import iconSet from '@/util/icons';
 
@@ -13,14 +26,8 @@ import logoLight from '@/assets/logo_light.png';
 
 export default function TopBarNavigation(props) {
     const { colorMode, toggleColorMode } = useColorMode();
-    const [pathSection, setPathSection] = useState('');
-    const pathname = usePathname();
 
-    useEffect(() => {
-        if (pathname) {
-            setPathSection(pathname.split('/')[1]);
-        }
-    }, [pathname]);
+    const { section } = useNav();
 
     return (
         <Flex
@@ -30,22 +37,39 @@ export default function TopBarNavigation(props) {
             borderBottom="1px solid"
             borderColor="chakra-border-color"
         >
+            <HStack
+                w="auto"
+                h="100%"
+                dir="row"
+                flexGrow={1}
+                alignItems="center"
+                justifyContent="flex-end"
+                spacing={3}
+                p={3}
+                display={{ base: 'flex', md: 'none' }}
+            >
+                <IconButton>
+                    <Icon as={iconSet.rightArrow} />
+                </IconButton>
+            </HStack>
+
             {/* intersection of sidebar/topbar */}
             <HStack
                 w="260px"
                 h="100%"
                 direction="row"
                 alignItems="center"
-                justifyContent="center"
+                justifyContent={{ base: 'center', md: 'center' }}
                 spacing={2}
                 py={3}
+                px={5}
                 // borderRight="1px solid"
                 borderColor="chakra-border-color"
             >
                 <NextImage
                     alt="HIVE logo"
                     src={colorMode === 'dark' ? logoDark : logoLight}
-                    height={44}
+                    height={42}
                     placeholder="blur"
                     priority
                 />
@@ -60,13 +84,14 @@ export default function TopBarNavigation(props) {
                 justifyContent="flex-start"
                 spacing={3}
                 p={3}
+                display={{ base: 'none', md: 'flex' }}
             >
                 <Button
                     variant="ghost"
                     as={NextLink}
                     href="/printing"
                     size="md"
-                    isActive={pathSection === 'printing'}
+                    isActive={section === 'printing'}
                 >
                     3D Printing
                 </Button>
@@ -77,10 +102,50 @@ export default function TopBarNavigation(props) {
                 <IconButton
                     as={NextLink}
                     href="/config"
-                    isActive={pathSection === 'config'}
+                    isActive={section === 'config'}
                 >
                     <Icon as={iconSet.settings} />
                 </IconButton>
+            </HStack>
+
+            <HStack
+                w="auto"
+                h="100%"
+                dir="row"
+                flexGrow={1}
+                alignItems="center"
+                justifyContent="flex-end"
+                spacing={3}
+                p={3}
+                display={{ base: 'flex', md: 'none' }}
+            >
+                <Menu>
+                    <MenuButton
+                        as={IconButton}
+                        aria-label="Options"
+                        icon={<Icon as={iconSet.hamburger} />}
+                        variant="solid"
+                    />
+                    <MenuList>
+                        <MenuGroup>
+                            <MenuItem>3D Printing</MenuItem>
+                            <MenuItem>Settings</MenuItem>
+                        </MenuGroup>
+                        <MenuDivider />
+                        <MenuGroup>
+                            <HStack
+                                px={3}
+                                justify="start"
+                            >
+                                <IconButton
+                                    size="sm"
+                                    onClick={toggleColorMode}
+                                    icon={colorMode === 'dark' ? <Icon as={iconSet.sun} /> : <Icon as={iconSet.moon} />}
+                                />
+                            </HStack>
+                        </MenuGroup>
+                    </MenuList>
+                </Menu>
             </HStack>
         </Flex>
     );

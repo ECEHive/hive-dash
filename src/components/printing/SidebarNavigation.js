@@ -48,14 +48,14 @@ export default function Navigation(props) {
 
             {
                 type: 'spacer'
-            },
-
-            {
-                type: 'button',
-                name: 'Knowledge base',
-                icon: <Icon as={iconSet.search} />,
-                href: '/knowledge'
             }
+
+            // {
+            //     type: 'button',
+            //     name: 'Knowledge base',
+            //     icon: <Icon as={iconSet.search} />,
+            //     href: '/knowledge'
+            // }
         ],
         []
     );

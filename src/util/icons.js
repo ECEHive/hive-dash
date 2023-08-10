@@ -6,6 +6,7 @@ import {
     CopyIcon,
     DeleteIcon,
     ExternalLinkIcon,
+    HamburgerIcon,
     MoonIcon,
     RepeatIcon,
     SearchIcon,
@@ -79,6 +80,7 @@ const iconSet = {
     list: FaTableList,
     grid: FaTableCellsLarge,
     minus: FaMinusCircle,
+    hamburger: HamburgerIcon,
     boxes: FaBoxOpen
 };
 
