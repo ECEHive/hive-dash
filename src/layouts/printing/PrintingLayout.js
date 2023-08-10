@@ -2,9 +2,7 @@ import { Box, Grid, GridItem, VStack } from '@chakra-ui/react';
 
 import { PrintingProvider } from '@/contexts/printing/PrintingContext';
 
-import Footer from '@/components/Footer';
 import SiteBanner from '@/components/SiteBanner';
-import TopBar from '@/components/TopBarNavigation';
 import PrintingNavigation from '@/components/printing/SidebarNavigation';
 
 export default function PrintingLayout({ children }) {
@@ -12,20 +10,13 @@ export default function PrintingLayout({ children }) {
         <>
             <PrintingProvider>
                 <Grid
-                    templateAreas={`"header header"
-                        "nav main"
-                        "footer footer"`}
+                    templateAreas={`"nav main"`}
                     gridTemplateColumns="260px 1fr"
-                    gridTemplateRows="80px 1fr 1.5rem"
-                    h="100vh"
-                    maxH="100vh"
+                    gridTemplateRows="1fr"
+                    h="full"
                     w="full"
                     overflow="hidden"
                 >
-                    <GridItem area="header">
-                        <TopBar />
-                    </GridItem>
-
                     <GridItem area="nav">
                         <PrintingNavigation />
                     </GridItem>
@@ -52,10 +43,6 @@ export default function PrintingLayout({ children }) {
                                 {children}
                             </Box>
                         </VStack>
-                    </GridItem>
-
-                    <GridItem area="footer">
-                        <Footer />
                     </GridItem>
                 </Grid>
             </PrintingProvider>

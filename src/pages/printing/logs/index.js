@@ -23,7 +23,8 @@ import usePrinting from '@/contexts/printing/PrintingContext';
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 
-import PrintingLayout from '@/layouts/printing/PrintingLayout';
+import GlobalLayout from '@/layouts/GlobalLayout';
+import Layout from '@/layouts/printing/PrintingLayout';
 
 function LogItem({ printData }) {
     const { betterPrintData, printerData } = usePrintParser(printData);
@@ -128,4 +129,8 @@ export default function PrintLogs(props) {
     );
 }
 
-PrintLogs.getLayout = (children) => <PrintingLayout>{children}</PrintingLayout>;
+PrintLogs.getLayout = (page) => (
+    <GlobalLayout>
+        <Layout>{page}</Layout>
+    </GlobalLayout>
+);

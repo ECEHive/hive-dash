@@ -6,7 +6,8 @@ import { useRouter } from 'next/router';
 
 import usePrinting from '@/contexts/printing/PrintingContext';
 
-import TopLayout from '@/layouts/printing/PrintingLayout';
+import GlobalLayout from '@/layouts/GlobalLayout';
+import Layout from '@/layouts/printing/PrintingLayout';
 
 import PrinterInfo from '@/components/printing/printers/PrinterInfo';
 import PrinterList from '@/components/printing/printers/PrinterList';
@@ -69,4 +70,8 @@ export default function Printers(props) {
     );
 }
 
-Printers.getLayout = (page) => <TopLayout>{page}</TopLayout>;
+Printers.getLayout = (page) => (
+    <GlobalLayout>
+        <Layout>{page}</Layout>
+    </GlobalLayout>
+);

@@ -27,6 +27,7 @@ import useConfirmation from '@/contexts/ConfirmDialogContext';
 
 import iconSet from '@/util/icons';
 
+import GlobalLayout from '@/layouts/GlobalLayout';
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
 import PrinterModal from '@/components/config/printers/PrinterModal';
@@ -387,4 +388,8 @@ export default function Printers(props) {
     );
 }
 
-Printers.getLayout = (page) => <ConfigLayout>{page}</ConfigLayout>;
+Printers.getLayout = (page) => (
+    <GlobalLayout>
+        <ConfigLayout>{page}</ConfigLayout>
+    </GlobalLayout>
+);

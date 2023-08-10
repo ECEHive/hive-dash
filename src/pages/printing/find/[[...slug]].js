@@ -33,6 +33,7 @@ import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
 
+import GlobalLayout from '@/layouts/GlobalLayout';
 import Layout from '@/layouts/printing/PrintingLayout';
 
 import PrintPreview from '@/components/printing/PrintPreview';
@@ -268,4 +269,8 @@ export default function FindPrint(props) {
     );
 }
 
-FindPrint.getLayout = (page) => <Layout>{page}</Layout>;
+FindPrint.getLayout = (page) => (
+    <GlobalLayout>
+        <Layout>{page}</Layout>
+    </GlobalLayout>
+);

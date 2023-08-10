@@ -27,6 +27,7 @@ import {
 import iconSet from '@/util/icons';
 import { PITypes } from '@/util/roles';
 
+import GlobalLayout from '@/layouts/GlobalLayout';
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
 import ConfirmDialog from '@/components/ConfirmDialog';
@@ -237,4 +238,8 @@ export default function People(props) {
     );
 }
 
-People.getLayout = (page) => <ConfigLayout>{page}</ConfigLayout>;
+People.getLayout = (page) => (
+    <GlobalLayout>
+        <ConfigLayout>{page}</ConfigLayout>
+    </GlobalLayout>
+);

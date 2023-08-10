@@ -33,6 +33,7 @@ import usePrinting from '@/contexts/printing/PrintingContext';
 
 import { PrintStates } from '@/util/states';
 
+import GlobalLayout from '@/layouts/GlobalLayout';
 import Layout from '@/layouts/printing/PrintingLayout';
 
 import PrintInfo from '@/components/printing/new/PrintInfo';
@@ -318,4 +319,8 @@ export default function NewPrint(props) {
     );
 }
 
-NewPrint.getLayout = (page) => <Layout>{page}</Layout>;
+NewPrint.getLayout = (page) => (
+    <GlobalLayout>
+        <Layout>{page}</Layout>
+    </GlobalLayout>
+);

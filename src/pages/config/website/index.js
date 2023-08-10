@@ -33,6 +33,7 @@ import ReactMarkdown from 'react-markdown';
 
 import iconSet from '@/util/icons';
 
+import GlobalLayout from '@/layouts/GlobalLayout';
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
 export default function WebsiteSettings(props) {
@@ -248,4 +249,8 @@ export default function WebsiteSettings(props) {
     );
 }
 
-WebsiteSettings.getLayout = (page) => <ConfigLayout>{page}</ConfigLayout>;
+WebsiteSettings.getLayout = (page) => (
+    <GlobalLayout>
+        <ConfigLayout>{page}</ConfigLayout>
+    </GlobalLayout>
+);

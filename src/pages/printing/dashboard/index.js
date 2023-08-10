@@ -30,6 +30,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
 
+import GlobalLayout from '@/layouts/GlobalLayout';
 import Layout from '@/layouts/printing/PrintingLayout';
 
 import PrinterCard from '@/components/printing/dashboard/PrinterGridItem';
@@ -236,4 +237,8 @@ export default function Dashboard(props) {
     );
 }
 
-Dashboard.getLayout = (page) => <Layout>{page}</Layout>;
+Dashboard.getLayout = (page) => (
+    <GlobalLayout>
+        <Layout>{page}</Layout>
+    </GlobalLayout>
+);
