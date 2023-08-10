@@ -251,7 +251,7 @@ export default function FindPrint(props) {
                                 </>
                             ) : (
                                 <VStack
-                                    h="100%"
+                                    minH="100%"
                                     w="100%"
                                     justify="center"
                                 >

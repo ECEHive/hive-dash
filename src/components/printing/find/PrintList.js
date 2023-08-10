@@ -6,6 +6,7 @@ import {
     Card,
     CardBody,
     CircularProgress,
+    Code,
     Divider,
     FormControl,
     HStack,
@@ -26,6 +27,8 @@ import { SearchIcon } from '@chakra-ui/icons';
 
 import { AsyncSelect } from 'chakra-react-select';
 import { useRouter } from 'next/router';
+
+import dayjs from '@/lib/time';
 
 import usePrinting from '@/contexts/printing/PrintingContext';
 
@@ -145,32 +148,12 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
     const { push } = useRouter();
 
     const [searchTerms, setSearchTerms] = useState([]);
-    // const [matchedPrints, setMatchedPrints] = useState([]);
-
-    // const matchedPrints = useMemo(() => {
-    //     if (searchTerm.length > 0) {
-    //         return queue
-    //             .filter(
-    //                 (print) =>
-    //                     print.endUser.email.toLowerCase().includes(searchTerm) ||
-    //                     (print.endUser.firstname || '').toLowerCase().includes(searchTerm) ||
-    //                     (print.endUser.lastname || '').toLowerCase().includes(searchTerm) ||
-    //                     print.trayName.toLowerCase().includes(searchTerm) ||
-    //                     dayjs(print.queuedAt).local().format('MM/DD/YYYY').includes(searchTerm)
-    //             )
-    //             .sort((a, b) => {
-    //                 return dayjs.utc(b.queuedAt) - dayjs.utc(a.queuedAt);
-    //             });
-    //     } else {
-    //         return [];
-    //     }
-    // }, [queue, searchTerm]);
 
     const matchedPrints = useMemo(() => {
         if (searchTerms.length < 1) {
             return [];
         }
-        const matches = queue.filter((print) => {
+        let matches = queue.filter((print) => {
             let match = true;
             searchTerms.forEach((term) => {
                 const type = term.split(':')[0];
@@ -193,9 +176,26 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                     if (!print.trayName.toLowerCase().includes(value)) {
                         match = false;
                     }
+                } else if (type === 'date') {
+                    if (!dayjs(print.queuedAt).local().format('MM/DD/YYYY').includes(value)) {
+                        match = false;
+                    }
                 }
             });
             return match;
+        });
+
+        matches = matches.sort((a, b) => {
+            let aTime = dayjs(a.updatedAt).valueOf();
+            let bTime = dayjs(b.updatedAt).valueOf();
+            console.log(aTime, bTime);
+            if (aTime > bTime) {
+                return -1;
+            }
+            if (aTime < bTime) {
+                return 1;
+            }
+            return 0;
         });
 
         return matches;
@@ -229,7 +229,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
             });
 
             let trays = currentResults.map((print) => print.trayName);
-            // search for email
+            // search for tray name
             let traysResults = trays.filter((tray) => tray.toLowerCase().includes(inputValue.toLowerCase()));
             traysResults = [...new Set(traysResults)]; //removes duplicates
             newResults.push({
@@ -240,20 +240,17 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                 }))
             });
 
-            // //search for name
-            // let nameResults = queue.filter(
-            //     (print) =>
-            //         (print.endUser.firstname || '').toLowerCase().includes(inputValue) ||
-            //         (print.endUser.lastname || '').toLowerCase().includes(inputValue)
-            // );
-            // nameResults = [...new Set(nameResults)]; //removes duplicates
-            // results.push({
-            //     label: 'Name',
-            //     options: nameResults.map((print) => ({
-            //         label: `${print.endUser.firstname} ${print.endUser.lastname}`,
-            //         value: `name:${print.endUser.firstname} ${print.endUser.lastname}`
-            //     }))
-            // });
+            let dates = currentResults.map((print) => dayjs(print.queuedAt).local().format('MM/DD/YYYY'));
+            // search for date
+            let dateResults = dates.filter((date) => date.toLowerCase().includes(inputValue.toLowerCase()));
+            dateResults = [...new Set(dateResults)]; //removes duplicates
+            newResults.push({
+                label: 'Date',
+                options: dateResults.map((date) => ({
+                    label: date,
+                    value: `date:${date}`
+                }))
+            });
 
             return callback(newResults);
         },
@@ -343,6 +340,9 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                             <UnorderedList>
                                 <ListItem>Your @gatech.edu email</ListItem>
                                 <ListItem>The print&apos;s name</ListItem>
+                                <ListItem>
+                                    The date in <Code>MM/DD/YYYY</Code> format
+                                </ListItem>
                             </UnorderedList>
                         </VStack>
                     )}
