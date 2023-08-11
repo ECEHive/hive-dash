@@ -1,8 +1,12 @@
-import { extendTheme } from '@chakra-ui/react';
+import { Modal, extendTheme } from '@chakra-ui/react';
 
 const config = {
     initialColorMode: 'dark', // 'dark' | 'light'
     useSystemColorMode: false
+};
+
+Modal.defaultProps = {
+    motionPreset: 'slideInBottom'
 };
 
 const theme = extendTheme({
