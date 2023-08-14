@@ -214,7 +214,7 @@ export default function Dashboard(props) {
                                             <Th>Status</Th>
                                             <Th># Queue</Th>
                                             <Th>Current print</Th>
-                                            <Th>Actions</Th>
+                                            <Th>Links</Th>
                                         </Tr>
                                     </Thead>
                                     <Tbody>

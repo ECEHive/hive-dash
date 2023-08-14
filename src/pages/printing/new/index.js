@@ -12,13 +12,10 @@ import {
     Spacer,
     Spinner,
     Step,
-    StepDescription,
     StepIcon,
     StepIndicator,
-    StepNumber,
     StepSeparator,
     StepStatus,
-    StepTitle,
     Stepper,
     VStack,
     useSteps,
@@ -167,6 +164,7 @@ export default function NewPrint(props) {
             >
                 <Box
                     w="full"
+                    maxW="5xl"
                     h="100%"
                 >
                     <VStack
@@ -177,27 +175,31 @@ export default function NewPrint(props) {
                         align="center"
                     >
                         <Stepper
-                            size="lg"
+                            size="md"
                             w="100%"
                             minH="50px"
                             index={activeStep}
+                            gap={0}
                         >
                             {steps.map((step, index) => (
-                                <Step key={index}>
+                                <Step
+                                    key={index}
+                                    gap={0}
+                                >
                                     <StepIndicator>
                                         <StepStatus
                                             complete={<StepIcon />}
-                                            incomplete={<StepNumber />}
-                                            active={<StepNumber />}
+                                            // incomplete={<StepNumber />}
+                                            // active={<StepNumber />}
                                         />
                                     </StepIndicator>
 
-                                    <Box flexShrink={0}>
+                                    {/* <Box flexShrink={0}>
                                         <StepTitle>{step.title}</StepTitle>
                                         <StepDescription>{step.description}</StepDescription>
-                                    </Box>
+                                    </Box> */}
 
-                                    <StepSeparator />
+                                    <StepSeparator _horizontal={{ ml: '0' }} />
                                 </Step>
                             ))}
                         </Stepper>

@@ -333,7 +333,7 @@ function Events({ printData, update }) {
                 <SectionHeader>Events</SectionHeader>
 
                 <TableContainer w="full">
-                    <Table>
+                    <Table size="md">
                         <Thead>
                             <ThColored>Event (newest first)</ThColored>
                             <ThColored>Actions</ThColored>
@@ -359,7 +359,13 @@ function Events({ printData, update }) {
                                                     >
                                                         {event.description}
                                                     </Text>
-                                                    <Text fontSize="xs">{event.formattedTimestamp}</Text>
+                                                    <Text
+                                                        fontSize="xs"
+                                                        color="secondaryText"
+                                                        lineHeight={1}
+                                                    >
+                                                        {event.formattedTimestamp}
+                                                    </Text>
                                                 </VStack>
                                             </HStack>
                                         </TdColored>

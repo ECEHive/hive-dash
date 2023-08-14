@@ -45,7 +45,8 @@ export default function usePrintEvents(print) {
 
     const detailedEvents = useMemo(() => {
         if (!print) return [];
-        return print.events
+        let newEvents = [...print.events];
+        return newEvents
             .map((event) => {
                 return {
                     ...event,
@@ -70,7 +71,7 @@ export default function usePrintEvents(print) {
                 };
             })
             .sort((a, b) => {
-                return dayjs.utc(b.timestamp).diff(dayjs.utc(a.timestamp)); //sort so newest at top
+                return dayjs.utc(a.timestamp).diff(dayjs.utc(b.timestamp)); //sort so newest at top
             });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +79,6 @@ export default function usePrintEvents(print) {
 
     const expectedEvents = useMemo(() => {
         if (!print) return [];
-        console.log(expectedIconColor);
         return eventOrder[print.state].map((type) => {
             return {
                 type,

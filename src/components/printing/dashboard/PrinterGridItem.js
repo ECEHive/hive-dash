@@ -103,7 +103,7 @@ export default function PrinterCard({ data }) {
                                             >
                                                 <Link
                                                     as={NextLink}
-                                                    href={`/printing/find/${betterPrintData._id}`}
+                                                    href={`/printing/prints/${betterPrintData._id}`}
                                                 >
                                                     {betterPrintData.trayName}
                                                 </Link>

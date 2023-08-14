@@ -37,7 +37,7 @@ export default function Navigation(props) {
                 type: 'button',
                 name: 'Find a print',
                 icon: <Icon as={iconSet.search} />,
-                href: '/find'
+                href: '/prints'
             },
             {
                 type: 'button',

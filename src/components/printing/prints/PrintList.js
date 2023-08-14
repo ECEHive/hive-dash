@@ -321,7 +321,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                                     key={print._id}
                                     data={print}
                                     onClick={() => {
-                                        push(`/printing/find/${print._id}`, undefined, { shallow: true });
+                                        push(`/printing/prints/${print._id}`, undefined, { shallow: true });
                                     }}
                                     isActive={selectedPrintData?._id === print._id}
                                 />

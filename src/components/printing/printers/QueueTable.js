@@ -54,7 +54,7 @@ function QueueTableItem({ printData, startPrint, canQueue, update, editCallback 
                         <Link
                             fontSize="md"
                             as={NextLink}
-                            href={`/printing/find/${betterPrintData._id}`}
+                            href={`/printing/prints/${betterPrintData._id}`}
                         >
                             {betterPrintData.trayName}
                         </Link>

@@ -6,7 +6,8 @@ const config = {
 };
 
 Modal.defaultProps = {
-    motionPreset: 'slideInBottom'
+    motionPreset: 'slideInBottom',
+    bgColor: 'gray.900'
 };
 
 const theme = extendTheme({

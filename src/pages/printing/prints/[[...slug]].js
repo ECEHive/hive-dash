@@ -37,10 +37,10 @@ import GlobalLayout from '@/layouts/GlobalLayout';
 import Layout from '@/layouts/printing/PrintingLayout';
 
 import PrintPreview from '@/components/printing/PrintPreview';
-import HorizontalTimeline from '@/components/printing/find/HorizontalTimeline';
-import PrintList from '@/components/printing/find/PrintList';
 import PrintEditorModal from '@/components/printing/printEdit/PrintEditorModal';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
+import HorizontalTimeline from '@/components/printing/prints/HorizontalTimeline';
+import PrintList from '@/components/printing/prints/PrintList';
 
 export default function FindPrint(props) {
     const { queue } = usePrinting();

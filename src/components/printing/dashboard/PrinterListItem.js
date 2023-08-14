@@ -101,7 +101,7 @@ export default function PrinterListItem({ data }) {
                             <Button
                                 visibility={betterPrintData.state === PrintStates.PRINTING ? 'visibile' : 'hidden'}
                                 onClick={() => {
-                                    push(`/printing/find/${betterPrintData._id}`);
+                                    push(`/printing/prints/${betterPrintData._id}`);
                                 }}
                             >
                                 View print

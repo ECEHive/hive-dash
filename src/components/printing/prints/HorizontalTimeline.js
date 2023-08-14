@@ -88,7 +88,7 @@ export default function Timeline({ print }) {
                         overflow="auto"
                         p={5}
                     >
-                        {detailedEvents.reverse().map((event, i) => {
+                        {detailedEvents.map((event, i) => {
                             return (
                                 <>
                                     <HStack>

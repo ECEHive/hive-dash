@@ -118,7 +118,7 @@ export default function WebsiteSettings(props) {
                         size="lg"
                         fontFamily="body"
                     >
-                        Website global configuration
+                        Website configuration
                     </Heading>
 
                     <Card
