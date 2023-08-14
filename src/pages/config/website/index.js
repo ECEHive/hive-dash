@@ -27,8 +27,8 @@ import {
     useToast
 } from '@chakra-ui/react';
 
-import { Select } from 'chakra-react-select';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import { Field, Form, Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 
 import iconSet from '@/util/icons';
@@ -36,9 +36,10 @@ import iconSet from '@/util/icons';
 import GlobalLayout from '@/layouts/GlobalLayout';
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
+import Select from '@/components/Select';
+
 export default function WebsiteSettings(props) {
     const [config, setConfig] = useState({});
-    const [saving, setSaving] = useState(false);
 
     const toast = useToast();
 
@@ -51,44 +52,9 @@ export default function WebsiteSettings(props) {
             });
     }, []);
 
-    const save = useCallback(() => {
-        setSaving(true);
-        fetch('/api/config/website', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(config)
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                refresh();
-                toast({
-                    description: 'Saved banner',
-                    status: 'success',
-                    duration: 5000
-                });
-            })
-            .finally(() => {
-                setSaving(false);
-            });
-    }, [config, refresh, toast]);
-
     useEffect(() => {
         refresh();
     }, [refresh]);
-
-    const update = useCallback((field, value) => {
-        setConfig((old) => {
-            return {
-                ...old,
-                [field]: {
-                    ...old[field],
-                    ...value
-                }
-            };
-        });
-    }, []);
 
     return (
         <Flex
@@ -126,121 +92,188 @@ export default function WebsiteSettings(props) {
                         w="full"
                     >
                         <CardBody p={0}>
-                            <VStack
-                                spacing={3}
-                                align="start"
-                                w="full"
-                                p={5}
-                            >
-                                <Text
-                                    fontSize="2xl"
-                                    fontWeight="semibold"
-                                    fontFamily="body"
-                                >
-                                    Banner
-                                </Text>
-                                <FormControl>
-                                    <FormLabel>Banner enabled</FormLabel>
-                                    <InputGroup>
-                                        <Switch
-                                            isChecked={config?.banner?.enabled}
-                                            onChange={(e) => {
-                                                update('banner', { enabled: e.target.checked });
-                                            }}
-                                        />
-                                    </InputGroup>
-                                    <FormHelperText>Show the banner on all pages on the website.</FormHelperText>
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Banner type</FormLabel>
-                                    <Select
-                                        value={{
-                                            value: config?.banner?.type,
-                                            label: config?.banner?.type
-                                        }}
-                                        options={[
-                                            { value: 'info', label: 'Info' },
-                                            { value: 'warning', label: 'Warning' },
-                                            { value: 'success', label: 'Success' },
-                                            { value: 'error', label: 'Error' }
-                                        ]}
-                                        onChange={(e) => {
-                                            update('banner', { type: e.value });
-                                        }}
-                                    />
-                                    <FormHelperText>Controls the color/icon on the banner</FormHelperText>
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Banner title</FormLabel>
-                                    <InputGroup>
-                                        <Input
-                                            value={config?.banner?.title}
-                                            onChange={(e) => {
-                                                update('banner', { title: e.target.value });
-                                            }}
-                                        />
-                                    </InputGroup>
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Banner description</FormLabel>
-                                    <InputGroup>
-                                        <Textarea
-                                            value={config?.banner?.subtitle}
-                                            onChange={(e) => {
-                                                update('banner', { subtitle: e.target.value });
-                                            }}
-                                        />
-                                    </InputGroup>
-                                    <FormHelperText>Markdown is supported.</FormHelperText>
-                                </FormControl>
+                            {config?.banner && (
+                                <Formik
+                                    initialValues={{
+                                        enabled: config.banner.enabled,
+                                        type: config.banner.type,
+                                        title: config.banner.title,
+                                        description: config.banner.description
+                                    }}
+                                    onSubmit={(values, actions) => {
+                                        let config = {
+                                            banner: {
+                                                ...values
+                                            }
+                                        };
 
-                                <VStack
-                                    w="100%"
-                                    h="auto"
-                                    align="start"
+                                        fetch('/api/config/website', {
+                                            method: 'PUT',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify(config)
+                                        })
+                                            .then((res) => res.json())
+                                            .then((data) => {
+                                                toast({
+                                                    description: 'Saved banner',
+                                                    status: 'success',
+                                                    duration: 5000
+                                                });
+                                            })
+                                            .finally(() => {
+                                                actions.setSubmitting(false);
+                                                refresh();
+                                            });
+                                    }}
                                 >
-                                    <Text>Banner preview</Text>
-                                    <Alert
-                                        status={config?.banner?.type}
-                                        w="100%"
-                                        h="auto"
-                                    >
-                                        <AlertIcon />
-                                        <Box>
-                                            <AlertTitle>{config?.banner?.title}</AlertTitle>
-                                            <AlertDescription>
-                                                <ReactMarkdown
-                                                    components={ChakraUIRenderer()}
-                                                    skipHtml
+                                    {(props) => (
+                                        <Form>
+                                            <VStack
+                                                spacing={3}
+                                                align="start"
+                                                w="full"
+                                                p={5}
+                                            >
+                                                <Text
+                                                    fontSize="2xl"
+                                                    fontWeight="semibold"
+                                                    fontFamily="body"
                                                 >
-                                                    {config?.banner?.subtitle}
-                                                </ReactMarkdown>
-                                            </AlertDescription>
-                                        </Box>
-                                    </Alert>
-                                </VStack>
-                            </VStack>
+                                                    Banner
+                                                </Text>
 
-                            <HStack
-                                w="full"
-                                h="auto"
-                                justify="end"
-                                borderTop="1px"
-                                borderColor="chakra-border-color"
-                                py={3}
-                                px={5}
-                            >
-                                <ButtonGroup w="auto">
-                                    <Button
-                                        colorScheme="blue"
-                                        isLoading={saving}
-                                        leftIcon={<Icon as={iconSet.save} />}
-                                        onClick={save}
-                                    >
-                                        Save
-                                    </Button>
-                                </ButtonGroup>
-                            </HStack>
+                                                <Field name="enabled">
+                                                    {({ field }) => (
+                                                        <FormControl>
+                                                            <FormLabel>Banner enabled</FormLabel>
+                                                            <InputGroup>
+                                                                <Switch
+                                                                    {...field}
+                                                                    isChecked={field?.value}
+                                                                />
+                                                            </InputGroup>
+                                                            <FormHelperText>
+                                                                Show the banner on all pages on the website.
+                                                            </FormHelperText>
+                                                        </FormControl>
+                                                    )}
+                                                </Field>
+
+                                                <Field name="type">
+                                                    {({ field, form }) => (
+                                                        <FormControl>
+                                                            <FormLabel>Banner type</FormLabel>
+                                                            <Select
+                                                                {...field}
+                                                                name="type"
+                                                                options={[
+                                                                    { value: 'info', label: 'Info' },
+                                                                    { value: 'warning', label: 'Warning' },
+                                                                    { value: 'success', label: 'Success' },
+                                                                    { value: 'error', label: 'Error' }
+                                                                ]}
+                                                                onChange={(selectedOption) => {
+                                                                    return form.setFieldValue(
+                                                                        'type',
+                                                                        selectedOption.value
+                                                                    );
+                                                                }}
+                                                                value={{
+                                                                    label: field?.value
+                                                                }}
+                                                            />
+                                                            <FormHelperText>
+                                                                Controls the color/icon of the banner
+                                                            </FormHelperText>
+                                                        </FormControl>
+                                                    )}
+                                                </Field>
+
+                                                <Field name="title">
+                                                    {({ field, form }) => (
+                                                        <FormControl>
+                                                            <FormLabel>Banner title</FormLabel>
+                                                            <InputGroup>
+                                                                <Input {...field} />
+                                                            </InputGroup>
+                                                        </FormControl>
+                                                    )}
+                                                </Field>
+
+                                                <Field name="description">
+                                                    {({ field, form }) => {
+                                                        console.log(props);
+                                                        return (
+                                                            <FormControl>
+                                                                <FormLabel>Banner description</FormLabel>
+                                                                <InputGroup>
+                                                                    <Textarea {...field} />
+                                                                </InputGroup>
+                                                                <FormHelperText>Markdown is supported.</FormHelperText>
+                                                            </FormControl>
+                                                        );
+                                                    }}
+                                                </Field>
+
+                                                <VStack
+                                                    w="100%"
+                                                    h="auto"
+                                                    align="start"
+                                                >
+                                                    <Text>Banner preview</Text>
+                                                    <Alert
+                                                        status={props.values.type}
+                                                        w="100%"
+                                                        h="auto"
+                                                    >
+                                                        <AlertIcon />
+                                                        <Box>
+                                                            <AlertTitle>{props.values.title}</AlertTitle>
+                                                            <AlertDescription>
+                                                                <ReactMarkdown
+                                                                    components={ChakraUIRenderer()}
+                                                                    skipHtml
+                                                                >
+                                                                    {props.values.description}
+                                                                </ReactMarkdown>
+                                                            </AlertDescription>
+                                                        </Box>
+                                                    </Alert>
+                                                </VStack>
+                                            </VStack>
+
+                                            <HStack
+                                                w="full"
+                                                h="auto"
+                                                justify="end"
+                                                borderTop="1px"
+                                                borderColor="chakra-border-color"
+                                                py={3}
+                                                px={5}
+                                            >
+                                                <ButtonGroup w="auto">
+                                                    <Button
+                                                        colorScheme="blue"
+                                                        leftIcon={<Icon as={iconSet.save} />}
+                                                        isLoading={props.isSubmitting}
+                                                        type={'submit'}
+                                                        onClick={() => {
+                                                            props.handleSubmit();
+                                                        }}
+                                                        onSubmit={() => {
+                                                            props.handleSubmit();
+                                                        }}
+                                                    >
+                                                        Save
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </HStack>
+                                        </Form>
+                                    )}
+                                </Formik>
+                            )}
                         </CardBody>
                     </Card>
                 </VStack>

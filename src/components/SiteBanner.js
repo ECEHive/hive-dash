@@ -31,7 +31,7 @@ export default function SiteBanner() {
                                 components={ChakraUIRenderer()}
                                 skipHtml
                             >
-                                {alertData.subtitle}
+                                {alertData.description}
                             </ReactMarkdown>
                         </AlertDescription>
                     </Box>
