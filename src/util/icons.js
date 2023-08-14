@@ -1,5 +1,6 @@
 import {
     AddIcon,
+    ArrowBackIcon,
     ArrowForwardIcon,
     CheckIcon,
     CloseIcon,
@@ -76,6 +77,7 @@ const iconSet = {
     refresh: RepeatIcon,
     branch: FaCodeBranch,
     rightArrow: ArrowForwardIcon,
+    leftArrow: ArrowBackIcon,
     dot: BsDot,
     list: FaTableList,
     grid: FaTableCellsLarge,

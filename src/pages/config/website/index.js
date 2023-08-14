@@ -175,14 +175,9 @@ export default function WebsiteSettings(props) {
                                                                     { value: 'error', label: 'Error' }
                                                                 ]}
                                                                 onChange={(selectedOption) => {
-                                                                    return form.setFieldValue(
-                                                                        'type',
-                                                                        selectedOption.value
-                                                                    );
+                                                                    return form.setFieldValue('type', selectedOption);
                                                                 }}
-                                                                value={{
-                                                                    label: field?.value
-                                                                }}
+                                                                value={field?.value}
                                                             />
                                                             <FormHelperText>
                                                                 Controls the color/icon of the banner
@@ -224,7 +219,7 @@ export default function WebsiteSettings(props) {
                                                 >
                                                     <Text>Banner preview</Text>
                                                     <Alert
-                                                        status={props.values.type}
+                                                        status={props.values.type.value}
                                                         w="100%"
                                                         h="auto"
                                                     >

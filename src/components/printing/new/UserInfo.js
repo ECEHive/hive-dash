@@ -120,7 +120,6 @@ export default function UserInfo({ set, data, setNext }) {
                                 label: person.name,
                                 value: person.name
                             }))}
-                            selectedOptionStyle="check"
                         />
                     )}
                 </FormControl>

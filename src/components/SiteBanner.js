@@ -22,7 +22,7 @@ export default function SiteBanner() {
     return (
         <>
             {alertData?.enabled && (
-                <Alert status={alertData.type}>
+                <Alert status={alertData.type.value}>
                     <AlertIcon />
                     <Box>
                         <AlertTitle>{alertData.title}</AlertTitle>

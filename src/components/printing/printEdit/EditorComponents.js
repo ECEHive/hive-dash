@@ -31,7 +31,6 @@ import {
 import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 import Editor from '@monaco-editor/react';
-import { Select } from 'chakra-react-select';
 
 import dayjs from '@/lib/time';
 
@@ -44,9 +43,9 @@ import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
 
+import Select from '@/components/Select';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 
-const FancySelect = chakra(Select);
 const ChakraEditor = chakra(Editor);
 
 function SectionHeader({ children }) {
@@ -163,10 +162,9 @@ function PrintInfo({ printData, update }) {
                 <FormLabel>Queued by</FormLabel>
 
                 {peerInstructors && (
-                    <FancySelect
+                    <Select
                         placeholder="PI name"
                         closeMenuOnSelect={true}
-                        selectedOptionStyle="check"
                         menuPortalTarget={document.body}
                         styles={{
                             menuPortal: (base) => ({
@@ -191,7 +189,7 @@ function PrintInfo({ printData, update }) {
             </FormControl>
             <FormControl>
                 <FormLabel>Printer</FormLabel>
-                <FancySelect
+                <Select
                     menuPortalTarget={document.body}
                     styles={{
                         menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
@@ -218,7 +216,6 @@ function PrintInfo({ printData, update }) {
                         };
                     })}
                     closeMenuOnSelect={true}
-                    selectedOptionStyle="check"
                 />
                 <FormHelperText>i feel like some helper text will be useful here</FormHelperText>
             </FormControl>
@@ -229,7 +226,7 @@ function PrintInfo({ printData, update }) {
             >
                 <FormControl>
                     <FormLabel>Material type</FormLabel>
-                    <FancySelect
+                    <Select
                         menuPortalTarget={document.body}
                         styles={{
                             menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
@@ -246,7 +243,6 @@ function PrintInfo({ printData, update }) {
                             return { label: material, value: material };
                         })}
                         closeMenuOnSelect={true}
-                        selectedOptionStyle="check"
                     />
                 </FormControl>
                 <FormControl>

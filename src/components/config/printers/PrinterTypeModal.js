@@ -40,9 +40,9 @@ import {
     useDisclosure
 } from '@chakra-ui/react';
 
-import { Select } from 'chakra-react-select';
-
 import iconSet from '@/util/icons';
+
+import Select from '@/components/Select';
 
 function AddMaterialPopover({ children, onAdd }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -290,7 +290,6 @@ export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
                                     onChange={(e) => {
                                         update('color', e.label);
                                     }}
-                                    selectedOptionStyle="check"
                                 />
                             </FormControl>
 

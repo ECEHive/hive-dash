@@ -19,9 +19,9 @@ import {
     useColorMode
 } from '@chakra-ui/react';
 
-import { Select } from 'chakra-react-select';
-
 import dayjs from '@/lib/time';
+
+import Select from '@/components/Select';
 
 export default function PrinterModal({ isOpen, onClose, initialData, printerTypes }) {
     const [saving, setSaving] = useState(false);
@@ -167,7 +167,6 @@ export default function PrinterModal({ isOpen, onClose, initialData, printerType
                                     onChange={(e) => {
                                         update('type', e.value);
                                     }}
-                                    selectedOptionStyle="check"
                                 />
                             </FormControl>
                         </VStack>

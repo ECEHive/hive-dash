@@ -282,7 +282,6 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                                     <Text>Search for a print</Text>
                                 </HStack>
                             }
-                            selectedOptionStyle="check"
                             loadOptions={search}
                             onChange={(value) => {
                                 if (value) {
@@ -300,7 +299,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                                     : null
                             }
                             noOptionsMessage={(e) => {
-                                return e.inputValue.length === 0 ? 'Search for something!' : 'No results';
+                                return e.inputValue.length === 0 ? 'Start typing to search!' : 'No results';
                             }}
                         />
                     </InputGroup>
@@ -337,7 +336,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                                 <ListItem>Your @gatech.edu email</ListItem>
                                 <ListItem>The print&apos;s name</ListItem>
                                 <ListItem>
-                                    The date in <Code>MM/DD/YYYY</Code> format
+                                    The print&apos;s queue date in <Code>MM/DD/YYYY</Code> format
                                 </ListItem>
                             </UnorderedList>
                         </VStack>

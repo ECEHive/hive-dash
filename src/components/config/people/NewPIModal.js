@@ -16,9 +16,9 @@ import {
     VStack
 } from '@chakra-ui/react';
 
-import { Select } from 'chakra-react-select';
-
 import { PITypes } from '@/util/roles';
+
+import Select from '@/components/Select';
 
 export default function NewPIModal({ isOpen, onClose, initialData }) {
     const [name, setName] = useState('');

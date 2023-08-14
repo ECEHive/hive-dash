@@ -33,6 +33,7 @@ import { PrintStates } from '@/util/states';
 import GlobalLayout from '@/layouts/GlobalLayout';
 import Layout from '@/layouts/printing/PrintingLayout';
 
+import NewPrintModal from '@/components/printing/new/NewPrintModal';
 import PrintInfo from '@/components/printing/new/PrintInfo';
 import PrinterSelect from '@/components/printing/new/PrinterSelect';
 import UserInfo from '@/components/printing/new/UserInfo';
@@ -157,6 +158,7 @@ export default function NewPrint(props) {
 
     return (
         <>
+            <NewPrintModal />
             <Center
                 w="100%"
                 h="100%"

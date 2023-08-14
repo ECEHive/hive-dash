@@ -8,9 +8,11 @@ import {
     Center,
     Code,
     Flex,
+    HStack,
     Heading,
     Icon,
     IconButton,
+    Spacer,
     Table,
     TableContainer,
     Tbody,
@@ -191,22 +193,28 @@ export default function Printers(props) {
                                     w="full"
                                     p={5}
                                 >
-                                    <Text
-                                        fontSize="2xl"
-                                        fontWeight="semibold"
-                                        fontFamily="body"
+                                    <HStack
+                                        w="full"
+                                        align="center"
                                     >
-                                        Printer types
-                                    </Text>
-
-                                    <ButtonGroup>
-                                        <Button
-                                            leftIcon={<Icon as={iconSet.add} />}
-                                            onClick={onNewTypeOpen}
+                                        <Text
+                                            fontSize="2xl"
+                                            fontWeight="semibold"
+                                            fontFamily="body"
                                         >
-                                            Add printer type
-                                        </Button>
-                                    </ButtonGroup>
+                                            Printer types
+                                        </Text>
+                                        <Spacer />
+                                        <ButtonGroup size="sm">
+                                            <Button
+                                                colorScheme="blue"
+                                                leftIcon={<Icon as={iconSet.add} />}
+                                                onClick={onNewTypeOpen}
+                                            >
+                                                Add printer type
+                                            </Button>
+                                        </ButtonGroup>
+                                    </HStack>
 
                                     <TableContainer w="full">
                                         <Table
@@ -237,6 +245,7 @@ export default function Printers(props) {
                                                         <Td>
                                                             <ButtonGroup size="sm">
                                                                 <Button
+                                                                    leftIcon={<Icon as={iconSet.pencil} />}
                                                                     onClick={() => {
                                                                         setEditingTypeData(type);
                                                                         onNewTypeOpen();
@@ -274,22 +283,28 @@ export default function Printers(props) {
                                     w="full"
                                     p={5}
                                 >
-                                    <Text
-                                        fontSize="2xl"
-                                        fontWeight="semibold"
-                                        fontFamily="body"
+                                    <HStack
+                                        w="full"
+                                        align="center"
                                     >
-                                        Printers
-                                    </Text>
-
-                                    <ButtonGroup>
-                                        <Button
-                                            leftIcon={<Icon as={iconSet.add} />}
-                                            onClick={onNewPrinterOpen}
+                                        <Text
+                                            fontSize="2xl"
+                                            fontWeight="semibold"
+                                            fontFamily="body"
                                         >
-                                            Add printer
-                                        </Button>
-                                    </ButtonGroup>
+                                            Printers
+                                        </Text>
+                                        <Spacer />
+                                        <ButtonGroup size="sm">
+                                            <Button
+                                                colorScheme="blue"
+                                                leftIcon={<Icon as={iconSet.add} />}
+                                                onClick={onNewPrinterOpen}
+                                            >
+                                                Add printer
+                                            </Button>
+                                        </ButtonGroup>
+                                    </HStack>
 
                                     <TableContainer w="full">
                                         <Table
