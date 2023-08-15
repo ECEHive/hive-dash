@@ -12,7 +12,7 @@ export default async function handler(req, res) {
             .select({
                 // Selecting the first 3 records in All:
                 view: 'All',
-                fields: ['Name', 'Current Status', 'MPI Role(s)'] //last one is MPI roles
+                fields: ['Name', 'Current Status', 'Email', 'MPI Role(s)'] //last one is MPI roles
             })
             .eachPage(
                 function page(records, fetchNextPage) {
@@ -22,7 +22,8 @@ export default async function handler(req, res) {
                         if (record.get('Current Status')) {
                             if (
                                 record.get('Current Status').includes('Returning') ||
-                                record.get('Current Status').includes('Staff')
+                                record.get('Current Status').includes('Staff') ||
+                                record.get('Current Status').includes('New')
                             ) {
                                 let role = 0;
                                 if (record.get('MPI Role(s)')) {
@@ -34,7 +35,8 @@ export default async function handler(req, res) {
 
                                 people.push({
                                     name: record.get('Name'),
-                                    type: role
+                                    type: role,
+                                    email: record.get('Email')
                                 });
                             }
                         }
@@ -74,7 +76,7 @@ export default async function handler(req, res) {
                         await mongoClient
                             .db('global-config')
                             .collection('peer-instructors')
-                            .insertMany(newPeople.map((pi) => ({ name: pi.name, type: pi.type, email: '' })));
+                            .insertMany(newPeople.map((pi) => ({ name: pi.name, type: pi.type, email: pi.email })));
 
                         await mongoClient
                             .db('global-config')

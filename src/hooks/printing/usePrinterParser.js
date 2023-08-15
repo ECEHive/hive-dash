@@ -33,6 +33,7 @@ export default function usePrinterParser(printer) {
             ...printer,
             state: state,
             updatedAtHumanized: dayjs.duration(dayjs.utc(printer.updatedAt).diff(dayjs().utc())).humanize(true),
+            queue: queue.filter((print) => print.printer === printer.id),
             queueLength: queue.filter(
                 (print) =>
                     print.printer === printer.id &&

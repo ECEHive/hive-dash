@@ -3,6 +3,8 @@ import {
     ArrowBackIcon,
     ArrowForwardIcon,
     CheckIcon,
+    ChevronDownIcon,
+    ChevronUpIcon,
     CloseIcon,
     CopyIcon,
     DeleteIcon,
@@ -83,6 +85,8 @@ const iconSet = {
     grid: FaTableCellsLarge,
     minus: FaMinusCircle,
     hamburger: HamburgerIcon,
+    dropdownClosed: ChevronDownIcon,
+    dropdownOpened: ChevronUpIcon,
     boxes: FaBoxOpen
 };
 
