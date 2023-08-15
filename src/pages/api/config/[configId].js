@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     const { configId } = req.query;
 
     if (req.method === 'GET') {
-        const data = await mongoClient.db('global-config').collection('website').find({ id: configId }).toArray();
+        const data = await mongoClient.db('global-config').collection('general').find({ id: configId }).toArray();
 
         //.find({ completed: false })
 
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
         const data = await mongoClient
             .db('global-config')
-            .collection('website')
+            .collection('general')
             .updateOne({ id: configId }, { $set: { ...body } });
 
         res.status(200).json({ data });

@@ -3,12 +3,11 @@ import { useCallback, useEffect, useState } from 'react';
 import {
     Badge,
     Button,
-    ButtonGroup,
+    Divider,
     Flex,
     HStack,
     Heading,
     Icon,
-    IconButton,
     Input,
     InputGroup,
     InputLeftElement,
@@ -21,8 +20,10 @@ import {
     Thead,
     Tr,
     VStack,
-    useDisclosure
+    useToast
 } from '@chakra-ui/react';
+
+import dayjs from '@/lib/time';
 
 import iconSet from '@/util/icons';
 import { PITypes } from '@/util/roles';
@@ -30,41 +31,29 @@ import { PITypes } from '@/util/roles';
 import GlobalLayout from '@/layouts/GlobalLayout';
 import ConfigLayout from '@/layouts/config/ConfigLayout';
 
-import ConfirmDialog from '@/components/ConfirmDialog';
-import BatchAddModal from '@/components/config/people/BatchAddModal';
-import NewPIModal from '@/components/config/people/NewPIModal';
-
 export default function People(props) {
     const [PIs, setPIs] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [editingPI, setEditingPI] = useState(null);
+    const [lastUpdated, setLastUpdated] = useState('');
 
     const [filteredPIs, setFilteredPIs] = useState(null);
 
-    const { isOpen: isNewPIOpen, onOpen: onNewPIOpen, onClose: onNewPIClose } = useDisclosure();
-    const { isOpen: isBatchAddOpen, onOpen: onBatchAddOpen, onClose: onBatchAddClose } = useDisclosure();
-    const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
+    const toast = useToast();
 
     const refresh = useCallback(() => {
         fetch('/api/peerInstructors')
             .then((res) => res.json())
             .then((data) => {
-                setPIs(data.peerInstructors);
+                setPIs(data.peerInstructors.sort((a, b) => a.name.localeCompare(b.name)));
+            });
+
+        fetch('/api/config/people')
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setLastUpdated(dayjs(data.config.lastUpdated).local().format('MMMM D, YYYY [at] h:mm A'));
             });
     }, []);
-
-    const deletePI = useCallback(
-        (entry) => {
-            fetch(`/api/peerInstructors/${entry._id}`, {
-                method: 'DELETE'
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    refresh();
-                });
-        },
-        [refresh]
-    );
 
     useEffect(() => {
         refresh();
@@ -78,51 +67,39 @@ export default function People(props) {
         }
     }, [searchTerm, PIs]);
 
+    const sync = useCallback(() => {
+        fetch('/api/peerInstructors/sync', {
+            method: 'POST'
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                toast({
+                    title: 'Synced peer instructors',
+                    status: 'success',
+                    duration: 5000
+                });
+                refresh();
+            });
+    }, [refresh, toast]);
+
     return (
         <>
-            <ConfirmDialog
-                isOpen={isDeleteOpen}
-                onClose={onDeleteClose}
-                onDelete={() => {
-                    deletePI(editingPI);
-                    onDeleteClose();
-                }}
-                header="Delete PI"
-                message={`Are you sure you want to delete ${editingPI?.name}? This action cannot be undone.`}
-            />
-            <BatchAddModal
-                isOpen={isBatchAddOpen}
-                onClose={() => {
-                    onBatchAddClose();
-                    refresh();
-                }}
-            />
-
-            <NewPIModal
-                isOpen={isNewPIOpen}
-                onClose={() => {
-                    onNewPIClose();
-                    refresh();
-                }}
-                initialData={editingPI}
-            />
             <Flex
                 w="full"
                 h="full"
                 p={5}
                 overflow="hidden"
                 direction="column"
-                justify="center"
+                justify="start"
                 align="center"
             >
                 <VStack
                     w="full"
                     maxW="2xl"
-                    h="full"
+                    maxH="full"
                     spacing={3}
                     align="start"
                     overflow="hidden"
-                    px={1}
                 >
                     <Heading
                         size="lg"
@@ -137,7 +114,30 @@ export default function People(props) {
                         h="full"
                         align="start"
                         spacing={3}
+                        overflow="hidden"
+                        px={1}
                     >
+                        <VStack align="start">
+                            <VStack
+                                spacing={0}
+                                align="start"
+                            >
+                                <Text fontSize="lg">Peer instructors are synced through The HIVE&apos;s Airtable</Text>
+                            </VStack>
+
+                            <HStack>
+                                <Button
+                                    leftIcon={<Icon as={iconSet.refresh} />}
+                                    onClick={sync}
+                                >
+                                    Sync PIs
+                                </Button>
+                                <Text color="secondaryText">Last synced: {lastUpdated}</Text>
+                            </HStack>
+                        </VStack>
+
+                        <Divider />
+
                         <VStack
                             w="auto"
                             h="auto"
@@ -156,74 +156,43 @@ export default function People(props) {
                                     }}
                                 />
                             </InputGroup>
-                            <ButtonGroup>
-                                <Button
-                                    leftIcon={<Icon as={iconSet.personPlus} />}
-                                    onClick={() => {
-                                        setEditingPI(null);
-                                        onNewPIOpen();
-                                    }}
-                                >
-                                    Add PI
-                                </Button>
-                                <Button
-                                    leftIcon={<Icon as={iconSet.people} />}
-                                    onClick={onBatchAddOpen}
-                                >
-                                    Batch add PIs
-                                </Button>
-                            </ButtonGroup>
                         </VStack>
+
                         {filteredPIs && (
                             <TableContainer
                                 w="full"
                                 h="auto"
-                                overflow="scroll"
+                                flexGrow={1}
+                                overflowY="auto"
+                                pr={1}
                             >
-                                <Table size="sm">
+                                <Table
+                                    h="auto"
+                                    size="md"
+                                >
                                     <Thead>
                                         <Tr>
                                             <Th>Peer instructor</Th>
-                                            <Th>Actions</Th>
+                                            <Th>Role</Th>
+                                            <Th>Email</Th>
                                         </Tr>
                                     </Thead>
                                     <Tbody>
                                         {filteredPIs.map((pi, i) => (
                                             <Tr key={i}>
                                                 <Td>
-                                                    <HStack>
-                                                        <Text fontSize="md">{pi.name}</Text>
-                                                        <Badge
-                                                            fontSize="xs"
-                                                            colorScheme="blue"
-                                                        >
-                                                            {Object.keys(PITypes).find(
-                                                                (key) => PITypes[key] === pi.type
-                                                            )}
-                                                        </Badge>
-                                                    </HStack>
+                                                    <Text fontSize="md">{pi.name}</Text>
                                                 </Td>
                                                 <Td>
-                                                    <ButtonGroup size="sm">
-                                                        <Button
-                                                            leftIcon={<Icon as={iconSet.pencil} />}
-                                                            onClick={() => {
-                                                                setEditingPI(pi);
-                                                                onNewPIOpen();
-                                                            }}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <IconButton
-                                                            colorScheme="red"
-                                                            onClick={() => {
-                                                                setEditingPI(pi);
-                                                                onDeleteOpen();
-                                                            }}
-                                                        >
-                                                            <Icon as={iconSet.delete} />
-                                                        </IconButton>
-                                                    </ButtonGroup>
+                                                    <Badge
+                                                        fontSize="xs"
+                                                        colorScheme="blue"
+                                                    >
+                                                        {Object.keys(PITypes).find((key) => PITypes[key] === pi.type)}
+                                                    </Badge>
+                                                </Td>
+                                                <Td>
+                                                    <Text fontSize="md">{pi.email}...</Text>
                                                 </Td>
                                             </Tr>
                                         ))}

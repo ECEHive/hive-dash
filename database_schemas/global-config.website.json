@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "64c425e73d046ceccfe0b72c"
+  },
+  "id": "website",
+  "banner": {
+    "enabled": true,
+    "type": {
+      "value": "info",
+      "label": "Info"
+    },
+    "title": "hi",
+    "description": ""
+  }
+},
+{
+  "_id": {
+    "$oid": "64dbb6505e7fb0eabe52fcbb"
+  },
+  "id": "people",
+  "lastUpdated": "2023-08-15T17:33:30.329Z"
+}]
