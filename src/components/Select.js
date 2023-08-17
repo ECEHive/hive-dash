@@ -9,6 +9,10 @@ export default function SelectComponent(props) {
         <ChakraSelect
             {...props}
             selectedOptionStyle="check"
+            menuPortalTarget={document.body}
+            styles={{
+                menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
+            }}
         />
     );
 }

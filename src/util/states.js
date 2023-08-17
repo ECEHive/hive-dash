@@ -6,15 +6,21 @@ const PrintStates = {
     CANCELED: 4
 };
 
+const PrinterStates = {
+    DOWN: 0,
+    IDLE: 1,
+    PRINTING: 2
+};
+
 const StateColors = {
     [PrintStates.QUEUED]: 'gray',
     [PrintStates.PRINTING]: 'green',
     [PrintStates.FAILED]: 'red',
     [PrintStates.COMPLETED]: 'green',
     [PrintStates.CANCELED]: 'red',
-    printing: 'green',
-    idle: 'yellow',
-    down: 'red'
+    [PrinterStates.PRINTING]: 'green',
+    [PrinterStates.IDLE]: 'yellow',
+    [PrinterStates.DOWN]: 'red'
 };
 
-export { PrintStates, StateColors };
+export { PrintStates, PrinterStates, StateColors };

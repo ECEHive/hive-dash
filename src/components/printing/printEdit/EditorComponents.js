@@ -165,13 +165,6 @@ function PrintInfo({ printData, update }) {
                     <Select
                         placeholder="PI name"
                         closeMenuOnSelect={true}
-                        menuPortalTarget={document.body}
-                        styles={{
-                            menuPortal: (base) => ({
-                                ...base,
-                                zIndex: 9999
-                            })
-                        }}
                         menuPlacement="auto"
                         value={{
                             label: printData.queuedBy,
@@ -190,10 +183,6 @@ function PrintInfo({ printData, update }) {
             <FormControl>
                 <FormLabel>Printer</FormLabel>
                 <Select
-                    menuPortalTarget={document.body}
-                    styles={{
-                        menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
-                    }}
                     w="full"
                     value={{
                         label: printers.find((p) => p.id === printData.printer)?.displayName,
@@ -227,10 +216,6 @@ function PrintInfo({ printData, update }) {
                 <FormControl>
                     <FormLabel>Material type</FormLabel>
                     <Select
-                        menuPortalTarget={document.body}
-                        styles={{
-                            menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
-                        }}
                         w="full"
                         value={{
                             label: printData.materialType,

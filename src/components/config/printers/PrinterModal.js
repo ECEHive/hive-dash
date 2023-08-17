@@ -135,10 +135,6 @@ export default function PrinterModal({ isOpen, onClose, initialData, printerType
                             <FormControl>
                                 <FormLabel>Printer Type</FormLabel>
                                 <Select
-                                    menuPortalTarget={document.body}
-                                    styles={{
-                                        menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
-                                    }}
                                     value={{
                                         value: data.type,
                                         label: data.type

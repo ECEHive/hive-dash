@@ -263,10 +263,6 @@ export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
                             <FormControl h="auto">
                                 <FormLabel>Type color</FormLabel>
                                 <Select
-                                    menuPortalTarget={document.body}
-                                    styles={{
-                                        menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
-                                    }}
                                     options={colors}
                                     formatOptionLabel={(option) => {
                                         console.log(option);
@@ -398,10 +394,6 @@ export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
                                 <FormControl>
                                     <FormLabel>Material measurement type</FormLabel>
                                     <Select
-                                        menuPortalTarget={document.body}
-                                        styles={{
-                                            menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
-                                        }}
                                         options={[
                                             { value: 'mass', label: 'Mass' },
                                             { value: 'volume', label: 'Volume' }
