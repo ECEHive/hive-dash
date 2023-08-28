@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { Box, Button, HStack, Icon, IconButton, Text, VStack, chakra } from '@chakra-ui/react';
+import { Box, Center, HStack, Icon, IconButton, Spinner, Text, VStack, chakra } from '@chakra-ui/react';
 
-import Image from 'next/image';
 import { useDropzone } from 'react-dropzone';
 import { StlViewer } from 'react-stl-viewer';
 
@@ -10,11 +9,10 @@ import iconSet from '@/util/icons';
 
 const ChakraStlViewer = chakra(StlViewer);
 
-export default function STLInput({ image, setImage }) {
-    const [file, setFile] = useState(null);
-
+export default function STLInput({ file, setFile }) {
     const onDrop = useCallback(
         (acceptedFiles) => {
+            setLoading(true);
             console.log(acceptedFiles[0]);
             setFile(acceptedFiles[0]);
         },
@@ -22,25 +20,18 @@ export default function STLInput({ image, setImage }) {
     );
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-    const captureImage = useCallback(() => {
-        setTimeout(() => {
-            const canvas = document.getElementById('stl-canvas').firstChild.firstChild;
-            const dataURL = canvas.toDataURL('image/png');
-
-            setImage(dataURL);
-        }, 1000);
-    }, [setImage]);
+    const [loading, setLoading] = useState(false);
 
     return (
         <Box
             w="full"
-            h="auto"
+            h="300px"
             position="relative"
         >
-            {!file && !image ? (
+            {!file ? (
                 <Box
                     w="full"
-                    h="300px"
+                    h="full"
                     {...getRootProps()}
                 >
                     <input {...getInputProps()} />
@@ -66,8 +57,7 @@ export default function STLInput({ image, setImage }) {
                 <>
                     <VStack
                         w="full"
-                        h="400px"
-                        p={3}
+                        h="full"
                         position="relative"
                         align="start"
                     >
@@ -76,34 +66,41 @@ export default function STLInput({ image, setImage }) {
                             position="relative"
                             flexGrow={1}
                         >
-                            {!image ? (
-                                <ChakraStlViewer
-                                    zIndex={1}
-                                    url={URL.createObjectURL(file)}
+                            <ChakraStlViewer
+                                zIndex={1}
+                                url={URL.createObjectURL(file)}
+                                w="full"
+                                h="full"
+                                modelProps={{
+                                    // set color to a pastel yellow
+                                    color: '#f5f5dc',
+                                    scale: 1
+                                }}
+                                shadows
+                                orbitControls={true}
+                                canvasId="stl-canvas"
+                                border="1px solid"
+                                borderColor="chakra-border-color"
+                                borderRadius={5}
+                                onFinishLoading={() => {
+                                    setLoading(false);
+                                }}
+                            />
+
+                            {loading && (
+                                <Center
+                                    position="absolute"
+                                    top={0}
+                                    left={0}
                                     w="full"
                                     h="full"
-                                    modelProps={{
-                                        // set color to a pastel yellow
-                                        color: '#f5f5dc',
-                                        scale: 1
-                                    }}
-                                    shadows
-                                    orbitControls={true}
-                                    canvasId="stl-canvas"
-                                    border="1px solid"
-                                    borderColor="chakra-border-color"
-                                    borderRadius={5}
-                                />
-                            ) : (
-                                <>
-                                    <Image
-                                        src={image}
-                                        alt="stl file"
-                                        layout="fill"
-                                        objectFit="contain"
-                                    />
-                                </>
+                                    zIndex={1}
+                                    backdropBlur={5}
+                                >
+                                    <Spinner />
+                                </Center>
                             )}
+
                             <IconButton
                                 position="absolute"
                                 top={3}
@@ -112,58 +109,12 @@ export default function STLInput({ image, setImage }) {
                                 icon={<Icon as={iconSet.delete} />}
                                 onClick={() => {
                                     setFile(null);
-                                    setImage(null);
                                 }}
                                 size="sm"
                                 colorScheme="red"
                                 alignSelf="flex-end"
                             />
-                            {!image ? (
-                                <Button
-                                    position="absolute"
-                                    left="50%"
-                                    transform="translateX(-50%)"
-                                    zIndex={2}
-                                    bottom={3}
-                                    onClick={() => {
-                                        //take screenshot of canvas
-                                        const canvas = document.getElementById('stl-canvas').firstChild.firstChild;
-                                        const dataURL = canvas.toDataURL('image/png');
-
-                                        setImage(dataURL);
-                                    }}
-                                    size="sm"
-                                    colorScheme="blue"
-                                    leftIcon={<Icon as={iconSet.camera} />}
-                                    isDisabled={image}
-                                >
-                                    Save preview
-                                </Button>
-                            ) : (
-                                <Button
-                                    position="absolute"
-                                    left="50%"
-                                    transform="translateX(-50%)"
-                                    zIndex={2}
-                                    bottom={3}
-                                    onClick={() => {
-                                        setImage(null);
-                                    }}
-                                    size="sm"
-                                    colorScheme="yellow"
-                                    leftIcon={<Icon as={iconSet.refresh} />}
-                                >
-                                    Retake preview
-                                </Button>
-                            )}
                         </Box>
-                        <Text
-                            fontSize="sm"
-                            color="secondaryText"
-                        >
-                            Try to orient the model so it&apos;s recognizable to help PIs identify the print later. Use
-                            as much space within the outlined area as possible.
-                        </Text>
                     </VStack>
                 </>
             )}
