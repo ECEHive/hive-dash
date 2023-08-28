@@ -34,7 +34,7 @@ import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
 
 import GlobalLayout from '@/layouts/GlobalLayout';
-import Layout from '@/layouts/printing/PrintingLayout';
+import Layout from '@/layouts/PrintingLayout';
 
 import PrintPreview from '@/components/printing/PrintPreview';
 import PrintEditorModal from '@/components/printing/printEdit/PrintEditorModal';

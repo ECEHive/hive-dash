@@ -31,7 +31,7 @@ import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
 
 import GlobalLayout from '@/layouts/GlobalLayout';
-import Layout from '@/layouts/printing/PrintingLayout';
+import Layout from '@/layouts/PrintingLayout';
 
 import PrinterCard from '@/components/printing/dashboard/PrinterGridItem';
 import PrinterListItem from '@/components/printing/dashboard/PrinterListItem';

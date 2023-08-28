@@ -1,8 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
-import { HStack, Spinner, Text, useToast } from '@chakra-ui/react';
+import { HStack, Spinner, Text, useDisclosure, useToast } from '@chakra-ui/react';
 
 import useFocus from '@/hooks/useFocus';
+
+import NewPrintModal from '@/components/printing/new/NewPrintModal';
 
 const PrintingContext = createContext({});
 
@@ -123,10 +125,20 @@ function PrintingProvider({ children }) {
         };
     }, [refreshDynamicData, refreshStaticData]);
 
+    const { onOpen: onNewOpen, onClose: onNewClose, isOpen: isNewOpen } = useDisclosure();
+
     return (
-        <PrintingContext.Provider value={{ queue, printers, printerTypes, refreshDynamicData, peerInstructors }}>
+        <PrintingContext.Provider
+            value={{ queue, printers, printerTypes, refreshDynamicData, peerInstructors, onNewOpen }}
+        >
             {queue && printers && printerTypes ? (
-                <>{children}</>
+                <>
+                    <NewPrintModal
+                        isOpen={isNewOpen}
+                        onClose={onNewClose}
+                    />
+                    {children}
+                </>
             ) : (
                 <HStack
                     w="100%"

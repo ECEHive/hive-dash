@@ -33,8 +33,8 @@ import ReactMarkdown from 'react-markdown';
 
 import iconSet from '@/util/icons';
 
+import ConfigLayout from '@/layouts/ConfigLayout';
 import GlobalLayout from '@/layouts/GlobalLayout';
-import ConfigLayout from '@/layouts/config/ConfigLayout';
 
 import Select from '@/components/Select';
 

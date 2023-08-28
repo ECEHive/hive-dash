@@ -29,8 +29,8 @@ import useConfirmation from '@/contexts/ConfirmDialogContext';
 
 import iconSet from '@/util/icons';
 
+import ConfigLayout from '@/layouts/ConfigLayout';
 import GlobalLayout from '@/layouts/GlobalLayout';
-import ConfigLayout from '@/layouts/config/ConfigLayout';
 
 import PrinterModal from '@/components/config/printers/PrinterModal';
 import PrinterTypeModal from '@/components/config/printers/PrinterTypeModal';

@@ -2,18 +2,24 @@ import { useMemo } from 'react';
 
 import { Icon } from '@chakra-ui/react';
 
+import usePrinting from '@/contexts/printing/PrintingContext';
+
 import iconSet from '@/util/icons';
 
 import SidebarTemplate from '@/components/SidebarTemplate';
 
-export default function Navigation(props) {
+export default function Navigation({}) {
+    const { onNewOpen } = usePrinting();
+
     const pages = useMemo(
         () => [
             {
                 type: 'button',
                 name: 'New print',
                 icon: <Icon as={iconSet.add} />,
-                href: '/new',
+                onClick: () => {
+                    onNewOpen();
+                },
                 colorScheme: 'green'
             },
 
@@ -57,7 +63,7 @@ export default function Navigation(props) {
             //     href: '/knowledge'
             // }
         ],
-        []
+        [onNewOpen]
     );
 
     return (

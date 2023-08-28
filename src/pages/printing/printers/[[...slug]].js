@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import usePrinting from '@/contexts/printing/PrintingContext';
 
 import GlobalLayout from '@/layouts/GlobalLayout';
-import Layout from '@/layouts/printing/PrintingLayout';
+import Layout from '@/layouts/PrintingLayout';
 
 import PrinterInfo from '@/components/printing/printers/PrinterInfo';
 import PrinterList from '@/components/printing/printers/PrinterList';

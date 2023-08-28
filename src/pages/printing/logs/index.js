@@ -24,7 +24,7 @@ import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 
 import GlobalLayout from '@/layouts/GlobalLayout';
-import Layout from '@/layouts/printing/PrintingLayout';
+import Layout from '@/layouts/PrintingLayout';
 
 function LogItem({ printData }) {
     const { betterPrintData, printerData } = usePrintParser(printData);

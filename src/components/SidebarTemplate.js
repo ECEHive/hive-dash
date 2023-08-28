@@ -25,23 +25,41 @@ function Navigation({ pageData, baseUrl, pathPage }) {
             {pageData &&
                 pageData.map((element, index) => {
                     if (element.type === 'button') {
-                        const active = pathPage === element.href.replace('/', '');
+                        const active = pathPage === element?.href?.replace('/', '') || false;
                         return (
-                            <Button
-                                // variant={active ? 'outline' : 'ghost'}
-                                variant="ghost"
-                                w="100%"
-                                size="md"
-                                justifyContent="flex-start"
-                                colorScheme={element?.colorScheme}
-                                as={NextLink}
-                                href={baseUrl + element.href}
-                                isActive={active}
-                                leftIcon={element.icon}
-                                key={element.name}
-                            >
-                                {element.name}
-                            </Button>
+                            <>
+                                {element.href ? (
+                                    <Button
+                                        // variant={active ? 'outline' : 'ghost'}
+                                        variant="ghost"
+                                        w="100%"
+                                        size="md"
+                                        justifyContent="flex-start"
+                                        colorScheme={element?.colorScheme}
+                                        as={NextLink}
+                                        href={baseUrl + element.href}
+                                        isActive={active}
+                                        leftIcon={element.icon}
+                                        key={element.name}
+                                    >
+                                        {element.name}
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        // variant={active ? 'outline' : 'ghost'}
+                                        variant="ghost"
+                                        w="100%"
+                                        size="md"
+                                        justifyContent="flex-start"
+                                        colorScheme={element?.colorScheme}
+                                        onClick={element.onClick}
+                                        leftIcon={element.icon}
+                                        key={element.name}
+                                    >
+                                        {element.name}
+                                    </Button>
+                                )}
+                            </>
                         );
                     } else if (element.type === 'divider') {
                         return <Divider key={index} />;

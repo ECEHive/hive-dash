@@ -28,8 +28,8 @@ import dayjs from '@/lib/time';
 import iconSet from '@/util/icons';
 import { PITypes } from '@/util/roles';
 
+import ConfigLayout from '@/layouts/ConfigLayout';
 import GlobalLayout from '@/layouts/GlobalLayout';
-import ConfigLayout from '@/layouts/config/ConfigLayout';
 
 export default function People(props) {
     const [PIs, setPIs] = useState(null);
