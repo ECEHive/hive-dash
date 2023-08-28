@@ -7,11 +7,12 @@ import {
     Flex,
     HStack,
     Icon,
-    Spacer,
     Text,
     VStack,
     useColorModeValue
 } from '@chakra-ui/react';
+
+import Image from 'next/image';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
@@ -89,6 +90,8 @@ export default function PrintPreview({ print }) {
                         p={5}
                         borderBottom="1px"
                         borderColor="chakra-border-color"
+                        position="relative"
+                        overflow="hidden"
                     >
                         <CircularProgress
                             size={16}
@@ -120,12 +123,32 @@ export default function PrintPreview({ print }) {
                                 <Text fontSize="sm">{timeLeftHumanizedDetailed}</Text>
                             </HStack>
                         </VStack>
-                        <Spacer />
+
+                        <Image
+                            src={betterPrintData?.preview}
+                            alt="print preview"
+                            height={20}
+                            width={100}
+                            style={{
+                                overflow: 'hidden',
+                                right: 20,
+                                position: 'absolute',
+                                background: `linear-gradient(to right, ${useColorModeValue(
+                                    'gray.200',
+                                    'gray.700'
+                                )} 0%, ${useColorModeValue('gray.700', 'gray.200')} 100%)`
+                            }}
+                            hidden={!betterPrintData?.preview}
+                        />
+                        {/* <Spacer />
                         <VStack
                             spacing={1}
                             color="secondaryText"
                             justify="center"
                             h="full"
+                            backdropBlur={3}
+                            bgColor="rgba(255, 255, 255, 0.5)"
+                            zIndex={2}
                         >
                             <HStack
                                 h="full"
@@ -149,7 +172,7 @@ export default function PrintPreview({ print }) {
                                     {betterPrintData.endUser.firstname} {betterPrintData.endUser.lastname}
                                 </Text>
                             </HStack>
-                        </VStack>
+                        </VStack> */}
                     </HStack>
 
                     <HStack

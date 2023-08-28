@@ -118,33 +118,51 @@ export default function STLInput({ image, setImage }) {
                                 colorScheme="red"
                                 alignSelf="flex-end"
                             />
-                            <Button
-                                position="absolute"
-                                left="50%"
-                                transform="translateX(-50%)"
-                                zIndex={2}
-                                bottom={3}
-                                onClick={() => {
-                                    //take screenshot of canvas
-                                    const canvas = document.getElementById('stl-canvas').firstChild.firstChild;
-                                    const dataURL = canvas.toDataURL('image/png');
+                            {!image ? (
+                                <Button
+                                    position="absolute"
+                                    left="50%"
+                                    transform="translateX(-50%)"
+                                    zIndex={2}
+                                    bottom={3}
+                                    onClick={() => {
+                                        //take screenshot of canvas
+                                        const canvas = document.getElementById('stl-canvas').firstChild.firstChild;
+                                        const dataURL = canvas.toDataURL('image/png');
 
-                                    setImage(dataURL);
-                                }}
-                                size="sm"
-                                colorScheme="blue"
-                                leftIcon={<Icon as={iconSet.camera} />}
-                                isDisabled={image}
-                            >
-                                Capture image
-                            </Button>
+                                        setImage(dataURL);
+                                    }}
+                                    size="sm"
+                                    colorScheme="blue"
+                                    leftIcon={<Icon as={iconSet.camera} />}
+                                    isDisabled={image}
+                                >
+                                    Save preview
+                                </Button>
+                            ) : (
+                                <Button
+                                    position="absolute"
+                                    left="50%"
+                                    transform="translateX(-50%)"
+                                    zIndex={2}
+                                    bottom={3}
+                                    onClick={() => {
+                                        setImage(null);
+                                    }}
+                                    size="sm"
+                                    colorScheme="yellow"
+                                    leftIcon={<Icon as={iconSet.refresh} />}
+                                >
+                                    Retake preview
+                                </Button>
+                            )}
                         </Box>
                         <Text
                             fontSize="sm"
                             color="secondaryText"
                         >
-                            Try to orient the model so it&apos;s somewhat recognizable to help PIs identify the print
-                            later.
+                            Try to orient the model so it&apos;s recognizable to help PIs identify the print later. Use
+                            as much space within the outlined area as possible.
                         </Text>
                     </VStack>
                 </>

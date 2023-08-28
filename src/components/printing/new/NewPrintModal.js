@@ -113,7 +113,7 @@ function PrinterItem({ printer, ...props }) {
                                 w="full"
                             >
                                 <Icon as={iconSet.queue} />
-                                <Text>3 prints in queue</Text>
+                                <Text>{printerData.queueLength} prints in queue</Text>
                             </HStack>
                         </VStack>
                         <Spacer />
@@ -204,88 +204,97 @@ export default function NewPrintModal({ isOpen, onClose }) {
     };
 
     return (
-        <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            isCentered
-            size="lg"
-            scrollBehavior="inside"
-        >
-            <ModalOverlay />
-            <ModalContent>
-                <Formik
-                    initialValues={{
-                        pi: {},
-                        printerType: '',
-                        printer: '',
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                        printName: '',
-                        material: {},
-                        materialUsage: '',
-                        estTimeHours: '',
-                        estTimeMinutes: ''
-                    }}
-                    onSubmit={(values, actions) => {
-                        uploadPreview(STLimage, values.printName)
-                            .then((url) => {
-                                const timestamp = dayjs.utc();
+        <Formik
+            initialValues={{
+                pi: {},
+                printerType: '',
+                printer: '',
+                firstName: '',
+                lastName: '',
+                email: '',
+                printName: '',
+                material: {},
+                materialUsage: '',
+                estTimeHours: '',
+                estTimeMinutes: ''
+            }}
+            onSubmit={(values, actions) => {
+                uploadPreview(STLimage, values.printName)
+                    .then((url) => {
+                        const timestamp = dayjs.utc();
 
-                                const payload = {
-                                    trayName: values.printName,
-                                    printer: values.printer.id,
-                                    estTime: dayjs
-                                        .duration(`PT${values.estTimeHours}H${values.estTimeMinutes}M`)
-                                        .toISOString(),
-                                    materialType: values.material.value,
-                                    materialUsage: values.materialUsage,
-                                    queuedBy: values.pi.value,
-                                    queuedAt: timestamp,
-                                    notes: '',
-                                    state: PrintStates.QUEUED,
-                                    preview: url,
-                                    endUser: {
-                                        firstname: values.firstName,
-                                        lastname: values.lastName,
-                                        email: values.email
-                                    },
-                                    events: [
-                                        {
-                                            type: PrintStates.QUEUED,
-                                            timestamp: timestamp,
-                                            notes: ''
-                                        }
-                                    ]
-                                };
+                        const payload = {
+                            trayName: values.printName,
+                            printer: values.printer.id,
+                            estTime: dayjs.duration(`PT${values.estTimeHours}H${values.estTimeMinutes}M`).toISOString(),
+                            materialType: values.material.value,
+                            materialUsage: values.materialUsage,
+                            queuedBy: values.pi.value,
+                            queuedAt: timestamp,
+                            notes: '',
+                            state: PrintStates.QUEUED,
+                            preview: url,
+                            endUser: {
+                                firstname: values.firstName,
+                                lastname: values.lastName,
+                                email: values.email
+                            },
+                            events: [
+                                {
+                                    type: PrintStates.QUEUED,
+                                    timestamp: timestamp,
+                                    notes: ''
+                                }
+                            ]
+                        };
 
-                                fetch('/api/printing/queue', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(payload)
-                                })
-                                    .then((res) => res.json())
-                                    .then((res) => {
-                                        actions.setSubmitting(false);
-                                        setActiveStep((s) => s + 1);
-                                    })
-                                    .catch((err) => {
-                                        toast({
-                                            title: 'Error',
-                                            description: `Couldn't queue the print: ${err.message}`,
-                                            status: 'error',
-                                            duration: 5000
-                                        });
-                                    });
+                        fetch('/api/printing/queue', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        })
+                            .then((res) => res.json())
+                            .then((res) => {
+                                actions.setSubmitting(false);
+                                setActiveStep((s) => s + 1);
                             })
                             .catch((err) => {
-                                console.log(err);
+                                toast({
+                                    title: 'Error',
+                                    description: `Couldn't queue the print: ${err.message}`,
+                                    status: 'error',
+                                    duration: 5000
+                                });
                             });
+                    })
+                    .catch((err) => {
+                        toast({
+                            title: 'Error uploading preview',
+                            description: err.message,
+                            status: 'error',
+                            duration: 5000
+                        });
+                    });
+            }}
+        >
+            {(props) => (
+                <Modal
+                    isOpen={isOpen}
+                    onClose={() => {
+                        onClose();
+                        setActiveStep(0);
+                        setSTLimage(null);
+                        props.handleReset();
                     }}
+                    isCentered
+                    size="lg"
+                    scrollBehavior="inside"
+                    closeOnOverlayClick={false}
                 >
-                    {(props) => (
+                    <ModalOverlay />
+                    <ModalContent>
                         <Form>
                             <ModalHeader pb={0}>New print</ModalHeader>
                             <ModalCloseButton />
@@ -693,9 +702,9 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                 )}
                             </ModalFooter>
                         </Form>
-                    )}
-                </Formik>
-            </ModalContent>
-        </Modal>
+                    </ModalContent>
+                </Modal>
+            )}
+        </Formik>
     );
 }
