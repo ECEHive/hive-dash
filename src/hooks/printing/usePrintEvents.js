@@ -74,12 +74,8 @@ export default function usePrintEvents(print) {
                     dayjs(currentStartTime).add(dayjs.duration(current.estTime)).diff(dayjs())
                 );
 
-                console.log(currentRemaining);
-
                 estWait = estWait.add(currentRemaining);
             }
-
-            console.log(estWait);
 
             newEvents.push({
                 type: PrintStates.PRINTING,
@@ -107,6 +103,7 @@ export default function usePrintEvents(print) {
             });
         }
 
+        // aggregate and organize progresses for each event such that they are padded and clamped to limit values
         let progressedEvents = [...newEvents].sort((a, b) => {
             return dayjs.utc(a.timestamp).diff(dayjs.utc(b.timestamp)); //sort so newest at top
         });
