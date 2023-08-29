@@ -27,7 +27,7 @@ function TimelineEvent({ event }) {
                     />
                 </HStack>
 
-                {event.type === PrintStates.QUEUED || event.next ? (
+                {event.next ? (
                     <VStack
                         align="start"
                         justify="start"
