@@ -250,15 +250,12 @@ export default function FindPrint(props) {
 
                                         <Divider />
 
-                                        {/* <PrintPreview print={selectedPrintData} /> */}
-
                                         <Timeline print={selectedPrintData} />
 
                                         {/* tabs */}
                                         <Tabs
                                             w="full"
                                             flexGrow={1}
-                                            mt={5}
                                             index={tabIndex}
                                             onChange={(index) => {
                                                 setTabIndex(index);

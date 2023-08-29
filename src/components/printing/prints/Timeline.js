@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { Avatar, Box, HStack, Progress, Text, VStack, useColorModeValue } from '@chakra-ui/react';
+import { Avatar, Box, HStack, Progress, Text, Tooltip, VStack, useColorModeValue } from '@chakra-ui/react';
 
 import dayjs from '@/lib/time';
 
@@ -21,11 +21,13 @@ function TimelineEvent({ event }) {
                 align={event.last ? 'end' : 'start'}
                 spacing={1}
             >
-                <Avatar
-                    bgColor={event.happened ? 'blue.200' : avatarIncompleteColor}
-                    size="xs"
-                    icon={event.icon}
-                />
+                <Tooltip label={`${event.description} @ ${event.formattedTimestamp}`}>
+                    <Avatar
+                        bgColor={event.happened ? 'blue.200' : avatarIncompleteColor}
+                        size="xs"
+                        icon={event.icon}
+                    />
+                </Tooltip>
 
                 {event.next || event.latest ? (
                     <VStack
@@ -79,6 +81,8 @@ export default function Timeline({ print }) {
             const nextProgress = nextEvent.progress;
             const currentProgress = latestEvent.progress;
 
+            console.log(currentProgress, nextProgress);
+
             // find the progress between the two events
             const progress = Math.min(
                 currentProgress +
@@ -110,6 +114,7 @@ export default function Timeline({ print }) {
                 h="auto"
                 align="start"
                 spacing={3}
+                pos="relative"
             >
                 <HStack w="full">
                     <VStack
@@ -161,23 +166,6 @@ export default function Timeline({ print }) {
                                 event={event}
                             />
                         ))}
-
-                        {/* {print.state !== PrintStates.COMPLETED && print.state !== PrintStates.CANCELED ? (
-                            <Box
-                                position="absolute"
-                                left={progress + '%'}
-                                top={6}
-                                transform="translateX(-50%)"
-                            >
-                                <Text
-                                    fontSize="2xs"
-                                    lineHeight={1}
-                                    color="secondaryText"
-                                >
-                                    {timeSinceQueue}
-                                </Text>
-                            </Box>
-                        ) : null} */}
                     </HStack>
                 </Box>
             </VStack>

@@ -18,6 +18,9 @@ export default function usePrintEvents(print) {
     const { betterPrintData, printerData } = usePrintParser(print);
     const { expandedPrinterData } = usePrinterParser(printerData);
 
+    const MAX_PROGRESS = 90;
+    const MIN_PROGRESS = 5;
+
     const eventIcons = {
         [PrintStates.QUEUED]: iconSet.download,
         [PrintStates.COMPLETED]: iconSet.check,
@@ -64,7 +67,6 @@ export default function usePrintEvents(print) {
 
             // if printer is printing, add the remaining time on the current print to estWait
             const current = queue.find((job) => job._id === expandedPrinterData.currentTray);
-            console.log(current);
             if (current?.state === PrintStates.PRINTING) {
                 const currentStartTime = [...current.events].find(
                     (event) => event.type === PrintStates.PRINTING
@@ -112,19 +114,32 @@ export default function usePrintEvents(print) {
         for (let index = 0; index < progressedEvents.length; index++) {
             const event = progressedEvents[index];
             let progress = 0;
-            if (!event?.passed) {
-                progress = Math.min(
+            progress = Math.round(
+                Math.min(
                     (dayjs(event.timestamp).subtract(queuedTime).valueOf() /
                         dayjs(completedTime).subtract(queuedTime).valueOf()) *
                         100,
-                    85
-                );
+                    MAX_PROGRESS
+                )
+            );
 
-                if (event.type !== PrintStates.QUEUED) {
-                    progress = Math.max(previousProgress + 4, progress);
+            // snap progress to 4% intervals
+            if (event.type !== PrintStates.QUEUED && event.type !== PrintStates.COMPLETED) {
+                progress = Math.max(previousProgress + 4, progress);
+                if (progress > MAX_PROGRESS) {
+                    // move preceeding events by 4% to make room for this one
+                    for (let i = index - 1; i >= 0; i--) {
+                        const e = progressedEvents[i];
+                        if (e.progress + 4 === progress) {
+                            e.progress -= 4;
+                        }
+                    }
+                    progress = MAX_PROGRESS;
                 }
-                previousProgress = progress;
+            } else if (event.type === PrintStates.COMPLETED) {
+                progress = 100;
             }
+            previousProgress = progress;
             event.progress = progress;
         }
 
