@@ -84,8 +84,6 @@ export default function FindPrint(props) {
         }
     }, [router.query, selectedPrintData, queue]);
 
-    useEffect(() => {}, [queue]);
-
     const cancelPrint = useCallback(() => {
         setCancelEventData({
             type: PrintStates.CANCELED,
@@ -107,6 +105,32 @@ export default function FindPrint(props) {
         },
         [printUpdater, onCancelClose, selectedPrintData]
     );
+
+    const dataFields = useMemo(() => {
+        return [
+            {
+                label: 'Printer',
+                icon: iconSet.printer,
+                value: printerData?.displayName || betterPrintData?.printer
+            },
+            {
+                label: 'Material',
+                icon: iconSet.material,
+                value: betterPrintData?.materialType
+            },
+            {
+                label: 'Est. material',
+                icon: iconSet.materialAmount,
+                value: betterPrintData?.materialUsage,
+                suffix: betterPrintData?.materialSymbol
+            },
+            {
+                label: 'Est. time',
+                icon: iconSet.clock,
+                value: betterPrintData?.estTimeFormatted
+            }
+        ];
+    }, [printerData, betterPrintData]);
 
     return (
         <>
@@ -169,6 +193,41 @@ export default function FindPrint(props) {
                                         spacing={3}
                                         px={1}
                                     >
+                                        {selectedPrintData.state === PrintStates.CANCELED && (
+                                            <Box
+                                                w="100%"
+                                                h="auto"
+                                            >
+                                                <Alert
+                                                    status="error"
+                                                    borderRadius={5}
+                                                >
+                                                    <AlertIcon />
+                                                    <AlertDescription>This print has been canceled</AlertDescription>
+                                                </Alert>
+                                            </Box>
+                                        )}
+
+                                        {printerData?.type === 'stratasys' &&
+                                        selectedPrintData.state !== PrintStates.CANCELED ? (
+                                            <Box
+                                                w="100%"
+                                                h="auto"
+                                            >
+                                                <Alert
+                                                    status="warning"
+                                                    borderRadius={5}
+                                                >
+                                                    <AlertIcon />
+                                                    <AlertDescription>
+                                                        This print uses QSR supports, which we will remove for you.
+                                                        Expect it to be ready one business day later than the print
+                                                        completion date.
+                                                    </AlertDescription>
+                                                </Alert>
+                                            </Box>
+                                        ) : null}
+
                                         <HStack
                                             w="full"
                                             position="relative"
@@ -213,40 +272,56 @@ export default function FindPrint(props) {
                                             />
                                         </HStack>
 
-                                        {selectedPrintData.state === PrintStates.CANCELED && (
-                                            <Box
-                                                w="100%"
-                                                h="auto"
-                                            >
-                                                <Alert
-                                                    status="error"
-                                                    borderRadius={5}
-                                                >
-                                                    <AlertIcon />
-                                                    <AlertDescription>This print has been canceled</AlertDescription>
-                                                </Alert>
-                                            </Box>
-                                        )}
-
-                                        {printerData?.type === 'stratasys' &&
-                                        selectedPrintData.state !== PrintStates.CANCELED ? (
-                                            <Box
-                                                w="100%"
-                                                h="auto"
-                                            >
-                                                <Alert
-                                                    status="warning"
-                                                    borderRadius={5}
-                                                >
-                                                    <AlertIcon />
-                                                    <AlertDescription>
-                                                        This print uses QSR supports, which we will remove for you.
-                                                        Expect it to be ready one business day later than the print
-                                                        completion date.
-                                                    </AlertDescription>
-                                                </Alert>
-                                            </Box>
-                                        ) : null}
+                                        <HStack
+                                            w="full"
+                                            h="auto"
+                                            align="center"
+                                            justify="space-around"
+                                            overflow="auto"
+                                            whiteSpace="nowrap"
+                                            pb={3}
+                                        >
+                                            {dataFields.map((field, i) => {
+                                                return (
+                                                    <>
+                                                        <VStack
+                                                            spacing={1}
+                                                            align="start"
+                                                        >
+                                                            <HStack
+                                                                fontSize="sm"
+                                                                color="secondaryTextAlt"
+                                                            >
+                                                                <Icon as={field.icon} />
+                                                                <Text>{field.label}</Text>
+                                                            </HStack>
+                                                            <HStack
+                                                                alignItems="end"
+                                                                spacing={1}
+                                                            >
+                                                                <Text
+                                                                    fontSize="2xl"
+                                                                    fontWeight="semibold"
+                                                                    lineHeight={1}
+                                                                >
+                                                                    {field.value}
+                                                                </Text>
+                                                                {field.suffix && (
+                                                                    <Text fontSize="sm">{field.suffix}</Text>
+                                                                )}
+                                                            </HStack>
+                                                        </VStack>
+                                                        {i < dataFields.length - 1 && (
+                                                            <Icon
+                                                                color="secondaryText"
+                                                                fontSize="sm"
+                                                                as={iconSet.dot}
+                                                            />
+                                                        )}
+                                                    </>
+                                                );
+                                            })}
+                                        </HStack>
 
                                         <Divider />
 

@@ -20,6 +20,7 @@ export default function usePrintEvents(print) {
 
     const MAX_PROGRESS = 90;
     const MIN_PROGRESS = 5;
+    const MIN_INTERVAL = 4;
 
     const eventIcons = {
         [PrintStates.QUEUED]: iconSet.download,
@@ -123,15 +124,15 @@ export default function usePrintEvents(print) {
                 )
             );
 
-            // snap progress to 4% intervals
+            // snap progress to MIN_INTERVAL% intervals
             if (event.type !== PrintStates.QUEUED && event.type !== PrintStates.COMPLETED) {
-                progress = Math.max(previousProgress + 4, progress);
+                progress = Math.max(previousProgress + MIN_INTERVAL, progress);
                 if (progress > MAX_PROGRESS) {
-                    // move preceeding events by 4% to make room for this one
+                    // move preceeding events by MIN_INTERVAL% to make room for this one
                     for (let i = index - 1; i >= 0; i--) {
                         const e = progressedEvents[i];
-                        if (e.progress + 4 === progress) {
-                            e.progress -= 4;
+                        if (e.progress + MIN_INTERVAL === progress) {
+                            e.progress -= MIN_INTERVAL;
                         }
                     }
                     progress = MAX_PROGRESS;

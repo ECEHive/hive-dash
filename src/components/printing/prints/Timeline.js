@@ -91,21 +91,13 @@ export default function Timeline({ print }) {
                 100
             );
 
-            return progress;
+            return progress + 1; //+1 makes sure it's under the avatar icon cuz of how things are positioned
         }
 
         if (print.state === PrintStates.COMPLETED || print.state === PrintStates.CANCELED) {
             return 100;
         }
     }, [detailedEvents, print.state]);
-
-    // const timeSinceQueue = useMemo(() => {
-    //     //calculate time since queued
-    //     const queuedTime = dayjs(print.queuedAt);
-    //     const now = dayjs();
-
-    //     return dayjs.duration(now.diff(queuedTime)).format('HH:mm');
-    // });
 
     return (
         <>
