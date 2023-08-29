@@ -1,15 +1,25 @@
 import { useMemo } from 'react';
 
-import { Avatar, AvatarBadge, Icon, useColorMode, useColorModeValue } from '@chakra-ui/react';
+import { Icon, useColorModeValue } from '@chakra-ui/react';
 
 import dayjs from '@/lib/time';
+
+import usePrinting from '@/contexts/printing/PrintingContext';
 
 import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
 
+import usePrintParser from './usePrintParser';
+import usePrinterParser from './usePrinterParser';
+
 export default function usePrintEvents(print) {
+    const { queue } = usePrinting();
+
+    const { betterPrintData, printerData } = usePrintParser(print);
+    const { expandedPrinterData } = usePrinterParser(printerData);
+
     const eventIcons = {
-        [PrintStates.QUEUED]: iconSet.pencil,
+        [PrintStates.QUEUED]: iconSet.download,
         [PrintStates.COMPLETED]: iconSet.check,
         [PrintStates.FAILED]: iconSet.stop,
         [PrintStates.PRINTING]: iconSet.play,
@@ -25,49 +35,80 @@ export default function usePrintEvents(print) {
     };
 
     const eventNames = {
-        [PrintStates.QUEUED]: 'Print queued',
-        [PrintStates.COMPLETED]: 'Print completed',
-        [PrintStates.FAILED]: 'Print failed',
-        [PrintStates.PRINTING]: 'Print started',
-        [PrintStates.CANCELED]: 'Print canceled'
+        [PrintStates.QUEUED]: 'Queued',
+        [PrintStates.COMPLETED]: 'Completed',
+        [PrintStates.FAILED]: 'Failed',
+        [PrintStates.PRINTING]: 'Printing',
+        [PrintStates.CANCELED]: 'Canceled'
     };
-
-    const eventOrder = {
-        [PrintStates.QUEUED]: [PrintStates.PRINTING, PrintStates.COMPLETED],
-        [PrintStates.PRINTING]: [PrintStates.COMPLETED],
-        [PrintStates.FAILED]: [PrintStates.PRINTING, PrintStates.COMPLETED],
-        [PrintStates.COMPLETED]: [],
-        [PrintStates.CANCELED]: []
-    };
-
-    const expectedIconColor = useColorModeValue('black', 'white');
-    const colorMode = useColorMode();
 
     const detailedEvents = useMemo(() => {
         if (!print) return [];
         let newEvents = [...print.events];
+
+        const queuedTime = dayjs(print.queuedAt);
+        let completedTime =
+            newEvents.find((event) => event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED)
+                ?.timestamp || dayjs().toISOString();
+
+        if (print.state === PrintStates.QUEUED || print.state === PrintStates.FAILED) {
+            // estimate when the print will start based on the sum of the estimated times of all the prints in the queue
+            let estTime = dayjs.duration(0, 'seconds');
+
+            expandedPrinterData.queue.forEach((job) => {
+                estTime = estTime.add(dayjs.duration(job.estTime));
+            });
+
+            newEvents.push({
+                type: PrintStates.PRINTING,
+                timestamp: queuedTime.add(estTime).toISOString(),
+                passed: false
+            });
+        }
+
+        if (
+            print.state === PrintStates.PRINTING ||
+            print.state === PrintStates.QUEUED ||
+            print.state === PrintStates.FAILED
+        ) {
+            // estimate the time the print will complete based on when it started printing and its duration
+            let startTime = dayjs(
+                [...newEvents].reverse().find((event) => event.type === PrintStates.PRINTING).timestamp
+            );
+            let endTime = startTime.add(dayjs.duration(betterPrintData.estTime));
+
+            completedTime = endTime.toISOString();
+
+            newEvents.push({
+                type: PrintStates.COMPLETED,
+                timestamp: endTime.toISOString(),
+                passed: false
+            });
+        }
+
         return newEvents
-            .map((event) => {
+            .map((event, index) => {
+                let progress = 0;
+                if (!event?.passed) {
+                    progress =
+                        (dayjs(event.timestamp).subtract(queuedTime).valueOf() /
+                            dayjs(completedTime).subtract(queuedTime).valueOf()) *
+                        100;
+                }
+
                 return {
                     ...event,
+
+                    happened: print.events.includes(event),
+                    next: newEvents.find((e) => !print.events.includes(e)) === event,
+                    progress: progress,
+                    last: event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED,
+
                     description: eventNames[event.type],
                     formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
                     humanizedTimestamp: dayjs.duration(dayjs.utc(event.timestamp).diff(dayjs().utc())).humanize(true),
-                    icon: (
-                        <Avatar
-                            size="sm"
-                            icon={<Icon as={eventIcons[event.type]} />}
-                            bgColor={eventColors[event.type]}
-                        >
-                            {event?.notes?.length > 0 && (
-                                <AvatarBadge
-                                    bg="yellow.300"
-                                    boxSize="1em"
-                                    placement="top-end"
-                                />
-                            )}
-                        </Avatar>
-                    )
+                    icon: <Icon as={eventIcons[event.type]} />,
+                    color: eventColors[event.type]
                 };
             })
             .sort((a, b) => {
@@ -77,30 +118,5 @@ export default function usePrintEvents(print) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [print?.events]); //ignore this warning, this is a safe memoized value
 
-    const expectedEvents = useMemo(() => {
-        if (!print) return [];
-        return eventOrder[print.state].map((type) => {
-            return {
-                type,
-                description: eventNames[type],
-                icon: (
-                    <Avatar
-                        size="sm"
-                        icon={
-                            <Icon
-                                as={eventIcons[type]}
-                                color={expectedIconColor}
-                            />
-                        }
-                        bgColor="transparent"
-                        borderColor={eventColors[type]}
-                        borderWidth={2}
-                    />
-                )
-            };
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [print, colorMode]);
-
-    return { expectedEvents, detailedEvents };
+    return { detailedEvents };
 }

@@ -41,8 +41,9 @@ import {
     VStack
 } from '@chakra-ui/react';
 
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { Field, Form, Formik } from 'formik';
+import { Image } from 'image-js';
 
 import { storage } from '@/lib/firebase';
 import dayjs from '@/lib/time';
@@ -51,6 +52,7 @@ import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
 
+import dataUrlToBlob from '@/util/dataUrlToBlob';
 import iconSet from '@/util/icons';
 import { PrintStates, PrinterStates, StateColors } from '@/util/states';
 
@@ -142,10 +144,10 @@ export default function NewPrintModal({ isOpen, onClose }) {
     const { printerTypes, printers, peerInstructors } = usePrinting();
 
     const [activeStep, setActiveStep] = useState(0);
-    const [STLFile, setSTLFile] = useState(null);
+    const [STLPreview, setSTLPreview] = useState(null);
 
     const steps = [
-        'STL file',
+        'STL preview',
         "Who's queueing the print?",
         'Printer type',
         'Printer',
@@ -155,12 +157,41 @@ export default function NewPrintModal({ isOpen, onClose }) {
         'Submitted'
     ];
 
-    const uploadSTL = (inputFile, name) => {
+    const uploadPreview = (inputImage, name) => {
         return new Promise(async (resolve, reject) => {
-            //upload stl to firestore
-            const storageRef = ref(storage, `/previews/${name}.stl`);
+            const blob = dataUrlToBlob(inputImage);
+            const buffer = await blob.arrayBuffer();
 
-            uploadBytes(storageRef, inputFile).then((snapshot) => {
+            const image = await Image.load(buffer);
+
+            //crop image to 512x512 at center, but if image is smaller than 512x512, just use the whole image and add padding so it's 512x51
+            //resize the image such that height is 512
+            const resizedImage = image.resize({
+                height: 512,
+                width: null,
+                preserveAspectRatio: true
+            });
+
+            console.log(resizedImage);
+
+            const croppedImage = resizedImage.crop({
+                x: (resizedImage.width - 512) / 2,
+                y: (resizedImage.height - 512) / 2,
+                width: image.width < 512 ? image.width : 512,
+                height: image.height < 512 ? image.height : 512
+            });
+
+            const imgBuffer = croppedImage.toBuffer();
+
+            // convert to base64
+            const converted = Buffer.from(imgBuffer).toString('base64');
+
+            //upload photo to firestore
+            const storageRef = ref(storage, `/previews/${name}`);
+
+            // progress can be paused and resumed. It also exposes progress updates.
+            // Receives the storage reference and the file to upload.
+            uploadString(storageRef, converted, 'base64').then((snapshot) => {
                 getDownloadURL(snapshot.ref)
                     .then((url) => {
                         resolve(url);
@@ -188,7 +219,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                 estTimeMinutes: ''
             }}
             onSubmit={(values, actions) => {
-                uploadSTL(STLFile, values.printName)
+                uploadPreview(STLPreview, values.printName)
                     .then((url) => {
                         const timestamp = dayjs.utc();
 
@@ -202,7 +233,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                             queuedAt: timestamp,
                             notes: '',
                             state: PrintStates.QUEUED,
-                            stl: url,
+                            preview: url,
                             endUser: {
                                 firstname: values.firstName,
                                 lastname: values.lastName,
@@ -254,7 +285,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                     onClose={() => {
                         onClose();
                         setActiveStep(0);
-                        setSTLFile(null);
+                        setSTLPreview(null);
                         props.handleReset();
                     }}
                     isCentered
@@ -317,8 +348,8 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                 <VStack w="full">
                                     {activeStep === 0 && (
                                         <STLInput
-                                            setFile={setSTLFile}
-                                            file={STLFile}
+                                            setImage={setSTLPreview}
+                                            image={STLPreview}
                                         />
                                     )}
 
@@ -661,7 +692,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                 props.handleReset();
                                                 onClose();
                                                 setActiveStep(0);
-                                                setSTLFile(null);
+                                                setSTLPreview(null);
                                             }}
                                             isDisabled={props.isSubmitting}
                                         >

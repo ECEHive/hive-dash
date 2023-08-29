@@ -7,8 +7,11 @@ import {
     Box,
     Button,
     ButtonGroup,
+    CircularProgress,
+    Divider,
     HStack,
     Icon,
+    Spacer,
     Tab,
     TabList,
     TabPanel,
@@ -20,6 +23,7 @@ import {
 } from '@chakra-ui/react';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
@@ -28,6 +32,7 @@ import dayjs from '@/lib/time';
 import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
+import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 
 import iconSet from '@/util/icons';
@@ -36,11 +41,10 @@ import { PrintStates } from '@/util/states';
 import GlobalLayout from '@/layouts/GlobalLayout';
 import Layout from '@/layouts/PrintingLayout';
 
-import PrintPreview from '@/components/printing/PrintPreview';
 import PrintEditorModal from '@/components/printing/printEdit/PrintEditorModal';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
-import HorizontalTimeline from '@/components/printing/prints/HorizontalTimeline';
 import PrintList from '@/components/printing/prints/PrintList';
+import Timeline from '@/components/printing/prints/Timeline';
 
 export default function FindPrint(props) {
     const { queue } = usePrinting();
@@ -54,7 +58,17 @@ export default function FindPrint(props) {
         return queue.find((print) => print._id === selectedPrintId);
     }, [selectedPrintId, queue]);
 
-    const { printerData } = usePrintParser(selectedPrintData);
+    const { betterPrintData, printerData } = usePrintParser(selectedPrintData);
+
+    const {
+        progressBarColor,
+        progressMessage,
+        progress,
+        progressCircleColor,
+        progressMessageColor,
+        timeLeftHumanized,
+        timeLeftHumanizedDetailed
+    } = usePrintProgress(selectedPrintData);
 
     const [cancelEventData, setCancelEventData] = useState(null);
 
@@ -147,13 +161,73 @@ export default function FindPrint(props) {
                             {selectedPrintData ? (
                                 <>
                                     <VStack
+                                        position="relative"
                                         w="100%"
                                         h="full"
-                                        justify="start"
+                                        justify="center"
                                         align="start"
                                         spacing={3}
                                         px={1}
                                     >
+                                        <HStack
+                                            w="full"
+                                            position="relative"
+                                            overflow="hidden"
+                                        >
+                                            <CircularProgress
+                                                size={16}
+                                                thickness={6}
+                                                value={progress}
+                                                color={progressCircleColor}
+                                                trackColor="progressTrackAlt"
+                                            />
+                                            <VStack
+                                                align="start"
+                                                justify="start"
+                                                spacing={1}
+                                            >
+                                                <HStack>
+                                                    <Text
+                                                        fontSize="2xl"
+                                                        lineHeight={1}
+                                                        fontWeight="medium"
+                                                    >
+                                                        {betterPrintData.trayName}
+                                                    </Text>
+                                                </HStack>
+                                                <HStack
+                                                    fontSize="md"
+                                                    color="secondaryTextAlt"
+                                                    spacing={2}
+                                                >
+                                                    <Icon as={iconSet.clock} />
+                                                    <Text fontSize="sm">{timeLeftHumanizedDetailed}</Text>
+                                                </HStack>
+                                            </VStack>
+                                            <Spacer />
+                                            <Image
+                                                src={betterPrintData.preview}
+                                                alt="print preview"
+                                                width={80}
+                                                height={100}
+                                            />
+                                        </HStack>
+
+                                        {selectedPrintData.state === PrintStates.CANCELED && (
+                                            <Box
+                                                w="100%"
+                                                h="auto"
+                                            >
+                                                <Alert
+                                                    status="error"
+                                                    borderRadius={5}
+                                                >
+                                                    <AlertIcon />
+                                                    <AlertDescription>This print has been canceled</AlertDescription>
+                                                </Alert>
+                                            </Box>
+                                        )}
+
                                         {printerData?.type === 'stratasys' &&
                                         selectedPrintData.state !== PrintStates.CANCELED ? (
                                             <Box
@@ -174,24 +248,11 @@ export default function FindPrint(props) {
                                             </Box>
                                         ) : null}
 
-                                        {selectedPrintData.state === PrintStates.CANCELED && (
-                                            <Box
-                                                w="100%"
-                                                h="auto"
-                                            >
-                                                <Alert
-                                                    status="error"
-                                                    borderRadius={5}
-                                                >
-                                                    <AlertIcon />
-                                                    <AlertDescription>This print has been canceled</AlertDescription>
-                                                </Alert>
-                                            </Box>
-                                        )}
+                                        <Divider />
 
-                                        <PrintPreview print={selectedPrintData} />
+                                        {/* <PrintPreview print={selectedPrintData} /> */}
 
-                                        <HorizontalTimeline print={selectedPrintData} />
+                                        <Timeline print={selectedPrintData} />
 
                                         {/* tabs */}
                                         <Tabs
