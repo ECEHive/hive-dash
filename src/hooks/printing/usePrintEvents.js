@@ -51,30 +51,51 @@ export default function usePrintEvents(print) {
             newEvents.find((event) => event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED)
                 ?.timestamp || dayjs().toISOString();
 
+        // estimate when the print will start
         if (print.state === PrintStates.QUEUED || print.state === PrintStates.FAILED) {
             // estimate when the print will start based on the sum of the estimated times of all the prints in the queue
-            let estTime = dayjs.duration(0, 'seconds');
+            let estWait = dayjs.duration(0, 'seconds');
 
             expandedPrinterData.queue.forEach((job) => {
-                estTime = estTime.add(dayjs.duration(job.estTime));
+                if (dayjs(job.queuedAt).valueOf() > dayjs(print.queuedAt).valueOf()) return; //ignore jobs that were queued after this one
+                if (job === print) return; //ignore this job
+                estWait = estWait.add(dayjs.duration(job.estTime));
             });
+
+            // if printer is printing, add the remaining time on the current print to estWait
+            const current = queue.find((job) => job._id === expandedPrinterData.currentTray);
+            console.log(current);
+            if (current?.state === PrintStates.PRINTING) {
+                const currentStartTime = [...current.events].find(
+                    (event) => event.type === PrintStates.PRINTING
+                ).timestamp;
+                // calculate time remaining
+                const currentRemaining = dayjs.duration(
+                    dayjs(currentStartTime).add(dayjs.duration(current.estTime)).diff(dayjs())
+                );
+
+                console.log(currentRemaining);
+
+                estWait = estWait.add(currentRemaining);
+            }
+
+            console.log(estWait);
 
             newEvents.push({
                 type: PrintStates.PRINTING,
-                timestamp: queuedTime.add(estTime).toISOString(),
+                timestamp: dayjs().add(estWait).toISOString(),
                 passed: false
             });
         }
 
+        // estimate when the print will complete
         if (
             print.state === PrintStates.PRINTING ||
             print.state === PrintStates.QUEUED ||
             print.state === PrintStates.FAILED
         ) {
-            // estimate the time the print will complete based on when it started printing and its duration
-            let startTime = dayjs(
-                [...newEvents].reverse().find((event) => event.type === PrintStates.PRINTING).timestamp
-            );
+            // estimate the time the print will complete based on when it started (or when it is estimated to start) printing and its duration
+            let startTime = dayjs([...newEvents].find((event) => event.type === PrintStates.PRINTING).timestamp);
             let endTime = startTime.add(dayjs.duration(betterPrintData.estTime));
 
             completedTime = endTime.toISOString();
@@ -86,22 +107,38 @@ export default function usePrintEvents(print) {
             });
         }
 
-        return newEvents
-            .map((event, index) => {
-                let progress = 0;
-                if (!event?.passed) {
-                    progress =
-                        (dayjs(event.timestamp).subtract(queuedTime).valueOf() /
-                            dayjs(completedTime).subtract(queuedTime).valueOf()) *
-                        100;
-                }
+        let progressedEvents = [...newEvents].sort((a, b) => {
+            return dayjs.utc(a.timestamp).diff(dayjs.utc(b.timestamp)); //sort so newest at top
+        });
 
+        let previousProgress = 0;
+        for (let index = 0; index < progressedEvents.length; index++) {
+            const event = progressedEvents[index];
+            let progress = 0;
+            if (!event?.passed) {
+                progress = Math.min(
+                    (dayjs(event.timestamp).subtract(queuedTime).valueOf() /
+                        dayjs(completedTime).subtract(queuedTime).valueOf()) *
+                        100,
+                    85
+                );
+
+                if (event.type !== PrintStates.QUEUED) {
+                    progress = Math.max(previousProgress + 4, progress);
+                }
+                previousProgress = progress;
+            }
+            event.progress = progress;
+        }
+
+        return progressedEvents
+            .map((event, index) => {
                 return {
                     ...event,
 
                     happened: print.events.includes(event),
                     next: newEvents.find((e) => !print.events.includes(e)) === event,
-                    progress: progress,
+                    progress: event.progress,
                     last: event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED,
 
                     description: eventNames[event.type],

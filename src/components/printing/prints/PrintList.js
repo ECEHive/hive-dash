@@ -207,7 +207,6 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
         matches = matches.sort((a, b) => {
             let aTime = dayjs(a.updatedAt).valueOf();
             let bTime = dayjs(b.updatedAt).valueOf();
-            console.log(aTime, bTime);
             if (aTime > bTime) {
                 return -1;
             }

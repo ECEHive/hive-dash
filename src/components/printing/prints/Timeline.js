@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { Avatar, Box, HStack, Progress, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Box, HStack, Progress, Text, VStack, useColorModeValue } from '@chakra-ui/react';
 
 import dayjs from '@/lib/time';
 
@@ -9,6 +9,8 @@ import usePrintEvents from '@/hooks/printing/usePrintEvents';
 import { PrintStates } from '@/util/states';
 
 function TimelineEvent({ event }) {
+    const avatarIncompleteColor = useColorModeValue('gray.200', 'gray.600');
+
     return (
         <>
             <VStack
@@ -19,19 +21,18 @@ function TimelineEvent({ event }) {
                 align={event.last ? 'end' : 'start'}
                 spacing={1}
             >
-                <HStack>
-                    <Avatar
-                        bgColor={event.happened ? 'blue.200' : 'gray.600'}
-                        size="xs"
-                        icon={event.icon}
-                    />
-                </HStack>
+                <Avatar
+                    bgColor={event.happened ? 'blue.200' : avatarIncompleteColor}
+                    size="xs"
+                    icon={event.icon}
+                />
 
-                {event.next ? (
+                {event.next || event.latest ? (
                     <VStack
-                        align="start"
+                        align={event.last ? 'end' : 'start'}
                         justify="start"
                         spacing={0}
+                        w="full"
                     >
                         <Text
                             fontSize="lg"
@@ -64,32 +65,35 @@ export default function Timeline({ print }) {
     }, [detailedEvents]);
 
     const progress = useMemo(() => {
+        let reversed = [...detailedEvents].reverse();
         // find latest event
-        const latestEvent = detailedEvents.find((event) => event.happened);
+        const latestEvent = reversed.find((event) => event.happened);
 
         // find next event
-        const nextEvent = detailedEvents.find((event) => !event.happened);
+        const nextEvent = reversed.find((event) => event.next);
 
         // find progress between them
         if (latestEvent && nextEvent) {
             // calculate how far we've progressed between the two events, and if we've passed the next event's estimate, just use the next event's progress
+            console.log(latestEvent, nextEvent);
+            const nextProgress = nextEvent.progress;
+            const currentProgress = latestEvent.progress;
+
+            // find the progress between the two events
             const progress = Math.min(
-                latestEvent.progress +
-                    (nextEvent.progress - latestEvent.progress) *
-                        (dayjs().diff(dayjs(latestEvent.timestamp)) /
-                            dayjs(nextEvent.timestamp).diff(dayjs(latestEvent.timestamp))),
-                nextEvent.progress
+                currentProgress +
+                    ((nextProgress - currentProgress) * (dayjs().valueOf() - dayjs(latestEvent.timestamp).valueOf())) /
+                        (dayjs(nextEvent.timestamp).valueOf() - dayjs(latestEvent.timestamp).valueOf()),
+                100
             );
 
             return progress;
         }
 
-        if (
-            detailedEvents.find((event) => event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED)
-        ) {
+        if (print.state === PrintStates.COMPLETED || print.state === PrintStates.CANCELED) {
             return 100;
         }
-    }, [detailedEvents]);
+    }, [detailedEvents, print.state]);
 
     // const timeSinceQueue = useMemo(() => {
     //     //calculate time since queued
@@ -113,9 +117,14 @@ export default function Timeline({ print }) {
                         align="start"
                         justify="start"
                     >
-                        <HStack fontSize="2xl">
+                        <HStack fontSize="xl">
                             {latest.icon}
-                            <Text fontWeight="semibold">{latest.description}</Text>
+                            <Text
+                                fontWeight="semibold"
+                                fontSize="2xl"
+                            >
+                                {latest.description}
+                            </Text>
                         </HStack>
                         <Text
                             fontSize="sm"
