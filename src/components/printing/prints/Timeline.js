@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { Avatar, Box, HStack, Progress, Text, Tooltip, VStack, useColorModeValue } from '@chakra-ui/react';
+import { Avatar, Box, HStack, Icon, Progress, Text, Tooltip, VStack, useColorModeValue } from '@chakra-ui/react';
 
 import dayjs from '@/lib/time';
 
@@ -10,6 +10,10 @@ import { PrintStates } from '@/util/states';
 
 function TimelineEvent({ event }) {
     const avatarIncompleteColor = useColorModeValue('gray.200', 'gray.600');
+
+    const rtl = useMemo(() => {
+        return event.progress > 50;
+    }, [event.progress]);
 
     return (
         <>
@@ -21,11 +25,13 @@ function TimelineEvent({ event }) {
                 align={event.last ? 'end' : 'start'}
                 spacing={1}
             >
-                <Tooltip label={`${event.description} @ ${event.formattedTimestamp}`}>
+                <Tooltip
+                    label={`${event.description} ${!event.happened ? '(expected) ' : ''}@ ${event.formattedTimestamp}`}
+                >
                     <Avatar
                         bgColor={event.happened ? 'blue.200' : avatarIncompleteColor}
                         size="xs"
-                        icon={event.icon}
+                        icon={<Icon as={event.icon} />}
                     />
                 </Tooltip>
 
@@ -91,7 +97,7 @@ export default function Timeline({ print }) {
                 100
             );
 
-            return progress + 1; //+1 makes sure it's under the avatar icon cuz of how things are positioned
+            return progress;
         }
 
         if (print.state === PrintStates.COMPLETED || print.state === PrintStates.CANCELED) {
@@ -115,7 +121,7 @@ export default function Timeline({ print }) {
                         justify="start"
                     >
                         <HStack fontSize="xl">
-                            {latest.icon}
+                            <Icon as={latest.icon} />
                             <Text
                                 fontWeight="semibold"
                                 fontSize="2xl"

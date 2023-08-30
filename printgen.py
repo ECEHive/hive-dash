@@ -27,7 +27,8 @@ struct = {
         "email": ""
     },
     "events": [],
-    "updatedAt": ""
+    "updatedAt": "",
+    "preview": "",
 
 }
 
@@ -82,7 +83,7 @@ def main():
         new_struct["materialUsage"] = random.randrange(5, 100)
         new_struct["estTime"] = f"PT{random.randrange(1, 10)}H{random.randrange(0, 60)}M"
 
-        datetime = fake.date_time_between(start_date='-30d', end_date='now')
+        datetime = fake.date_time_between(start_date='-5d', end_date='now')
         time = datetime.replace(microsecond=0).isoformat()
         new_struct["queuedAt"] = time
 

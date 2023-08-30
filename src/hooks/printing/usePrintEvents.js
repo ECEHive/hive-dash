@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Icon, useColorModeValue } from '@chakra-ui/react';
+import { useColorModeValue } from '@chakra-ui/react';
 
 import dayjs from '@/lib/time';
 
@@ -129,9 +129,9 @@ export default function usePrintEvents(print) {
                 progress = Math.max(previousProgress + MIN_INTERVAL, progress);
                 if (progress > MAX_PROGRESS) {
                     // move preceeding events by MIN_INTERVAL% to make room for this one
-                    for (let i = index - 1; i >= 0; i--) {
+                    for (let i = index; i >= 0; i--) {
                         const e = progressedEvents[i];
-                        if (e.progress + MIN_INTERVAL === progress) {
+                        if (e.progress + MIN_INTERVAL * (index - i) === progress || e.progress === progress) {
                             e.progress -= MIN_INTERVAL;
                         }
                     }
@@ -157,7 +157,7 @@ export default function usePrintEvents(print) {
                     description: eventNames[event.type],
                     formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
                     humanizedTimestamp: dayjs.duration(dayjs.utc(event.timestamp).diff(dayjs().utc())).humanize(true),
-                    icon: <Icon as={eventIcons[event.type]} />,
+                    icon: eventIcons[event.type],
                     color: eventColors[event.type]
                 };
             })

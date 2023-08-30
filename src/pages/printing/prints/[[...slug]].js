@@ -7,9 +7,9 @@ import {
     Box,
     Button,
     ButtonGroup,
-    CircularProgress,
     Divider,
     HStack,
+    Heading,
     Icon,
     Spacer,
     Tab,
@@ -82,7 +82,7 @@ export default function FindPrint(props) {
             setTabIndex(0);
             setSelectedPrintId(router.query.slug[0]);
         }
-    }, [router.query, selectedPrintData, queue]);
+    }, [router.query, queue]);
 
     const cancelPrint = useCallback(() => {
         setCancelEventData({
@@ -208,7 +208,7 @@ export default function FindPrint(props) {
                                             </Box>
                                         )}
 
-                                        {printerData?.type === 'stratasys' &&
+                                        {/* {printerData?.type === 'stratasys' &&
                                         selectedPrintData.state !== PrintStates.CANCELED ? (
                                             <Box
                                                 w="100%"
@@ -226,101 +226,110 @@ export default function FindPrint(props) {
                                                     </AlertDescription>
                                                 </Alert>
                                             </Box>
-                                        ) : null}
+                                        ) : null} */}
 
                                         <HStack
                                             w="full"
                                             position="relative"
                                             overflow="hidden"
                                         >
-                                            <CircularProgress
+                                            {/* <CircularProgress
                                                 size={16}
                                                 thickness={6}
                                                 value={progress}
                                                 color={progressCircleColor}
                                                 trackColor="progressTrackAlt"
-                                            />
+                                            /> */}
                                             <VStack
                                                 align="start"
                                                 justify="start"
-                                                spacing={1}
+                                                spacing={3}
                                             >
-                                                <HStack>
-                                                    <Text
-                                                        fontSize="2xl"
-                                                        lineHeight={1}
-                                                        fontWeight="medium"
-                                                    >
-                                                        {betterPrintData.trayName}
-                                                    </Text>
-                                                </HStack>
+                                                <Heading
+                                                    size="lg"
+                                                    fontWeight="semibold"
+                                                >
+                                                    {betterPrintData.trayName}
+                                                </Heading>
                                                 <HStack
+                                                    w="auto"
+                                                    h="auto"
+                                                    align="center"
+                                                    justify="start"
+                                                    pb={2}
+                                                    spacing={3}
+                                                    overflow="auto"
+                                                    whiteSpace="nowrap"
+                                                    // borderRight={actions && '1px'}
+                                                    // borderRightColor={actions && 'chakra-border-color'}
+                                                >
+                                                    {dataFields.map((field, i) => {
+                                                        return (
+                                                            <>
+                                                                <VStack
+                                                                    spacing={1}
+                                                                    align="start"
+                                                                >
+                                                                    <HStack
+                                                                        alignItems="center"
+                                                                        spacing={2}
+                                                                        color="secondaryText"
+                                                                    >
+                                                                        <Icon
+                                                                            fontSize="lg"
+                                                                            as={field.icon}
+                                                                        />
+                                                                        <HStack
+                                                                            align="end"
+                                                                            spacing={1}
+                                                                            height="full"
+                                                                        >
+                                                                            <Text
+                                                                                fontSize="xl"
+                                                                                fontWeight="medium"
+                                                                                lineHeight={1}
+                                                                            >
+                                                                                {field.value}
+                                                                            </Text>
+                                                                            {field.suffix && (
+                                                                                <Text fontSize="sm">
+                                                                                    {field.suffix}
+                                                                                </Text>
+                                                                            )}
+                                                                        </HStack>
+                                                                    </HStack>
+                                                                </VStack>
+                                                                {i < dataFields.length - 1 && (
+                                                                    <Icon
+                                                                        color="secondaryText"
+                                                                        fontSize="sm"
+                                                                        as={iconSet.dot}
+                                                                    />
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })}
+                                                </HStack>
+                                                {/* <HStack
                                                     fontSize="md"
                                                     color="secondaryTextAlt"
                                                     spacing={2}
                                                 >
                                                     <Icon as={iconSet.clock} />
                                                     <Text fontSize="sm">{timeLeftHumanizedDetailed}</Text>
-                                                </HStack>
+                                                </HStack> */}
                                             </VStack>
                                             <Spacer />
                                             <Image
                                                 src={betterPrintData.preview}
                                                 alt="print preview"
-                                                width={80}
-                                                height={100}
+                                                width={512}
+                                                height={512}
+                                                style={{
+                                                    width: 'auto',
+                                                    height: '80px'
+                                                }}
                                             />
-                                        </HStack>
-
-                                        <HStack
-                                            w="full"
-                                            h="auto"
-                                            align="center"
-                                            justify="space-around"
-                                            overflow="auto"
-                                            whiteSpace="nowrap"
-                                            pb={3}
-                                        >
-                                            {dataFields.map((field, i) => {
-                                                return (
-                                                    <>
-                                                        <VStack
-                                                            spacing={1}
-                                                            align="start"
-                                                        >
-                                                            <HStack
-                                                                fontSize="sm"
-                                                                color="secondaryTextAlt"
-                                                            >
-                                                                <Icon as={field.icon} />
-                                                                <Text>{field.label}</Text>
-                                                            </HStack>
-                                                            <HStack
-                                                                alignItems="end"
-                                                                spacing={1}
-                                                            >
-                                                                <Text
-                                                                    fontSize="2xl"
-                                                                    fontWeight="semibold"
-                                                                    lineHeight={1}
-                                                                >
-                                                                    {field.value}
-                                                                </Text>
-                                                                {field.suffix && (
-                                                                    <Text fontSize="sm">{field.suffix}</Text>
-                                                                )}
-                                                            </HStack>
-                                                        </VStack>
-                                                        {i < dataFields.length - 1 && (
-                                                            <Icon
-                                                                color="secondaryText"
-                                                                fontSize="sm"
-                                                                as={iconSet.dot}
-                                                            />
-                                                        )}
-                                                    </>
-                                                );
-                                            })}
                                         </HStack>
 
                                         <Divider />
