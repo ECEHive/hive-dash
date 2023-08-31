@@ -54,7 +54,7 @@ import usePrinterParser from '@/hooks/printing/usePrinterParser';
 
 import dataUrlToBlob from '@/util/dataUrlToBlob';
 import iconSet from '@/util/icons';
-import { PrintStates, PrinterStates, StateColors } from '@/util/states';
+import { PrintStates, StateColors } from '@/util/states';
 
 import Select from '@/components/Select';
 import STLInput from '@/components/printing/new/STLInput';
@@ -100,7 +100,7 @@ function PrinterItem({ printer, ...props }) {
                         >
                             <HStack>
                                 <Heading size="md">{printerData.displayName}</Heading>
-                                {printerData.state === PrinterStates.DOWN && (
+                                {!printerData.enabled && (
                                     <Badge colorScheme={StateColors[printerData.state]}>{printerData.state}</Badge>
                                 )}
                             </HStack>

@@ -7,9 +7,9 @@ const PrintStates = {
 };
 
 const PrinterStates = {
-    DOWN: 0,
-    IDLE: 1,
-    PRINTING: 2
+    DOWN: 10,
+    IDLE: 11,
+    PRINTING: 12
 };
 
 const StateColors = {
@@ -17,7 +17,10 @@ const StateColors = {
     [PrintStates.PRINTING]: 'green',
     [PrintStates.FAILED]: 'red',
     [PrintStates.COMPLETED]: 'green',
-    [PrintStates.CANCELED]: 'red'
+    [PrintStates.CANCELED]: 'red',
+    [PrinterStates.DOWN]: 'red',
+    [PrinterStates.IDLE]: 'yellow',
+    [PrinterStates.PRINTING]: 'green'
 };
 
 export { PrintStates, PrinterStates, StateColors };

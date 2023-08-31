@@ -204,7 +204,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
             return match;
         });
 
-        matches = matches.sort((a, b) => {
+        matches = [...matches].sort((a, b) => {
             let aTime = dayjs(a.updatedAt).valueOf();
             let bTime = dayjs(b.updatedAt).valueOf();
             if (aTime > bTime) {
@@ -255,7 +255,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
     return (
         <>
             <VStack
-                w="375px"
+                minW="375px"
                 h="100%"
                 spacing={3}
                 alignItems="flex-start"

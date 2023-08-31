@@ -73,7 +73,7 @@ export default function PrintEditorModal({ isOpen, onClose, initialData }) {
                     update={updatePrintData}
                 />
             ),
-            icon: <Icon as={iconSet.smile} />
+            icon: <Icon as={iconSet.person} />
         },
         {
             name: 'Print info',

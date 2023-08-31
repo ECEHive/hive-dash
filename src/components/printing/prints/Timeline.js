@@ -94,7 +94,7 @@ export default function Timeline({ print }) {
                 currentProgress +
                     ((nextProgress - currentProgress) * (dayjs().valueOf() - dayjs(latestEvent.timestamp).valueOf())) /
                         (dayjs(nextEvent.timestamp).valueOf() - dayjs(latestEvent.timestamp).valueOf()),
-                100
+                nextProgress
             );
 
             return progress;

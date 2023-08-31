@@ -328,7 +328,7 @@ function Events({ printData, update }) {
                                                 justify="start"
                                                 spacing={3}
                                             >
-                                                {event.icon}
+                                                <Icon as={event.icon} />
 
                                                 <VStack
                                                     align="start"
@@ -338,7 +338,7 @@ function Events({ printData, update }) {
                                                         lineHeight={1}
                                                         fontSize="md"
                                                     >
-                                                        {event.description}
+                                                        {event.description} {!event.happened ? '(expected)' : ''}
                                                     </Text>
                                                     <Text
                                                         fontSize="xs"

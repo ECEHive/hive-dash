@@ -37,8 +37,8 @@ export default function Printers(props) {
         <>
             {/* <CompleteConfirm /> */}
             <Box
-                w="100%"
-                h="100%"
+                w="full"
+                h="full"
                 overflow="hidden"
                 p={5}
             >
