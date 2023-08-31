@@ -19,10 +19,10 @@ function TimelineEvent({ event }) {
         <>
             <VStack
                 position="absolute"
-                left={event.last ? null : `${event.progress}%`}
-                right={event.last ? 0 : null}
+                left={rtl ? null : `${event.progress}%`}
+                right={rtl ? `${100 - event.progress}%` : null}
                 top={0}
-                align={event.last ? 'end' : 'start'}
+                align={rtl ? 'end' : 'start'}
                 spacing={1}
             >
                 <Tooltip
@@ -37,7 +37,7 @@ function TimelineEvent({ event }) {
 
                 {event.next || event.latest ? (
                     <VStack
-                        align={event.last ? 'end' : 'start'}
+                        align={rtl ? 'end' : 'start'}
                         justify="start"
                         spacing={0}
                         w="full"
@@ -105,6 +105,10 @@ export default function Timeline({ print }) {
         }
     }, [detailedEvents, print.state]);
 
+    const tall = useMemo(() => {
+        return detailedEvents.find((event) => event.next || event.latest);
+    }, [detailedEvents]);
+
     return (
         <>
             <VStack
@@ -155,7 +159,7 @@ export default function Timeline({ print }) {
                     <HStack
                         position="relative"
                         w="full"
-                        h="80px"
+                        h={tall ? '80px' : '40px'}
                     >
                         {/* events */}
                         {detailedEvents.map((event) => (
