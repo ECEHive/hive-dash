@@ -5,7 +5,11 @@ import {
     AlertDescription,
     AlertIcon,
     Box,
+    Card,
+    CardBody,
     Divider,
+    Grid,
+    GridItem,
     HStack,
     Heading,
     Icon,
@@ -72,6 +76,10 @@ export default function PrintInfo({ selectedPrintData }) {
         [printUpdater, onCancelClose, selectedPrintData]
     );
 
+    const latestEvent = useMemo(() => {
+        return selectedPrintData?.events?.[0];
+    }, [selectedPrintData]);
+
     const dataFields = useMemo(() => {
         return [
             {
@@ -98,6 +106,23 @@ export default function PrintInfo({ selectedPrintData }) {
             }
         ];
     }, [printerData, betterPrintData]);
+
+    const metadataFields = useMemo(() => {
+        return [
+            {
+                icon: iconSet.calendarAdd,
+                value: betterPrintData?.queuedAtFormatted
+            },
+            {
+                icon: iconSet.personPlus,
+                value: betterPrintData?.queuedBy
+            },
+            {
+                icon: iconSet.refresh,
+                value: betterPrintData?.updatedAtHumanized
+            }
+        ];
+    }, [betterPrintData]);
 
     return (
         <>
@@ -269,91 +294,229 @@ export default function PrintInfo({ selectedPrintData }) {
 
                         <Timeline print={selectedPrintData} />
 
-                        <HStack
+                        <Grid
+                            templateColumns="repeat(2, auto)"
+                            templateRows="repeat(3, auto)"
+                            gap={4}
                             w="full"
-                            h="full"
-                            minH="300px"
-                            align="start"
-                            spacing={5}
-                            flexGrow={1}
+                            h="auto"
                         >
-                            <VStack
-                                w="50%"
-                                h="full"
-                                spacing={1}
-                                align="start"
+                            <GridItem
+                                rowSpan={2}
+                                colSpan={1}
                             >
-                                <HStack>
-                                    <Icon as={iconSet.camera} />
-                                    <Text
-                                        fontSize="xl"
-                                        fontWeight="medium"
-                                    >
-                                        Preview
-                                    </Text>
-                                </HStack>
-                                <Image
-                                    src={
-                                        betterPrintData.preview ||
-                                        'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2Fu2!?alt=media&token=2571082c-e369-400e-b428-27a1c51564ee'
-                                    }
-                                    alt="print preview"
-                                    width={512}
-                                    height={512}
-                                    style={{
-                                        width: 'auto',
-                                        height: 'auto',
-                                        alignSelf: 'center'
-                                    }}
-                                />
-                            </VStack>
-
-                            <Divider
-                                orientation="vertical"
-                                h="full"
-                            />
-
-                            <VStack
-                                w="50%"
-                                h="full"
-                                align="start"
-                            >
-                                <HStack>
-                                    <Icon as={iconSet.note} />
-                                    <Text
-                                        fontSize="xl"
-                                        fontWeight="medium"
-                                    >
-                                        Notes
-                                    </Text>
-                                </HStack>
-                                {selectedPrintData.notes?.length > 0 ? (
-                                    <>
-                                        <ReactMarkdown
-                                            components={ChakraUIRenderer()}
-                                            skipHtml
-                                        >
-                                            {selectedPrintData?.notes || 'test'}
-                                        </ReactMarkdown>
-                                    </>
-                                ) : (
-                                    <VStack
-                                        justify="center"
-                                        align="center"
-                                        h="full"
-                                    >
-                                        <Text
+                                <Card
+                                    variant="filled"
+                                    w="full"
+                                    h="full"
+                                >
+                                    <CardBody>
+                                        <VStack
                                             w="full"
                                             h="full"
-                                            color={'secondaryText'}
-                                            textAlign="center"
+                                            spacing={1}
+                                            align="start"
                                         >
-                                            No notes are attached to this print.
-                                        </Text>
-                                    </VStack>
-                                )}
-                            </VStack>
-                        </HStack>
+                                            <HStack>
+                                                <Icon as={iconSet.camera} />
+                                                <Text
+                                                    fontSize="xl"
+                                                    fontWeight="semibold"
+                                                >
+                                                    Preview
+                                                </Text>
+                                            </HStack>
+                                            <Image
+                                                src={
+                                                    betterPrintData.preview ||
+                                                    'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2Fu2!?alt=media&token=2571082c-e369-400e-b428-27a1c51564ee'
+                                                }
+                                                alt="print preview"
+                                                width={512}
+                                                height={512}
+                                                style={{
+                                                    width: 'auto',
+                                                    height: 'auto',
+                                                    alignSelf: 'center'
+                                                }}
+                                            />
+                                        </VStack>
+                                    </CardBody>
+                                </Card>
+                            </GridItem>
+
+                            <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            >
+                                <Card
+                                    variant="filled"
+                                    w="full"
+                                    h="full"
+                                >
+                                    <CardBody>
+                                        <VStack
+                                            w="full"
+                                            h="full"
+                                            align="start"
+                                        >
+                                            <HStack>
+                                                <Icon as={iconSet.note} />
+                                                <Text
+                                                    fontSize="xl"
+                                                    fontWeight="semibold"
+                                                >
+                                                    Event notes
+                                                </Text>
+                                            </HStack>
+
+                                            <VStack
+                                                justify="start"
+                                                align="center"
+                                                h="full"
+                                                fontSize="md"
+                                            >
+                                                {latestEvent.notes?.length > 0 ? (
+                                                    <>
+                                                        <ReactMarkdown
+                                                            components={ChakraUIRenderer()}
+                                                            skipHtml
+                                                        >
+                                                            {latestEvent.notes}
+                                                        </ReactMarkdown>
+                                                    </>
+                                                ) : (
+                                                    <VStack
+                                                        justify="center"
+                                                        align="center"
+                                                        h="full"
+                                                    >
+                                                        <Text
+                                                            w="full"
+                                                            h="full"
+                                                            color={'secondaryText'}
+                                                            textAlign="center"
+                                                        >
+                                                            No notes are attached to the latest event.
+                                                        </Text>
+                                                    </VStack>
+                                                )}
+                                            </VStack>
+                                        </VStack>
+                                    </CardBody>
+                                </Card>
+                            </GridItem>
+
+                            <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            >
+                                <Card
+                                    variant="filled"
+                                    w="full"
+                                    h="full"
+                                >
+                                    <CardBody>
+                                        <VStack
+                                            w="full"
+                                            h="full"
+                                            align="start"
+                                        >
+                                            <HStack>
+                                                <Icon as={iconSet.wrench} />
+                                                <Text
+                                                    fontSize="xl"
+                                                    fontWeight="semibold"
+                                                >
+                                                    Meta details
+                                                </Text>
+                                            </HStack>
+
+                                            <VStack
+                                                justify="start"
+                                                align="center"
+                                                h="full"
+                                                fontSize="md"
+                                            >
+                                                {metadataFields.map((field, i) => {
+                                                    return (
+                                                        <HStack
+                                                            key={i}
+                                                            w="full"
+                                                        >
+                                                            <Icon as={field.icon} />
+                                                            <Text>{field.value}</Text>
+                                                        </HStack>
+                                                    );
+                                                })}
+                                            </VStack>
+                                        </VStack>
+                                    </CardBody>
+                                </Card>
+                            </GridItem>
+
+                            <GridItem
+                                rowSpan={1}
+                                colSpan={2}
+                            >
+                                <Card
+                                    variant="filled"
+                                    w="full"
+                                    h="full"
+                                >
+                                    <CardBody>
+                                        <VStack
+                                            w="full"
+                                            h="full"
+                                            align="start"
+                                        >
+                                            <HStack>
+                                                <Icon as={iconSet.note} />
+                                                <Text
+                                                    fontSize="xl"
+                                                    fontWeight="semibold"
+                                                >
+                                                    Print notes
+                                                </Text>
+                                            </HStack>
+
+                                            <VStack
+                                                justify="start"
+                                                align="start"
+                                                h="full"
+                                                fontSize="md"
+                                            >
+                                                {betterPrintData.notes?.length > 0 ? (
+                                                    <>
+                                                        <ReactMarkdown
+                                                            components={ChakraUIRenderer()}
+                                                            skipHtml
+                                                        >
+                                                            {betterPrintData.notes}
+                                                        </ReactMarkdown>
+                                                    </>
+                                                ) : (
+                                                    <VStack
+                                                        justify="center"
+                                                        align="center"
+                                                        h="full"
+                                                    >
+                                                        <Text
+                                                            w="full"
+                                                            h="full"
+                                                            color={'secondaryText'}
+                                                            textAlign="center"
+                                                        >
+                                                            No notes are attached to this print.
+                                                        </Text>
+                                                    </VStack>
+                                                )}
+                                            </VStack>
+                                        </VStack>
+                                    </CardBody>
+                                </Card>
+                            </GridItem>
+                        </Grid>
                     </VStack>
                 </>
             ) : (
