@@ -77,7 +77,9 @@ function PrintingProvider({ children }) {
             .then((res) => res.json())
             .then((data) => {
                 setQueue((old) => {
-                    if (old.length !== data.length) {
+                    // this is hella inefficient?
+                    let diff = data.filter((x) => !old.includes(x));
+                    if (diff.length > 0 || old.length === 0) {
                         console.log('updated queue');
                         return data;
                     } else {
@@ -118,7 +120,7 @@ function PrintingProvider({ children }) {
         refreshDynamicData();
         const int = setInterval(() => {
             refreshDynamicData();
-        }, 2000);
+        }, 5000);
 
         return () => {
             clearInterval(int);
