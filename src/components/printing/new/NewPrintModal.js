@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
     Alert,
@@ -14,7 +14,6 @@ import {
     Checkbox,
     Divider,
     FormControl,
-    FormHelperText,
     FormLabel,
     HStack,
     Heading,
@@ -144,18 +143,63 @@ export default function NewPrintModal({ isOpen, onClose }) {
     const { printerTypes, printers, peerInstructors } = usePrinting();
 
     const [activeStep, setActiveStep] = useState(0);
-    const [STLPreview, setSTLPreview] = useState(null);
+    const [canContinue, setCanContinue] = useState(false);
 
-    const steps = [
-        'STL preview',
-        "Who's queueing the print?",
-        'Printer type',
-        'Printer',
-        'End user info',
-        'Print info',
-        'Submitting',
-        'Submitted'
-    ];
+    const steps = useMemo(
+        () => [
+            {
+                title: 'STL preview',
+                checkComplete: (values) => {
+                    return values?.STLPreview.length > 0;
+                }
+            },
+            {
+                title: "Who's queuing?",
+                checkComplete: (values) => {
+                    return values?.pi?.value.length > 0;
+                }
+            },
+            {
+                title: 'Printer type',
+                checkComplete: (values) => {
+                    console.log(values);
+                    return values?.printerType?.id.length > 0;
+                }
+            },
+            {
+                title: 'Printer',
+                checkComplete: (values) => {
+                    return values?.printer?.id.length > 0;
+                }
+            },
+            {
+                title: 'End user',
+                checkComplete: (values) => {
+                    return values?.firstName.length > 0 && values?.lastName.length > 0 && values?.email.length > 0;
+                }
+            },
+            {
+                title: 'Print info',
+                checkComplete: (values) => {
+                    console.log(values);
+                    return (
+                        values?.printName.length > 0 &&
+                        values?.material?.value?.length > 0 &&
+                        values?.materialUsage > 0 &&
+                        values?.estTimeHours > 0 &&
+                        values?.estTimeMinutes > 0
+                    );
+                }
+            },
+            {
+                title: 'Submitting'
+            },
+            {
+                title: 'Submitted'
+            }
+        ],
+        []
+    );
 
     const uploadPreview = (inputImage, name) => {
         return new Promise(async (resolve, reject) => {
@@ -164,15 +208,11 @@ export default function NewPrintModal({ isOpen, onClose }) {
 
             const image = await Image.load(buffer);
 
-            //crop image to 512x512 at center, but if image is smaller than 512x512, just use the whole image and add padding so it's 512x51
-            //resize the image such that height is 512
             const resizedImage = image.resize({
                 height: 512,
                 width: null,
                 preserveAspectRatio: true
             });
-
-            console.log(resizedImage);
 
             const croppedImage = resizedImage.crop({
                 x: (resizedImage.width - 512) / 2,
@@ -203,10 +243,32 @@ export default function NewPrintModal({ isOpen, onClose }) {
         });
     };
 
+    const validate = useCallback(
+        (values) => {
+            if (steps[activeStep].checkComplete) {
+                if (steps[activeStep].checkComplete(values)) {
+                    setCanContinue(true);
+                } else {
+                    setCanContinue(false);
+                }
+            }
+            return {};
+        },
+        [activeStep, steps]
+    );
+
+    useEffect(() => {
+        if (activeStep) {
+            setCanContinue(false);
+        }
+    }, [activeStep]);
+
     return (
         <Formik
+            validate={validate}
             initialValues={{
                 pi: {},
+                STLPreview: '',
                 printerType: '',
                 printer: '',
                 firstName: '',
@@ -219,7 +281,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                 estTimeMinutes: ''
             }}
             onSubmit={(values, actions) => {
-                uploadPreview(STLPreview, values.printName)
+                uploadPreview(values.STLPreview, values.printName)
                     .then((url) => {
                         const timestamp = dayjs.utc();
 
@@ -285,7 +347,6 @@ export default function NewPrintModal({ isOpen, onClose }) {
                     onClose={() => {
                         onClose();
                         setActiveStep(0);
-                        setSTLPreview(null);
                         props.handleReset();
                     }}
                     isCentered
@@ -339,7 +400,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                         fontWeight="semibold"
                                         alignSelf="start"
                                     >
-                                        {steps[activeStep]}
+                                        {steps[activeStep].title}
                                     </Text>
                                 </VStack>
 
@@ -347,10 +408,14 @@ export default function NewPrintModal({ isOpen, onClose }) {
 
                                 <VStack w="full">
                                     {activeStep === 0 && (
-                                        <STLInput
-                                            setImage={setSTLPreview}
-                                            image={STLPreview}
-                                        />
+                                        <Field name="STLPreview">
+                                            {({ form, field }) => (
+                                                <STLInput
+                                                    setImage={(image) => form.setFieldValue('STLPreview', image)}
+                                                    image={field?.value}
+                                                />
+                                            )}
+                                        </Field>
                                     )}
 
                                     {activeStep === 1 && (
@@ -371,10 +436,6 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                             }}
                                                             value={field?.value}
                                                         />
-                                                        <FormHelperText>
-                                                            maybe make this autofill to whoever&apos;s logged in
-                                                            eventually
-                                                        </FormHelperText>
                                                     </FormControl>
                                                 )}
                                             </Field>
@@ -677,7 +738,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                 }
                                                 setActiveStep((s) => s + 1);
                                             }}
-                                            isDisabled={activeStep >= steps.length}
+                                            isDisabled={activeStep >= steps.length || !canContinue}
                                         >
                                             Next
                                         </Button>
@@ -692,7 +753,6 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                 props.handleReset();
                                                 onClose();
                                                 setActiveStep(0);
-                                                setSTLPreview(null);
                                             }}
                                             isDisabled={props.isSubmitting}
                                         >

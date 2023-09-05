@@ -77,8 +77,7 @@ function PrintingProvider({ children }) {
             .then((res) => res.json())
             .then((data) => {
                 setQueue((old) => {
-                    console.log(old, data);
-                    if (JSON.stringify(old) !== JSON.stringify(data)) {
+                    if (old.length !== data.length) {
                         console.log('updated queue');
                         return data;
                     } else {

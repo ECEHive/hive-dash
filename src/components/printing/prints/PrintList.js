@@ -189,7 +189,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
         if (searchTerms.length < 1) {
             return [];
         }
-        let matches = queue.filter((print) => {
+        let matches = [...queue].filter((print) => {
             let match = true;
             searchTerms.forEach((term) => {
                 const type = searchTypes.find((type) => type.id === term.split(':')[0]);

@@ -42,6 +42,41 @@ import PrintEditorModal from '@/components/printing/printEdit/PrintEditorModal';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 import Timeline from '@/components/printing/prints/Timeline';
 
+function DetailsPane({ title, icon, rowSpan, colSpan, children }) {
+    return (
+        <GridItem
+            rowSpan={rowSpan}
+            colSpan={colSpan}
+        >
+            <Card
+                variant="outline"
+                w="full"
+                h="full"
+            >
+                <CardBody>
+                    <VStack
+                        w="full"
+                        h="full"
+                        align="start"
+                    >
+                        <HStack>
+                            <Icon as={icon} />
+                            <Text
+                                fontSize="xl"
+                                fontWeight="semibold"
+                            >
+                                {title}
+                            </Text>
+                        </HStack>
+
+                        {children}
+                    </VStack>
+                </CardBody>
+            </Card>
+        </GridItem>
+    );
+}
+
 export default function PrintInfo({ selectedPrintData }) {
     const router = useRouter();
 
@@ -301,221 +336,107 @@ export default function PrintInfo({ selectedPrintData }) {
                             w="full"
                             h="auto"
                         >
-                            <GridItem
+                            <DetailsPane
+                                title="Preview"
+                                icon={iconSet.camera}
                                 rowSpan={2}
                                 colSpan={1}
                             >
-                                <Card
-                                    variant="filled"
-                                    w="full"
-                                    h="full"
-                                >
-                                    <CardBody>
-                                        <VStack
-                                            w="full"
-                                            h="full"
-                                            spacing={1}
-                                            align="start"
-                                        >
-                                            <HStack>
-                                                <Icon as={iconSet.camera} />
-                                                <Text
-                                                    fontSize="xl"
-                                                    fontWeight="semibold"
-                                                >
-                                                    Preview
-                                                </Text>
-                                            </HStack>
-                                            <Image
-                                                src={
-                                                    betterPrintData.preview ||
-                                                    'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2Fu2!?alt=media&token=2571082c-e369-400e-b428-27a1c51564ee'
-                                                }
-                                                alt="print preview"
-                                                width={512}
-                                                height={512}
-                                                style={{
-                                                    width: 'auto',
-                                                    height: 'auto',
-                                                    alignSelf: 'center'
-                                                }}
-                                            />
-                                        </VStack>
-                                    </CardBody>
-                                </Card>
-                            </GridItem>
+                                <Image
+                                    src={
+                                        betterPrintData.preview ||
+                                        'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2Fu2!?alt=media&token=2571082c-e369-400e-b428-27a1c51564ee'
+                                    }
+                                    alt="print preview"
+                                    width={512}
+                                    height={512}
+                                    style={{
+                                        width: 'auto',
+                                        height: 'auto',
+                                        alignSelf: 'center'
+                                    }}
+                                />
+                            </DetailsPane>
 
-                            <GridItem
+                            <DetailsPane
+                                title="Event notes"
+                                icon={iconSet.timeline}
                                 rowSpan={1}
                                 colSpan={1}
                             >
-                                <Card
-                                    variant="filled"
-                                    w="full"
+                                <VStack
+                                    justify="start"
+                                    align="center"
                                     h="full"
+                                    fontSize="md"
                                 >
-                                    <CardBody>
-                                        <VStack
-                                            w="full"
-                                            h="full"
-                                            align="start"
-                                        >
-                                            <HStack>
-                                                <Icon as={iconSet.note} />
-                                                <Text
-                                                    fontSize="xl"
-                                                    fontWeight="semibold"
-                                                >
-                                                    Event notes
-                                                </Text>
-                                            </HStack>
-
-                                            <VStack
-                                                justify="start"
-                                                align="center"
-                                                h="full"
-                                                fontSize="md"
+                                    {latestEvent.notes?.length > 0 ? (
+                                        <>
+                                            <ReactMarkdown
+                                                components={ChakraUIRenderer()}
+                                                skipHtml
                                             >
-                                                {latestEvent.notes?.length > 0 ? (
-                                                    <>
-                                                        <ReactMarkdown
-                                                            components={ChakraUIRenderer()}
-                                                            skipHtml
-                                                        >
-                                                            {latestEvent.notes}
-                                                        </ReactMarkdown>
-                                                    </>
-                                                ) : (
-                                                    <VStack
-                                                        justify="center"
-                                                        align="center"
-                                                        h="full"
-                                                    >
-                                                        <Text
-                                                            w="full"
-                                                            h="full"
-                                                            color={'secondaryText'}
-                                                            textAlign="center"
-                                                        >
-                                                            No notes are attached to the latest event.
-                                                        </Text>
-                                                    </VStack>
-                                                )}
-                                            </VStack>
+                                                {latestEvent.notes}
+                                            </ReactMarkdown>
+                                        </>
+                                    ) : (
+                                        <VStack
+                                            justify="center"
+                                            align="center"
+                                            h="full"
+                                        >
+                                            <Text
+                                                w="full"
+                                                h="full"
+                                                color={'secondaryText'}
+                                                textAlign="center"
+                                            >
+                                                No notes are attached to the latest event.
+                                            </Text>
                                         </VStack>
-                                    </CardBody>
-                                </Card>
-                            </GridItem>
+                                    )}
+                                </VStack>
+                            </DetailsPane>
 
-                            <GridItem
+                            <DetailsPane
+                                title="Print Notes"
+                                icon={iconSet.note}
                                 rowSpan={1}
                                 colSpan={1}
                             >
-                                <Card
-                                    variant="filled"
-                                    w="full"
+                                <VStack
+                                    justify="start"
+                                    align="start"
                                     h="full"
+                                    fontSize="md"
                                 >
-                                    <CardBody>
-                                        <VStack
-                                            w="full"
-                                            h="full"
-                                            align="start"
-                                        >
-                                            <HStack>
-                                                <Icon as={iconSet.wrench} />
-                                                <Text
-                                                    fontSize="xl"
-                                                    fontWeight="semibold"
-                                                >
-                                                    Meta details
-                                                </Text>
-                                            </HStack>
-
-                                            <VStack
-                                                justify="start"
-                                                align="center"
-                                                h="full"
-                                                fontSize="md"
+                                    {betterPrintData.notes?.length > 0 ? (
+                                        <>
+                                            <ReactMarkdown
+                                                components={ChakraUIRenderer()}
+                                                skipHtml
                                             >
-                                                {metadataFields.map((field, i) => {
-                                                    return (
-                                                        <HStack
-                                                            key={i}
-                                                            w="full"
-                                                        >
-                                                            <Icon as={field.icon} />
-                                                            <Text>{field.value}</Text>
-                                                        </HStack>
-                                                    );
-                                                })}
-                                            </VStack>
-                                        </VStack>
-                                    </CardBody>
-                                </Card>
-                            </GridItem>
-
-                            <GridItem
-                                rowSpan={1}
-                                colSpan={2}
-                            >
-                                <Card
-                                    variant="filled"
-                                    w="full"
-                                    h="full"
-                                >
-                                    <CardBody>
+                                                {betterPrintData.notes}
+                                            </ReactMarkdown>
+                                        </>
+                                    ) : (
                                         <VStack
-                                            w="full"
+                                            justify="center"
+                                            align="center"
                                             h="full"
-                                            align="start"
                                         >
-                                            <HStack>
-                                                <Icon as={iconSet.note} />
-                                                <Text
-                                                    fontSize="xl"
-                                                    fontWeight="semibold"
-                                                >
-                                                    Print notes
-                                                </Text>
-                                            </HStack>
-
-                                            <VStack
-                                                justify="start"
-                                                align="start"
+                                            <Text
+                                                w="full"
                                                 h="full"
-                                                fontSize="md"
+                                                color={'secondaryText'}
+                                                textAlign="center"
                                             >
-                                                {betterPrintData.notes?.length > 0 ? (
-                                                    <>
-                                                        <ReactMarkdown
-                                                            components={ChakraUIRenderer()}
-                                                            skipHtml
-                                                        >
-                                                            {betterPrintData.notes}
-                                                        </ReactMarkdown>
-                                                    </>
-                                                ) : (
-                                                    <VStack
-                                                        justify="center"
-                                                        align="center"
-                                                        h="full"
-                                                    >
-                                                        <Text
-                                                            w="full"
-                                                            h="full"
-                                                            color={'secondaryText'}
-                                                            textAlign="center"
-                                                        >
-                                                            No notes are attached to this print.
-                                                        </Text>
-                                                    </VStack>
-                                                )}
-                                            </VStack>
+                                                No notes are attached to this print.
+                                            </Text>
                                         </VStack>
-                                    </CardBody>
-                                </Card>
-                            </GridItem>
+                                    )}
+                                </VStack>
+                            </DetailsPane>
                         </Grid>
                     </VStack>
                 </>
