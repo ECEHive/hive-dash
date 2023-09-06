@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { HStack, Spinner, Text, useDisclosure, useToast } from '@chakra-ui/react';
 
@@ -13,7 +13,7 @@ function usePrinting() {
 }
 
 function PrintingProvider({ children }) {
-    const [queue, setQueue] = useState(null);
+    const [staticQueue, setStaticQueue] = useState(null);
     const [printers, setPrinters] = useState(null);
     const [printerTypes, setPrinterTypes] = useState(null);
 
@@ -76,9 +76,8 @@ function PrintingProvider({ children }) {
         })
             .then((res) => res.json())
             .then((data) => {
-                setQueue((old) => {
-                    // update this to check if the actual things have changed
-                    if (old.length !== data.length) {
+                setStaticQueue((old) => {
+                    if (JSON.stringify(old) !== JSON.stringify(data)) {
                         console.log('updated queue');
                         return data;
                     } else {
@@ -95,6 +94,12 @@ function PrintingProvider({ children }) {
                 });
             });
     }, [toast, focus]);
+
+    const queue = useMemo(() => {
+        if (staticQueue) {
+            return JSON.parse(JSON.stringify(staticQueue));
+        }
+    }, [staticQueue]);
 
     const refreshStaticData = useCallback(() => {
         fetch('/api/peerInstructors', {
@@ -149,7 +154,7 @@ function PrintingProvider({ children }) {
                     spacing={3}
                 >
                     <Spinner />
-                    <Text>Fetching data...</Text>
+                    <Text>Fetching...</Text>
                 </HStack>
             )}
         </PrintingContext.Provider>
