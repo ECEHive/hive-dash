@@ -40,12 +40,11 @@ export default function Printers(props) {
                 w="full"
                 h="full"
                 overflow="hidden"
-                p={5}
             >
                 <HStack
                     w="100%"
                     h="100%"
-                    spacing={4}
+                    spacing={0}
                     alignItems="flex-start"
                     justifyContent="flex-start"
                 >

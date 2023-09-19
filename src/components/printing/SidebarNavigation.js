@@ -29,15 +29,9 @@ export default function Navigation({}) {
 
             {
                 type: 'button',
-                name: 'Dashboard',
-                icon: <Icon as={iconSet.dashboard} />,
-                href: '/dashboard'
-            },
-            {
-                type: 'button',
-                name: 'Printers',
-                icon: <Icon as={iconSet.printer} />,
-                href: '/printers'
+                name: 'Print logs',
+                icon: <Icon as={iconSet.table} />,
+                href: '/logs'
             },
             {
                 type: 'button',
@@ -45,11 +39,19 @@ export default function Navigation({}) {
                 icon: <Icon as={iconSet.search} />,
                 href: '/prints'
             },
+
             {
                 type: 'button',
-                name: 'Print logs',
-                icon: <Icon as={iconSet.table} />,
-                href: '/logs'
+                name: 'Printers',
+                icon: <Icon as={iconSet.printer} />,
+                href: '/printers'
+            },
+
+            {
+                type: 'button',
+                name: 'Dashboard',
+                icon: <Icon as={iconSet.dashboard} />,
+                href: '/dashboard'
             },
 
             {

@@ -204,26 +204,6 @@ export default function PrintInfo({ selectedPrintData }) {
                             </Box>
                         )}
 
-                        {/* {printerData?.type === 'stratasys' &&
-                                        selectedPrintData.state !== PrintStates.CANCELED ? (
-                                            <Box
-                                                w="100%"
-                                                h="auto"
-                                            >
-                                                <Alert
-                                                    status="warning"
-                                                    borderRadius={5}
-                                                >
-                                                    <AlertIcon />
-                                                    <AlertDescription>
-                                                        This print uses QSR supports, which we will remove for you.
-                                                        Expect it to be ready one business day later than the print
-                                                        completion date.
-                                                    </AlertDescription>
-                                                </Alert>
-                                            </Box>
-                                        ) : null} */}
-
                         <HStack
                             w="full"
                             position="relative"
@@ -326,6 +306,24 @@ export default function PrintInfo({ selectedPrintData }) {
                         </HStack>
 
                         <Divider />
+
+                        {printerData?.type === 'stratasys' && selectedPrintData.state !== PrintStates.CANCELED ? (
+                            <Box
+                                w="100%"
+                                h="auto"
+                            >
+                                <Alert
+                                    status="warning"
+                                    borderRadius={5}
+                                >
+                                    <AlertIcon />
+                                    <AlertDescription>
+                                        This print uses QSR supports, which we remove for you. Expect it to be ready one
+                                        business day later than the print completion date.
+                                    </AlertDescription>
+                                </Alert>
+                            </Box>
+                        ) : null}
 
                         <Timeline print={selectedPrintData} />
 

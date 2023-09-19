@@ -60,138 +60,129 @@ export default function PrinterInfo({ selectedPrinterData }) {
                 </>
             )}
 
-            <HStack
-                flexGrow={1}
-                h="auto"
+            <Box
+                h="full"
                 w="full"
-                justify="center"
+                maxW="4xl"
+                overflow="hidden"
+                p={5}
             >
-                <Box
-                    h="full"
-                    w="full"
-                    maxW="4xl"
-                    overflow="hidden"
-                    px={1}
-                >
-                    {/* <Card
+                {/* <Card
                     h="100%"
                     flexGrow={1}
                     variant="outline"
                     borderRadius={10}
                 >
                     <CardBody> */}
-                    {/* <Box w="auto" h="100%" p={2}> */}
-                    {selectedPrinterData ? (
-                        <>
-                            <HStack
-                                w="100%"
-                                mb={4}
-                                alignItems="center"
+                {/* <Box w="auto" h="100%" p={2}> */}
+                {selectedPrinterData ? (
+                    <>
+                        <HStack
+                            w="100%"
+                            mb={4}
+                            alignItems="center"
+                        >
+                            <Heading
+                                size="lg"
+                                fontWeight="semibold"
                             >
-                                <Heading
-                                    size="lg"
-                                    fontWeight="semibold"
+                                {selectedPrinterData.displayName}
+                            </Heading>
+                            <Spacer />
+                            <ButtonGroup>
+                                <IconButton
+                                    icon={<Icon as={iconSet.wrench} />}
+                                    colorScheme="orange"
+                                    onClick={onMaintenanceOpen}
+                                />
+                            </ButtonGroup>
+                        </HStack>
+                        <VStack
+                            alignItems="flex-start"
+                            h="auto"
+                            w="100%"
+                            spacing={4}
+                            overflow="auto"
+                        >
+                            {!selectedPrinterData.enabled && (
+                                <Box
+                                    w="100%"
+                                    h="auto"
                                 >
-                                    {selectedPrinterData.displayName}
-                                </Heading>
-                                <Spacer />
-                                <ButtonGroup>
-                                    <IconButton
-                                        icon={<Icon as={iconSet.wrench} />}
-                                        colorScheme="orange"
-                                        onClick={onMaintenanceOpen}
-                                    />
-                                </ButtonGroup>
-                            </HStack>
-                            <VStack
-                                alignItems="flex-start"
-                                h="auto"
-                                w="100%"
-                                spacing={4}
-                                overflow="auto"
-                            >
-                                {!selectedPrinterData.enabled && (
-                                    <Box
-                                        w="100%"
-                                        h="auto"
+                                    <Alert
+                                        status="error"
+                                        borderRadius={5}
                                     >
-                                        <Alert
-                                            status="error"
-                                            borderRadius={5}
-                                        >
-                                            <AlertIcon />
-                                            <HStack w="100%">
-                                                <AlertDescription>
-                                                    This printer is down. Check the notes tab for more details
-                                                </AlertDescription>
-                                                {/* <Spacer />
+                                        <AlertIcon />
+                                        <HStack w="100%">
+                                            <AlertDescription>
+                                                This printer is down. Check the notes tab for more details
+                                            </AlertDescription>
+                                            {/* <Spacer />
                                                 <Button
                                                     size="sm"
                                                     onClick={onStatusOpen}
                                                 >
                                                     Read more
                                                 </Button> */}
-                                            </HStack>
-                                        </Alert>
-                                    </Box>
-                                )}
+                                        </HStack>
+                                    </Alert>
+                                </Box>
+                            )}
 
-                                {/* current print */}
-                                {activePrint && <PrintPreview print={activePrint} />}
+                            {/* current print */}
+                            {activePrint && <PrintPreview print={activePrint} />}
 
-                                <Tabs
-                                    w="full"
-                                    flexGrow={1}
-                                    index={tabIndex}
-                                    onChange={(index) => {
-                                        setTabIndex(index);
-                                    }}
-                                >
-                                    <TabList>
-                                        <Tab>Queue</Tab>
-                                        <Tab>Printer notes</Tab>
-                                    </TabList>
+                            <Tabs
+                                w="full"
+                                flexGrow={1}
+                                index={tabIndex}
+                                onChange={(index) => {
+                                    setTabIndex(index);
+                                }}
+                            >
+                                <TabList>
+                                    <Tab>Queue</Tab>
+                                    <Tab>Printer notes</Tab>
+                                </TabList>
 
-                                    <TabPanels w="full">
-                                        {/* notes */}
-                                        <TabPanel px={0}>
-                                            <QueueTable
-                                                activePrint={activePrint}
-                                                selectedPrinterData={selectedPrinterData}
-                                            />
-                                        </TabPanel>
-                                        <TabPanel px={0}>
-                                            {selectedPrinterData.maintenance.notes?.length > 0 ? (
-                                                <ReactMarkdown
-                                                    components={ChakraUIRenderer()}
-                                                    skipHtml
-                                                >
-                                                    {selectedPrinterData.maintenance.notes}
-                                                </ReactMarkdown>
-                                            ) : (
-                                                <Text color={'secondaryText'}>
-                                                    No notes are attached to this print.
-                                                </Text>
-                                            )}
-                                        </TabPanel>
-                                    </TabPanels>
-                                </Tabs>
-                            </VStack>
-                        </>
-                    ) : (
-                        <VStack
-                            h="100%"
-                            w="100%"
-                            justify="center"
-                        >
-                            <Text color="secondaryText">select a printer</Text>
+                                <TabPanels w="full">
+                                    {/* notes */}
+                                    <TabPanel px={0}>
+                                        <QueueTable
+                                            activePrint={activePrint}
+                                            selectedPrinterData={selectedPrinterData}
+                                        />
+                                    </TabPanel>
+                                    <TabPanel px={0}>
+                                        {selectedPrinterData.maintenance.notes?.length > 0 ? (
+                                            <ReactMarkdown
+                                                components={ChakraUIRenderer()}
+                                                skipHtml
+                                            >
+                                                {selectedPrinterData.maintenance.notes}
+                                            </ReactMarkdown>
+                                        ) : (
+                                            <Text color={'secondaryText'}>No notes are attached to this print.</Text>
+                                        )}
+                                    </TabPanel>
+                                </TabPanels>
+                            </Tabs>
                         </VStack>
-                    )}
-                    {/* </Box> */}
-                    {/* </CardBody>
+                    </>
+                ) : (
+                    <VStack
+                        h="100%"
+                        w="100%"
+                        justify="center"
+                    >
+                        <Text color="secondaryText">select a printer</Text>
+                    </VStack>
+                )}
+                {/* </Box> */}
+                {/* </CardBody>
                 </Card> */}
-                </Box>
-            </HStack>
+            </Box>
         </>
     );
 }
