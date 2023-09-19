@@ -54,14 +54,15 @@ export default function Printers(props) {
                     />
 
                     {/* {selectedPrinterData && ( */}
-                    <Box
-                        w="full"
+                    <HStack
+                        w="auto"
                         h="full"
                         flexGrow={1}
                         overflow="auto"
+                        justify="center"
                     >
                         <PrinterInfo selectedPrinterData={selectedPrinterData} />
-                    </Box>
+                    </HStack>
                     {/* )} */}
                 </HStack>
             </Box>

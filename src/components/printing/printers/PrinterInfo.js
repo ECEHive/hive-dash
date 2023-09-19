@@ -67,14 +67,6 @@ export default function PrinterInfo({ selectedPrinterData }) {
                 overflow="hidden"
                 p={5}
             >
-                {/* <Card
-                    h="100%"
-                    flexGrow={1}
-                    variant="outline"
-                    borderRadius={10}
-                >
-                    <CardBody> */}
-                {/* <Box w="auto" h="100%" p={2}> */}
                 {selectedPrinterData ? (
                     <>
                         <HStack

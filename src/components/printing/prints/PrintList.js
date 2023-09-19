@@ -2,9 +2,8 @@ import { useCallback, useMemo, useState } from 'react';
 
 import {
     Badge,
+    Box,
     Button,
-    Card,
-    CardBody,
     CircularProgress,
     Code,
     Divider,
@@ -22,8 +21,6 @@ import {
     chakra,
     useColorModeValue
 } from '@chakra-ui/react';
-
-import { SearchIcon } from '@chakra-ui/icons';
 
 import { AsyncSelect } from 'chakra-react-select';
 import { useRouter } from 'next/router';
@@ -47,99 +44,99 @@ function PrintListItem({ data, isActive, onClick }) {
     const progressColor = useColorModeValue('green.500', 'green.200');
 
     return (
-        <Card
-            w="100%"
+        <Box
+            w="full"
             h="auto"
             as={Button}
-            p={0}
-            variant="outline"
-            isActive={isActive}
+            borderRadius={0}
+            p={5}
+            borderBottom="1px solid"
+            borderColor="chakra-border-color"
             onClick={onClick}
-            bgColor="chakra-subtle-bg"
+            isActive={isActive}
         >
-            <CardBody w="100%">
-                <VStack
-                    spacing={3}
-                    alignItems="flex-start"
-                    h="100%"
-                >
-                    <HStack w="100%">
-                        <Tooltip label={betterPrintData.trayName}>
-                            <Heading
-                                size="md"
-                                fontWeight="medium"
-                                fontFamily="body"
-                                overflow="hidden"
-                                textOverflow="ellipsis"
-                                whiteSpace="nowrap"
-                            >
-                                {betterPrintData.trayName}
-                            </Heading>
-                        </Tooltip>
-                        <Spacer />
-                        <Badge
-                            variant="subtle"
-                            colorScheme={StateColors[betterPrintData.state]}
+            <VStack
+                spacing={3}
+                alignItems="flex-start"
+                w="full"
+                h="100%"
+            >
+                <HStack w="100%">
+                    <Tooltip label={betterPrintData.trayName}>
+                        <Heading
+                            size="md"
+                            fontWeight="medium"
+                            fontFamily="body"
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
                         >
-                            {betterPrintData.stateName}
-                        </Badge>
-                    </HStack>
-
-                    <VStack
-                        w="100%"
-                        justify="start"
-                        align="start"
-                        spacing={2}
-                        color="secondaryText"
-                        fontSize="sm"
+                            {betterPrintData.trayName}
+                        </Heading>
+                    </Tooltip>
+                    <Spacer />
+                    <Badge
+                        variant="subtle"
+                        colorScheme={StateColors[betterPrintData.state]}
                     >
-                        <HStack
-                            spacing={2}
-                            align="center"
-                        >
-                            <Icon as={iconSet.printer} />
-                            <Text fontWeight="normal">{printerData?.displayName}</Text>
-                        </HStack>
-                        <HStack
-                            spacing={2}
-                            align="center"
-                        >
-                            <Icon as={iconSet.refresh} />
-                            <Text fontWeight="normal">{betterPrintData.updatedAtHumanized}</Text>
-                        </HStack>
-                    </VStack>
+                        {betterPrintData.stateName}
+                    </Badge>
+                </HStack>
 
-                    {betterPrintData.state === PrintStates.PRINTING && (
-                        <>
-                            <Divider />
-
-                            <HStack spacing={1.5}>
-                                <CircularProgress
-                                    value={progress}
-                                    color={progressColor}
-                                    size={5}
-                                    thickness={8}
-                                    trackColor="progressTrack"
-                                />
-                                <VStack
-                                    align="start"
-                                    justify="start"
-                                    spacing={1}
-                                >
-                                    <Text
-                                        fontSize="lg"
-                                        fontWeight="medium"
-                                        lineHeight={1}
-                                    >
-                                        {timeLeftHumanizedDetailed}
-                                    </Text>
-                                </VStack>
-                            </HStack>
-                        </>
-                    )}
+                <VStack
+                    w="100%"
+                    justify="start"
+                    align="start"
+                    spacing={2}
+                    color="secondaryText"
+                    fontSize="sm"
+                >
+                    <HStack
+                        spacing={2}
+                        align="center"
+                    >
+                        <Icon as={iconSet.printer} />
+                        <Text fontWeight="normal">{printerData?.displayName}</Text>
+                    </HStack>
+                    <HStack
+                        spacing={2}
+                        align="center"
+                    >
+                        <Icon as={iconSet.refresh} />
+                        <Text fontWeight="normal">{betterPrintData.updatedAtHumanized}</Text>
+                    </HStack>
                 </VStack>
-            </CardBody>
-        </Card>
+
+                {betterPrintData.state === PrintStates.PRINTING && (
+                    <>
+                        <Divider />
+
+                        <HStack spacing={1.5}>
+                            <CircularProgress
+                                value={progress}
+                                color={progressColor}
+                                size={5}
+                                thickness={8}
+                                trackColor="progressTrack"
+                            />
+                            <VStack
+                                align="start"
+                                justify="start"
+                                spacing={1}
+                            >
+                                <Text
+                                    fontSize="lg"
+                                    fontWeight="medium"
+                                    lineHeight={1}
+                                >
+                                    {timeLeftHumanizedDetailed}
+                                </Text>
+                            </VStack>
+                        </HStack>
+                    </>
+                )}
+            </VStack>
+        </Box>
     );
 }
 
@@ -255,62 +252,69 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
     return (
         <>
             <VStack
-                minW="375px"
+                maxW="375px"
+                w="full"
                 h="100%"
-                spacing={3}
+                spacing={0}
                 alignItems="flex-start"
                 justifyContent="flex-start"
+                borderRight="1px solid"
+                borderColor="chakra-border-color"
             >
-                <FormControl>
-                    <InputGroup w="100%">
-                        <ChakraAsyncSelect
-                            w="100%"
-                            menuPortalTarget={document.body}
-                            styles={{
-                                menuPortal: (base) => ({
-                                    ...base,
-                                    zIndex: 9999
-                                })
-                            }}
-                            menuPlacement="auto"
-                            isMulti
-                            isClearable
-                            placeholder={
-                                <HStack spacing={2}>
-                                    <SearchIcon />
-                                    <Text>Search for a print</Text>
-                                </HStack>
-                            }
-                            loadOptions={search}
-                            onChange={(value) => {
-                                if (value) {
-                                    setSearchTerms(value.map((term) => term.value));
-                                } else {
-                                    setSearchTerms([]);
+                <HStack
+                    w="full"
+                    h="auto"
+                    p={5}
+                    borderBottom="1px solid"
+                    borderColor="chakra-border-color"
+                >
+                    <Icon as={iconSet.search} />
+                    <FormControl>
+                        <InputGroup w="100%">
+                            <ChakraAsyncSelect
+                                variant="unstyled"
+                                w="100%"
+                                menuPortalTarget={document.body}
+                                styles={{
+                                    menuPortal: (base) => ({
+                                        ...base,
+                                        zIndex: 9999
+                                    })
+                                }}
+                                menuPlacement="auto"
+                                isMulti
+                                isClearable
+                                placeholder={<Text>Search for a print</Text>}
+                                loadOptions={search}
+                                onChange={(value) => {
+                                    if (value) {
+                                        setSearchTerms(value.map((term) => term.value));
+                                    } else {
+                                        setSearchTerms([]);
+                                    }
+                                }}
+                                value={
+                                    searchTerms.length > 0
+                                        ? searchTerms.map((term) => ({
+                                              label: `${term.split(':')[0]}: ${term.split(':')[1]}`,
+                                              value: term
+                                          }))
+                                        : null
                                 }
-                            }}
-                            value={
-                                searchTerms.length > 0
-                                    ? searchTerms.map((term) => ({
-                                          label: `${term.split(':')[0]}: ${term.split(':')[1]}`,
-                                          value: term
-                                      }))
-                                    : null
-                            }
-                            noOptionsMessage={(e) => {
-                                return e.inputValue.length === 0 ? 'Start typing to search!' : 'No results';
-                            }}
-                        />
-                    </InputGroup>
-                </FormControl>
+                                noOptionsMessage={(e) => {
+                                    return e.inputValue.length === 0 ? 'Start typing to search!' : 'No results';
+                                }}
+                            />
+                        </InputGroup>
+                    </FormControl>
+                </HStack>
 
                 <VStack
-                    w="100%"
+                    w="full"
+                    h="auto"
                     alignItems="flex-start"
-                    spacing={3}
+                    spacing={0}
                     overflow="auto"
-                    pt={3}
-                    pr={1}
                 >
                     {matchedPrints.length > 0 ? (
                         matchedPrints.map((print) => {
@@ -328,7 +332,8 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                     ) : (
                         <VStack
                             align="start"
-                            px={3}
+                            px={5}
+                            pt={5}
                         >
                             <Text fontSize="lg">Search for a print using any of the following fields:</Text>
                             <UnorderedList>

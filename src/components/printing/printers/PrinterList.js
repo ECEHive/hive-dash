@@ -43,7 +43,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                     as={Button}
                     borderRadius={0}
                     p={5}
-                    borderTop="1px solid"
+                    borderBottom="1px solid"
                     borderColor="chakra-border-color"
                     onClick={onClick}
                     isActive={isActive}
@@ -168,7 +168,8 @@ export default function PrinterList({ selectedPrinter }) {
                 <IconButton icon={<ChevronRightIcon />} />
             </VStack> */}
             <VStack
-                minW="375px"
+                maxW="375px"
+                w="full"
                 h="100%"
                 spacing={0}
                 alignItems="flex-start"
@@ -180,6 +181,8 @@ export default function PrinterList({ selectedPrinter }) {
                     w="full"
                     h="auto"
                     p={5}
+                    borderBottom="1px solid"
+                    borderColor="chakra-border-color"
                 >
                     <Icon as={iconSet.search} />
                     <InputGroup>

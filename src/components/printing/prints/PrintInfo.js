@@ -178,275 +178,286 @@ export default function PrintInfo({ selectedPrintData }) {
                     />
                 </>
             )}
-            {selectedPrintData ? (
-                <>
-                    <VStack
-                        position="relative"
-                        w="100%"
-                        h="auto"
-                        justify="center"
-                        align="start"
-                        spacing={3}
-                        px={1}
-                    >
-                        {selectedPrintData.state === PrintStates.CANCELED && (
-                            <Box
-                                w="100%"
-                                h="auto"
-                            >
-                                <Alert
-                                    status="error"
-                                    borderRadius={5}
-                                >
-                                    <AlertIcon />
-                                    <AlertDescription>This print has been canceled</AlertDescription>
-                                </Alert>
-                            </Box>
-                        )}
-
-                        <HStack
-                            w="full"
+            <Box
+                h="full"
+                w="full"
+                maxW="4xl"
+                overflow="hidden"
+                p={5}
+            >
+                {selectedPrintData ? (
+                    <>
+                        <VStack
                             position="relative"
-                            overflow="hidden"
-                        >
-                            <VStack
-                                align="start"
-                                justify="start"
-                                spacing={3}
-                            >
-                                <Heading
-                                    size="lg"
-                                    fontWeight="semibold"
-                                >
-                                    {betterPrintData.trayName}
-                                </Heading>
-                                <HStack
-                                    w="auto"
-                                    h="auto"
-                                    align="center"
-                                    justify="start"
-                                    pb={2}
-                                    spacing={3}
-                                    overflow="auto"
-                                    whiteSpace="nowrap"
-                                    // borderRight={actions && '1px'}
-                                    // borderRightColor={actions && 'chakra-border-color'}
-                                >
-                                    {dataFields.map((field, i) => {
-                                        return (
-                                            <>
-                                                <VStack
-                                                    spacing={1}
-                                                    align="start"
-                                                >
-                                                    <HStack
-                                                        alignItems="center"
-                                                        spacing={2}
-                                                        color="secondaryText"
-                                                    >
-                                                        <Icon
-                                                            fontSize="lg"
-                                                            as={field.icon}
-                                                        />
-                                                        <HStack
-                                                            align="end"
-                                                            spacing={1}
-                                                            height="full"
-                                                        >
-                                                            <Text
-                                                                as={field.link ? Link : 'span'}
-                                                                fontSize="xl"
-                                                                fontWeight="medium"
-                                                                lineHeight={1}
-                                                                href={field?.link}
-                                                            >
-                                                                {field.value}
-                                                            </Text>
-                                                            {field.suffix && <Text fontSize="sm">{field.suffix}</Text>}
-                                                        </HStack>
-                                                    </HStack>
-                                                </VStack>
-                                                {i < dataFields.length - 1 && (
-                                                    <Icon
-                                                        color="secondaryText"
-                                                        fontSize="sm"
-                                                        as={iconSet.dot}
-                                                    />
-                                                )}
-                                            </>
-                                        );
-                                    })}
-                                </HStack>
-                            </VStack>
-                            <Spacer />
-                            <Menu strategy="fixed">
-                                <MenuButton
-                                    as={IconButton}
-                                    icon={<Icon as={iconSet.hamburger} />}
-                                />
-                                <MenuList>
-                                    <MenuItem
-                                        icon={<Icon as={iconSet.pencil} />}
-                                        onClick={onEditorOpen}
-                                    >
-                                        Edit print
-                                    </MenuItem>
-                                    <MenuItem
-                                        icon={<Icon as={iconSet.minus} />}
-                                        onClick={cancelPrint}
-                                        isDisabled={
-                                            selectedPrintData.state === PrintStates.CANCELED ||
-                                            selectedPrintData.state === PrintStates.COMPLETED
-                                        }
-                                    >
-                                        Cancel print
-                                    </MenuItem>
-                                </MenuList>
-                            </Menu>
-                        </HStack>
-
-                        <Divider />
-
-                        {printerData?.type === 'stratasys' && selectedPrintData.state !== PrintStates.CANCELED ? (
-                            <Box
-                                w="100%"
-                                h="auto"
-                            >
-                                <Alert
-                                    status="warning"
-                                    borderRadius={5}
-                                >
-                                    <AlertIcon />
-                                    <AlertDescription>
-                                        This print uses QSR supports, which we remove for you. Expect it to be ready one
-                                        business day later than the print completion date.
-                                    </AlertDescription>
-                                </Alert>
-                            </Box>
-                        ) : null}
-
-                        <Timeline print={selectedPrintData} />
-
-                        <Grid
-                            templateColumns="repeat(2, auto)"
-                            templateRows="repeat(3, auto)"
-                            gap={4}
                             w="full"
                             h="auto"
+                            justify="center"
+                            align="start"
+                            spacing={3}
+                            px={1}
                         >
-                            <DetailsPane
-                                title="Preview"
-                                icon={iconSet.camera}
-                                rowSpan={2}
-                                colSpan={1}
-                            >
-                                <Image
-                                    src={
-                                        betterPrintData.preview ||
-                                        'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2Fu2!?alt=media&token=2571082c-e369-400e-b428-27a1c51564ee'
-                                    }
-                                    alt="print preview"
-                                    width={512}
-                                    height={512}
-                                    style={{
-                                        width: 'auto',
-                                        height: 'auto',
-                                        alignSelf: 'center'
-                                    }}
-                                />
-                            </DetailsPane>
-
-                            <DetailsPane
-                                title="Event notes"
-                                icon={iconSet.timeline}
-                                rowSpan={1}
-                                colSpan={1}
+                            <HStack
+                                w="full"
+                                position="relative"
+                                overflow="hidden"
                             >
                                 <VStack
-                                    justify="start"
-                                    align="center"
-                                    h="full"
-                                    fontSize="md"
-                                >
-                                    {latestEvent.notes?.length > 0 ? (
-                                        <>
-                                            <ReactMarkdown
-                                                components={ChakraUIRenderer()}
-                                                skipHtml
-                                            >
-                                                {latestEvent.notes}
-                                            </ReactMarkdown>
-                                        </>
-                                    ) : (
-                                        <VStack
-                                            justify="center"
-                                            align="center"
-                                            h="full"
-                                        >
-                                            <Text
-                                                w="full"
-                                                h="full"
-                                                color={'secondaryText'}
-                                                textAlign="center"
-                                            >
-                                                No notes are attached to the latest event.
-                                            </Text>
-                                        </VStack>
-                                    )}
-                                </VStack>
-                            </DetailsPane>
-
-                            <DetailsPane
-                                title="Print Notes"
-                                icon={iconSet.note}
-                                rowSpan={1}
-                                colSpan={1}
-                            >
-                                <VStack
-                                    justify="start"
                                     align="start"
-                                    h="full"
-                                    fontSize="md"
+                                    justify="start"
+                                    spacing={3}
                                 >
-                                    {betterPrintData.notes?.length > 0 ? (
-                                        <>
-                                            <ReactMarkdown
-                                                components={ChakraUIRenderer()}
-                                                skipHtml
-                                            >
-                                                {betterPrintData.notes}
-                                            </ReactMarkdown>
-                                        </>
-                                    ) : (
-                                        <VStack
-                                            justify="center"
-                                            align="center"
-                                            h="full"
-                                        >
-                                            <Text
-                                                w="full"
-                                                h="full"
-                                                color={'secondaryText'}
-                                                textAlign="center"
-                                            >
-                                                No notes are attached to this print.
-                                            </Text>
-                                        </VStack>
-                                    )}
+                                    <Heading
+                                        size="lg"
+                                        fontWeight="semibold"
+                                    >
+                                        {betterPrintData.trayName}
+                                    </Heading>
+                                    <HStack
+                                        w="auto"
+                                        h="auto"
+                                        align="center"
+                                        justify="start"
+                                        pb={2}
+                                        spacing={3}
+                                        overflow="auto"
+                                        whiteSpace="nowrap"
+                                        // borderRight={actions && '1px'}
+                                        // borderRightColor={actions && 'chakra-border-color'}
+                                    >
+                                        {dataFields.map((field, i) => {
+                                            return (
+                                                <>
+                                                    <VStack
+                                                        spacing={1}
+                                                        align="start"
+                                                    >
+                                                        <HStack
+                                                            alignItems="center"
+                                                            spacing={2}
+                                                            color="secondaryText"
+                                                        >
+                                                            <Icon
+                                                                fontSize="lg"
+                                                                as={field.icon}
+                                                            />
+                                                            <HStack
+                                                                align="end"
+                                                                spacing={1}
+                                                                height="full"
+                                                            >
+                                                                <Text
+                                                                    as={field.link ? Link : 'span'}
+                                                                    fontSize="xl"
+                                                                    fontWeight="medium"
+                                                                    lineHeight={1}
+                                                                    href={field?.link}
+                                                                >
+                                                                    {field.value}
+                                                                </Text>
+                                                                {field.suffix && (
+                                                                    <Text fontSize="sm">{field.suffix}</Text>
+                                                                )}
+                                                            </HStack>
+                                                        </HStack>
+                                                    </VStack>
+                                                    {i < dataFields.length - 1 && (
+                                                        <Icon
+                                                            color="secondaryText"
+                                                            fontSize="sm"
+                                                            as={iconSet.dot}
+                                                        />
+                                                    )}
+                                                </>
+                                            );
+                                        })}
+                                    </HStack>
                                 </VStack>
-                            </DetailsPane>
-                        </Grid>
+                                <Spacer />
+                                <Menu strategy="fixed">
+                                    <MenuButton
+                                        as={IconButton}
+                                        icon={<Icon as={iconSet.hamburger} />}
+                                    />
+                                    <MenuList>
+                                        <MenuItem
+                                            icon={<Icon as={iconSet.pencil} />}
+                                            onClick={onEditorOpen}
+                                        >
+                                            Edit print
+                                        </MenuItem>
+                                        <MenuItem
+                                            icon={<Icon as={iconSet.minus} />}
+                                            onClick={cancelPrint}
+                                            isDisabled={
+                                                selectedPrintData.state === PrintStates.CANCELED ||
+                                                selectedPrintData.state === PrintStates.COMPLETED
+                                            }
+                                        >
+                                            Cancel print
+                                        </MenuItem>
+                                    </MenuList>
+                                </Menu>
+                            </HStack>
+
+                            <Divider />
+
+                            {/* ERROR BANNERS */}
+                            {printerData?.type === 'stratasys' && selectedPrintData.state !== PrintStates.CANCELED ? (
+                                <Box
+                                    w="100%"
+                                    h="auto"
+                                >
+                                    <Alert
+                                        status="warning"
+                                        borderRadius={5}
+                                    >
+                                        <AlertIcon />
+                                        <AlertDescription>
+                                            This print uses QSR supports, which we remove for you. Expect it to be ready
+                                            one business day later than the print completion date.
+                                        </AlertDescription>
+                                    </Alert>
+                                </Box>
+                            ) : null}
+                            {selectedPrintData.state === PrintStates.CANCELED && (
+                                <Box
+                                    w="100%"
+                                    h="auto"
+                                >
+                                    <Alert
+                                        status="error"
+                                        borderRadius={5}
+                                    >
+                                        <AlertIcon />
+                                        <AlertDescription>This print has been canceled</AlertDescription>
+                                    </Alert>
+                                </Box>
+                            )}
+                            {/* --- */}
+
+                            <Timeline print={selectedPrintData} />
+
+                            <Grid
+                                templateColumns="repeat(2, auto)"
+                                templateRows="repeat(3, auto)"
+                                gap={4}
+                                w="full"
+                                h="auto"
+                            >
+                                <DetailsPane
+                                    title="Preview"
+                                    icon={iconSet.camera}
+                                    rowSpan={2}
+                                    colSpan={1}
+                                >
+                                    <Image
+                                        src={
+                                            betterPrintData.preview ||
+                                            'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2Fu2!?alt=media&token=2571082c-e369-400e-b428-27a1c51564ee'
+                                        }
+                                        alt="print preview"
+                                        width={512}
+                                        height={512}
+                                        style={{
+                                            width: 'auto',
+                                            height: 'auto',
+                                            alignSelf: 'center'
+                                        }}
+                                    />
+                                </DetailsPane>
+
+                                <DetailsPane
+                                    title="Event notes"
+                                    icon={iconSet.timeline}
+                                    rowSpan={1}
+                                    colSpan={1}
+                                >
+                                    <VStack
+                                        justify="start"
+                                        align="center"
+                                        h="full"
+                                        fontSize="md"
+                                    >
+                                        {latestEvent.notes?.length > 0 ? (
+                                            <>
+                                                <ReactMarkdown
+                                                    components={ChakraUIRenderer()}
+                                                    skipHtml
+                                                >
+                                                    {latestEvent.notes}
+                                                </ReactMarkdown>
+                                            </>
+                                        ) : (
+                                            <VStack
+                                                justify="center"
+                                                align="center"
+                                                h="full"
+                                            >
+                                                <Text
+                                                    w="full"
+                                                    h="full"
+                                                    color={'secondaryText'}
+                                                    textAlign="center"
+                                                >
+                                                    No notes are attached to the latest event.
+                                                </Text>
+                                            </VStack>
+                                        )}
+                                    </VStack>
+                                </DetailsPane>
+
+                                <DetailsPane
+                                    title="Print Notes"
+                                    icon={iconSet.note}
+                                    rowSpan={1}
+                                    colSpan={1}
+                                >
+                                    <VStack
+                                        justify="start"
+                                        align="start"
+                                        h="full"
+                                        fontSize="md"
+                                    >
+                                        {betterPrintData.notes?.length > 0 ? (
+                                            <>
+                                                <ReactMarkdown
+                                                    components={ChakraUIRenderer()}
+                                                    skipHtml
+                                                >
+                                                    {betterPrintData.notes}
+                                                </ReactMarkdown>
+                                            </>
+                                        ) : (
+                                            <VStack
+                                                justify="center"
+                                                align="center"
+                                                h="full"
+                                            >
+                                                <Text
+                                                    w="full"
+                                                    h="full"
+                                                    color={'secondaryText'}
+                                                    textAlign="center"
+                                                >
+                                                    No notes are attached to this print.
+                                                </Text>
+                                            </VStack>
+                                        )}
+                                    </VStack>
+                                </DetailsPane>
+                            </Grid>
+                        </VStack>
+                    </>
+                ) : (
+                    <VStack
+                        minH="100%"
+                        w="100%"
+                        justify="center"
+                    >
+                        <Text color="gray.400">select a print</Text>
                     </VStack>
-                </>
-            ) : (
-                <VStack
-                    minH="100%"
-                    w="100%"
-                    justify="center"
-                >
-                    <Text color="gray.400">select a print</Text>
-                </VStack>
-            )}
+                )}
+            </Box>
         </>
     );
 }

@@ -34,13 +34,12 @@ export default function FindPrint(props) {
             <Box
                 w="100%"
                 h="100%"
-                p={5}
                 overflow="hidden"
             >
                 <HStack
                     w="100%"
                     h="100%"
-                    spacing={4}
+                    spacing={0}
                     alignItems="flex-start"
                     justifyContent="flex-start"
                 >
@@ -49,15 +48,15 @@ export default function FindPrint(props) {
                         setSelectedPrintId={setSelectedPrintId}
                     />
 
-                    <Box
+                    <HStack
+                        w="auto"
                         h="full"
-                        w="full"
-                        maxW="4xl"
-                        px={1}
+                        flexGrow={1}
                         overflow="auto"
+                        justify="center"
                     >
                         <PrintInfo selectedPrintData={selectedPrintData} />
-                    </Box>
+                    </HStack>
                 </HStack>
             </Box>
         </>
