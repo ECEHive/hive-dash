@@ -86,6 +86,7 @@ function PrinterItem({ printer, ...props }) {
             as={Button}
             h="auto"
             p={0}
+            isDisabled={!printerData.enabled}
         >
             <CardBody
                 p={4}

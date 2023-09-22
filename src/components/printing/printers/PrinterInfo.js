@@ -64,7 +64,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                 h="full"
                 w="full"
                 maxW="4xl"
-                overflow="hidden"
+                overflow="auto"
                 p={5}
             >
                 {selectedPrinterData ? (

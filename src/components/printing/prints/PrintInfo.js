@@ -182,7 +182,7 @@ export default function PrintInfo({ selectedPrintData }) {
                 h="full"
                 w="full"
                 maxW="4xl"
-                overflow="hidden"
+                overflow="auto"
                 p={5}
             >
                 {selectedPrintData ? (

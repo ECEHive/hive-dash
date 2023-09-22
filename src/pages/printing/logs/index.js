@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Badge,
     Box,
     HStack,
@@ -12,6 +13,7 @@ import {
     Text,
     Th,
     Thead,
+    Tooltip,
     Tr,
     VStack
 } from '@chakra-ui/react';
@@ -33,19 +35,27 @@ function LogItem({ printData }) {
     return (
         <Tr>
             <Td>
-                <VStack
-                    align="start"
-                    justify="start"
-                    spacing={1}
-                >
-                    <Text fontSize="md">{betterPrintData.trayName}</Text>
-                    <Text
-                        fontSize="xs"
-                        color="gray.500"
+                <HStack>
+                    <Avatar
+                        src={betterPrintData.preview}
+                        size="md"
+                    />
+                    <VStack
+                        align="start"
+                        justify="start"
+                        spacing={1}
                     >
-                        {betterPrintData.queuedAtExtendedFormatted}
-                    </Text>
-                </VStack>
+                        <Text fontSize="md">{betterPrintData.trayName}</Text>
+                        <Tooltip label={betterPrintData.queuedAtExtendedFormatted}>
+                            <Text
+                                fontSize="xs"
+                                color="secondaryText"
+                            >
+                                {betterPrintData.queuedAtHumanized}
+                            </Text>
+                        </Tooltip>
+                    </VStack>
+                </HStack>
             </Td>
             <Td>{printerData?.displayName || betterPrintData.printer}</Td>
             <Td>
