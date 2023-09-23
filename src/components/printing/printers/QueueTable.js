@@ -7,6 +7,7 @@ import {
     ButtonGroup,
     HStack,
     Icon,
+    IconButton,
     Link,
     Table,
     TableContainer,
@@ -117,14 +118,14 @@ function QueueTableItem({ printData, startPrint, canQueue, update, editCallback 
                         >
                             Start
                         </Button>
-                        <Button
-                            leftIcon={<Icon as={iconSet.pencil} />}
+                        <IconButton
+                            icon={<Icon as={iconSet.pencil} />}
                             colorScheme="gray"
                             variant="solid"
                             onClick={editCallback}
                         >
                             Edit
-                        </Button>
+                        </IconButton>
                     </ButtonGroup>
                 )}
             </Td>

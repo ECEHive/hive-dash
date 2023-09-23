@@ -4,13 +4,12 @@ import {
     Badge,
     Box,
     Button,
-    CircularProgress,
-    Divider,
     HStack,
     Heading,
     Icon,
     Input,
     InputGroup,
+    Progress,
     Spacer,
     Text,
     VStack
@@ -30,7 +29,7 @@ import { StateColors } from '@/util/states';
 function PrinterListItem({ data, onClick, isActive, queue }) {
     const { expandedPrinterData, currentPrintData, printerTypeData } = usePrinterParser(data);
     const { betterPrintData } = usePrintParser(currentPrintData);
-    const { timeLeftHumanized, progress, progressCircleColor } = usePrintProgress(currentPrintData);
+    const { timeLeftHumanized, progress, progressCircleColor, progressBarColor } = usePrintProgress(currentPrintData);
 
     //const cardColor = useColorModeValue('white.100', 'gray.700');
 
@@ -50,7 +49,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                 >
                     <VStack
                         w="full"
-                        spacing={3}
+                        spacing={2}
                         alignItems="flex-start"
                         h="100%"
                     >
@@ -99,40 +98,39 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                         </VStack>
 
                         {expandedPrinterData.state === 'printing' && (
-                            <>
-                                <Divider />
+                            <VStack
+                                mt={2}
+                                w="full"
+                                align="start"
+                            >
+                                <Progress
+                                    w="full"
+                                    size="xs"
+                                    colorScheme={progressBarColor}
+                                    value={progress}
+                                />
 
-                                <HStack spacing={1.5}>
-                                    <CircularProgress
-                                        value={progress}
-                                        color={progressCircleColor}
-                                        size={8}
-                                        thickness={8}
-                                        trackColor="progressTrack"
-                                    />
-                                    <VStack
-                                        align="start"
-                                        justify="start"
+                                <VStack
+                                    align="start"
+                                    justify="start"
+                                    spacing={1}
+                                >
+                                    <Text
+                                        fontSize="md"
+                                        fontWeight="medium"
+                                    >
+                                        {betterPrintData.trayName}
+                                    </Text>
+                                    <HStack
+                                        color="secondaryText"
+                                        fontSize="xs"
                                         spacing={1}
                                     >
-                                        <Text
-                                            fontSize="md"
-                                            fontWeight="medium"
-                                            lineHeight={1}
-                                        >
-                                            {betterPrintData.trayName}
-                                        </Text>
-                                        <Text
-                                            fontSize="xs"
-                                            fontWeight="normal"
-                                            color="secondaryText"
-                                            lineHeight={1}
-                                        >
-                                            {timeLeftHumanized}
-                                        </Text>
-                                    </VStack>
-                                </HStack>
-                            </>
+                                        <Icon as={iconSet.clock} />
+                                        <Text fontWeight="normal">{timeLeftHumanized}</Text>
+                                    </HStack>
+                                </VStack>
+                            </VStack>
                         )}
                     </VStack>
                 </Box>

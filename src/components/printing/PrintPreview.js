@@ -125,7 +125,10 @@ export default function PrintPreview({ print }) {
                         </VStack>
 
                         <Image
-                            src={betterPrintData?.preview}
+                            src={
+                                betterPrintData?.preview ||
+                                'http://localhost:3001/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fhive-af57a.appspot.com%2Fo%2Fpreviews%252FPI_Colin_Hartigan_bruh10000%3Falt%3Dmedia%26token%3D21d28026-6320-4b9c-9d4a-f8ce304b7bb3&w=1080&q=75'
+                            }
                             alt="print preview"
                             height={20}
                             width={100}

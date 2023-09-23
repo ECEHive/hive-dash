@@ -1,6 +1,22 @@
 import { useEffect, useMemo } from 'react';
 
-import { Avatar, Box, HStack, Icon, Progress, Text, Tooltip, VStack, useColorModeValue } from '@chakra-ui/react';
+import {
+    Avatar,
+    AvatarBadge,
+    Box,
+    HStack,
+    Icon,
+    Popover,
+    PopoverArrow,
+    PopoverBody,
+    PopoverContent,
+    PopoverHeader,
+    PopoverTrigger,
+    Progress,
+    Text,
+    VStack,
+    useColorModeValue
+} from '@chakra-ui/react';
 
 import dayjs from '@/lib/time';
 
@@ -17,46 +33,67 @@ function TimelineEvent({ event }) {
 
     return (
         <>
-            <VStack
-                position="absolute"
-                left={rtl ? null : `${event.progress}%`}
-                right={rtl ? `${100 - event.progress}%` : null}
-                top={0}
-                align={rtl ? 'end' : 'start'}
-                spacing={1}
+            <Popover
+                strategy="absolute"
+                trigger="hover"
             >
-                <Tooltip
-                    label={`${event.description} ${!event.happened ? '(expected) ' : ''}@ ${event.formattedTimestamp}`}
-                >
-                    <Avatar
-                        bgColor={event.happened ? 'blue.200' : avatarIncompleteColor}
-                        size="xs"
-                        icon={<Icon as={event.icon} />}
-                    />
-                </Tooltip>
-
-                {event.next || event.latest ? (
+                <PopoverTrigger>
                     <VStack
+                        position="absolute"
+                        left={rtl ? null : `${event.progress}%`}
+                        right={rtl ? `${100 - event.progress}%` : null}
+                        top={0}
                         align={rtl ? 'end' : 'start'}
-                        justify="start"
-                        spacing={0}
-                        w="full"
+                        spacing={1}
                     >
-                        <Text
-                            fontSize="lg"
-                            fontWeight="medium"
+                        <Avatar
+                            bgColor={event.happened ? 'blue.200' : avatarIncompleteColor}
+                            size="xs"
+                            icon={<Icon as={event.icon} />}
                         >
-                            {event.description}
-                        </Text>
-                        <Text
-                            fontSize="xs"
-                            color="secondaryText"
-                        >
-                            {!event.happened && 'expected '} {event.humanizedTimestamp}
-                        </Text>
+                            {event?.notes?.length > 0 && (
+                                <AvatarBadge
+                                    bg="red.200"
+                                    boxSize="1em"
+                                />
+                            )}
+                        </Avatar>
+
+                        {event.next || event.latest ? (
+                            <VStack
+                                align={rtl ? 'end' : 'start'}
+                                justify="start"
+                                spacing={0}
+                                w="full"
+                            >
+                                <Text
+                                    fontSize="lg"
+                                    fontWeight="medium"
+                                >
+                                    {event.description}
+                                </Text>
+                                <Text
+                                    fontSize="xs"
+                                    color="secondaryText"
+                                >
+                                    {!event.happened && 'expected '} {event.humanizedTimestamp}
+                                </Text>
+                            </VStack>
+                        ) : null}
                     </VStack>
-                ) : null}
-            </VStack>
+                </PopoverTrigger>
+                <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverHeader>{`${event.description} ${!event.happened ? '(expected) ' : ''}@ ${
+                        event.formattedTimestamp
+                    }`}</PopoverHeader>
+                    {event?.notes && (
+                        <PopoverBody>
+                            <Text>{event.notes}</Text>
+                        </PopoverBody>
+                    )}
+                </PopoverContent>
+            </Popover>
         </>
     );
 }
@@ -141,6 +178,7 @@ export default function Timeline({ print }) {
                         </Text>
                     </VStack>
                 </HStack>
+
                 <Box
                     w="full"
                     h="auto"

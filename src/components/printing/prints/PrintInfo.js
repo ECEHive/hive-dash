@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
     Alert,
@@ -8,7 +8,6 @@ import {
     Card,
     CardBody,
     Divider,
-    Grid,
     GridItem,
     HStack,
     Heading,
@@ -20,6 +19,11 @@ import {
     MenuItem,
     MenuList,
     Spacer,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
     Text,
     VStack,
     useDisclosure
@@ -89,6 +93,12 @@ export default function PrintInfo({ selectedPrintData }) {
 
     const { update: printUpdater } = usePrintUpdate();
 
+    const [tabIndex, setTabIndex] = useState(0);
+
+    useEffect(() => {
+        setTabIndex(0);
+    }, [selectedPrintData]);
+
     const cancelPrint = useCallback(() => {
         setCancelEventData({
             type: PrintStates.CANCELED,
@@ -142,23 +152,6 @@ export default function PrintInfo({ selectedPrintData }) {
         ];
     }, [printerData, betterPrintData]);
 
-    const metadataFields = useMemo(() => {
-        return [
-            {
-                icon: iconSet.calendarAdd,
-                value: betterPrintData?.queuedAtFormatted
-            },
-            {
-                icon: iconSet.personPlus,
-                value: betterPrintData?.queuedBy
-            },
-            {
-                icon: iconSet.refresh,
-                value: betterPrintData?.updatedAtHumanized
-            }
-        ];
-    }, [betterPrintData]);
-
     return (
         <>
             {selectedPrintData && (
@@ -178,6 +171,7 @@ export default function PrintInfo({ selectedPrintData }) {
                     />
                 </>
             )}
+
             <Box
                 h="full"
                 w="full"
@@ -200,11 +194,12 @@ export default function PrintInfo({ selectedPrintData }) {
                                 w="full"
                                 position="relative"
                                 overflow="hidden"
+                                align="start"
                             >
                                 <VStack
                                     align="start"
                                     justify="start"
-                                    spacing={3}
+                                    spacing={2}
                                 >
                                     <Heading
                                         size="lg"
@@ -277,6 +272,7 @@ export default function PrintInfo({ selectedPrintData }) {
                                     <MenuButton
                                         as={IconButton}
                                         icon={<Icon as={iconSet.hamburger} />}
+                                        variant={'ghost'}
                                     />
                                     <MenuList>
                                         <MenuItem
@@ -337,115 +333,44 @@ export default function PrintInfo({ selectedPrintData }) {
 
                             <Timeline print={selectedPrintData} />
 
-                            <Grid
-                                templateColumns="repeat(2, auto)"
-                                templateRows="repeat(3, auto)"
-                                gap={4}
+                            <Tabs
                                 w="full"
-                                h="auto"
+                                index={tabIndex}
+                                onChange={(index) => {
+                                    setTabIndex(index);
+                                }}
+                                flexGrow={1}
                             >
-                                <DetailsPane
-                                    title="Preview"
-                                    icon={iconSet.camera}
-                                    rowSpan={2}
-                                    colSpan={1}
-                                >
-                                    <Image
-                                        src={
-                                            betterPrintData.preview ||
-                                            'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2Fu2!?alt=media&token=2571082c-e369-400e-b428-27a1c51564ee'
-                                        }
-                                        alt="print preview"
-                                        width={512}
-                                        height={512}
-                                        style={{
-                                            width: 'auto',
-                                            height: 'auto',
-                                            alignSelf: 'center'
-                                        }}
-                                    />
-                                </DetailsPane>
+                                <TabList>
+                                    <Tab>Preview</Tab>
+                                    <Tab>Print notes</Tab>
+                                </TabList>
 
-                                <DetailsPane
-                                    title="Event notes"
-                                    icon={iconSet.timeline}
-                                    rowSpan={1}
-                                    colSpan={1}
+                                <TabPanels
+                                    w="full"
+                                    h="full"
                                 >
-                                    <VStack
-                                        justify="start"
-                                        align="center"
-                                        h="full"
-                                        fontSize="md"
-                                    >
-                                        {latestEvent.notes?.length > 0 ? (
-                                            <>
-                                                <ReactMarkdown
-                                                    components={ChakraUIRenderer()}
-                                                    skipHtml
-                                                >
-                                                    {latestEvent.notes}
-                                                </ReactMarkdown>
-                                            </>
-                                        ) : (
-                                            <VStack
-                                                justify="center"
-                                                align="center"
-                                                h="full"
-                                            >
-                                                <Text
-                                                    w="full"
-                                                    h="full"
-                                                    color={'secondaryText'}
-                                                    textAlign="center"
-                                                >
-                                                    No notes are attached to the latest event.
-                                                </Text>
-                                            </VStack>
-                                        )}
-                                    </VStack>
-                                </DetailsPane>
+                                    {/* notes */}
+                                    <TabPanel px={0}>
+                                        <Image
+                                            src={betterPrintData.preview}
+                                            width={512}
+                                            height={512}
+                                            alt="preview"
+                                            style={{
+                                                height: 'full',
+                                                width: 'auto'
+                                            }}
+                                        />
+                                    </TabPanel>
 
-                                <DetailsPane
-                                    title="Print Notes"
-                                    icon={iconSet.note}
-                                    rowSpan={1}
-                                    colSpan={1}
-                                >
-                                    <VStack
-                                        justify="start"
-                                        align="start"
-                                        h="full"
-                                        fontSize="md"
-                                    >
-                                        {betterPrintData.notes?.length > 0 ? (
-                                            <>
-                                                <ReactMarkdown
-                                                    components={ChakraUIRenderer()}
-                                                    skipHtml
-                                                >
-                                                    {betterPrintData.notes}
-                                                </ReactMarkdown>
-                                            </>
-                                        ) : (
-                                            <VStack
-                                                justify="center"
-                                                align="center"
-                                                h="full"
-                                            >
-                                                <Text
-                                                    w="full"
-                                                    h="full"
-                                                    color={'secondaryText'}
-                                                    textAlign="center"
-                                                >
-                                                    No notes are attached to this print.
-                                                </Text>
-                                            </VStack>
-                                        )}
-                                    </VStack>
-                                </DetailsPane>
-                            </Grid>
+                                    <TabPanel>
+                                        <ReactMarkdown components={ChakraUIRenderer()}>
+                                            {selectedPrintData.notes}
+                                        </ReactMarkdown>
+                                    </TabPanel>
+                                </TabPanels>
+                            </Tabs>
                         </VStack>
                     </>
                 ) : (

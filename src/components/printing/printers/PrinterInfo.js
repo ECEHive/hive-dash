@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
     Alert,
@@ -6,6 +6,8 @@ import {
     AlertIcon,
     Box,
     ButtonGroup,
+    CircularProgress,
+    Divider,
     HStack,
     Heading,
     Icon,
@@ -22,15 +24,17 @@ import {
 } from '@chakra-ui/react';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 
+import usePrintParser from '@/hooks/printing/usePrintParser';
+import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
 import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
 
 import iconSet from '@/util/icons';
 
-import PrintPreview from '@/components/printing/PrintPreview';
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import QueueTable from '@/components/printing/printers/QueueTable';
 
@@ -43,6 +47,38 @@ export default function PrinterInfo({ selectedPrinterData }) {
     const { isOpen: isMaintenanceOpen, onOpen: onMaintenanceOpen, onClose: onMaintenanceClose } = useDisclosure();
 
     const { currentPrintData: activePrint } = usePrinterParser(selectedPrinterData);
+
+    const { betterPrintData, printerData } = usePrintParser(activePrint);
+    const {
+        progressBarColor,
+        progressMessage,
+        progress,
+        progressCircleColor,
+        progressMessageColor,
+        timeLeftHumanized,
+        timeLeftHumanizedDetailed
+    } = usePrintProgress(activePrint);
+
+    const dataFields = useMemo(() => {
+        return [
+            {
+                label: 'Material',
+                icon: iconSet.material,
+                value: betterPrintData?.materialType
+            },
+            {
+                label: 'Est. material',
+                icon: iconSet.materialAmount,
+                value: betterPrintData?.materialUsage,
+                suffix: betterPrintData?.materialSymbol
+            },
+            {
+                label: 'Est. time',
+                icon: iconSet.clock,
+                value: betterPrintData?.estTimeFormatted
+            }
+        ];
+    }, [betterPrintData]);
 
     useEffect(() => {
         setTabIndex(0);
@@ -74,17 +110,29 @@ export default function PrinterInfo({ selectedPrinterData }) {
                             mb={4}
                             alignItems="center"
                         >
-                            <Heading
-                                size="lg"
-                                fontWeight="semibold"
-                            >
-                                {selectedPrinterData.displayName}
-                            </Heading>
+                            <VStack>
+                                <Heading
+                                    size="lg"
+                                    fontWeight="semibold"
+                                >
+                                    {selectedPrinterData.displayName}
+                                </Heading>
+                                {/* <HStack w="full">
+                                    <Icon as={iconSet.play} />
+                                    <Text
+                                        fontSize="md"
+                                        fontWeight="medium"
+                                    >
+                                        Printing
+                                    </Text>
+                                </HStack> */}
+                            </VStack>
                             <Spacer />
                             <ButtonGroup>
                                 <IconButton
                                     icon={<Icon as={iconSet.wrench} />}
                                     colorScheme="orange"
+                                    variant="ghost"
                                     onClick={onMaintenanceOpen}
                                 />
                             </ButtonGroup>
@@ -122,16 +170,129 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                 </Box>
                             )}
 
+                            <Divider />
+
                             {/* current print */}
-                            {activePrint && <PrintPreview print={activePrint} />}
+                            {activePrint && (
+                                <>
+                                    <HStack
+                                        w="full"
+                                        h="full"
+                                        align="start"
+                                        bgColor="chakra-body-bg"
+                                        borderRadius={10}
+                                    >
+                                        <VStack
+                                            align="start"
+                                            spacing={5}
+                                            minH="150px"
+                                        >
+                                            <VStack
+                                                align="start"
+                                                spacing={2}
+                                            >
+                                                <Heading
+                                                    size="lg"
+                                                    fontWeight="semibold"
+                                                >
+                                                    {betterPrintData.trayName}
+                                                </Heading>
+                                                <HStack>
+                                                    {dataFields.map((field, i) => {
+                                                        return (
+                                                            <>
+                                                                <VStack
+                                                                    spacing={1}
+                                                                    align="start"
+                                                                >
+                                                                    <HStack
+                                                                        alignItems="center"
+                                                                        spacing={2}
+                                                                        color="secondaryText"
+                                                                    >
+                                                                        <Icon
+                                                                            fontSize="md"
+                                                                            as={field.icon}
+                                                                        />
+                                                                        <HStack
+                                                                            align="end"
+                                                                            spacing={1}
+                                                                            height="full"
+                                                                        >
+                                                                            <Text
+                                                                                fontSize="xl"
+                                                                                fontWeight="medium"
+                                                                                lineHeight={1}
+                                                                            >
+                                                                                {field.value}
+                                                                            </Text>
+                                                                            {field.suffix && (
+                                                                                <Text fontSize="sm">
+                                                                                    {field.suffix}
+                                                                                </Text>
+                                                                            )}
+                                                                        </HStack>
+                                                                    </HStack>
+                                                                </VStack>
+                                                                {i < dataFields.length - 1 && (
+                                                                    <Icon
+                                                                        color="secondaryText"
+                                                                        fontSize="sm"
+                                                                        as={iconSet.dot}
+                                                                    />
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })}
+                                                </HStack>
+                                            </VStack>
+
+                                            <Spacer />
+
+                                            <HStack
+                                                w="auto"
+                                                h="full"
+                                            >
+                                                <CircularProgress
+                                                    size={6}
+                                                    thickness={6}
+                                                    value={progress}
+                                                    color={progressCircleColor}
+                                                    trackColor="chakra-subtle-bg"
+                                                />
+                                                <Text fontWeight="medium">{progressMessage}</Text>
+                                            </HStack>
+                                        </VStack>
+
+                                        <Spacer />
+
+                                        <Box
+                                            w="auto"
+                                            h="150px"
+                                            bgColor="chakra-subtle-bg"
+                                            borderRadius={5}
+                                        >
+                                            <Image
+                                                src={
+                                                    betterPrintData?.preview ||
+                                                    'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2FPI_Colin_Hartigan_bruh10000?alt=media&token=21d28026-6320-4b9c-9d4a-f8ce304b7bb3'
+                                                }
+                                                alt="preview"
+                                                width={512}
+                                                height={512}
+                                                style={{
+                                                    maxHeight: '150px',
+                                                    width: 'auto'
+                                                }}
+                                            />
+                                        </Box>
+                                    </HStack>
+                                </>
+                            )}
 
                             <Tabs
                                 w="full"
                                 flexGrow={1}
-                                index={tabIndex}
-                                onChange={(index) => {
-                                    setTabIndex(index);
-                                }}
                             >
                                 <TabList>
                                     <Tab>Queue</Tab>
