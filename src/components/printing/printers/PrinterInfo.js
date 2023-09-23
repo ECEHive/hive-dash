@@ -25,6 +25,7 @@ import {
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import Image from 'next/image';
+import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
@@ -194,6 +195,8 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                 <Heading
                                                     size="lg"
                                                     fontWeight="semibold"
+                                                    as={Link}
+                                                    href={`/printing/prints/${betterPrintData._id}`}
                                                 >
                                                     {betterPrintData.trayName}
                                                 </Heading>

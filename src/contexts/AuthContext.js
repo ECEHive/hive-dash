@@ -8,6 +8,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { auth } from '@/lib/firebase';
 
+import PinModal from '@/components/PinModal';
+
 const AuthContext = createContext(null);
 
 export function useAuthContext() {
@@ -59,7 +61,12 @@ export default function AuthProvider({ children }) {
         isAuthLoaded
     };
 
-    return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={values}>
+            <PinModal />
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
 export { AuthContext, AuthProvider };

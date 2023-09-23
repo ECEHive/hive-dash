@@ -39,6 +39,8 @@ function LogItem({ printData }) {
                     <Avatar
                         src={betterPrintData.preview}
                         size="md"
+                        name={`${betterPrintData.endUser.firstname} ${betterPrintData.endUser.lastname}`}
+                        bgColor="transparent"
                     />
                     <VStack
                         align="start"

@@ -18,9 +18,9 @@ const StateColors = {
     [PrintStates.FAILED]: 'red',
     [PrintStates.COMPLETED]: 'green',
     [PrintStates.CANCELED]: 'red',
-    [PrinterStates.DOWN]: 'red',
-    [PrinterStates.IDLE]: 'yellow',
-    [PrinterStates.PRINTING]: 'green'
+    down: 'red',
+    idle: 'gray',
+    printing: 'green'
 };
 
 export { PrintStates, PrinterStates, StateColors };

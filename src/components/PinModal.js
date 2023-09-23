@@ -1,5 +1,4 @@
 import {
-    Button,
     HStack,
     Modal,
     ModalBody,
@@ -27,7 +26,7 @@ export default function PinModal({}) {
                     <ModalBody>
                         <HStack
                             w="full"
-                            justify="center"
+                            justify="space-evenly"
                         >
                             <PinInput size="lg">
                                 <PinInputField />
@@ -37,9 +36,7 @@ export default function PinModal({}) {
                             </PinInput>
                         </HStack>
                     </ModalBody>
-                    <ModalFooter>
-                        <Button colorScheme="blue">Confirm</Button>
-                    </ModalFooter>
+                    <ModalFooter />
                 </ModalContent>
             </Modal>
         </>

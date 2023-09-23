@@ -13,7 +13,6 @@ import {
     Heading,
     Icon,
     IconButton,
-    Link,
     Menu,
     MenuButton,
     MenuItem,
@@ -31,6 +30,7 @@ import {
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
 
