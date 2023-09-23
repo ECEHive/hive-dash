@@ -120,6 +120,7 @@ export default function PrintLogs(props) {
                                     <Th>Status</Th>
                                     <Th>Est. time</Th>
                                     <Th>Queued by</Th>
+                                    {/* <Th>Queued by</Th> */}
                                 </Tr>
                             </Thead>
                             <Tbody>

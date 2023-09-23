@@ -343,7 +343,7 @@ export default function PrintInfo({ selectedPrintData }) {
                             >
                                 <TabList>
                                     <Tab>Preview</Tab>
-                                    <Tab>Print notes</Tab>
+                                    <Tab isDisabled={betterPrintData.notes.length == 0}>Print notes</Tab>
                                 </TabList>
 
                                 <TabPanels

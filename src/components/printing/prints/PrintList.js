@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import {
     Badge,
@@ -31,6 +31,7 @@ import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
+import useFilters from '@/hooks/useFilters';
 
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
@@ -144,8 +145,6 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
     const { printers, printerTypes, queue } = usePrinting();
     const { push } = useRouter();
 
-    const [searchTerms, setSearchTerms] = useState([]);
-
     const searchTypes = useMemo(
         () => [
             {
@@ -182,72 +181,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
         []
     );
 
-    const matchedPrints = useMemo(() => {
-        if (searchTerms.length < 1) {
-            return [];
-        }
-        let matches = [...queue].filter((print) => {
-            let match = true;
-            searchTerms.forEach((term) => {
-                const type = searchTypes.find((type) => type.id === term.split(':')[0]);
-                const value = term.split(':')[1].toLowerCase();
-
-                let result = type.match(print, value);
-
-                if (!result) {
-                    match = false;
-                }
-            });
-            return match;
-        });
-
-        matches = [...matches].sort((a, b) => {
-            let aTime = dayjs(a.updatedAt).valueOf();
-            let bTime = dayjs(b.updatedAt).valueOf();
-            if (aTime > bTime) {
-                return -1;
-            }
-            if (aTime < bTime) {
-                return 1;
-            }
-            return 0;
-        });
-
-        return matches;
-    }, [searchTerms, queue, searchTypes]);
-
-    const search = useCallback(
-        (inputValue, callback) => {
-            if (inputValue.length < 1) {
-                return callback([]);
-            }
-
-            let currentResults;
-            if (matchedPrints.length > 0) {
-                currentResults = [...matchedPrints];
-            } else {
-                currentResults = [...queue];
-            }
-
-            let newResults = [];
-
-            for (const type of searchTypes) {
-                let targets = currentResults.map((print) => type.format(print));
-                let results = targets.filter((thing) => thing.toLowerCase().includes(inputValue.toLowerCase()));
-                results = [...new Set(results)]; //removes duplicates
-                newResults.push({
-                    label: type.label,
-                    options: results.map((item) => ({
-                        label: item,
-                        value: `${type.id}:${item}`
-                    }))
-                });
-            }
-
-            return callback(newResults);
-        },
-        [queue, matchedPrints, searchTypes]
-    );
+    const [terms, setTerms, search, matches] = useFilters(searchTypes, queue);
 
     return (
         <>
@@ -288,14 +222,14 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                                 loadOptions={search}
                                 onChange={(value) => {
                                     if (value) {
-                                        setSearchTerms(value.map((term) => term.value));
+                                        setTerms(value.map((term) => term.value));
                                     } else {
-                                        setSearchTerms([]);
+                                        setTerms([]);
                                     }
                                 }}
                                 value={
-                                    searchTerms.length > 0
-                                        ? searchTerms.map((term) => ({
+                                    terms.length > 0
+                                        ? terms.map((term) => ({
                                               label: `${term.split(':')[0]}: ${term.split(':')[1]}`,
                                               value: term
                                           }))
@@ -316,8 +250,8 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                     spacing={0}
                     overflow="auto"
                 >
-                    {matchedPrints.length > 0 ? (
-                        matchedPrints.map((print) => {
+                    {matches.length > 0 ? (
+                        matches.map((print) => {
                             return (
                                 <PrintListItem
                                     key={print._id}
