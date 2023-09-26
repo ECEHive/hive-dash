@@ -17,6 +17,7 @@ import {
 import NextImage from 'next/image';
 import NextLink from 'next/link';
 
+import { useAuth } from '@/contexts/AuthContext';
 import useNav from '@/contexts/NavContext';
 
 import iconSet from '@/util/icons';
@@ -28,6 +29,8 @@ export default function TopBarNavigation(props) {
     const { colorMode, toggleColorMode } = useColorMode();
 
     const { section } = useNav();
+
+    const { onAuthOpen, isLoggedIn } = useAuth();
 
     return (
         <Flex
@@ -106,8 +109,12 @@ export default function TopBarNavigation(props) {
                 >
                     <Icon as={iconSet.settings} />
                 </IconButton>
+                <IconButton onClick={onAuthOpen}>
+                    <Icon as={isLoggedIn > 0 ? iconSet.peerInstructor : iconSet.person} />
+                </IconButton>
             </HStack>
 
+            {/* mobile */}
             <HStack
                 w="auto"
                 h="100%"

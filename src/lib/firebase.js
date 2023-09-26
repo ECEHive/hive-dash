@@ -27,4 +27,5 @@ export default app;
 export const initFirebase = () => {
     return app();
 };
+
 export { auth, storage };

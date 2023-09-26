@@ -1,69 +1,61 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
-import { useToast } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
 
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { useRouter } from 'next/router';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
-import { auth } from '@/lib/firebase';
-
-import PinModal from '@/components/PinModal';
+import AuthModal from '@/components/AuthModal';
 
 const AuthContext = createContext(null);
 
-export function useAuthContext() {
+export function useAuth() {
     return useContext(AuthContext);
 }
 
 export default function AuthProvider({ children }) {
-    const [user, loading, error] = useAuthState(auth);
-    const [currentUser, setCurrentUser] = useState();
-    const [isAuthLoaded, setIsAuthLoaded] = useState(false);
-    const toast = useToast();
-    const { push } = useRouter();
+    const [roleId, setRoleId] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [isLoggedIn, setLoggedIn] = useState(null);
 
-    async function waitForAuthInit() {
-        let unsubscribe = null;
-        await new Promise((resolve) => {
-            unsubscribe = auth.onAuthStateChanged((_) => resolve());
+    const { isOpen: isAuthOpen, onOpen: onAuthOpen, onClose: onAuthClose } = useDisclosure();
+
+    function login(pin) {
+        return new Promise((resolve, reject) => {
+            fetch('/api/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pin: pin
+                })
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    setRoleId(data.role);
+                    setUserId(data.id);
+                    setLoggedIn(true);
+                    resolve();
+                })
+                .catch((err) => {
+                    reject(err);
+                });
         });
     }
 
-    useEffect(() => {
-        setIsAuthLoaded(false);
-        async function checkUser() {
-            // Wait for auth to initialize before checking if the user is logged in
-            await waitForAuthInit().then(async () => {
-                setIsAuthLoaded(true);
-            });
-        }
-        checkUser();
-    }, [user]);
-
-    useEffect(() => {
-        // refreshCurrentUser();
-    }, [user]);
-
-    function logOut() {
-        signOut(auth);
-    }
-
     const values = {
-        user,
-        currentUser,
-        // refreshCurrentUser,
-        auth,
-        getAuth,
-        logOut,
-        signOut,
-        signInWithEmailAndPassword,
-        isAuthLoaded
+        login,
+        roleId,
+        userId,
+        isLoggedIn,
+        onAuthOpen
     };
 
     return (
         <AuthContext.Provider value={values}>
-            <PinModal />
+            <AuthModal
+                isOpen={isAuthOpen}
+                onClose={onAuthClose}
+            />
             {children}
         </AuthContext.Provider>
     );
