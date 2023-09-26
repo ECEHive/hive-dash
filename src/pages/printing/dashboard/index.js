@@ -108,7 +108,6 @@ export default function Dashboard(props) {
                 overflow="hidden"
                 w="full"
                 h="full"
-                p={5}
             >
                 <VStack
                     spacing={8}
@@ -116,7 +115,7 @@ export default function Dashboard(props) {
                     w="100%"
                     overflow="auto"
                     align="center"
-                    px={1}
+                    p={5}
                 >
                     <VStack
                         w="full"

@@ -1,17 +1,4 @@
-import {
-    Badge,
-    Card,
-    CardBody,
-    HStack,
-    Heading,
-    Icon,
-    Link,
-    Progress,
-    Spacer,
-    Text,
-    Tooltip,
-    VStack
-} from '@chakra-ui/react';
+import { Badge, Card, CardBody, HStack, Heading, Icon, Link, Progress, Spacer, Text, VStack } from '@chakra-ui/react';
 
 import NextLink from 'next/link';
 
@@ -20,12 +7,12 @@ import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
 
 import iconSet from '@/util/icons';
-import { StateColors } from '@/util/states';
+import { PrintStates, StateColors } from '@/util/states';
 
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
     const { betterPrintData } = usePrintParser(currentPrintData);
-    const { progress, progressBarColor, progressMessage } = usePrintProgress(currentPrintData);
+    const { progress, progressBarColor, progressMessage, complete } = usePrintProgress(currentPrintData);
 
     return (
         <>
@@ -39,9 +26,9 @@ export default function PrinterCard({ data }) {
                     h="100%"
                     // h="115px"
                 >
-                    <CardBody>
+                    <CardBody p={5}>
                         <VStack
-                            spacing={2}
+                            spacing={4}
                             alignItems="flex-start"
                             h="100%"
                         >
@@ -53,7 +40,7 @@ export default function PrinterCard({ data }) {
                                 <HStack w="100%">
                                     <Heading
                                         size="md"
-                                        fontWeight="medium"
+                                        fontWeight="bold"
                                     >
                                         <Link
                                             as={NextLink}
@@ -78,47 +65,57 @@ export default function PrinterCard({ data }) {
                                     <Text fontWeight="normal">{expandedPrinterData?.queueLength} in queue</Text>
                                 </HStack>
                             </VStack>
-                            <Spacer />
+
                             {betterPrintData && (
                                 <VStack
                                     justifyContent="center"
+                                    align="start"
                                     spacing={1}
                                     w="100%"
                                     h="auto"
                                 >
-                                    <HStack
-                                        w="100%"
-                                        maxW="100%"
-                                        overflow="hidden"
-                                    >
-                                        <Tooltip
-                                            label={betterPrintData.trayName}
-                                            placement="top"
-                                        >
-                                            <Text
-                                                fontSize="md"
-                                                whiteSpace="nowrap"
-                                                textOverflow="ellipsis"
-                                                overflow="hidden"
-                                            >
-                                                <Link
-                                                    as={NextLink}
-                                                    href={`/printing/prints/${betterPrintData._id}`}
-                                                >
-                                                    {betterPrintData.trayName}
-                                                </Link>
-                                            </Text>
-                                        </Tooltip>
-                                        <Spacer />
-                                        <Badge variant="subtle">{progressMessage}</Badge>
-                                    </HStack>
                                     <Progress
                                         value={progress}
-                                        size="sm"
+                                        size="xs"
                                         w="100%"
-                                        borderRadius={5}
                                         colorScheme={progressBarColor}
                                     />
+
+                                    <VStack
+                                        align="start"
+                                        spacing={0}
+                                        justify="start"
+                                    >
+                                        {/* <Tooltip
+                                            label={betterPrintData.trayName}
+                                            placement="top"
+                                        > */}
+                                        <Text
+                                            fontSize="md"
+                                            whiteSpace="nowrap"
+                                            textOverflow="ellipsis"
+                                            overflow="hidden"
+                                            fontWeight="medium"
+                                        >
+                                            <Link
+                                                as={NextLink}
+                                                href={`/printing/prints/${betterPrintData._id}`}
+                                            >
+                                                {betterPrintData.trayName}
+                                            </Link>
+                                        </Text>
+                                        {betterPrintData.state !== PrintStates.COMPLETED && (
+                                            <HStack
+                                                fontSize="xs"
+                                                color="secondaryText"
+                                                spacing={1}
+                                            >
+                                                <Icon as={iconSet.clock} />
+                                                <Text>{progressMessage}</Text>
+                                            </HStack>
+                                        )}
+                                        {/* </Tooltip> */}
+                                    </VStack>
                                 </VStack>
                             )}
                         </VStack>
