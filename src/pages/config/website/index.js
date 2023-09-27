@@ -52,10 +52,12 @@ export default function WebsiteSettings(props) {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((data) => {
-            console.log(data.config);
-            setConfig(data.config);
-        });
+        })
+            .then((data) => {
+                console.log(data.config);
+                setConfig(data.config);
+            })
+            .catch((err) => {});
     }, [request]);
 
     useEffect(() => {

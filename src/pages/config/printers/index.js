@@ -52,22 +52,28 @@ export default function Printers(props) {
     const confirm = useConfirmation();
 
     const refresh = useCallback(() => {
-        request('/api/printing/printers').then((data) => {
-            setPrinters(data);
-        });
+        request('/api/printing/printers')
+            .then((data) => {
+                setPrinters(data);
+            })
+            .catch((err) => {});
 
-        request('/api/printing/printerTypes').then((data) => {
-            setPrinterTypes(data);
-        });
+        request('/api/printing/printerTypes')
+            .then((data) => {
+                setPrinterTypes(data);
+            })
+            .catch((err) => {});
     }, [request]);
 
     const deleteType = useCallback(
         (type) => {
             request(`/api/printing/printerTypes/${type._id}`, {
                 method: 'DELETE'
-            }).then((data) => {
-                refresh();
-            });
+            })
+                .then((data) => {
+                    refresh();
+                })
+                .catch((err) => {});
         },
         [refresh, request]
     );
@@ -76,9 +82,11 @@ export default function Printers(props) {
         (printer) => {
             request(`/api/printing/printers/${printer._id}`, {
                 method: 'DELETE'
-            }).then((data) => {
-                refresh();
-            });
+            })
+                .then((data) => {
+                    refresh();
+                })
+                .catch((err) => {});
         },
         [refresh, request]
     );

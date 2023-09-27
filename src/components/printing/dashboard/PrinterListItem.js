@@ -17,37 +17,37 @@ export default function PrinterListItem({ data }) {
 
     return (
         <>
-            {betterPrintData && (
-                <Tr>
-                    <Td>
-                        <VStack
-                            align="start"
+            <Tr>
+                <Td>
+                    <VStack
+                        align="start"
+                        spacing={1}
+                    >
+                        <Text
+                            fontSize="lg"
+                            fontWeight="medium"
+                        >
+                            {expandedPrinterData.displayName}
+                        </Text>
+                        <HStack
+                            color="secondaryText"
+                            fontSize="sm"
                             spacing={1}
                         >
-                            <Text
-                                fontSize="lg"
-                                fontWeight="medium"
-                            >
-                                {expandedPrinterData.displayName}
-                            </Text>
-                            <HStack
-                                color="secondaryText"
-                                fontSize="sm"
-                                spacing={1}
-                            >
-                                <Icon as={iconSet.refresh} />
-                                <Text>{expandedPrinterData.updatedAtHumanized}</Text>
-                            </HStack>
-                        </VStack>
-                    </Td>
-                    <Td>
-                        <Badge colorScheme={StateColors[expandedPrinterData.state]}>{expandedPrinterData.state}</Badge>
-                    </Td>
-                    <Td>
-                        <Text>{expandedPrinterData.queueLength}</Text>
-                    </Td>
-                    <Td>
-                        {/* {betterPrintData.state === PrintStates.PRINTING ? ( */}
+                            <Icon as={iconSet.refresh} />
+                            <Text>{expandedPrinterData.updatedAtHumanized}</Text>
+                        </HStack>
+                    </VStack>
+                </Td>
+                <Td>
+                    <Badge colorScheme={StateColors[expandedPrinterData.state]}>{expandedPrinterData.state}</Badge>
+                </Td>
+                <Td>
+                    <Text>{expandedPrinterData.queueLength}</Text>
+                </Td>
+
+                <Td>
+                    {betterPrintData && (
                         <HStack spacing={1.5}>
                             <CircularProgress
                                 value={progress}
@@ -78,38 +78,38 @@ export default function PrinterListItem({ data }) {
                                 </Text>
                             </VStack>
                         </HStack>
-                        {/* ) : (
+                    )}
+                    {/* ) : (
                     <Text>N/A</Text>
                 )} */}
-                    </Td>
-                    <Td>
-                        <ButtonGroup
-                            size="sm"
-                            display="flex"
-                            flexDir="row"
-                            w="full"
-                            alignItems="flex-end"
+                </Td>
+                <Td>
+                    <ButtonGroup
+                        size="sm"
+                        display="flex"
+                        flexDir="row"
+                        w="full"
+                        alignItems="flex-end"
+                    >
+                        <Button
+                            colorScheme="blue"
+                            onClick={() => {
+                                push(`/printing/printers/${expandedPrinterData.id}`);
+                            }}
                         >
-                            <Button
-                                colorScheme="blue"
-                                onClick={() => {
-                                    push(`/printing/printers/${expandedPrinterData.id}`);
-                                }}
-                            >
-                                View printer
-                            </Button>
-                            <Button
-                                visibility={betterPrintData.state === PrintStates.PRINTING ? 'visibile' : 'hidden'}
-                                onClick={() => {
-                                    push(`/printing/prints/${betterPrintData._id}`);
-                                }}
-                            >
-                                View print
-                            </Button>
-                        </ButtonGroup>
-                    </Td>
-                </Tr>
-            )}
+                            View printer
+                        </Button>
+                        <Button
+                            visibility={betterPrintData?.state === PrintStates.PRINTING ? 'visibile' : 'hidden'}
+                            onClick={() => {
+                                push(`/printing/prints/${betterPrintData._id}`);
+                            }}
+                        >
+                            View print
+                        </Button>
+                    </ButtonGroup>
+                </Td>
+            </Tr>
         </>
     );
 }

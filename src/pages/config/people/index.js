@@ -45,15 +45,19 @@ export default function People(props) {
     const toast = useToast();
 
     const refresh = useCallback(() => {
-        request('/api/peerInstructors').then((data) => {
-            setPIs(data.peerInstructors.sort((a, b) => a.name.localeCompare(b.name)));
-        });
+        request('/api/peerInstructors')
+            .then((data) => {
+                setPIs(data.peerInstructors.sort((a, b) => a.name.localeCompare(b.name)));
+            })
+            .catch((err) => {});
 
-        request('/api/config/people').then((data) => {
-            console.log(data);
-            setLastUpdated(dayjs(data.config.lastUpdated).local().format('MMMM D, YYYY [at] h:mm A'));
-        });
-    }, []);
+        request('/api/config/people')
+            .then((data) => {
+                console.log(data);
+                setLastUpdated(dayjs(data.config.lastUpdated).local().format('MMMM D, YYYY [at] h:mm A'));
+            })
+            .catch((err) => {});
+    }, [request]);
 
     useEffect(() => {
         refresh();
@@ -70,15 +74,17 @@ export default function People(props) {
     const sync = useCallback(() => {
         request('/api/peerInstructors/sync', {
             method: 'POST'
-        }).then((data) => {
-            toast({
-                title: 'Synced peer instructors',
-                status: 'success',
-                duration: 5000
-            });
-            refresh();
-        });
-    }, [refresh, toast]);
+        })
+            .then((data) => {
+                toast({
+                    title: 'Synced peer instructors',
+                    status: 'success',
+                    duration: 5000
+                });
+                refresh();
+            })
+            .catch((err) => {});
+    }, [refresh, toast, request]);
 
     return (
         <>

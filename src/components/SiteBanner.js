@@ -14,10 +14,12 @@ export default function SiteBanner() {
     useEffect(() => {
         request('/api/config/website', {
             method: 'GET'
-        }).then((data) => {
-            console.log(data.config.banner);
-            setAlertData(data.config.banner);
-        });
+        })
+            .then((data) => {
+                console.log(data.config.banner);
+                setAlertData(data.config.banner);
+            })
+            .catch((err) => {});
     }, [request]);
 
     return (

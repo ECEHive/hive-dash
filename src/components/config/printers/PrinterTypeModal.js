@@ -197,10 +197,14 @@ export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
-            }).then((data) => {
-                onClose();
-                setSaving(false);
-            });
+            })
+                .then((data) => {
+                    onClose();
+                    setSaving(false);
+                })
+                .catch((err) => {
+                    setSaving(false);
+                });
         } else {
             request('/api/printing/printerTypes/create', {
                 method: 'POST',
