@@ -7,7 +7,6 @@ import {
     HStack,
     Heading,
     Icon,
-    Input,
     InputGroup,
     Progress,
     Spacer,
@@ -22,9 +21,12 @@ import usePrinting from '@/contexts/printing/PrintingContext';
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
+import useFilters from '@/hooks/useFilters';
 
 import iconSet from '@/util/icons';
 import { StateColors } from '@/util/states';
+
+import { AsyncSelect } from '@/components/Select';
 
 function PrinterListItem({ data, onClick, isActive, queue }) {
     const { expandedPrinterData, currentPrintData, printerTypeData } = usePrinterParser(data);
@@ -145,20 +147,33 @@ export default function PrinterList({ selectedPrinter }) {
 
     const [searchTerm, setSearchTerm] = useState('');
 
-    const matchedPrinters = useMemo(() => {
-        if (searchTerm.length > 0) {
-            return printers.filter(
-                (printer) =>
-                    printer.displayName.includes(searchTerm.toLowerCase()) ||
-                    printerTypes
-                        .find((type) => type.id === printer.type)
-                        .displayName.toLowerCase()
-                        .includes(searchTerm)
-            );
-        } else {
-            return printers;
-        }
-    }, [printers, printerTypes, searchTerm]);
+    const searchTypes = useMemo(
+        () => [
+            {
+                label: 'Printer name',
+                id: 'name',
+                format: (printer) => {
+                    return printer.displayName;
+                },
+                match: (printer, value) => {
+                    return printer.displayName.toLowerCase().includes(value);
+                }
+            },
+            {
+                label: 'Printer type',
+                id: 'type',
+                format: (printer) => {
+                    return printer.type;
+                },
+                match: (printer, value) => {
+                    return printer.type.toLowerCase().includes(value);
+                }
+            }
+        ],
+        []
+    );
+
+    const [terms, setTerms, search, matches] = useFilters(searchTypes, printers, true);
 
     return (
         <>
@@ -183,22 +198,33 @@ export default function PrinterList({ selectedPrinter }) {
                     borderColor="chakra-border-color"
                 >
                     <Icon as={iconSet.search} />
-                    <InputGroup>
-                        <Input
-                            h="auto"
-                            w="full"
-                            size="lg"
+                    <InputGroup w="100%">
+                        <AsyncSelect
                             variant="unstyled"
-                            placeholder="Search for a printer"
-                            type="text"
-                            //value={searchTerm}
-                            value={searchTerm}
-                            onChange={(e) => {
-                                setSearchTerm(e.target.value.toLowerCase());
+                            w="100%"
+                            menuPlacement="auto"
+                            isMulti
+                            isClearable
+                            placeholder={<Text>Search for a printer</Text>}
+                            loadOptions={search}
+                            onChange={(value) => {
+                                if (value) {
+                                    setTerms(value.map((term) => term.value));
+                                } else {
+                                    setTerms([]);
+                                }
                             }}
-                            // onKeyDown={(e) => {
-                            //     if (e.key === 'Enter') search();
-                            // }}
+                            value={
+                                terms.length > 0
+                                    ? terms.map((term) => ({
+                                          label: `${term.split(':')[0]}: ${term.split(':')[1]}`,
+                                          value: term
+                                      }))
+                                    : null
+                            }
+                            noOptionsMessage={(e) => {
+                                return e.inputValue.length === 0 ? 'Start typing to search!' : 'No results';
+                            }}
                         />
                     </InputGroup>
                 </HStack>
@@ -209,35 +235,19 @@ export default function PrinterList({ selectedPrinter }) {
                     spacing={0}
                     overflow="auto"
                 >
-                    {printerTypes.map((type) => {
+                    {matches.map((printer) => {
                         return (
-                            <>
-                                {/* <Text
-                                    fontSize="2xl"
-                                    fontWeight="bold"
-                                    my={1}
-                                >
-                                    {type.displayName}
-                                </Text> */}
-
-                                {matchedPrinters
-                                    .filter((printer) => printer.type === type.id)
-                                    .map((printer) => {
-                                        return (
-                                            <PrinterListItem
-                                                key={printer._id}
-                                                data={printer}
-                                                queue={queue}
-                                                onClick={() => {
-                                                    push('/printing/printers/' + printer.id, undefined, {
-                                                        shallow: true
-                                                    });
-                                                }}
-                                                isActive={printer.id === selectedPrinter?.id}
-                                            />
-                                        );
-                                    })}
-                            </>
+                            <PrinterListItem
+                                key={printer._id}
+                                data={printer}
+                                queue={queue}
+                                onClick={() => {
+                                    push('/printing/printers/' + printer.id, undefined, {
+                                        shallow: true
+                                    });
+                                }}
+                                isActive={printer.id === selectedPrinter?.id}
+                            />
                         );
                     })}
                 </VStack>

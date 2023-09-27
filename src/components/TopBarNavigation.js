@@ -21,16 +21,19 @@ import { useAuth } from '@/contexts/AuthContext';
 import useNav from '@/contexts/NavContext';
 
 import iconSet from '@/util/icons';
+import { PITypes } from '@/util/roles';
 
 import logoDark from '@/assets/logo_dark.png';
 import logoLight from '@/assets/logo_light.png';
+
+import AuthMenu from './auth/AuthMenu';
 
 export default function TopBarNavigation(props) {
     const { colorMode, toggleColorMode } = useColorMode();
 
     const { section } = useNav();
 
-    const { onAuthOpen, isLoggedIn } = useAuth();
+    const { roleId } = useAuth();
 
     return (
         <Flex
@@ -102,16 +105,18 @@ export default function TopBarNavigation(props) {
                 <IconButton onClick={toggleColorMode}>
                     {colorMode === 'dark' ? <Icon as={iconSet.sun} /> : <Icon as={iconSet.moon} />}
                 </IconButton>
-                <IconButton
-                    as={NextLink}
-                    href="/config"
-                    isActive={section === 'config'}
-                >
-                    <Icon as={iconSet.settings} />
-                </IconButton>
-                <IconButton onClick={onAuthOpen}>
-                    <Icon as={isLoggedIn > 0 ? iconSet.peerInstructor : iconSet.person} />
-                </IconButton>
+
+                {roleId >= PITypes.MPI && (
+                    <IconButton
+                        as={NextLink}
+                        href="/config"
+                        isActive={section === 'config'}
+                    >
+                        <Icon as={iconSet.settings} />
+                    </IconButton>
+                )}
+
+                <AuthMenu />
             </HStack>
 
             {/* mobile */}

@@ -18,7 +18,7 @@ export default function Navigation(props) {
             {
                 type: 'button',
                 name: 'People',
-                icon: <Icon as={iconSet.smile} />,
+                icon: <Icon as={iconSet.person} />,
                 href: '/people'
             },
             {

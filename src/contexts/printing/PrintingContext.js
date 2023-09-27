@@ -3,6 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { HStack, Spinner, Text, useDisclosure, useToast } from '@chakra-ui/react';
 
 import useFocus from '@/hooks/useFocus';
+import useRequest from '@/hooks/useRequest';
 
 import NewPrintModal from '@/components/printing/new/NewPrintModal';
 
@@ -13,6 +14,8 @@ function usePrinting() {
 }
 
 function PrintingProvider({ children }) {
+    const request = useRequest();
+
     const [staticQueue, setStaticQueue] = useState(null);
     const [printers, setPrinters] = useState(null);
     const [printerTypes, setPrinterTypes] = useState(null);
@@ -25,10 +28,9 @@ function PrintingProvider({ children }) {
     const refreshDynamicData = useCallback(() => {
         if (!focus) return;
         console.log('REFRESHING DATA');
-        fetch('/api/printing/printerTypes', {
+        request('/api/printing/printerTypes', {
             method: 'GET'
         })
-            .then((res) => res.json())
             .then((data) => {
                 setPrinterTypes((old) => {
                     if (JSON.stringify(old) !== JSON.stringify(data)) {
@@ -48,10 +50,9 @@ function PrintingProvider({ children }) {
                 });
             });
 
-        fetch('/api/printing/printers', {
+        request('/api/printing/printers', {
             method: 'GET'
         })
-            .then((res) => res.json())
             .then((data) => {
                 setPrinters((old) => {
                     if (JSON.stringify(old) !== JSON.stringify(data)) {
@@ -71,10 +72,9 @@ function PrintingProvider({ children }) {
                 });
             });
 
-        fetch('/api/printing/queue', {
+        request('/api/printing/queue', {
             method: 'GET'
         })
-            .then((res) => res.json())
             .then((data) => {
                 setStaticQueue((old) => {
                     if (JSON.stringify(old) !== JSON.stringify(data)) {
@@ -93,7 +93,7 @@ function PrintingProvider({ children }) {
                     duration: 5000
                 });
             });
-    }, [toast, focus]);
+    }, [toast, focus, request]);
 
     const queue = useMemo(() => {
         if (staticQueue) {
@@ -102,10 +102,9 @@ function PrintingProvider({ children }) {
     }, [staticQueue]);
 
     const refreshStaticData = useCallback(() => {
-        fetch('/api/peerInstructors', {
+        request('/api/peerInstructors', {
             method: 'GET'
         })
-            .then((res) => res.json())
             .then((data) => {
                 setPeerInstructors(data.peerInstructors);
             })
@@ -117,7 +116,7 @@ function PrintingProvider({ children }) {
                     duration: 5000
                 });
             });
-    }, [toast]);
+    }, [toast, request]);
 
     useEffect(() => {
         refreshStaticData();

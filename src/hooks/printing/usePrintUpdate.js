@@ -4,8 +4,11 @@ import dayjs from '@/lib/time';
 
 import usePrinting from '@/contexts/printing/PrintingContext';
 
+import useRequest from '../useRequest';
+
 export default function usePrintUpdate(silent = false) {
     const toast = useToast();
+    const request = useRequest();
 
     const { refreshDynamicData } = usePrinting();
 
@@ -13,14 +16,13 @@ export default function usePrintUpdate(silent = false) {
         data['updatedAt'] = dayjs().utc().toISOString();
 
         return new Promise((resolve, reject) => {
-            fetch(`/api/printing/prints/${printId}`, {
+            request(`/api/printing/prints/${printId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
-                .then((res) => res.json())
                 .then((data) => {
                     refreshDynamicData();
                     if (!silent) {
@@ -45,10 +47,9 @@ export default function usePrintUpdate(silent = false) {
 
     function remove(printId) {
         return new Promise((resolve, reject) => {
-            fetch(`/api/printing/prints/${printId}`, {
+            request(`/api/printing/prints/${printId}`, {
                 method: 'DELETE'
             })
-                .then((res) => res.json())
                 .then((data) => {
                     refreshDynamicData();
                     if (!silent) {

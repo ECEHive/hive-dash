@@ -43,7 +43,7 @@ import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
 
-import Select from '@/components/Select';
+import { Select } from '@/components/Select';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 
 const ChakraEditor = chakra(Editor);

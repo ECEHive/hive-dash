@@ -45,6 +45,7 @@ import {
     FaWrench
 } from 'react-icons/fa';
 import {
+    FaArrowRightToBracket,
     FaBarsProgress,
     FaFaceSmile,
     FaNoteSticky,
@@ -88,6 +89,7 @@ const iconSet = {
     clock: TimeIcon,
     material: FaCubes,
     materialAmount: FaBarsProgress,
+    logout: FaArrowRightToBracket,
     refresh: RepeatIcon,
     branch: FaCodeBranch,
     rightArrow: ArrowForwardIcon,

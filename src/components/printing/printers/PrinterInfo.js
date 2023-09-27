@@ -296,6 +296,10 @@ export default function PrinterInfo({ selectedPrinterData }) {
                             <Tabs
                                 w="full"
                                 flexGrow={1}
+                                index={tabIndex}
+                                onChange={(index) => {
+                                    setTabIndex(index);
+                                }}
                             >
                                 <TabList>
                                     <Tab>Queue</Tab>

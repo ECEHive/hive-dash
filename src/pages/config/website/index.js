@@ -31,26 +31,32 @@ import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { Field, Form, Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 
+import useRequest from '@/hooks/useRequest';
+
 import iconSet from '@/util/icons';
 
 import ConfigLayout from '@/layouts/ConfigLayout';
 import GlobalLayout from '@/layouts/GlobalLayout';
 
-import Select from '@/components/Select';
+import { Select } from '@/components/Select';
 
 export default function WebsiteSettings(props) {
     const [config, setConfig] = useState({});
 
     const toast = useToast();
+    const request = useRequest();
 
     const refresh = useCallback(() => {
-        fetch('/api/config/website')
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data.config);
-                setConfig(data.config);
-            });
-    }, []);
+        request('/api/config/website', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((data) => {
+            console.log(data.config);
+            setConfig(data.config);
+        });
+    }, [request]);
 
     useEffect(() => {
         refresh();
@@ -107,14 +113,13 @@ export default function WebsiteSettings(props) {
                                             }
                                         };
 
-                                        fetch('/api/config/website', {
+                                        request('/api/config/website', {
                                             method: 'PUT',
                                             headers: {
                                                 'Content-Type': 'application/json'
                                             },
                                             body: JSON.stringify(config)
                                         })
-                                            .then((res) => res.json())
                                             .then((data) => {
                                                 toast({
                                                     description: 'Saved banner',
@@ -122,6 +127,7 @@ export default function WebsiteSettings(props) {
                                                     duration: 5000
                                                 });
                                             })
+                                            .catch((err) => {})
                                             .finally(() => {
                                                 actions.setSubmitting(false);
                                                 refresh();

@@ -2,13 +2,15 @@ import { useCallback, useMemo, useState } from 'react';
 
 import dayjs from '@/lib/time';
 
-export default function useFilters(types, data) {
+export default function useFilters(types, data, showAllDefault = false) {
     const [terms, setTerms] = useState([]);
 
     const matches = useMemo(() => {
         if (terms.length < 1) {
-            return [];
+            if (showAllDefault) return [...data];
+            else return [];
         }
+
         let matches = [...data].filter((print) => {
             let match = true;
             terms.forEach((term) => {
@@ -37,7 +39,7 @@ export default function useFilters(types, data) {
         });
 
         return matches;
-    }, [terms, data, types]);
+    }, [terms, data, types, showAllDefault]);
 
     const search = useCallback(
         (inputValue, callback) => {

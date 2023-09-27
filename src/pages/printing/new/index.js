@@ -6,6 +6,8 @@ import dayjs from '@/lib/time';
 
 import usePrinting from '@/contexts/printing/PrintingContext';
 
+import useRequest from '@/hooks/useRequest';
+
 import { PrintStates } from '@/util/states';
 
 import GlobalLayout from '@/layouts/GlobalLayout';
@@ -16,6 +18,7 @@ import NewPrintModal from '@/components/printing/new/NewPrintModal';
 export default function NewPrint(props) {
     const { refreshDynamicData } = usePrinting();
     const toast = useToast();
+    const request = useRequest();
 
     const [inputData, setInputData] = useState({
         printer: {
@@ -97,14 +100,13 @@ export default function NewPrint(props) {
             ]
         };
 
-        fetch('/api/printing/queue', {
+        request('/api/printing/queue', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         })
-            .then((res) => res.json())
             .then((res) => {
                 setQueuePos(res.queueLength);
                 refreshDynamicData();

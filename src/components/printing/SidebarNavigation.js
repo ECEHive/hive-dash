@@ -20,11 +20,27 @@ export default function Navigation({}) {
                 onClick: () => {
                     onNewOpen();
                 },
-                colorScheme: 'green'
+                colorScheme: 'green',
+                auth: true
             },
 
             {
-                type: 'divider'
+                type: 'divider',
+                auth: true
+            },
+
+            {
+                type: 'button',
+                name: 'Dashboard',
+                icon: <Icon as={iconSet.dashboard} />,
+                href: '/dashboard'
+            },
+
+            {
+                type: 'button',
+                name: 'Printers',
+                icon: <Icon as={iconSet.printer} />,
+                href: '/printers'
             },
 
             {
@@ -38,20 +54,6 @@ export default function Navigation({}) {
                 name: 'Find a print',
                 icon: <Icon as={iconSet.search} />,
                 href: '/prints'
-            },
-
-            {
-                type: 'button',
-                name: 'Printers',
-                icon: <Icon as={iconSet.printer} />,
-                href: '/printers'
-            },
-
-            {
-                type: 'button',
-                name: 'Dashboard',
-                icon: <Icon as={iconSet.dashboard} />,
-                href: '/dashboard'
             },
 
             {

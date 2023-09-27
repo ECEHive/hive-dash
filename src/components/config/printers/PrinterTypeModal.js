@@ -40,9 +40,11 @@ import {
     useDisclosure
 } from '@chakra-ui/react';
 
+import useRequest from '@/hooks/useRequest';
+
 import iconSet from '@/util/icons';
 
-import Select from '@/components/Select';
+import { Select } from '@/components/Select';
 
 function AddMaterialPopover({ children, onAdd }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -106,6 +108,8 @@ function AddMaterialPopover({ children, onAdd }) {
 
 export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
     const tableBorderColor = useColorModeValue('gray.200', 'gray.600');
+
+    const request = useRequest();
 
     const [saving, setSaving] = useState(false);
 
@@ -187,33 +191,34 @@ export default function PrinterTypeModal({ isOpen, onClose, initialData }) {
         setSaving(true);
 
         if (initialData) {
-            fetch(`/api/printing/printerTypes/${initialData._id}`, {
+            request(`/api/printing/printerTypes/${initialData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    onClose();
-                    setSaving(false);
-                });
+            }).then((data) => {
+                onClose();
+                setSaving(false);
+            });
         } else {
-            fetch('/api/printing/printerTypes/create', {
+            request('/api/printing/printerTypes/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
-                .then((res) => res.json())
-                .then((data) => {
+                .catch((err) => {
+                    setSaving(false);
+                    onClose();
+                })
+                .finally(() => {
                     onClose();
                     setSaving(false);
                 });
         }
-    }, [data, initialData, onClose]);
+    }, [data, initialData, onClose, request]);
 
     return (
         <>

@@ -50,12 +50,13 @@ import dayjs from '@/lib/time';
 import usePrinting from '@/contexts/printing/PrintingContext';
 
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
+import useRequest from '@/hooks/useRequest';
 
 import dataUrlToBlob from '@/util/dataUrlToBlob';
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
 
-import Select from '@/components/Select';
+import { Select } from '@/components/Select';
 import STLInput from '@/components/printing/new/STLInput';
 
 function PrinterItem({ printer, ...props }) {
@@ -142,6 +143,7 @@ function PrinterItem({ printer, ...props }) {
 
 export default function NewPrintModal({ isOpen, onClose }) {
     const { printerTypes, printers, peerInstructors } = usePrinting();
+    const request = useRequest();
 
     const [activeStep, setActiveStep] = useState(0);
     const [canContinue, setCanContinue] = useState(false);
@@ -311,14 +313,13 @@ export default function NewPrintModal({ isOpen, onClose }) {
                             ]
                         };
 
-                        fetch('/api/printing/queue', {
+                        request('/api/printing/queue', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(payload)
                         })
-                            .then((res) => res.json())
                             .then((res) => {
                                 actions.setSubmitting(false);
                                 setActiveStep((s) => s + 1);

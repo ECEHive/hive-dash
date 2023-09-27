@@ -1,12 +1,26 @@
 import { chakra } from '@chakra-ui/react';
 
-import { Select } from 'chakra-react-select';
+import { AsyncSelect as normalAsyncSelect, Select as normalSelect } from 'chakra-react-select';
 
-const ChakraSelect = chakra(Select);
+const CSelect = chakra(normalSelect);
+const CAsyncSelect = chakra(normalAsyncSelect);
 
-export default function SelectComponent(props) {
+export function Select(props) {
     return (
-        <ChakraSelect
+        <CSelect
+            {...props}
+            selectedOptionStyle="check"
+            menuPortalTarget={document.body}
+            styles={{
+                menuPortal: (provided) => ({ ...provided, zIndex: 10000 })
+            }}
+        />
+    );
+}
+
+export function AsyncSelect(props) {
+    return (
+        <CAsyncSelect
             {...props}
             selectedOptionStyle="check"
             menuPortalTarget={document.body}

@@ -12,8 +12,6 @@ export default async function handler(req, res) {
             pin: pin
         });
 
-        console.log(data);
-
         res.status(200).json({
             role: data.role,
             id: data._id

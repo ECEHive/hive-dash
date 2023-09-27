@@ -18,11 +18,9 @@ import {
     Tooltip,
     UnorderedList,
     VStack,
-    chakra,
     useColorModeValue
 } from '@chakra-ui/react';
 
-import { AsyncSelect } from 'chakra-react-select';
 import { useRouter } from 'next/router';
 
 import dayjs from '@/lib/time';
@@ -36,7 +34,7 @@ import useFilters from '@/hooks/useFilters';
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
 
-const ChakraAsyncSelect = chakra(AsyncSelect);
+import { AsyncSelect } from '@/components/Select';
 
 function PrintListItem({ data, isActive, onClick }) {
     const { betterPrintData, printerData } = usePrintParser(data);
@@ -205,17 +203,9 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                     <Icon as={iconSet.search} />
                     <FormControl>
                         <InputGroup w="100%">
-                            <ChakraAsyncSelect
+                            <AsyncSelect
                                 variant="unstyled"
                                 w="100%"
-                                menuPortalTarget={document.body}
-                                styles={{
-                                    menuPortal: (base) => ({
-                                        ...base,
-                                        zIndex: 9999
-                                    })
-                                }}
-                                menuPlacement="auto"
                                 isMulti
                                 isClearable
                                 placeholder={<Text>Search for a print</Text>}

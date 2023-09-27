@@ -16,16 +16,24 @@ import {
     ModalOverlay,
     Text,
     VStack,
-    useColorMode
+    useColorMode,
+    useToast
 } from '@chakra-ui/react';
 
 import dayjs from '@/lib/time';
 
-import Select from '@/components/Select';
+import { useAuth } from '@/contexts/AuthContext';
+
+import useRequest from '@/hooks/useRequest';
+
+import { Select } from '@/components/Select';
 
 export default function PrinterModal({ isOpen, onClose, initialData, printerTypes }) {
     const [saving, setSaving] = useState(false);
+    const toast = useToast();
+    const request = useRequest();
 
+    const { userId } = useAuth();
     const isDark = useColorMode().colorMode === 'dark';
 
     const template = useMemo(
@@ -66,33 +74,34 @@ export default function PrinterModal({ isOpen, onClose, initialData, printerType
         setSaving(true);
 
         if (initialData) {
-            fetch(`/api/printing/printers/${initialData._id}`, {
+            request(`/api/printing/printers/${initialData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
-                .then((res) => res.json())
                 .then((data) => {
                     onClose();
                     setSaving(false);
+                })
+                .catch((err) => {
+                    setSaving(false);
+                    onClose();
                 });
         } else {
-            fetch('/api/printing/printers/create', {
+            request('/api/printing/printers/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    onClose();
-                    setSaving(false);
-                });
+            }).finally((err) => {
+                setSaving(false);
+                onClose();
+            });
         }
-    }, [data, initialData, onClose]);
+    }, [data, initialData, onClose, request]);
 
     return (
         <>

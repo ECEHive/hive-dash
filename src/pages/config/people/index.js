@@ -25,6 +25,8 @@ import {
 
 import dayjs from '@/lib/time';
 
+import useRequest from '@/hooks/useRequest';
+
 import iconSet from '@/util/icons';
 import { PITypes } from '@/util/roles';
 
@@ -32,6 +34,8 @@ import ConfigLayout from '@/layouts/ConfigLayout';
 import GlobalLayout from '@/layouts/GlobalLayout';
 
 export default function People(props) {
+    const request = useRequest();
+
     const [PIs, setPIs] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [lastUpdated, setLastUpdated] = useState('');
@@ -41,18 +45,14 @@ export default function People(props) {
     const toast = useToast();
 
     const refresh = useCallback(() => {
-        fetch('/api/peerInstructors')
-            .then((res) => res.json())
-            .then((data) => {
-                setPIs(data.peerInstructors.sort((a, b) => a.name.localeCompare(b.name)));
-            });
+        request('/api/peerInstructors').then((data) => {
+            setPIs(data.peerInstructors.sort((a, b) => a.name.localeCompare(b.name)));
+        });
 
-        fetch('/api/config/people')
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setLastUpdated(dayjs(data.config.lastUpdated).local().format('MMMM D, YYYY [at] h:mm A'));
-            });
+        request('/api/config/people').then((data) => {
+            console.log(data);
+            setLastUpdated(dayjs(data.config.lastUpdated).local().format('MMMM D, YYYY [at] h:mm A'));
+        });
     }, []);
 
     useEffect(() => {
@@ -68,18 +68,16 @@ export default function People(props) {
     }, [searchTerm, PIs]);
 
     const sync = useCallback(() => {
-        fetch('/api/peerInstructors/sync', {
+        request('/api/peerInstructors/sync', {
             method: 'POST'
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                toast({
-                    title: 'Synced peer instructors',
-                    status: 'success',
-                    duration: 5000
-                });
-                refresh();
+        }).then((data) => {
+            toast({
+                title: 'Synced peer instructors',
+                status: 'success',
+                duration: 5000
             });
+            refresh();
+        });
     }, [refresh, toast]);
 
     return (

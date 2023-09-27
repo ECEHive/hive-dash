@@ -1,8 +1,8 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 import { useDisclosure } from '@chakra-ui/react';
 
-import AuthModal from '@/components/AuthModal';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 const AuthContext = createContext(null);
 
@@ -15,10 +15,13 @@ export default function AuthProvider({ children }) {
     const [userId, setUserId] = useState(null);
     const [isLoggedIn, setLoggedIn] = useState(null);
 
+    const [savedPin, setSavedPin] = useLocalStorage('HIVEPIN', '');
+
     const { isOpen: isAuthOpen, onOpen: onAuthOpen, onClose: onAuthClose } = useDisclosure();
 
     function login(pin) {
         return new Promise((resolve, reject) => {
+            console.log('logging in');
             fetch('/api/auth', {
                 method: 'POST',
                 headers: {
@@ -28,9 +31,9 @@ export default function AuthProvider({ children }) {
                     pin: pin
                 })
             })
-                .then((res) => res.json())
+                .then((data) => data.json())
                 .then((data) => {
-                    console.log(data);
+                    setSavedPin(pin);
                     setRoleId(data.role);
                     setUserId(data.id);
                     setLoggedIn(true);
@@ -42,23 +45,31 @@ export default function AuthProvider({ children }) {
         });
     }
 
+    function logout() {
+        setSavedPin('');
+        setRoleId(null);
+        setUserId(null);
+        setLoggedIn(false);
+    }
+
+    useEffect(() => {
+        if (savedPin) {
+            login(savedPin);
+        }
+    });
+
     const values = {
         login,
+        logout,
         roleId,
         userId,
         isLoggedIn,
-        onAuthOpen
+        onAuthOpen,
+        isAuthOpen,
+        onAuthClose
     };
 
-    return (
-        <AuthContext.Provider value={values}>
-            <AuthModal
-                isOpen={isAuthOpen}
-                onClose={onAuthClose}
-            />
-            {children}
-        </AuthContext.Provider>
-    );
+    return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
 
 export { AuthContext, AuthProvider };

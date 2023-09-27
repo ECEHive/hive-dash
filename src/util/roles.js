@@ -4,4 +4,10 @@ const PITypes = {
     STAFF: 2
 };
 
-export { PITypes };
+const PINames = {
+    0: 'PI',
+    1: 'MPI',
+    2: 'Staff'
+};
+
+export { PINames, PITypes };

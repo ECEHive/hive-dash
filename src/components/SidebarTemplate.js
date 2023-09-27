@@ -14,9 +14,12 @@ import {
 
 import NextLink from 'next/link';
 
+import { useAuth } from '@/contexts/AuthContext';
 import useNav from '@/contexts/NavContext';
 
 function Navigation({ pageData, baseUrl, pathPage }) {
+    const { isLoggedIn } = useAuth();
+
     return (
         <VStack
             p={2}
@@ -24,6 +27,7 @@ function Navigation({ pageData, baseUrl, pathPage }) {
         >
             {pageData &&
                 pageData.map((element, index) => {
+                    if (element.auth && !isLoggedIn) return null;
                     if (element.type === 'button') {
                         const active = pathPage === element?.href?.replace('/', '') || false;
                         return (
