@@ -35,11 +35,7 @@ export default function usePrintUpdate(silent = false) {
                     resolve();
                 })
                 .catch((err) => {
-                    toast({
-                        description: `Couldn't update print: ${err}`,
-                        status: 'error',
-                        duration: 5000
-                    });
+                    console.log('reject');
                     reject(err);
                 });
         });
@@ -62,11 +58,7 @@ export default function usePrintUpdate(silent = false) {
                     resolve();
                 })
                 .catch((err) => {
-                    toast({
-                        description: `Couldn't delete print: ${err}`,
-                        status: 'error',
-                        duration: 5000
-                    });
+                    console.log('reject');
                     reject(err);
                 });
         });

@@ -38,6 +38,7 @@ export default function AuthMenu({}) {
         login(pin)
             .then(() => {
                 setLoading(false);
+                onAuthClose();
             })
             .catch((err) => {
                 setLoading(false);

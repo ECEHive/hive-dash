@@ -205,8 +205,14 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                 state: event.type,
                 events: [event, ...activePrint.events]
             };
-            printUpdater(activePrint._id, data);
-            onUpdateClose();
+            printUpdater(activePrint._id, data)
+                .then(() => {
+                    onUpdateClose();
+                })
+                .catch((err) => {
+                    console.log('err');
+                    onUpdateClose();
+                });
         },
         [activePrint, printUpdater, onUpdateClose]
     );

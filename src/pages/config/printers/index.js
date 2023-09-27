@@ -59,7 +59,7 @@ export default function Printers(props) {
         request('/api/printing/printerTypes').then((data) => {
             setPrinterTypes(data);
         });
-    }, []);
+    }, [request]);
 
     const deleteType = useCallback(
         (type) => {
@@ -69,7 +69,7 @@ export default function Printers(props) {
                 refresh();
             });
         },
-        [refresh]
+        [refresh, request]
     );
 
     const deletePrinter = useCallback(
@@ -80,7 +80,7 @@ export default function Printers(props) {
                 refresh();
             });
         },
-        [refresh]
+        [refresh, request]
     );
 
     const initDelete = useCallback(

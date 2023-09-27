@@ -1,13 +1,13 @@
 const PITypes = {
-    PI: 0,
-    MPI: 1,
-    STAFF: 2
+    PI: 1,
+    MPI: 2,
+    STAFF: 3
 };
 
 const PINames = {
-    0: 'PI',
-    1: 'MPI',
-    2: 'Staff'
+    [PITypes.PI]: 'PI',
+    [PITypes.MPI]: 'MPI',
+    [PITypes.STAFF]: 'Staff'
 };
 
 export { PINames, PITypes };

@@ -120,7 +120,7 @@ export default function NewPrint(props) {
                     duration: 5000
                 });
             });
-    }, [inputData, toast, refreshDynamicData]);
+    }, [inputData, toast, refreshDynamicData, request]);
 
     useEffect(() => {
         if (activeStep === 3) {

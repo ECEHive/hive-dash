@@ -36,12 +36,7 @@ export default function usePrinterUpdate(silent = false) {
                     resolve();
                 })
                 .catch((err) => {
-                    toast({
-                        title: 'Error',
-                        description: `Couldn't update printer: ${err}`,
-                        status: 'error',
-                        duration: 5000
-                    });
+                    console.log('reject');
                     reject(err);
                 });
         });

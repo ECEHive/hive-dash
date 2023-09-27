@@ -24,24 +24,28 @@ export default function useRequest() {
                             return res.json();
                         } else if (res.status === 401) {
                             return res.json().then((json) => {
+                                toast({
+                                    title: 'Error',
+                                    description: json.message,
+                                    status: 'error',
+                                    duration: 5000
+                                });
                                 throw new Error(json.message);
                             });
                         } else {
                             reject(res.json());
                         }
                     })
+                    .catch((err) => {
+                        console.log('rejected');
+                        reject(err);
+                    })
                     .then((data) => {
                         console.log('wassap');
                         resolve(data);
                     })
-                    .catch((err) => {
-                        toast({
-                            title: 'Error',
-                            description: err.message,
-                            status: 'error',
-                            duration: 5000
-                        });
-                        reject(err);
+                    .finally(() => {
+                        reject();
                     });
             });
         },

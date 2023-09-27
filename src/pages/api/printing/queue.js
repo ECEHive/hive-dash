@@ -1,9 +1,19 @@
+import { validatePerms } from '@/lib/auth';
 import clientPromise from '@/lib/mongodb';
+
+import { PITypes } from '@/util/roles';
 
 export default async function handler(req, res) {
     const mongoClient = await clientPromise;
 
     if (req.method === 'POST') {
+        const hasPerms = await validatePerms(req, PITypes.PI);
+
+        if (!hasPerms) {
+            res.status(401).json({ message: 'Unauthorized' });
+            return;
+        }
+
         const body = req.body;
 
         const data = await mongoClient
