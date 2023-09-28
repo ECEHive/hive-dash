@@ -1,7 +1,9 @@
 import {
     AddIcon,
     ArrowBackIcon,
+    ArrowDownIcon,
     ArrowForwardIcon,
+    ArrowUpIcon,
     CheckIcon,
     ChevronDownIcon,
     ChevronUpIcon,
@@ -50,6 +52,7 @@ import {
     FaFaceSmile,
     FaNoteSticky,
     FaPencil,
+    FaRightFromBracket,
     FaTableCellsLarge,
     FaTableList,
     FaTimeline
@@ -89,7 +92,8 @@ const iconSet = {
     clock: TimeIcon,
     material: FaCubes,
     materialAmount: FaBarsProgress,
-    logout: FaArrowRightToBracket,
+    logout: FaRightFromBracket,
+    sendTo: FaArrowRightToBracket,
     refresh: RepeatIcon,
     branch: FaCodeBranch,
     rightArrow: ArrowForwardIcon,
@@ -104,6 +108,8 @@ const iconSet = {
     hamburger: HamburgerIcon,
     dropdownClosed: ChevronDownIcon,
     dropdownOpened: ChevronUpIcon,
+    upArrow: ArrowUpIcon,
+    downArrow: ArrowDownIcon,
     boxes: FaBoxOpen
 };
 

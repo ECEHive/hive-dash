@@ -28,6 +28,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 
+import { useAuth } from '@/contexts/AuthContext';
+
 import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
@@ -35,6 +37,7 @@ import usePrinterParser from '@/hooks/printing/usePrinterParser';
 import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
 
 import iconSet from '@/util/icons';
+import { PITypes } from '@/util/roles';
 
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import QueueTable from '@/components/printing/printers/QueueTable';
@@ -59,6 +62,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
         timeLeftHumanized,
         timeLeftHumanizedDetailed
     } = usePrintProgress(activePrint);
+    const { roleId } = useAuth();
 
     const dataFields = useMemo(() => {
         return [
@@ -129,14 +133,16 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                 </HStack> */}
                             </VStack>
                             <Spacer />
-                            <ButtonGroup>
-                                <IconButton
-                                    icon={<Icon as={iconSet.wrench} />}
-                                    colorScheme="orange"
-                                    variant="ghost"
-                                    onClick={onMaintenanceOpen}
-                                />
-                            </ButtonGroup>
+                            {roleId >= PITypes.PI && (
+                                <ButtonGroup>
+                                    <IconButton
+                                        icon={<Icon as={iconSet.wrench} />}
+                                        colorScheme="orange"
+                                        variant="ghost"
+                                        onClick={onMaintenanceOpen}
+                                    />
+                                </ButtonGroup>
+                            )}
                         </HStack>
                         <VStack
                             alignItems="flex-start"
@@ -256,14 +262,24 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                 w="auto"
                                                 h="full"
                                             >
-                                                <CircularProgress
-                                                    size={6}
-                                                    thickness={6}
-                                                    value={progress}
-                                                    color={progressCircleColor}
-                                                    trackColor="chakra-subtle-bg"
+                                                <HStack
+                                                    w="auto"
+                                                    h="full"
+                                                >
+                                                    <CircularProgress
+                                                        size={6}
+                                                        thickness={6}
+                                                        value={progress}
+                                                        color={progressCircleColor}
+                                                        trackColor="chakra-subtle-bg"
+                                                    />
+                                                    <Text fontWeight="medium">{progressMessage}</Text>
+                                                </HStack>
+                                                <Icon
+                                                    fontSize="sm"
+                                                    as={iconSet.dot}
                                                 />
-                                                <Text fontWeight="medium">{progressMessage}</Text>
+                                                <Text>Queued by {activePrint.queuedBy}</Text>
                                             </HStack>
                                         </VStack>
 

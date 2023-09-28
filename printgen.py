@@ -20,6 +20,7 @@ struct = {
     "queuedBy": "some PI",
     "queuedAt": "",
     "state": 0,
+    "order": 0,
     "notes": "",
     "endUser": {
         "firstname": "",
@@ -51,10 +52,15 @@ materials = {
     "formlabs": ["Resin (White)", "Resin (Clear)"]
 }
 
+dates = [
+    fake.date_time_between(start_date='-5d', end_date='now').replace(microsecond=0).isoformat() for i in range(50)
+]
+dates = sorted(dates)
+
 
 def main():
     output = []
-    for i in range(50):
+    for i, date in enumerate(dates):
         # generate a random name
         name = names.get_full_name()
 
@@ -83,14 +89,14 @@ def main():
         new_struct["materialUsage"] = random.randrange(5, 100)
         new_struct["estTime"] = f"PT{random.randrange(1, 10)}H{random.randrange(0, 60)}M"
 
-        datetime = fake.date_time_between(start_date='-5d', end_date='now')
-        time = datetime.replace(microsecond=0).isoformat()
-        new_struct["queuedAt"] = time
+        new_struct["queuedAt"] = date
 
         new_struct["events"].append({
             "type": 0,
-            "timestamp": time
+            "timestamp": date
         })
+
+        new_struct["order"] = i
 
         output.append(new_struct)
 

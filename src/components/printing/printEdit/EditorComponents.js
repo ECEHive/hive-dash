@@ -351,25 +351,27 @@ function Events({ printData, update }) {
                                             </HStack>
                                         </TdColored>
                                         <TdColored>
-                                            <ButtonGroup size="sm">
-                                                <Button
-                                                    rightIcon={<ExternalLinkIcon />}
-                                                    onClick={() => {
-                                                        setSelectedEventData(event);
-                                                        onNotesOpen();
-                                                    }}
-                                                >
-                                                    Edit notes
-                                                </Button>
-                                                <IconButton
-                                                    colorScheme="red"
-                                                    onClick={() => {
-                                                        initDelete(event);
-                                                    }}
-                                                >
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </ButtonGroup>
+                                            {event.happened && (
+                                                <ButtonGroup size="sm">
+                                                    <Button
+                                                        rightIcon={<ExternalLinkIcon />}
+                                                        onClick={() => {
+                                                            setSelectedEventData(event);
+                                                            onNotesOpen();
+                                                        }}
+                                                    >
+                                                        Edit notes
+                                                    </Button>
+                                                    <IconButton
+                                                        colorScheme="red"
+                                                        onClick={() => {
+                                                            initDelete(event);
+                                                        }}
+                                                    >
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </ButtonGroup>
+                                            )}
                                         </TdColored>
                                     </Tr>
                                 );

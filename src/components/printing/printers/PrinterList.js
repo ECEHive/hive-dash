@@ -58,7 +58,7 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                         <HStack w="100%">
                             <Heading
                                 size="md"
-                                fontWeight="medium"
+                                fontWeight="semibold"
                                 fontFamily="body"
                             >
                                 {data.displayName}
