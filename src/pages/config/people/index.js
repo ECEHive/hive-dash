@@ -183,7 +183,7 @@ export default function People(props) {
                                     </Thead>
                                     <Tbody>
                                         {filteredPIs.map((pi, i) => (
-                                            <Tr key={i}>
+                                            <Tr key={pi.name}>
                                                 <Td>
                                                     <Text fontSize="md">{pi.name}</Text>
                                                 </Td>

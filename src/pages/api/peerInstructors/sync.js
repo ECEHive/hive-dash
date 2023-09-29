@@ -1,4 +1,5 @@
 import base from '@/lib/airtable';
+import { validateRequest } from '@/lib/auth';
 import clientPromise from '@/lib/mongodb';
 import dayjs from '@/lib/time';
 
@@ -6,6 +7,10 @@ export default async function handler(req, res) {
     const mongoClient = await clientPromise;
 
     if (req.method === 'POST') {
+        let uid,
+            allowed = await validateRequest(req, PITypes.MPI);
+        if (!allowed) return res.status(401).json({ message: 'Unauthorized' });
+
         let people = [];
 
         base('PI Tracker')
@@ -25,12 +30,12 @@ export default async function handler(req, res) {
                                 record.get('Current Status').includes('Staff') ||
                                 record.get('Current Status').includes('New')
                             ) {
-                                let role = 0;
+                                let role = 1;
                                 if (record.get('MPI Role(s)')) {
-                                    role = 1;
+                                    role = 2;
                                 }
                                 if (record.get('Current Status').includes('Staff')) {
-                                    role = 2;
+                                    role = 3;
                                 }
 
                                 people.push({
@@ -59,9 +64,13 @@ export default async function handler(req, res) {
                         .find()
                         .toArray();
 
-                    const existingPeople = existing.map((pi) => pi.name);
-                    const newPeople = people.filter((pi) => !existingPeople.includes(pi));
-                    const oldPeople = existing.filter((pi) => !people.includes(pi.name));
+                    const existingNames = existing.map((pi) => pi.name);
+                    const newPeople = people.filter((pi) => !existingNames.includes(pi.name));
+
+                    // delete existing people who aren't in people
+                    const oldPeople = existing.filter((pi) => {
+                        !people.find((person) => person.name === pi.name);
+                    });
 
                     // remove old people from database
                     if (oldPeople.length > 0) {
@@ -76,7 +85,9 @@ export default async function handler(req, res) {
                         await mongoClient
                             .db('global-config')
                             .collection('peer-instructors')
-                            .insertMany(newPeople.map((pi) => ({ name: pi.name, type: pi.type, email: pi.email })));
+                            .insertMany(
+                                newPeople.map((pi) => ({ name: pi.name, type: pi.type, email: pi.email, uid: null }))
+                            );
 
                         await mongoClient
                             .db('global-config')
@@ -91,8 +102,8 @@ export default async function handler(req, res) {
                             );
 
                         res.json({ success: true });
-                        res.status(200).end();
                     }
+                    res.status(200).end();
                 }
             );
 

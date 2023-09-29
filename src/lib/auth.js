@@ -1,26 +1,37 @@
-import { ObjectId } from 'mongodb';
+import { tokenToID } from '@/pages/api/firebase';
 
 import clientPromise from '@/lib/mongodb';
 
-export async function validatePerms(request, minRole) {
-    const userId = request.headers.authorization?.split(' ')[1] || '';
+async function authToken(req) {
+    // authorization Header
+    const authHeader = req.headers.authorization;
 
-    if (userId.length < 10) return false;
+    // bearer Token
+    const token = authHeader?.split(' ')[1];
+
+    // verify Token
+    const uid = await tokenToID(token);
+
+    return uid;
+}
+
+export async function validateRequest(req, minRole) {
+    const uid = await authToken(req);
+    if (!uid) return null, false;
 
     const mongoClient = await clientPromise;
 
-    const user = await mongoClient
-        .db('global-config')
-        .collection('access')
-        .findOne({ _id: new ObjectId(userId) });
+    const user = await mongoClient.db('global-config').collection('peer-instructors').findOne({ uid: uid });
 
     console.log(user);
 
-    if (!user) return false;
+    if (!user) return uid, false;
 
-    if (user.role >= minRole) {
-        return true;
+    if (user.type >= minRole) {
+        return uid, true;
     } else {
-        return false;
+        return uid, false;
     }
 }
+
+export { authToken };

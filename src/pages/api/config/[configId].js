@@ -1,4 +1,4 @@
-import { validatePerms } from '@/lib/auth';
+import { validateRequest } from '@/lib/auth';
 import clientPromise from '@/lib/mongodb';
 
 import { PITypes } from '@/util/roles';
@@ -15,12 +15,9 @@ export default async function handler(req, res) {
 
         res.status(200).json({ config: data[0] });
     } else if (req.method === 'PUT') {
-        const hasPerms = await validatePerms(req, PITypes.MPI);
-
-        if (!hasPerms) {
-            res.status(401).json({ message: 'Unauthorized' });
-            return;
-        }
+        let uid,
+            allowed = await validateRequest(req, PITypes.MPI);
+        if (!allowed) return res.status(401).json({ message: 'Unauthorized' });
 
         const body = req.body;
 

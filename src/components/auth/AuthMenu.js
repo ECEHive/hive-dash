@@ -6,8 +6,7 @@ import {
     HStack,
     Icon,
     IconButton,
-    PinInput,
-    PinInputField,
+    Input,
     Popover,
     PopoverArrow,
     PopoverBody,
@@ -26,31 +25,33 @@ import iconSet from '@/util/icons';
 import { PINames } from '@/util/roles';
 
 export default function AuthMenu({}) {
-    const [loading, setLoading] = useState(false);
+    const [input, setInput] = useState('');
     const toast = useToast();
 
     const initialFocusRef = useRef();
 
-    const { login, userId, roleId, onAuthOpen, isLoggedIn, isAuthOpen, onAuthClose, logout } = useAuth();
+    const { login, loading, user, userData, roleId, onAuthOpen, isAuthOpen, onAuthClose, logout } = useAuth();
 
-    function handleLogin(pin) {
-        setLoading(true);
-        login(pin)
-            .then(() => {
-                setLoading(false);
-                onAuthClose();
-            })
-            .catch((err) => {
-                setLoading(false);
-                onAuthClose();
-                toast({
-                    title: 'Error',
-                    description: err.message,
-                    status: 'error',
-                    duration: 5000,
-                    isClosable: true
+    function handleLogin(result) {
+        console.log(result);
+        if (result && result.includes('903')) {
+            const gtid = result.split('=')[1];
+            console.log(gtid);
+            login(gtid)
+                .then(() => {
+                    onAuthClose();
+                })
+                .catch((err) => {
+                    onAuthClose();
+                    toast({
+                        title: 'Error',
+                        description: err.message,
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true
+                    });
                 });
-            });
+        }
     }
 
     return (
@@ -65,9 +66,9 @@ export default function AuthMenu({}) {
             <PopoverTrigger>
                 <IconButton
                     onClick={onAuthOpen}
-                    colorScheme={isLoggedIn ? 'yellow' : 'gray'}
+                    colorScheme={user ? 'yellow' : 'gray'}
                 >
-                    <Icon as={isLoggedIn > 0 ? iconSet.peerInstructor : iconSet.person} />
+                    <Icon as={user ? iconSet.peerInstructor : iconSet.person} />
                 </IconButton>
             </PopoverTrigger>
             <PopoverContent>
@@ -82,39 +83,41 @@ export default function AuthMenu({}) {
                     </HStack>
                 </PopoverHeader>
                 <PopoverBody backdropFilter={'blur'}>
-                    {!isLoggedIn ? (
+                    {!user ? (
                         <>
                             {loading ? (
                                 <>
-                                    <VStack
+                                    <HStack
                                         w="full"
                                         h="full"
                                         justify="center"
+                                        p={3}
                                     >
                                         <Spinner />
-                                    </VStack>
+                                        <Text>Logging you in...</Text>
+                                    </HStack>
                                 </>
                             ) : (
                                 <VStack align="start">
-                                    <HStack
-                                        w="full"
-                                        justify="space-evenly"
-                                    >
-                                        <PinInput
-                                            size="lg"
-                                            type="number"
-                                            onChange={(e) => {
-                                                if (e.length === 4) {
-                                                    handleLogin(e);
-                                                }
-                                            }}
-                                        >
-                                            <PinInputField ref={initialFocusRef} />
-                                            <PinInputField />
-                                            <PinInputField />
-                                            <PinInputField />
-                                        </PinInput>
-                                    </HStack>
+                                    <Text>Present your BuzzCard to log in!</Text>
+                                    <Input
+                                        ref={initialFocusRef}
+                                        placeholder="BuzzCard Number"
+                                        zIndex={-1}
+                                        position="absolute"
+                                        variant="unstyled"
+                                        top={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                console.log(input);
+                                                handleLogin(input);
+                                            }
+                                        }}
+                                        onChange={(e) => {
+                                            setInput(e.target.value);
+                                        }}
+                                        w={0}
+                                    />
                                 </VStack>
                             )}
                         </>
@@ -133,7 +136,7 @@ export default function AuthMenu({}) {
                                         fontSize="xl"
                                         fontWeight="bold"
                                     >
-                                        Hello!
+                                        Hello, {userData?.name}!
                                     </Text>
                                     <Text>You&apos;re logged in as a {PINames[roleId]}</Text>
                                 </VStack>
