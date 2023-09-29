@@ -37,6 +37,7 @@ export default function AuthProvider({ children }) {
                 .catch((err) => {});
         } else {
             setUserData(null);
+            setRoleId(0);
         }
     }, [user, request]);
 

@@ -3,6 +3,8 @@ import { validateRequest } from '@/lib/auth';
 import clientPromise from '@/lib/mongodb';
 import dayjs from '@/lib/time';
 
+import { PITypes } from '@/util/roles';
+
 export default async function handler(req, res) {
     const mongoClient = await clientPromise;
 
@@ -103,12 +105,12 @@ export default async function handler(req, res) {
 
                         res.json({ success: true });
                     }
-                    res.status(200).end();
                 }
             );
 
         //const data = await mongoClient.db('global-config').collection('peer-instructors').find().toArray();
 
         //res.status(200).json({ peerInstructors: data });
+        res.status(200).end();
     }
 }

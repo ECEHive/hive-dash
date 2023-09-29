@@ -37,3 +37,23 @@ export async function tokenToID(token) {
         return null;
     }
 }
+
+export async function createUser(email, password) {
+    const user = await admin
+        .auth()
+        .createUser({
+            email: email,
+            password: password
+        })
+        .then((userRecord) => {
+            console.log('created user');
+            // See the UserRecord reference doc for the contents of userRecord.
+            return userRecord;
+        })
+        .catch((error) => {
+            console.log('Error creating new user:', error);
+            return null;
+        });
+
+    return user;
+}

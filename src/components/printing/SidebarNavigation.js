@@ -5,6 +5,7 @@ import { Icon } from '@chakra-ui/react';
 import usePrinting from '@/contexts/printing/PrintingContext';
 
 import iconSet from '@/util/icons';
+import { PITypes } from '@/util/roles';
 
 import SidebarTemplate from '@/components/SidebarTemplate';
 
@@ -21,12 +22,12 @@ export default function Navigation({}) {
                     onNewOpen();
                 },
                 colorScheme: 'green',
-                auth: true
+                minRole: PITypes.PI
             },
 
             {
                 type: 'divider',
-                auth: true
+                minRole: PITypes.PI
             },
 
             {

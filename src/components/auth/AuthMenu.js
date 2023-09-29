@@ -26,14 +26,16 @@ import { PINames } from '@/util/roles';
 
 export default function AuthMenu({}) {
     const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const toast = useToast();
 
     const initialFocusRef = useRef();
 
-    const { login, loading, user, userData, roleId, onAuthOpen, isAuthOpen, onAuthClose, logout } = useAuth();
+    const { login, user, userData, roleId, onAuthOpen, isAuthOpen, onAuthClose, logout } = useAuth();
 
     function handleLogin(result) {
         console.log(result);
+        setIsLoading(true);
         if (result && result.includes('903')) {
             const gtid = result.split('=')[1];
             console.log(gtid);
@@ -52,6 +54,7 @@ export default function AuthMenu({}) {
                     });
                 });
         }
+        setIsLoading(false);
     }
 
     return (
@@ -85,7 +88,7 @@ export default function AuthMenu({}) {
                 <PopoverBody backdropFilter={'blur'}>
                     {!user ? (
                         <>
-                            {loading ? (
+                            {isLoading ? (
                                 <>
                                     <HStack
                                         w="full"
@@ -103,7 +106,6 @@ export default function AuthMenu({}) {
                                     <Input
                                         ref={initialFocusRef}
                                         placeholder="BuzzCard Number"
-                                        zIndex={-1}
                                         position="absolute"
                                         variant="unstyled"
                                         top={0}
@@ -115,6 +117,9 @@ export default function AuthMenu({}) {
                                         }}
                                         onChange={(e) => {
                                             setInput(e.target.value);
+                                        }}
+                                        onBlur={() => {
+                                            onAuthClose();
                                         }}
                                         w={0}
                                     />

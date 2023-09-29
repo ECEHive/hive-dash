@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import {
     Badge,
     Button,
+    ButtonGroup,
     Divider,
     Flex,
     HStack,
@@ -11,6 +12,7 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
+    Spacer,
     Table,
     TableContainer,
     Tbody,
@@ -20,6 +22,7 @@ import {
     Thead,
     Tr,
     VStack,
+    useDisclosure,
     useToast
 } from '@chakra-ui/react';
 
@@ -33,14 +36,20 @@ import { PITypes } from '@/util/roles';
 import ConfigLayout from '@/layouts/ConfigLayout';
 import GlobalLayout from '@/layouts/GlobalLayout';
 
+import BuzzCardRegisterModal from '@/components/config/people/BuzzCardRegisterModal';
+
 export default function People(props) {
     const request = useRequest();
 
     const [PIs, setPIs] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [lastUpdated, setLastUpdated] = useState('');
+    const [isSyncing, setIsSyncing] = useState(false);
 
     const [filteredPIs, setFilteredPIs] = useState(null);
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [selectedUser, setSelectedUser] = useState(null);
 
     const toast = useToast();
 
@@ -72,6 +81,7 @@ export default function People(props) {
     }, [searchTerm, PIs]);
 
     const sync = useCallback(() => {
+        setIsSyncing(true);
         request('/api/peerInstructors/sync', {
             method: 'POST'
         })
@@ -83,27 +93,46 @@ export default function People(props) {
                 });
                 refresh();
             })
-            .catch((err) => {});
+            .catch((err) => {})
+            .finally(() => {
+                setIsSyncing(false);
+            });
     }, [refresh, toast, request]);
 
     return (
         <>
+            {selectedUser && (
+                <BuzzCardRegisterModal
+                    isOpen={isOpen}
+                    onClose={() => {
+                        onClose();
+                        setTimeout(() => {
+                            refresh();
+                            setSelectedUser(null);
+                        }, 1000);
+                    }}
+                    user={selectedUser}
+                />
+            )}
             <Flex
-                w="full"
                 h="full"
+                w="full"
+                overflowY="hidden"
                 p={5}
-                overflow="hidden"
-                direction="column"
-                justify="start"
-                align="center"
+                dir="row"
+                justify="center"
+                overflowX="auto"
             >
                 <VStack
+                    position="relative"
                     w="full"
-                    maxW="2xl"
-                    maxH="full"
-                    spacing={3}
+                    h="full"
+                    maxW="4xl"
+                    justify="center"
                     align="start"
-                    overflow="hidden"
+                    spacing={3}
+                    px={1}
+                    overflowY="hidden"
                 >
                     <Heading
                         size="lg"
@@ -119,9 +148,11 @@ export default function People(props) {
                         align="start"
                         spacing={3}
                         overflow="hidden"
-                        px={1}
                     >
-                        <VStack align="start">
+                        <VStack
+                            align="start"
+                            w="full"
+                        >
                             <VStack
                                 spacing={0}
                                 align="start"
@@ -129,38 +160,43 @@ export default function People(props) {
                                 <Text fontSize="lg">Peer instructors are synced through The HIVE&apos;s Airtable</Text>
                             </VStack>
 
-                            <HStack>
+                            <HStack w="full">
                                 <Button
+                                    size="sm"
                                     leftIcon={<Icon as={iconSet.refresh} />}
                                     onClick={sync}
+                                    colorScheme="blue"
+                                    isLoading={isSyncing}
                                 >
                                     Sync PIs
                                 </Button>
-                                <Text color="secondaryText">Last synced: {lastUpdated}</Text>
+                                <Icon as={iconSet.dot} />
+                                <Text
+                                    color="secondaryText"
+                                    fontSize="sm"
+                                >
+                                    Last synced: {lastUpdated}
+                                </Text>
+
+                                <Spacer />
+
+                                <InputGroup w="auto">
+                                    <InputLeftElement>
+                                        <Icon as={iconSet.search} />
+                                    </InputLeftElement>
+                                    <Input
+                                        placeholder="Search for a PI"
+                                        type="text"
+                                        value={searchTerm}
+                                        onChange={(e) => {
+                                            setSearchTerm(e.target.value.toLowerCase());
+                                        }}
+                                    />
+                                </InputGroup>
                             </HStack>
                         </VStack>
 
                         <Divider />
-
-                        <VStack
-                            w="auto"
-                            h="auto"
-                            align="start"
-                        >
-                            <InputGroup>
-                                <InputLeftElement>
-                                    <Icon as={iconSet.search} />
-                                </InputLeftElement>
-                                <Input
-                                    placeholder="Search for a PI"
-                                    type="text"
-                                    value={searchTerm}
-                                    onChange={(e) => {
-                                        setSearchTerm(e.target.value.toLowerCase());
-                                    }}
-                                />
-                            </InputGroup>
-                        </VStack>
 
                         {filteredPIs && (
                             <TableContainer
@@ -179,24 +215,56 @@ export default function People(props) {
                                             <Th>Peer instructor</Th>
                                             <Th>Role</Th>
                                             <Th>Email</Th>
+                                            <Th>Actions</Th>
                                         </Tr>
                                     </Thead>
                                     <Tbody>
                                         {filteredPIs.map((pi, i) => (
                                             <Tr key={pi.name}>
                                                 <Td>
-                                                    <Text fontSize="md">{pi.name}</Text>
+                                                    <HStack>
+                                                        {pi?.uid?.length > 0 && <Icon as={iconSet.buzzCard} />}
+                                                        <Text fontSize="md">{pi.name}</Text>
+                                                    </HStack>
                                                 </Td>
                                                 <Td>
                                                     <Badge
                                                         fontSize="xs"
-                                                        colorScheme="blue"
+                                                        colorScheme="yellow"
                                                     >
                                                         {Object.keys(PITypes).find((key) => PITypes[key] === pi.type)}
                                                     </Badge>
                                                 </Td>
                                                 <Td>
-                                                    <Text fontSize="md">{pi.email}...</Text>
+                                                    <Text fontSize="md">{pi.email}</Text>
+                                                </Td>
+                                                <Td>
+                                                    <ButtonGroup
+                                                        size="sm"
+                                                        dir="row"
+                                                    >
+                                                        {!pi?.uid ? (
+                                                            <Button
+                                                                leftIcon={<Icon as={iconSet.buzzCard} />}
+                                                                onClick={() => {
+                                                                    setSelectedUser(pi);
+                                                                    onOpen();
+                                                                }}
+                                                            >
+                                                                Register BuzzCard
+                                                            </Button>
+                                                        ) : (
+                                                            <Button
+                                                                colorScheme="red"
+                                                                leftIcon={<Icon as={iconSet.minus} />}
+                                                                onClick={() => {
+                                                                    //disconnectBuzzCard(pi);
+                                                                }}
+                                                            >
+                                                                Disconnect BuzzCard
+                                                            </Button>
+                                                        )}
+                                                    </ButtonGroup>
                                                 </Td>
                                             </Tr>
                                         ))}

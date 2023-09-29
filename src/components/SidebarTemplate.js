@@ -18,7 +18,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import useNav from '@/contexts/NavContext';
 
 function Navigation({ pageData, baseUrl, pathPage }) {
-    const { isLoggedIn } = useAuth();
+    const { roleId } = useAuth();
 
     return (
         <VStack
@@ -27,7 +27,9 @@ function Navigation({ pageData, baseUrl, pathPage }) {
         >
             {pageData &&
                 pageData.map((element, index) => {
-                    if (element.auth && !isLoggedIn) return null;
+                    if (roleId < element?.minRole) {
+                        return null;
+                    }
                     if (element.type === 'button') {
                         const active = pathPage === element?.href?.replace('/', '') || false;
                         return (
