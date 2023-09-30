@@ -154,6 +154,27 @@ function QueueTableItem({
                     )}
                 </Td>
             )}
+            {showActions && editMode && (
+                <Td>
+                    <ButtonGroup size="sm">
+                        <IconButton
+                            variant="outline"
+                            colorScheme="gray"
+                            isDisabled={() => {
+                                // check if prints can be moved up, i.e. if the first ordered print is included in the selection and it's at the top, we can't move anymore
+                            }}
+                        >
+                            <Icon as={iconSet.upArrow} />
+                        </IconButton>
+                        <IconButton
+                            variant="outline"
+                            colorScheme="gray"
+                        >
+                            <Icon as={iconSet.downArrow} />
+                        </IconButton>
+                    </ButtonGroup>
+                </Td>
+            )}
         </Tr>
     );
 }
@@ -172,15 +193,27 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     const [nextEventData, setNextEventData] = useState(null);
     const [printToEdit, setPrintToEdit] = useState(null);
 
+    const [editedCopy, setEditedCopy] = useState(null);
+
     const [checkedPrints, setCheckedPrints] = useState([]);
 
     const printerQueue = useMemo(() => {
-        const q = queue.filter(
-            (print) =>
-                print.printer === selectedPrinterData?.id &&
-                print.state !== PrintStates.COMPLETED &&
-                print.state !== PrintStates.CANCELED
-        );
+        const q = queue
+            .filter(
+                (print) =>
+                    print.printer === selectedPrinterData?.id &&
+                    print.state !== PrintStates.COMPLETED &&
+                    print.state !== PrintStates.CANCELED
+            )
+            .sort((a, b) => {
+                if (a.order > b.order) {
+                    return 1;
+                } else if (b.order > a.order) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
 
         return q;
     }, [selectedPrinterData, queue]);
@@ -253,6 +286,17 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
         [activePrint, printUpdater, onUpdateClose]
     );
 
+    function startEdit() {
+        setEditedCopy(printerQueue);
+        setEditMode(true);
+    }
+
+    function endEdit() {
+        // post changes to server
+        setEditMode(false);
+        setEditedCopy(null);
+    }
+
     return (
         <>
             <UpdateModal
@@ -284,7 +328,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                     <Button
                                         leftIcon={<Icon as={iconSet.boxes} />}
                                         variant="outline"
-                                        onClick={() => setEditMode(true)}
+                                        onClick={() => startEdit()}
                                     >
                                         Edit queue
                                     </Button>
@@ -292,7 +336,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                     <Button
                                         leftIcon={<Icon as={iconSet.check} />}
                                         variant="outline"
-                                        onClick={() => setEditMode(false)}
+                                        onClick={() => endEdit()}
                                     >
                                         Done
                                     </Button>
@@ -303,28 +347,12 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                     <Text>{checkedPrints.length} selected</Text>
                                     <Spacer />
                                     <ButtonGroup size="sm">
-                                        <IconButton
-                                            variant="outline"
-                                            colorScheme="gray"
-                                            isDisabled={() => {
-                                                // check if prints can be moved up, i.e. if the first ordered print is included in the selection and it's at the top, we can't move anymore
-                                            }}
-                                        >
-                                            <Icon as={iconSet.upArrow} />
-                                        </IconButton>
-                                        <IconButton
-                                            variant="outline"
-                                            colorScheme="gray"
-                                        >
-                                            <Icon as={iconSet.downArrow} />
-                                        </IconButton>
-
                                         <Button
                                             variant="outline"
                                             leftIcon={<Icon as={iconSet.sendTo} />}
                                             colorScheme="yellow"
                                         >
-                                            Move to printer
+                                            Move prints
                                         </Button>
                                     </ButtonGroup>
                                 </>
@@ -361,6 +389,11 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                         {roleId >= PITypes.PI && !editMode && (
                                             <>
                                                 <Th>Actions</Th>
+                                            </>
+                                        )}
+                                        {roleId >= PITypes.PI && editMode && (
+                                            <>
+                                                <Th>Reorder</Th>
                                             </>
                                         )}
                                     </Tr>

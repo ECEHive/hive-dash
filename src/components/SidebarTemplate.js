@@ -46,7 +46,7 @@ function Navigation({ pageData, baseUrl, pathPage }) {
                                         href={baseUrl + element.href}
                                         isActive={active}
                                         leftIcon={element.icon}
-                                        key={element.name}
+                                        key={element.href}
                                     >
                                         {element.name}
                                     </Button>
@@ -84,6 +84,7 @@ export default function SidebarTemplate({ pageData, baseUrl }) {
     return (
         <>
             <Flex
+                key={page}
                 direction="column"
                 w="full"
                 h="full"

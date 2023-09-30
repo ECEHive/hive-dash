@@ -99,6 +99,25 @@ export default function People(props) {
             });
     }, [refresh, toast, request]);
 
+    function disconnectBuzzCard(pi) {
+        request('/api/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                uid: pi.uid,
+                mongoId: pi._id
+            })
+        })
+            .then(() => {
+                refresh();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
     return (
         <>
             {selectedUser && (
@@ -258,7 +277,7 @@ export default function People(props) {
                                                                 colorScheme="red"
                                                                 leftIcon={<Icon as={iconSet.minus} />}
                                                                 onClick={() => {
-                                                                    //disconnectBuzzCard(pi);
+                                                                    disconnectBuzzCard(pi);
                                                                 }}
                                                             >
                                                                 Disconnect BuzzCard

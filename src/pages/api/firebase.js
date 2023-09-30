@@ -57,3 +57,20 @@ export async function createUser(email, password) {
 
     return user;
 }
+
+export async function deleteUser(uid) {
+    console.log('deleting');
+    const success = await admin
+        .auth()
+        .deleteUser(uid)
+        .then(() => {
+            console.log('deleted user');
+            return true;
+        })
+        .catch((error) => {
+            console.log('Error deleting user:', error);
+            return false;
+        });
+
+    return success;
+}

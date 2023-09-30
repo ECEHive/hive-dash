@@ -1,13 +1,11 @@
 import { useState } from 'react';
 
 import {
-    ButtonGroup,
     Icon,
     Input,
     Modal,
     ModalBody,
     ModalContent,
-    ModalFooter,
     ModalHeader,
     ModalOverlay,
     Spinner,
@@ -68,7 +66,7 @@ export default function BuzzCardRegisterModal({ user, isOpen, onClose }) {
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Registering {user.name}&apos;s BuzzCard</ModalHeader>
-                <ModalBody>
+                <ModalBody pb={5}>
                     {!isLoading ? (
                         <VStack
                             align="center"
@@ -108,9 +106,9 @@ export default function BuzzCardRegisterModal({ user, isOpen, onClose }) {
                         </VStack>
                     )}
                 </ModalBody>
-                <ModalFooter>
-                    <ButtonGroup>{/* <Button colorScheme="blue">Done</Button> */}</ButtonGroup>
-                </ModalFooter>
+                {/* <ModalFooter>
+                    <ButtonGroup><Button colorScheme="blue">Done</Button></ButtonGroup>
+                </ModalFooter> */}
             </ModalContent>
         </Modal>
     );
