@@ -197,30 +197,9 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
 
     const [checkedPrints, setCheckedPrints] = useState([]);
 
-    const printerQueue = useMemo(() => {
-        const q = queue
-            .filter(
-                (print) =>
-                    print.printer === selectedPrinterData?.id &&
-                    print.state !== PrintStates.COMPLETED &&
-                    print.state !== PrintStates.CANCELED
-            )
-            .sort((a, b) => {
-                if (a.order > b.order) {
-                    return 1;
-                } else if (b.order > a.order) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            });
-
-        return q;
-    }, [selectedPrinterData, queue]);
-
     const checkAll = useCallback(() => {
-        setCheckedPrints(printerQueue.map((print) => print._id));
-    }, [printerQueue]);
+        setCheckedPrints(selectedPrinterData.queue);
+    }, [selectedPrinterData.queue]);
 
     const canQueue = useMemo(() => {
         return activePrint?.state !== PrintStates.PRINTING && selectedPrinterData?.enabled;
@@ -282,12 +261,15 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                     console.log('err');
                     onUpdateClose();
                 });
+            if (event.type === PrintStates.COMPLETED) {
+                // TODO: update printer queue
+            }
         },
         [activePrint, printUpdater, onUpdateClose]
     );
 
     function startEdit() {
-        setEditedCopy(printerQueue);
+        setEditedCopy([...selectedPrinterData.queue]);
         setEditMode(true);
     }
 
@@ -317,7 +299,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                 w="100%"
                 h="auto"
             >
-                {printerQueue.length > 0 ? (
+                {selectedPrinterData.queue.length > 0 ? (
                     <VStack spacing={5}>
                         <HStack
                             w="full"
@@ -369,7 +351,9 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                         {editMode && (
                                             <Th>
                                                 <Checkbox
-                                                    isChecked={checkedPrints.length === printerQueue.length}
+                                                    isChecked={
+                                                        checkedPrints.length === selectedPrinterData.queue.length
+                                                    }
                                                     onChange={() => {
                                                         if (checkedPrints.length > 0) {
                                                             setCheckedPrints([]);
@@ -378,7 +362,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                                         }
                                                     }}
                                                     isIndeterminate={
-                                                        !(checkedPrints.length === printerQueue.length) &&
+                                                        !(checkedPrints.length === selectedPrinterData.queue.length) &&
                                                         checkedPrints.length > 0
                                                     }
                                                 />
@@ -399,7 +383,8 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {printerQueue.map((print) => {
+                                    {selectedPrinterData.queue.map((printId) => {
+                                        const print = queue.find((print) => print._id === printId);
                                         return (
                                             <QueueTableItem
                                                 key={print._id}

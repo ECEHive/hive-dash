@@ -52,16 +52,21 @@ export default function AuthMenu({}) {
                         duration: 5000,
                         isClosable: true
                     });
+                })
+                .finally(() => {
+                    setIsLoading(false);
                 });
         }
-        setIsLoading(false);
     }
 
     return (
         <Popover
             isOpen={isAuthOpen}
             strategy="absolute"
-            onClose={onAuthClose}
+            onClose={() => {
+                setInput('');
+                onAuthClose();
+            }}
             closeOnBlur
             closeOnEsc
             initialFocusRef={initialFocusRef}
@@ -86,21 +91,21 @@ export default function AuthMenu({}) {
                     </HStack>
                 </PopoverHeader>
                 <PopoverBody backdropFilter={'blur'}>
-                    {!user ? (
+                    {isLoading ? (
                         <>
-                            {isLoading ? (
-                                <>
-                                    <HStack
-                                        w="full"
-                                        h="full"
-                                        justify="center"
-                                        p={3}
-                                    >
-                                        <Spinner />
-                                        <Text>Logging you in...</Text>
-                                    </HStack>
-                                </>
-                            ) : (
+                            <HStack
+                                w="full"
+                                h="full"
+                                justify="center"
+                                p={3}
+                            >
+                                <Spinner />
+                                <Text>Logging you in...</Text>
+                            </HStack>
+                        </>
+                    ) : (
+                        <>
+                            {!user ? (
                                 <VStack align="start">
                                     <Text>Present your BuzzCard to log in!</Text>
                                     <Input
@@ -124,44 +129,44 @@ export default function AuthMenu({}) {
                                         w={0}
                                     />
                                 </VStack>
-                            )}
-                        </>
-                    ) : (
-                        <>
-                            <VStack
-                                align="start"
-                                w="full"
-                                spacing={5}
-                            >
-                                <VStack
-                                    spacing={0}
-                                    align="start"
-                                >
-                                    <Text
-                                        fontSize="xl"
-                                        fontWeight="bold"
-                                    >
-                                        Hello, {userData?.name}!
-                                    </Text>
-                                    <Text>You&apos;re logged in as a {PINames[roleId]}</Text>
-                                </VStack>
-
-                                <VStack w="full">
-                                    <ButtonGroup
+                            ) : (
+                                <>
+                                    <VStack
+                                        align="start"
                                         w="full"
-                                        variant="outline"
+                                        spacing={5}
                                     >
-                                        <Button
-                                            w="full"
-                                            leftIcon={<Icon as={iconSet.logout} />}
-                                            colorScheme="red"
-                                            onClick={logout}
+                                        <VStack
+                                            spacing={0}
+                                            align="start"
                                         >
-                                            Sign out
-                                        </Button>
-                                    </ButtonGroup>
-                                </VStack>
-                            </VStack>
+                                            <Text
+                                                fontSize="xl"
+                                                fontWeight="bold"
+                                            >
+                                                Hello, {userData?.name}!
+                                            </Text>
+                                            <Text>You&apos;re logged in as a {PINames[roleId]}</Text>
+                                        </VStack>
+
+                                        <VStack w="full">
+                                            <ButtonGroup
+                                                w="full"
+                                                variant="outline"
+                                            >
+                                                <Button
+                                                    w="full"
+                                                    leftIcon={<Icon as={iconSet.logout} />}
+                                                    colorScheme="red"
+                                                    onClick={logout}
+                                                >
+                                                    Sign out
+                                                </Button>
+                                            </ButtonGroup>
+                                        </VStack>
+                                    </VStack>
+                                </>
+                            )}
                         </>
                     )}
                 </PopoverBody>

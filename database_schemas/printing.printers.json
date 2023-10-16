@@ -1,0 +1,176 @@
+[
+    {
+        "_id": {
+            "$oid": "64b585f471c34524c55930f4"
+        },
+        "id": "ultimaker-1",
+        "displayName": "Ultimaker 1",
+        "type": "ultimaker",
+        "enabled": false,
+        "queue": [],
+        "maintenance": {
+            "notes": "### brocken :(",
+            "events": []
+        },
+        "updatedAt": "2023-09-18T23:38:45.351Z",
+        "currentTray": "65006ac2cac84f5773a73a43"
+    },
+    {
+        "_id": {
+            "$oid": "64b585f471c34524c55930f5"
+        },
+        "id": "left-stratasys",
+        "displayName": "Left Stratasys",
+        "type": "stratasys",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": "### this printer is down for some reason!\n\nwe are waiting for parts\n\n![](https://media.tenor.com/P1R9xKiavLgAAAAd/funny-dogs-cute.gif)",
+            "events": []
+        },
+        "updatedAt": "2023-10-12T21:34:49.405Z",
+        "currentTray": "6514f35eb11d32645e546d2b"
+    },
+    {
+        "_id": {
+            "$oid": "64b7e426e9fdcba8283b74f7"
+        },
+        "id": "right-stratasys",
+        "displayName": "Right Stratasys",
+        "type": "stratasys",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": "# printer is down until new materials come in\n\nthank u :)",
+            "events": []
+        },
+        "updatedAt": "2023-10-12T21:36:19.153Z",
+        "currentTray": "6514f35eb11d32645e546d12"
+    },
+    {
+        "_id": {
+            "$oid": "64b7e426e9fdcba8283b74f5"
+        },
+        "id": "ultimaker-4",
+        "displayName": "Ultimaker 4",
+        "type": "ultimaker",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": "",
+            "events": []
+        },
+        "updatedAt": "2023-10-12T21:36:07.703Z",
+        "currentTray": "6514f35eb11d32645e546d22"
+    },
+    {
+        "_id": {
+            "$oid": "64b7e426e9fdcba8283b74f3"
+        },
+        "id": "ultimaker-2",
+        "displayName": "Ultimaker 2",
+        "type": "ultimaker",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": "hopefully it doesnt braek anymore",
+            "events": []
+        },
+        "updatedAt": "2023-10-12T21:34:55.605Z",
+        "currentTray": "6514f35eb11d32645e546d28"
+    },
+    {
+        "_id": {
+            "$oid": "64b7e426e9fdcba8283b74f6"
+        },
+        "id": "center-stratasys",
+        "displayName": "Center Stratasys",
+        "type": "stratasys",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": "",
+            "events": []
+        },
+        "updatedAt": "2023-10-12T21:36:11.469Z",
+        "currentTray": "6514f35eb11d32645e546d17"
+    },
+    {
+        "_id": {
+            "$oid": "64b7e426e9fdcba8283b74f8"
+        },
+        "id": "wealthyacouchi",
+        "displayName": "WealthyAcouchi",
+        "type": "formlabs",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": "",
+            "events": []
+        },
+        "updatedAt": "2023-10-12T21:36:17.186Z",
+        "currentTray": "6514f35eb11d32645e546d21"
+    },
+    {
+        "_id": {
+            "$oid": "64b7e426e9fdcba8283b74f4"
+        },
+        "id": "ultimaker-3",
+        "displayName": "Ultimaker 3",
+        "type": "ultimaker",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": "# the printer's broken\n\n> thing",
+            "events": []
+        },
+        "updatedAt": "2023-10-12T21:36:03.121Z",
+        "currentTray": "6514f35eb11d32645e546d0e"
+    },
+    {
+        "_id": {
+            "$oid": "64b7e426e9fdcba8283b74f9"
+        },
+        "id": "cloudypytilia",
+        "displayName": "CloudyPytilia",
+        "type": "formlabs",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": "down until we get new parts",
+            "events": []
+        },
+        "updatedAt": "2023-10-13T15:04:30.137Z",
+        "currentTray": "6514f35eb11d32645e546d0d"
+    },
+    {
+        "_id": {
+            "$oid": "65133107e388cd94c25323d6"
+        },
+        "displayName": "MachoCapybara",
+        "id": "machocapybara",
+        "type": "formlabs",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": ""
+        },
+        "updatedAt": "2023-09-26T19:28:57.362Z",
+        "currentTray": ""
+    },
+    {
+        "_id": {
+            "$oid": "65144ff4a68f466f36f2149a"
+        },
+        "displayName": "TidySitatunga",
+        "id": "tidysitatunga",
+        "type": "formlabs",
+        "enabled": true,
+        "queue": [],
+        "maintenance": {
+            "notes": ""
+        },
+        "updatedAt": "2023-09-27T15:53:01.408Z",
+        "currentTray": ""
+    }
+]

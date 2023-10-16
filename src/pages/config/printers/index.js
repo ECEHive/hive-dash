@@ -115,6 +115,14 @@ export default function Printers(props) {
         [confirm, deletePrinter, deleteType, refresh]
     );
 
+    const syncQueues = useCallback(() => {
+        request('/api/printing/queue/sync', {
+            method: 'POST'
+        })
+            .then((data) => {})
+            .catch((err) => {});
+    }, [request]);
+
     useEffect(() => {
         refresh();
     }, [refresh]);
@@ -183,6 +191,15 @@ export default function Printers(props) {
                         >
                             3D Printers
                         </Heading>
+
+                        <HStack>
+                            <Button
+                                size="lg"
+                                onClick={syncQueues}
+                            >
+                                Sync queues
+                            </Button>
+                        </HStack>
 
                         <VStack
                             spacing={3}
