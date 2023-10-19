@@ -12,7 +12,7 @@ export default function usePrintUpdate(silent = false) {
 
     const { refreshDynamicData } = usePrinting();
 
-    function update(printId, data) {
+    function update(printId, data, removeFromQueue = false) {
         data['updatedAt'] = dayjs().utc().toISOString();
 
         return new Promise((resolve, reject) => {
@@ -24,15 +24,28 @@ export default function usePrintUpdate(silent = false) {
                 body: JSON.stringify(data)
             })
                 .then((data) => {
-                    refreshDynamicData();
-                    if (!silent) {
-                        toast({
-                            description: 'Print updated',
-                            status: 'success',
-                            duration: 5000
-                        });
+                    if (removeFromQueue) {
+                        request(`/api/printing/queue/${printId}`, {
+                            method: 'DELETE'
+                        })
+                            .then((data) => {
+                                refreshDynamicData();
+                                if (!silent) {
+                                    toast({
+                                        description: 'Print updated',
+                                        status: 'success',
+                                        duration: 5000
+                                    });
+                                }
+                                resolve();
+                            })
+                            .catch((err) => {
+                                console.log('reject');
+                                reject(err);
+                            });
+                    } else {
+                        resolve();
                     }
-                    resolve();
                 })
                 .catch((err) => {
                     console.log('reject');

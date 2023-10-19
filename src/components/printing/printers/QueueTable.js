@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
     Badge,
@@ -183,8 +183,8 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     const { update: printUpdater } = usePrintUpdate();
     const printerUpdater = usePrinterUpdate(true);
 
-    const { queue } = usePrinting();
     const { roleId } = useAuth();
+    const { queue } = usePrinting();
 
     const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
     const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onClose: onUpdateClose } = useDisclosure();
@@ -193,7 +193,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     const [nextEventData, setNextEventData] = useState(null);
     const [printToEdit, setPrintToEdit] = useState(null);
 
-    const [editedCopy, setEditedCopy] = useState(null);
+    const [editedCopy, setEditedCopy] = useState([]);
 
     const [checkedPrints, setCheckedPrints] = useState([]);
 
@@ -204,6 +204,12 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     const canQueue = useMemo(() => {
         return activePrint?.state !== PrintStates.PRINTING && selectedPrinterData?.enabled;
     }, [activePrint, selectedPrinterData]);
+
+    useEffect(() => {
+        if (!editMode) {
+            setEditedCopy([...selectedPrinterData.queue]);
+        }
+    }, [editMode, selectedPrinterData.queue]);
 
     function startPrint(printData) {
         let newPrintData = {
@@ -253,7 +259,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                 state: event.type,
                 events: [event, ...activePrint.events]
             };
-            printUpdater(activePrint._id, data)
+            printUpdater(activePrint._id, data, event.type === PrintStates.COMPLETED)
                 .then(() => {
                     onUpdateClose();
                 })
@@ -261,9 +267,6 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                     console.log('err');
                     onUpdateClose();
                 });
-            if (event.type === PrintStates.COMPLETED) {
-                // TODO: update printer queue
-            }
         },
         [activePrint, printUpdater, onUpdateClose]
     );
@@ -276,7 +279,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     function endEdit() {
         // post changes to server
         setEditMode(false);
-        setEditedCopy(null);
+        setEditedCopy([...selectedPrinterData.queue]);
     }
 
     return (
@@ -383,7 +386,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {selectedPrinterData.queue.map((printId) => {
+                                    {editedCopy.map((printId) => {
                                         const print = queue.find((print) => print._id === printId);
                                         return (
                                             <QueueTableItem
@@ -406,6 +409,12 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                                         setCheckedPrints((prev) =>
                                                             prev.filter((id) => id !== print._id)
                                                         );
+                                                    }
+                                                }}
+                                                onReorder={(dir) => {
+                                                    // move print in queue
+                                                    if (dir === 1) {
+                                                        // move up
                                                     }
                                                 }}
                                             />

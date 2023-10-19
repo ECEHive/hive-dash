@@ -298,7 +298,6 @@ export default function NewPrintModal({ isOpen, onClose }) {
                             queuedAt: timestamp,
                             notes: '',
                             state: PrintStates.QUEUED,
-                            order: 0,
                             preview: url,
                             endUser: {
                                 firstname: values.firstName,
