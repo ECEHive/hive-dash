@@ -34,6 +34,7 @@ import usePrintParser from '@/hooks/printing/usePrintParser';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
+import useRequest from '@/hooks/useRequest';
 
 import iconSet from '@/util/icons';
 import { PITypes } from '@/util/roles';
@@ -64,6 +65,7 @@ function QueueTableItem({
             {editMode && (
                 <Td>
                     <Checkbox
+                        isDisabled={printData.state === PrintStates.PRINTING}
                         isChecked={isChecked}
                         onChange={onCheck}
                     />
@@ -158,7 +160,10 @@ function QueueTableItem({
             )}
             {showActions && editMode && (
                 <Td>
-                    <ButtonGroup size="sm">
+                    <ButtonGroup
+                        size="sm"
+                        isDisabled={printData.state === PrintStates.PRINTING}
+                    >
                         <IconButton
                             variant="outline"
                             colorScheme="gray"
@@ -188,7 +193,8 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     const printerUpdater = usePrinterUpdate(true);
 
     const { roleId } = useAuth();
-    const { queue } = usePrinting();
+    const { queue, refreshDynamicData } = usePrinting();
+    const request = useRequest();
 
     const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
     const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onClose: onUpdateClose } = useDisclosure();
@@ -202,9 +208,19 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
 
     const [checkedPrints, setCheckedPrints] = useState([]);
 
+    const checkablePrints = useMemo(() => {
+        return selectedPrinterData.queue.filter(
+            (print) => queue.find((p) => p._id.toString() === print).state !== PrintStates.PRINTING
+        );
+    }, [selectedPrinterData.queue, queue]);
+
     const checkAll = useCallback(() => {
-        setCheckedPrints(selectedPrinterData.queue);
-    }, [selectedPrinterData.queue]);
+        setCheckedPrints(
+            selectedPrinterData.queue.filter(
+                (print) => queue.find((p) => p._id.toString() === print).state !== PrintStates.PRINTING
+            )
+        );
+    }, [selectedPrinterData.queue, queue]);
 
     const canQueue = useMemo(() => {
         return activePrint?.state !== PrintStates.PRINTING && selectedPrinterData?.enabled;
@@ -283,16 +299,26 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
 
     function endEdit() {
         // post changes to server
-        setEditMode(false);
-        setEditedCopy([...selectedPrinterData.queue]);
-        setCheckedPrints([]);
+        request(`/api/printing/queue/reorder/${selectedPrinterData.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                reorderedQueue: editedCopy
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {})
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                refreshDynamicData();
+                setEditMode(false);
+                setEditedCopy([...selectedPrinterData.queue]);
+                setCheckedPrints([]);
+            });
     }
-
-    const movePrints = useCallback((prints, targetPrinter) => {
-        // move prints to target printer
-        // update printer data
-        // update print data
-    }, []);
 
     return (
         <>
@@ -313,7 +339,6 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                 isOpen={isMoveOpen}
                 onClose={onMoveClose}
                 originalPrinter={selectedPrinterData}
-                callback={movePrints}
                 prints={checkedPrints}
             />
 
@@ -323,47 +348,55 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
             >
                 {selectedPrinterData.queue.length > 0 ? (
                     <VStack spacing={5}>
-                        <HStack
-                            w="full"
-                            spacing={5}
-                        >
-                            <ButtonGroup size="sm">
-                                {!editMode ? (
-                                    <Button
-                                        leftIcon={<Icon as={iconSet.boxes} />}
-                                        variant="outline"
-                                        onClick={() => startEdit()}
-                                    >
-                                        Edit queue
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        leftIcon={<Icon as={iconSet.check} />}
-                                        variant="outline"
-                                        onClick={() => endEdit()}
-                                    >
-                                        Done
-                                    </Button>
-                                )}
-                            </ButtonGroup>
-                            {editMode && (
-                                <>
-                                    <Text>{checkedPrints.length} selected</Text>
-                                    <Spacer />
-                                    <ButtonGroup size="sm">
+                        {roleId >= PITypes.MPI && (
+                            <HStack
+                                w="full"
+                                spacing={5}
+                            >
+                                <ButtonGroup size="sm">
+                                    {!editMode ? (
                                         <Button
+                                            leftIcon={<Icon as={iconSet.boxes} />}
                                             variant="outline"
-                                            leftIcon={<Icon as={iconSet.sendTo} />}
-                                            colorScheme="yellow"
-                                            onClick={() => onMoveOpen()}
-                                            isDisabled={checkedPrints.length === 0}
+                                            onClick={() => startEdit()}
                                         >
-                                            Move prints
+                                            Edit queue
                                         </Button>
-                                    </ButtonGroup>
-                                </>
-                            )}
-                        </HStack>
+                                    ) : (
+                                        <Button
+                                            leftIcon={<Icon as={iconSet.check} />}
+                                            variant="outline"
+                                            onClick={() => endEdit()}
+                                        >
+                                            Done
+                                        </Button>
+                                    )}
+                                </ButtonGroup>
+
+                                {editMode && (
+                                    <>
+                                        <Badge
+                                            fontSize="sm"
+                                            colorScheme="yellow"
+                                        >
+                                            {checkedPrints.length} selected
+                                        </Badge>
+                                        <Spacer />
+                                        <ButtonGroup size="sm">
+                                            <Button
+                                                variant="outline"
+                                                leftIcon={<Icon as={iconSet.sendTo} />}
+                                                colorScheme="yellow"
+                                                onClick={() => onMoveOpen()}
+                                                isDisabled={checkedPrints.length === 0}
+                                            >
+                                                Move prints
+                                            </Button>
+                                        </ButtonGroup>
+                                    </>
+                                )}
+                            </HStack>
+                        )}
                         <TableContainer w="full">
                             <Table
                                 variant="simple"
@@ -375,9 +408,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                         {editMode && (
                                             <Th>
                                                 <Checkbox
-                                                    isChecked={
-                                                        checkedPrints.length === selectedPrinterData.queue.length
-                                                    }
+                                                    isChecked={checkedPrints.length === checkablePrints.length}
                                                     onChange={() => {
                                                         if (checkedPrints.length > 0) {
                                                             setCheckedPrints([]);
@@ -386,7 +417,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                                         }
                                                     }}
                                                     isIndeterminate={
-                                                        !(checkedPrints.length === selectedPrinterData.queue.length) &&
+                                                        !(checkedPrints.length === checkablePrints.length) &&
                                                         checkedPrints.length > 0
                                                     }
                                                 />
@@ -438,6 +469,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                                     if (dir === 1) {
                                                         // move up in editedCopy
                                                         setEditedCopy((prev) => {
+                                                            // make sure it can move up, i.e. if the print above is the current print, don't move
                                                             let newCopy = [...prev];
                                                             let index = newCopy.indexOf(print._id);
                                                             let temp = newCopy[index - 1];

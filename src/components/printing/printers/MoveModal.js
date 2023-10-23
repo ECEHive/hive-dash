@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
+    Alert,
+    AlertDescription,
+    AlertIcon,
     Button,
     FormControl,
     FormHelperText,
@@ -12,17 +15,62 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    VStack
+    VStack,
+    useToast
 } from '@chakra-ui/react';
 
 import usePrinting from '@/contexts/printing/PrintingContext';
 
+import useRequest from '@/hooks/useRequest';
+
 import { Select } from '@/components/Select';
 
-export default function MoveModal({ isOpen, onClose, originalPrinter, callback, prints }) {
-    const { printers, printerTypes } = usePrinting();
+export default function MoveModal({ isOpen, onClose, originalPrinter, prints }) {
+    const request = useRequest();
+    const { printers, printerTypes, refreshDynamicData } = usePrinting();
+
+    const toast = useToast();
 
     const [target, setTarget] = useState(originalPrinter.id);
+    const [isSaving, setIsSaving] = useState(false);
+
+    useEffect(() => {
+        setTarget(originalPrinter.id);
+    }, [originalPrinter.id]);
+
+    const movePrints = useCallback(
+        (prints, targetPrinter) => {
+            setIsSaving(true);
+            request(`/api/printing/queue/move`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    originalPrinter: originalPrinter.id,
+                    targetPrinter: targetPrinter,
+                    prints: prints
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then((res) => {
+                    toast({
+                        description: `Moved ${prints.length} prints to ${targetPrinter}`,
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: false
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    refreshDynamicData();
+                    setIsSaving(false);
+                    onClose();
+                });
+        },
+        [request, onClose, originalPrinter.id, toast, refreshDynamicData]
+    );
 
     return (
         <>
@@ -68,6 +116,18 @@ export default function MoveModal({ isOpen, onClose, originalPrinter, callback, 
                                     Prints will be added to the end of the queue on the target printer.
                                 </FormHelperText>
                             </FormControl>
+
+                            {printers.find((p) => p.id === target)?.type !== originalPrinter.type && (
+                                <Alert
+                                    status="warning"
+                                    borderRadius={5}
+                                >
+                                    <AlertIcon />
+                                    <AlertDescription>
+                                        Moving prints to a different printer type is an unlikely action
+                                    </AlertDescription>
+                                </Alert>
+                            )}
                         </VStack>
                     </ModalBody>
 
@@ -76,9 +136,10 @@ export default function MoveModal({ isOpen, onClose, originalPrinter, callback, 
                         <Button
                             colorScheme="blue"
                             onClick={() => {
-                                callback(target, prints);
+                                movePrints(prints, target);
                             }}
                             isDisabled={target === originalPrinter.id}
+                            isLoading={isSaving}
                         >
                             Confirm
                         </Button>

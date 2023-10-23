@@ -25,7 +25,7 @@ export default function usePrintUpdate(silent = false) {
             })
                 .then((data) => {
                     if (removeFromQueue) {
-                        request(`/api/printing/queue/${printId}`, {
+                        request(`/api/printing/queue/remove/${printId}`, {
                             method: 'DELETE'
                         })
                             .then((data) => {

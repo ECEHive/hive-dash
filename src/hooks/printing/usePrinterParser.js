@@ -29,20 +29,13 @@ export default function usePrinterParser(printer) {
             state = 'printing';
         }
 
-        const filtered = queue.filter(
-            (print) =>
-                print.printer === printer.id &&
-                (print.state === PrintStates.QUEUED || print.state === PrintStates.FAILED)
-        );
-
         return {
             ...printer,
             state: state,
             updatedAtHumanized: dayjs.duration(dayjs.utc(printer.updatedAt).diff(dayjs().utc())).humanize(true),
-            queue: filtered,
-            queueLength: filtered.length
+            queueLength: printer.queue.length
         };
-    }, [printer, currentPrintData, queue]);
+    }, [printer, currentPrintData]);
 
     return {
         expandedPrinterData,

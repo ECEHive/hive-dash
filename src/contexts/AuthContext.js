@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 
 import { useDisclosure } from '@chakra-ui/react';
 
-import { browserSessionPersistence, setPersistence, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { sha256 } from 'js-sha256';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -48,25 +48,25 @@ export default function AuthProvider({ children }) {
             const hash = sha256(gtid);
             const email = `${hash}@hive.com`;
             const password = hash;
-            setPersistence(auth, browserSessionPersistence)
-                .then(() => {
-                    console.log('ye');
-                    signInWithEmailAndPassword(auth, email, password)
-                        .then((result) => {
-                            resolve(result);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            reject(error);
-                        });
+            // setPersistence(auth, browserSessionPersistence)
+            //     .then(() => {
+            console.log('ye');
+            signInWithEmailAndPassword(auth, email, password)
+                .then((result) => {
+                    resolve(result);
                 })
                 .catch((error) => {
                     console.log(error);
                     reject(error);
-                })
-                .finally(() => {
-                    console.log('something went really wrong');
                 });
+            // })
+            // .catch((error) => {
+            //     console.log(error);
+            //     reject(error);
+            // })
+            // .finally(() => {
+            //     console.log('something went really wrong');
+            // });
         });
     }
 
