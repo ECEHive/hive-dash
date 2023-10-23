@@ -42,6 +42,7 @@ import { PrintStates } from '@/util/states';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 
 import PrintEditorModal from '../printEdit/PrintEditorModal';
+import MoveModal from './MoveModal';
 
 function QueueTableItem({
     printData,
@@ -52,7 +53,8 @@ function QueueTableItem({
     showActions,
     editMode,
     isChecked,
-    onCheck
+    onCheck,
+    onReorder
 }) {
     const { betterPrintData } = usePrintParser(printData);
     const { progressMessage, progressMessageColor } = usePrintProgress(printData);
@@ -160,15 +162,17 @@ function QueueTableItem({
                         <IconButton
                             variant="outline"
                             colorScheme="gray"
-                            isDisabled={() => {
-                                // check if prints can be moved up, i.e. if the first ordered print is included in the selection and it's at the top, we can't move anymore
-                            }}
+                            // isDisabled={() => {
+                            //     // check if prints can be moved up, i.e. if the first ordered print is included in the selection and it's at the top, we can't move anymore
+                            // }}
+                            onClick={() => onReorder(1)}
                         >
                             <Icon as={iconSet.upArrow} />
                         </IconButton>
                         <IconButton
                             variant="outline"
                             colorScheme="gray"
+                            onClick={() => onReorder(-1)}
                         >
                             <Icon as={iconSet.downArrow} />
                         </IconButton>
@@ -188,6 +192,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
 
     const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
     const { isOpen: isUpdateOpen, onOpen: onUpdateOpen, onClose: onUpdateClose } = useDisclosure();
+    const { isOpen: isMoveOpen, onOpen: onMoveOpen, onClose: onMoveClose } = useDisclosure();
 
     const [editMode, setEditMode] = useState(false);
     const [nextEventData, setNextEventData] = useState(null);
@@ -206,10 +211,10 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     }, [activePrint, selectedPrinterData]);
 
     useEffect(() => {
-        if (!editMode) {
-            setEditedCopy([...selectedPrinterData.queue]);
-        }
-    }, [editMode, selectedPrinterData.queue]);
+        setEditedCopy([...selectedPrinterData.queue]);
+        setCheckedPrints([]);
+        setEditMode(false);
+    }, [selectedPrinterData]);
 
     function startPrint(printData) {
         let newPrintData = {
@@ -280,7 +285,14 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
         // post changes to server
         setEditMode(false);
         setEditedCopy([...selectedPrinterData.queue]);
+        setCheckedPrints([]);
     }
+
+    const movePrints = useCallback((prints, targetPrinter) => {
+        // move prints to target printer
+        // update printer data
+        // update print data
+    }, []);
 
     return (
         <>
@@ -297,6 +309,13 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                     initialData={printToEdit}
                 />
             )}
+            <MoveModal
+                isOpen={isMoveOpen}
+                onClose={onMoveClose}
+                originalPrinter={selectedPrinterData}
+                callback={movePrints}
+                prints={checkedPrints}
+            />
 
             <Box
                 w="100%"
@@ -336,6 +355,8 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                             variant="outline"
                                             leftIcon={<Icon as={iconSet.sendTo} />}
                                             colorScheme="yellow"
+                                            onClick={() => onMoveOpen()}
+                                            isDisabled={checkedPrints.length === 0}
                                         >
                                             Move prints
                                         </Button>
@@ -413,8 +434,26 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                                 }}
                                                 onReorder={(dir) => {
                                                     // move print in queue
+                                                    console.log(dir);
                                                     if (dir === 1) {
-                                                        // move up
+                                                        // move up in editedCopy
+                                                        setEditedCopy((prev) => {
+                                                            let newCopy = [...prev];
+                                                            let index = newCopy.indexOf(print._id);
+                                                            let temp = newCopy[index - 1];
+                                                            newCopy[index - 1] = newCopy[index];
+                                                            newCopy[index] = temp;
+                                                            return newCopy;
+                                                        });
+                                                    } else {
+                                                        setEditedCopy((prev) => {
+                                                            let newCopy = [...prev];
+                                                            let index = newCopy.indexOf(print._id);
+                                                            let temp = newCopy[index + 1];
+                                                            newCopy[index + 1] = newCopy[index];
+                                                            newCopy[index] = temp;
+                                                            return newCopy;
+                                                        });
                                                     }
                                                 }}
                                             />
