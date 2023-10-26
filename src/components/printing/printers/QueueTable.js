@@ -61,7 +61,7 @@ function QueueTableItem({
     const { progressMessage, progressMessageColor } = usePrintProgress(printData);
 
     return (
-        <Tr key={print._id}>
+        <Tr>
             {editMode && (
                 <Td>
                     <Checkbox
@@ -227,10 +227,10 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
     }, [activePrint, selectedPrinterData]);
 
     useEffect(() => {
-        setEditedCopy([...selectedPrinterData.queue]);
+        setEditedCopy((prev) => selectedPrinterData.queue);
         setCheckedPrints([]);
         setEditMode(false);
-    }, [selectedPrinterData]);
+    }, [selectedPrinterData.queue]);
 
     function startPrint(printData) {
         let newPrintData = {
@@ -438,59 +438,61 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {editedCopy.map((printId) => {
-                                        const print = queue.find((print) => print._id === printId);
-                                        return (
-                                            <QueueTableItem
-                                                key={print._id}
-                                                printData={print}
-                                                startPrint={startPrint}
-                                                canQueue={canQueue}
-                                                update={completePrint}
-                                                editCallback={() => {
-                                                    setPrintToEdit(print);
-                                                    onEditorOpen();
-                                                }}
-                                                showActions={roleId >= PITypes.PI}
-                                                editMode={editMode}
-                                                isChecked={checkedPrints.includes(print._id)}
-                                                onCheck={(e) => {
-                                                    if (e.target.checked) {
-                                                        setCheckedPrints((prev) => [...prev, print._id]);
-                                                    } else {
-                                                        setCheckedPrints((prev) =>
-                                                            prev.filter((id) => id !== print._id)
-                                                        );
-                                                    }
-                                                }}
-                                                onReorder={(dir) => {
-                                                    // move print in queue
-                                                    console.log(dir);
-                                                    if (dir === 1) {
-                                                        // move up in editedCopy
-                                                        setEditedCopy((prev) => {
-                                                            // make sure it can move up, i.e. if the print above is the current print, don't move
-                                                            let newCopy = [...prev];
-                                                            let index = newCopy.indexOf(print._id);
-                                                            let temp = newCopy[index - 1];
-                                                            newCopy[index - 1] = newCopy[index];
-                                                            newCopy[index] = temp;
-                                                            return newCopy;
-                                                        });
-                                                    } else {
-                                                        setEditedCopy((prev) => {
-                                                            let newCopy = [...prev];
-                                                            let index = newCopy.indexOf(print._id);
-                                                            let temp = newCopy[index + 1];
-                                                            newCopy[index + 1] = newCopy[index];
-                                                            newCopy[index] = temp;
-                                                            return newCopy;
-                                                        });
-                                                    }
-                                                }}
-                                            />
-                                        );
-                                    })}
+                                    {editedCopy &&
+                                        editedCopy.map((printId) => {
+                                            const print = queue.find((print) => print._id === printId);
+                                            console.log(print._id);
+                                            return (
+                                                <QueueTableItem
+                                                    key={print._id}
+                                                    printData={print}
+                                                    startPrint={startPrint}
+                                                    canQueue={canQueue}
+                                                    update={completePrint}
+                                                    editCallback={() => {
+                                                        setPrintToEdit(print);
+                                                        onEditorOpen();
+                                                    }}
+                                                    showActions={roleId >= PITypes.PI}
+                                                    editMode={editMode}
+                                                    isChecked={checkedPrints.includes(print._id)}
+                                                    onCheck={(e) => {
+                                                        if (e.target.checked) {
+                                                            setCheckedPrints((prev) => [...prev, print._id]);
+                                                        } else {
+                                                            setCheckedPrints((prev) =>
+                                                                prev.filter((id) => id !== print._id)
+                                                            );
+                                                        }
+                                                    }}
+                                                    onReorder={(dir) => {
+                                                        // move print in queue
+                                                        console.log(dir);
+                                                        if (dir === 1) {
+                                                            // move up in editedCopy
+                                                            setEditedCopy((prev) => {
+                                                                // make sure it can move up, i.e. if the print above is the current print, don't move
+                                                                let newCopy = [...prev];
+                                                                let index = newCopy.indexOf(print._id);
+                                                                let temp = newCopy[index - 1];
+                                                                newCopy[index - 1] = newCopy[index];
+                                                                newCopy[index] = temp;
+                                                                return newCopy;
+                                                            });
+                                                        } else {
+                                                            setEditedCopy((prev) => {
+                                                                let newCopy = [...prev];
+                                                                let index = newCopy.indexOf(print._id);
+                                                                let temp = newCopy[index + 1];
+                                                                newCopy[index + 1] = newCopy[index];
+                                                                newCopy[index] = temp;
+                                                                return newCopy;
+                                                            });
+                                                        }
+                                                    }}
+                                                />
+                                            );
+                                        })}
                                 </Tbody>
                             </Table>
                         </TableContainer>

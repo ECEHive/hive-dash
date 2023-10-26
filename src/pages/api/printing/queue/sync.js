@@ -15,7 +15,9 @@ export default async function handler(req, res) {
         const printsInQueue = await mongoClient
             .db('printing')
             .collection('print-log')
-            .find({ $or: [{ state: PrintStates.QUEUED }, { state: PrintStates.FAILED }] })
+            .find({
+                $or: [{ state: PrintStates.QUEUED }, { state: PrintStates.FAILED }, { state: PrintStates.PRINTING }]
+            })
             .sort({ queuedAt: 1 })
             .toArray();
 

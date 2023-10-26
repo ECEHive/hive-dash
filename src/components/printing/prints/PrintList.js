@@ -196,7 +196,7 @@ export default function PrintList({ selectedPrintData, setSelectedPrintId }) {
                 <HStack
                     w="full"
                     h="auto"
-                    p={5}
+                    p={3}
                     borderBottom="1px solid"
                     borderColor="chakra-border-color"
                 >

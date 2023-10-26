@@ -23,8 +23,6 @@ export async function validateRequest(req, minRole) {
 
     const user = await mongoClient.db('global-config').collection('peer-instructors').findOne({ uid: uid });
 
-    console.log(user);
-
     if (!user) return uid, false;
 
     if (user.type >= minRole) {

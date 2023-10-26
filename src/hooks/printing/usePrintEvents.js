@@ -60,11 +60,15 @@ export default function usePrintEvents(print) {
             // estimate when the print will start based on the sum of the estimated times of all the prints in the queue
             let estWait = dayjs.duration(0, 'seconds');
 
-            expandedPrinterData.queue.forEach((job) => {
-                if (dayjs(job.queuedAt).valueOf() > dayjs(print.queuedAt).valueOf()) return; //ignore jobs that were queued after this one
-                if (job === print) return; //ignore this job
-                estWait = estWait.add(dayjs.duration(job.estTime));
-            });
+            // figure out how many prints in front of this and how long they will take
+            for (const job of expandedPrinterData.queue) {
+                if (job === print._id.toString()) break; //ignore this job
+
+                // get print data
+                const otherPrint = queue.find((p) => p._id.toString() === job);
+                if (otherPrint.state === PrintStates.PRINTING) continue;
+                estWait = estWait.add(dayjs.duration(otherPrint.estTime));
+            }
 
             // if printer is printing, add the remaining time on the current print to estWait
             const current = queue.find((job) => job._id === expandedPrinterData.currentTray);
@@ -72,6 +76,7 @@ export default function usePrintEvents(print) {
                 const currentStartTime = [...current.events].find(
                     (event) => event.type === PrintStates.PRINTING
                 ).timestamp;
+
                 // calculate time remaining
                 const currentRemaining = dayjs.duration(
                     dayjs(currentStartTime).add(dayjs.duration(current.estTime)).diff(dayjs())

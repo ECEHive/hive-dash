@@ -193,7 +193,7 @@ export default function PrinterList({ selectedPrinter }) {
                 <HStack
                     w="full"
                     h="auto"
-                    p={5}
+                    p={3}
                     borderBottom="1px solid"
                     borderColor="chakra-border-color"
                 >

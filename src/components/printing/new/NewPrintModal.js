@@ -61,13 +61,14 @@ import STLInput from '@/components/printing/new/STLInput';
 
 function PrinterItem({ printer, ...props }) {
     const { expandedPrinterData: printerData } = usePrinterParser(printer);
+    const { queue } = usePrinting();
 
     const queueTime = useMemo(() => {
         let time = dayjs.duration(0, 'seconds');
 
         printerData.queue.forEach((job) => {
-            console.log(job.estTime);
-            time = time.add(dayjs.duration(job.estTime));
+            const p = queue.find((p) => p.id === job.id);
+            time = time.add(dayjs.duration(p.estTime));
         });
 
         // NOTE: could add a way to pad for closed time to make more accurate estimations
@@ -76,7 +77,7 @@ function PrinterItem({ printer, ...props }) {
         } else {
             return 'none';
         }
-    }, [printerData.queue]);
+    }, [printerData.queue, queue]);
 
     return (
         <Card

@@ -96,16 +96,18 @@ export default function PrinterListItem({ data }) {
                             onClick={() => {
                                 push(`/printing/printers/${expandedPrinterData.id}`);
                             }}
+                            leftIcon={<Icon as={iconSet.printer} />}
                         >
-                            View printer
+                            Printer
                         </Button>
                         <Button
                             visibility={betterPrintData?.state === PrintStates.PRINTING ? 'visibile' : 'hidden'}
                             onClick={() => {
                                 push(`/printing/prints/${betterPrintData._id}`);
                             }}
+                            // leftIcon={<Icon as={iconSet.external} />}
                         >
-                            View print
+                            Print
                         </Button>
                     </ButtonGroup>
                 </Td>
