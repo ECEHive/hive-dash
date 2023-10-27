@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         const trayName = body.trayName;
-        const printerJobId = body.id;
+        const printerJobId = body.printerJobId;
 
         const data = await mongoClient
             .db('printing')
