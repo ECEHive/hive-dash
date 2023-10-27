@@ -45,6 +45,7 @@ function TimelineEvent({ event }) {
                         top={0}
                         align={rtl ? 'end' : 'start'}
                         spacing={1}
+                        zIndex={event.happened ? 1 : 0}
                     >
                         <Avatar
                             bgColor={event.happened ? 'blue.200' : avatarIncompleteColor}

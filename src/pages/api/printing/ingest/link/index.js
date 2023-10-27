@@ -14,9 +14,7 @@ export default async function handler(req, res) {
             .collection('print-log')
             .findOneAndUpdate(
                 {
-                    trayName: {
-                        $regex: new RegExp(trayName, 'i')
-                    }
+                    trayName: trayName
                 },
                 {
                     $set: {

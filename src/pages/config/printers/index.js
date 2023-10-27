@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import {
     Button,
     ButtonGroup,
-    Center,
     Code,
     Divider,
     Flex,
@@ -167,224 +166,218 @@ export default function Printers(props) {
                 w="full"
                 h="full"
                 p={5}
-                overflow="hidden"
+                overflow="auto"
                 direction="column"
                 justify="start"
                 align="center"
             >
-                <Center
+                <VStack
                     w="full"
+                    maxW="2xl"
                     h="auto"
-                    overflow="auto"
+                    spacing={5}
+                    align="start"
+                    px={1}
                 >
-                    <VStack
-                        w="full"
-                        maxW="2xl"
-                        h="full"
-                        spacing={5}
-                        align="start"
-                        px={1}
+                    <Heading
+                        size="lg"
+                        fontFamily="body"
                     >
-                        <Heading
-                            size="lg"
-                            fontFamily="body"
-                        >
-                            3D Printers
-                        </Heading>
+                        3D Printers
+                    </Heading>
 
-                        <HStack>
-                            <Button
-                                size="lg"
-                                onClick={syncQueues}
+                    <HStack>
+                        <Button
+                            size="lg"
+                            onClick={syncQueues}
+                        >
+                            Sync queues
+                        </Button>
+                    </HStack>
+
+                    <VStack
+                        spacing={3}
+                        align="start"
+                        w="full"
+                    >
+                        <HStack
+                            w="full"
+                            align="center"
+                        >
+                            <Text
+                                fontSize="2xl"
+                                fontWeight="semibold"
+                                fontFamily="body"
                             >
-                                Sync queues
-                            </Button>
+                                Printer types
+                            </Text>
+                            <Spacer />
+                            <ButtonGroup size="sm">
+                                <Button
+                                    colorScheme="blue"
+                                    leftIcon={<Icon as={iconSet.add} />}
+                                    onClick={onNewTypeOpen}
+                                >
+                                    Add printer type
+                                </Button>
+                            </ButtonGroup>
                         </HStack>
 
-                        <VStack
-                            spacing={3}
-                            align="start"
-                            w="full"
-                        >
-                            <HStack
+                        <TableContainer w="full">
+                            <Table
                                 w="full"
-                                align="center"
+                                size="sm"
                             >
-                                <Text
-                                    fontSize="2xl"
-                                    fontWeight="semibold"
-                                    fontFamily="body"
-                                >
-                                    Printer types
-                                </Text>
-                                <Spacer />
-                                <ButtonGroup size="sm">
-                                    <Button
-                                        colorScheme="blue"
-                                        leftIcon={<Icon as={iconSet.add} />}
-                                        onClick={onNewTypeOpen}
-                                    >
-                                        Add printer type
-                                    </Button>
-                                </ButtonGroup>
-                            </HStack>
-
-                            <TableContainer w="full">
-                                <Table
-                                    w="full"
-                                    size="sm"
-                                >
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Type Name</Th>
-                                            <Th>Type ID</Th>
-                                            <Th>Actions</Th>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Type Name</Th>
+                                        <Th>Type ID</Th>
+                                        <Th>Actions</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {printerTypes?.map((type) => (
+                                        <Tr key={type.id}>
+                                            <Td>
+                                                <Text fontSize="md">{type.displayName}</Text>
+                                            </Td>
+                                            <Td>
+                                                <Code
+                                                    fontSize="md"
+                                                    colorScheme={type.color}
+                                                >
+                                                    {type.id}
+                                                </Code>
+                                            </Td>
+                                            <Td>
+                                                <ButtonGroup size="sm">
+                                                    <Button
+                                                        leftIcon={<Icon as={iconSet.pencil} />}
+                                                        onClick={() => {
+                                                            setEditingTypeData(type);
+                                                            onNewTypeOpen();
+                                                        }}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <IconButton
+                                                        colorScheme="red"
+                                                        onClick={() => {
+                                                            initDelete(type, true);
+                                                        }}
+                                                    >
+                                                        <Icon as={iconSet.delete} />
+                                                    </IconButton>
+                                                </ButtonGroup>
+                                            </Td>
                                         </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {printerTypes?.map((type) => (
-                                            <Tr key={type.id}>
-                                                <Td>
-                                                    <Text fontSize="md">{type.displayName}</Text>
-                                                </Td>
-                                                <Td>
-                                                    <Code
-                                                        fontSize="md"
-                                                        colorScheme={type.color}
-                                                    >
-                                                        {type.id}
-                                                    </Code>
-                                                </Td>
-                                                <Td>
-                                                    <ButtonGroup size="sm">
-                                                        <Button
-                                                            leftIcon={<Icon as={iconSet.pencil} />}
-                                                            onClick={() => {
-                                                                setEditingTypeData(type);
-                                                                onNewTypeOpen();
-                                                            }}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <IconButton
-                                                            colorScheme="red"
-                                                            onClick={() => {
-                                                                initDelete(type, true);
-                                                            }}
-                                                        >
-                                                            <Icon as={iconSet.delete} />
-                                                        </IconButton>
-                                                    </ButtonGroup>
-                                                </Td>
-                                            </Tr>
-                                        ))}
-                                    </Tbody>
-                                </Table>
-                            </TableContainer>
-                        </VStack>
-
-                        <Divider />
-
-                        <VStack
-                            spacing={3}
-                            align="start"
-                            w="full"
-                        >
-                            <HStack
-                                w="full"
-                                align="center"
-                            >
-                                <Text
-                                    fontSize="2xl"
-                                    fontWeight="semibold"
-                                    fontFamily="body"
-                                >
-                                    Printers
-                                </Text>
-                                <Spacer />
-                                <ButtonGroup size="sm">
-                                    <Button
-                                        colorScheme="blue"
-                                        leftIcon={<Icon as={iconSet.add} />}
-                                        onClick={onNewPrinterOpen}
-                                    >
-                                        Add printer
-                                    </Button>
-                                </ButtonGroup>
-                            </HStack>
-
-                            <TableContainer w="full">
-                                <Table
-                                    w="full"
-                                    size="sm"
-                                >
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Printer Name</Th>
-                                            <Th>Type</Th>
-                                            <Th>Actions</Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {printers?.map((printer) => (
-                                            <Tr key={printer.id}>
-                                                <Td>
-                                                    <VStack
-                                                        spacing={1}
-                                                        align="start"
-                                                    >
-                                                        <Text fontSize="md">{printer.displayName}</Text>
-                                                        <Code fontSize="xs">{printer.id}</Code>
-                                                    </VStack>
-                                                </Td>
-                                                <Td>
-                                                    <Code
-                                                        fontSize="md"
-                                                        colorScheme={
-                                                            printerTypes?.find((t) => t.id === printer.type)?.color
-                                                        }
-                                                    >
-                                                        {printer.type}
-                                                    </Code>
-                                                </Td>
-                                                <Td>
-                                                    <ButtonGroup size="sm">
-                                                        <Button
-                                                            onClick={() => {
-                                                                setEditingPrinterData(printer);
-                                                                onNewPrinterOpen();
-                                                            }}
-                                                            leftIcon={<Icon as={iconSet.pencil} />}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <IconButton
-                                                            colorScheme="orange"
-                                                            onClick={() => {
-                                                                setEditingPrinterData(printer);
-                                                                onMaintenanceOpen();
-                                                            }}
-                                                        >
-                                                            <Icon as={iconSet.wrench} />
-                                                        </IconButton>
-                                                        <IconButton
-                                                            colorScheme="red"
-                                                            onClick={() => {
-                                                                initDelete(printer, false);
-                                                            }}
-                                                        >
-                                                            <Icon as={iconSet.delete} />
-                                                        </IconButton>
-                                                    </ButtonGroup>
-                                                </Td>
-                                            </Tr>
-                                        ))}
-                                    </Tbody>
-                                </Table>
-                            </TableContainer>
-                        </VStack>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
                     </VStack>
-                </Center>
+
+                    <Divider />
+
+                    <VStack
+                        spacing={3}
+                        align="start"
+                        w="full"
+                    >
+                        <HStack
+                            w="full"
+                            align="center"
+                        >
+                            <Text
+                                fontSize="2xl"
+                                fontWeight="semibold"
+                                fontFamily="body"
+                            >
+                                Printers
+                            </Text>
+                            <Spacer />
+                            <ButtonGroup size="sm">
+                                <Button
+                                    colorScheme="blue"
+                                    leftIcon={<Icon as={iconSet.add} />}
+                                    onClick={onNewPrinterOpen}
+                                >
+                                    Add printer
+                                </Button>
+                            </ButtonGroup>
+                        </HStack>
+
+                        <TableContainer w="full">
+                            <Table
+                                w="full"
+                                size="sm"
+                            >
+                                <Thead>
+                                    <Tr>
+                                        <Th>Printer Name</Th>
+                                        <Th>Type</Th>
+                                        <Th>Actions</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {printers?.map((printer) => (
+                                        <Tr key={printer.id}>
+                                            <Td>
+                                                <VStack
+                                                    spacing={1}
+                                                    align="start"
+                                                >
+                                                    <Text fontSize="md">{printer.displayName}</Text>
+                                                    <Code fontSize="xs">{printer.id}</Code>
+                                                </VStack>
+                                            </Td>
+                                            <Td>
+                                                <Code
+                                                    fontSize="md"
+                                                    colorScheme={
+                                                        printerTypes?.find((t) => t.id === printer.type)?.color
+                                                    }
+                                                >
+                                                    {printer.type}
+                                                </Code>
+                                            </Td>
+                                            <Td>
+                                                <ButtonGroup size="sm">
+                                                    <Button
+                                                        onClick={() => {
+                                                            setEditingPrinterData(printer);
+                                                            onNewPrinterOpen();
+                                                        }}
+                                                        leftIcon={<Icon as={iconSet.pencil} />}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <IconButton
+                                                        colorScheme="orange"
+                                                        onClick={() => {
+                                                            setEditingPrinterData(printer);
+                                                            onMaintenanceOpen();
+                                                        }}
+                                                    >
+                                                        <Icon as={iconSet.wrench} />
+                                                    </IconButton>
+                                                    <IconButton
+                                                        colorScheme="red"
+                                                        onClick={() => {
+                                                            initDelete(printer, false);
+                                                        }}
+                                                    >
+                                                        <Icon as={iconSet.delete} />
+                                                    </IconButton>
+                                                </ButtonGroup>
+                                            </Td>
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
+                    </VStack>
+                </VStack>
 
                 {/* <HStack
                     w="full"

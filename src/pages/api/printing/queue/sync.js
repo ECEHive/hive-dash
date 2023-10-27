@@ -36,6 +36,9 @@ export default async function handler(req, res) {
                 }
             });
 
+            // remove duplicates from queue
+            queue = [...new Set(queue)];
+
             await mongoClient
                 .db('printing')
                 .collection('printers')

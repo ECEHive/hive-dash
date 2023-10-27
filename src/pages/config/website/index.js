@@ -10,7 +10,6 @@ import {
     ButtonGroup,
     Card,
     CardBody,
-    Center,
     Flex,
     FormControl,
     FormHelperText,
@@ -69,218 +68,211 @@ export default function WebsiteSettings(props) {
             w="full"
             h="full"
             p={5}
-            overflow="hidden"
+            overflow="auto"
             direction="column"
             align="center"
         >
-            {/* have to wrap everything just to get the scrollbar all the way over on the right :( */}
-            <Center
+            <VStack
                 w="full"
+                maxW="2xl"
                 h="auto"
-                overflow="auto"
+                spacing={3}
+                align="flex-start"
+                justify="start"
+                px={1}
             >
-                <VStack
-                    w="full"
-                    maxW="2xl"
-                    h="full"
-                    spacing={3}
-                    align="flex-start"
-                    justify="start"
-                    px={1}
+                <Heading
+                    size="lg"
+                    fontFamily="body"
                 >
-                    <Heading
-                        size="lg"
-                        fontFamily="body"
-                    >
-                        Website configuration
-                    </Heading>
+                    Website configuration
+                </Heading>
 
-                    <Card
-                        variant="outline"
-                        w="full"
-                    >
-                        <CardBody p={0}>
-                            {config?.banner && (
-                                <Formik
-                                    initialValues={{
-                                        enabled: config.banner.enabled,
-                                        type: config.banner.type,
-                                        title: config.banner.title,
-                                        description: config.banner.description
-                                    }}
-                                    onSubmit={(values, actions) => {
-                                        let config = {
-                                            banner: {
-                                                ...values
-                                            }
-                                        };
+                <Card
+                    variant="elevated"
+                    w="full"
+                >
+                    <CardBody p={0}>
+                        {config?.banner && (
+                            <Formik
+                                initialValues={{
+                                    enabled: config.banner.enabled,
+                                    type: config.banner.type,
+                                    title: config.banner.title,
+                                    description: config.banner.description
+                                }}
+                                onSubmit={(values, actions) => {
+                                    let config = {
+                                        banner: {
+                                            ...values
+                                        }
+                                    };
 
-                                        request('/api/config/website', {
-                                            method: 'PUT',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify(config)
-                                        })
-                                            .then((data) => {
-                                                toast({
-                                                    description: 'Saved banner',
-                                                    status: 'success',
-                                                    duration: 5000
-                                                });
-                                            })
-                                            .catch((err) => {})
-                                            .finally(() => {
-                                                actions.setSubmitting(false);
-                                                refresh();
+                                    request('/api/config/website', {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(config)
+                                    })
+                                        .then((data) => {
+                                            toast({
+                                                description: 'Saved banner',
+                                                status: 'success',
+                                                duration: 5000
                                             });
-                                    }}
-                                >
-                                    {(props) => (
-                                        <Form>
-                                            <VStack
-                                                spacing={3}
-                                                align="start"
-                                                w="full"
-                                                p={5}
+                                        })
+                                        .catch((err) => {})
+                                        .finally(() => {
+                                            actions.setSubmitting(false);
+                                            refresh();
+                                        });
+                                }}
+                            >
+                                {(props) => (
+                                    <Form>
+                                        <VStack
+                                            spacing={3}
+                                            align="start"
+                                            w="full"
+                                            p={5}
+                                        >
+                                            <Text
+                                                fontSize="2xl"
+                                                fontWeight="semibold"
+                                                fontFamily="body"
                                             >
-                                                <Text
-                                                    fontSize="2xl"
-                                                    fontWeight="semibold"
-                                                    fontFamily="body"
-                                                >
-                                                    Banner
-                                                </Text>
+                                                Banner
+                                            </Text>
 
-                                                <Field name="enabled">
-                                                    {({ field }) => (
-                                                        <FormControl>
-                                                            <FormLabel>Banner enabled</FormLabel>
-                                                            <InputGroup>
-                                                                <Switch
-                                                                    {...field}
-                                                                    isChecked={field?.value}
-                                                                />
-                                                            </InputGroup>
-                                                            <FormHelperText>
-                                                                Show the banner on all pages on the website.
-                                                            </FormHelperText>
-                                                        </FormControl>
-                                                    )}
-                                                </Field>
-
-                                                <Field name="type">
-                                                    {({ field, form }) => (
-                                                        <FormControl>
-                                                            <FormLabel>Banner type</FormLabel>
-                                                            <Select
+                                            <Field name="enabled">
+                                                {({ field }) => (
+                                                    <FormControl>
+                                                        <FormLabel>Banner enabled</FormLabel>
+                                                        <InputGroup>
+                                                            <Switch
                                                                 {...field}
-                                                                name="type"
-                                                                options={[
-                                                                    { value: 'info', label: 'Info' },
-                                                                    { value: 'warning', label: 'Warning' },
-                                                                    { value: 'success', label: 'Success' },
-                                                                    { value: 'error', label: 'Error' }
-                                                                ]}
-                                                                onChange={(selectedOption) => {
-                                                                    return form.setFieldValue('type', selectedOption);
-                                                                }}
-                                                                value={field?.value}
+                                                                isChecked={field?.value}
                                                             />
-                                                            <FormHelperText>
-                                                                Controls the color/icon of the banner
-                                                            </FormHelperText>
-                                                        </FormControl>
-                                                    )}
-                                                </Field>
+                                                        </InputGroup>
+                                                        <FormHelperText>
+                                                            Show the banner on all pages on the website.
+                                                        </FormHelperText>
+                                                    </FormControl>
+                                                )}
+                                            </Field>
 
-                                                <Field name="title">
-                                                    {({ field, form }) => (
+                                            <Field name="type">
+                                                {({ field, form }) => (
+                                                    <FormControl>
+                                                        <FormLabel>Banner type</FormLabel>
+                                                        <Select
+                                                            {...field}
+                                                            name="type"
+                                                            options={[
+                                                                { value: 'info', label: 'Info' },
+                                                                { value: 'warning', label: 'Warning' },
+                                                                { value: 'success', label: 'Success' },
+                                                                { value: 'error', label: 'Error' }
+                                                            ]}
+                                                            onChange={(selectedOption) => {
+                                                                return form.setFieldValue('type', selectedOption);
+                                                            }}
+                                                            value={field?.value}
+                                                        />
+                                                        <FormHelperText>
+                                                            Controls the color/icon of the banner
+                                                        </FormHelperText>
+                                                    </FormControl>
+                                                )}
+                                            </Field>
+
+                                            <Field name="title">
+                                                {({ field, form }) => (
+                                                    <FormControl>
+                                                        <FormLabel>Banner title</FormLabel>
+                                                        <InputGroup>
+                                                            <Input {...field} />
+                                                        </InputGroup>
+                                                    </FormControl>
+                                                )}
+                                            </Field>
+
+                                            <Field name="description">
+                                                {({ field, form }) => {
+                                                    console.log(props);
+                                                    return (
                                                         <FormControl>
-                                                            <FormLabel>Banner title</FormLabel>
+                                                            <FormLabel>Banner description</FormLabel>
                                                             <InputGroup>
-                                                                <Input {...field} />
+                                                                <Textarea {...field} />
                                                             </InputGroup>
+                                                            <FormHelperText>Markdown is supported.</FormHelperText>
                                                         </FormControl>
-                                                    )}
-                                                </Field>
+                                                    );
+                                                }}
+                                            </Field>
 
-                                                <Field name="description">
-                                                    {({ field, form }) => {
-                                                        console.log(props);
-                                                        return (
-                                                            <FormControl>
-                                                                <FormLabel>Banner description</FormLabel>
-                                                                <InputGroup>
-                                                                    <Textarea {...field} />
-                                                                </InputGroup>
-                                                                <FormHelperText>Markdown is supported.</FormHelperText>
-                                                            </FormControl>
-                                                        );
-                                                    }}
-                                                </Field>
-
-                                                <VStack
+                                            <VStack
+                                                w="100%"
+                                                h="auto"
+                                                align="start"
+                                            >
+                                                <Text>Banner preview</Text>
+                                                <Alert
+                                                    status={props.values.type.value}
                                                     w="100%"
                                                     h="auto"
-                                                    align="start"
                                                 >
-                                                    <Text>Banner preview</Text>
-                                                    <Alert
-                                                        status={props.values.type.value}
-                                                        w="100%"
-                                                        h="auto"
-                                                    >
-                                                        <AlertIcon />
-                                                        <Box>
-                                                            <AlertTitle>{props.values.title}</AlertTitle>
-                                                            <AlertDescription>
-                                                                <ReactMarkdown
-                                                                    components={ChakraUIRenderer()}
-                                                                    skipHtml
-                                                                >
-                                                                    {props.values.description}
-                                                                </ReactMarkdown>
-                                                            </AlertDescription>
-                                                        </Box>
-                                                    </Alert>
-                                                </VStack>
+                                                    <AlertIcon />
+                                                    <Box>
+                                                        <AlertTitle>{props.values.title}</AlertTitle>
+                                                        <AlertDescription>
+                                                            <ReactMarkdown
+                                                                components={ChakraUIRenderer()}
+                                                                skipHtml
+                                                            >
+                                                                {props.values.description}
+                                                            </ReactMarkdown>
+                                                        </AlertDescription>
+                                                    </Box>
+                                                </Alert>
                                             </VStack>
+                                        </VStack>
 
-                                            <HStack
-                                                w="full"
-                                                h="auto"
-                                                justify="end"
-                                                borderTop="1px"
-                                                borderColor="chakra-border-color"
-                                                py={3}
-                                                px={5}
-                                            >
-                                                <ButtonGroup w="auto">
-                                                    <Button
-                                                        colorScheme="blue"
-                                                        leftIcon={<Icon as={iconSet.save} />}
-                                                        isLoading={props.isSubmitting}
-                                                        type={'submit'}
-                                                        onClick={() => {
-                                                            props.handleSubmit();
-                                                        }}
-                                                        onSubmit={() => {
-                                                            props.handleSubmit();
-                                                        }}
-                                                    >
-                                                        Save
-                                                    </Button>
-                                                </ButtonGroup>
-                                            </HStack>
-                                        </Form>
-                                    )}
-                                </Formik>
-                            )}
-                        </CardBody>
-                    </Card>
-                </VStack>
-            </Center>
+                                        <HStack
+                                            w="full"
+                                            h="auto"
+                                            justify="end"
+                                            borderTop="1px"
+                                            borderColor="chakra-border-color"
+                                            py={3}
+                                            px={5}
+                                        >
+                                            <ButtonGroup w="auto">
+                                                <Button
+                                                    colorScheme="blue"
+                                                    leftIcon={<Icon as={iconSet.save} />}
+                                                    isLoading={props.isSubmitting}
+                                                    type={'submit'}
+                                                    onClick={() => {
+                                                        props.handleSubmit();
+                                                    }}
+                                                    onSubmit={() => {
+                                                        props.handleSubmit();
+                                                    }}
+                                                >
+                                                    Save
+                                                </Button>
+                                            </ButtonGroup>
+                                        </HStack>
+                                    </Form>
+                                )}
+                            </Formik>
+                        )}
+                    </CardBody>
+                </Card>
+            </VStack>
         </Flex>
     );
 }
