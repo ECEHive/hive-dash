@@ -19,6 +19,7 @@ import {
     TabPanels,
     Tabs,
     Text,
+    Tooltip,
     VStack,
     useDisclosure
 } from '@chakra-ui/react';
@@ -198,14 +199,27 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                 align="start"
                                                 spacing={2}
                                             >
-                                                <Heading
-                                                    size="lg"
-                                                    fontWeight="semibold"
-                                                    as={Link}
-                                                    href={`/printing/prints/${betterPrintData._id}`}
-                                                >
-                                                    {betterPrintData.trayName}
-                                                </Heading>
+                                                <HStack>
+                                                    <Heading
+                                                        size="lg"
+                                                        fontWeight="semibold"
+                                                        as={Link}
+                                                        href={`/printing/prints/${betterPrintData._id}`}
+                                                    >
+                                                        {betterPrintData.trayName}
+                                                    </Heading>
+                                                    {betterPrintData.linkedPrintId?.length > 0 && (
+                                                        <Tooltip label="Linked to printer">
+                                                            <span>
+                                                                <Icon
+                                                                    fontSize="lg"
+                                                                    color="secondaryTextAlt"
+                                                                    as={iconSet.link}
+                                                                />
+                                                            </span>
+                                                        </Tooltip>
+                                                    )}
+                                                </HStack>
                                                 <HStack>
                                                     {dataFields.map((field, i) => {
                                                         return (
@@ -339,7 +353,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                 {selectedPrinterData.maintenance.notes}
                                             </ReactMarkdown>
                                         ) : (
-                                            <Text color={'secondaryText'}>No notes are attached to this print.</Text>
+                                            <Text color={'secondaryText'}>No notes are attached to this printer.</Text>
                                         )}
                                     </TabPanel>
                                 </TabPanels>

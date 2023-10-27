@@ -36,8 +36,7 @@ function Navigation({ pageData, baseUrl, pathPage }) {
                             <>
                                 {element.href ? (
                                     <Button
-                                        // variant={active ? 'outline' : 'ghost'}
-                                        variant="ghost"
+                                        variant={active ? 'solid' : 'ghost'}
                                         w="100%"
                                         size="md"
                                         justifyContent="flex-start"
@@ -52,8 +51,7 @@ function Navigation({ pageData, baseUrl, pathPage }) {
                                     </Button>
                                 ) : (
                                     <Button
-                                        // variant={active ? 'outline' : 'ghost'}
-                                        variant="ghost"
+                                        variant={active ? 'solid' : 'ghost'}
                                         w="100%"
                                         size="md"
                                         justifyContent="flex-start"

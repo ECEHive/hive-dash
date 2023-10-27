@@ -214,11 +214,13 @@ export default function PrintInfo({ selectedPrintData }) {
                                         </Heading>
                                         {betterPrintData.linkedPrintId && (
                                             <Tooltip label="Linked to live print job">
-                                                <Icon
-                                                    fontSize="lg"
-                                                    as={iconSet.link}
-                                                    textColor="secondaryTextAlt"
-                                                />
+                                                <span>
+                                                    <Icon
+                                                        fontSize="lg"
+                                                        as={iconSet.link}
+                                                        textColor="secondaryTextAlt"
+                                                    />
+                                                </span>
                                             </Tooltip>
                                         )}
                                     </HStack>
