@@ -176,11 +176,11 @@ export default function usePrintProgress(printData) {
         } else if (printData.state === PrintStates.COMPLETED) {
             return 'completed';
         } else if (printData.state === PrintStates.PRINTING) {
-            return `${timeLeft} left`;
+            return `printing`;
         } else if (printData.state === PrintStates.QUEUED) {
             return 'queued';
         }
-    }, [complete, printData, timeLeft]);
+    }, [complete, printData]);
 
     const progressCircleColor = useColorModeValue(`${progressBarColor}.500`, `${progressBarColor}.200`);
 

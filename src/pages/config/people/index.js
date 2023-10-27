@@ -85,17 +85,20 @@ export default function People(props) {
         request('/api/peerInstructors/sync', {
             method: 'POST'
         })
-            .then((data) => {
+            .then(() => {
                 toast({
-                    title: 'Synced peer instructors',
+                    description: 'Synced peer instructors',
                     status: 'success',
                     duration: 5000
                 });
                 refresh();
             })
-            .catch((err) => {})
+            .catch((err) => {
+                console.log('error?');
+            })
             .finally(() => {
                 setIsSyncing(false);
+                refresh();
             });
     }, [refresh, toast, request]);
 
@@ -136,22 +139,20 @@ export default function People(props) {
             <Flex
                 h="full"
                 w="full"
-                overflowY="hidden"
                 p={5}
                 dir="row"
                 justify="center"
-                overflowX="auto"
+                overflow="auto"
             >
                 <VStack
                     position="relative"
                     w="full"
-                    h="full"
-                    maxW="4xl"
+                    h="auto"
+                    maxW="6xl"
                     justify="center"
                     align="start"
                     spacing={3}
                     px={1}
-                    overflowY="hidden"
                 >
                     <Heading
                         size="lg"

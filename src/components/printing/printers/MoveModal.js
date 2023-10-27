@@ -96,19 +96,21 @@ export default function MoveModal({ isOpen, onClose, originalPrinter, prints }) 
                                         onChange={(e) => {
                                             setTarget(e.value);
                                         }}
-                                        options={printerTypes.map((type) => {
-                                            return {
-                                                label: type.displayName,
-                                                options: printers
-                                                    .filter((p) => p.type === type.id)
-                                                    .map((p) => {
-                                                        return {
-                                                            label: `${p.displayName} (${p.id})`,
-                                                            value: p.id
-                                                        };
-                                                    })
-                                            };
-                                        })}
+                                        options={printerTypes
+                                            .filter((t) => t.id === originalPrinter.type)
+                                            .map((type) => {
+                                                return {
+                                                    label: type.displayName,
+                                                    options: printers
+                                                        .filter((p) => p.type === type.id)
+                                                        .map((p) => {
+                                                            return {
+                                                                label: `${p.displayName} (${p.id})`,
+                                                                value: p.id
+                                                            };
+                                                        })
+                                                };
+                                            })}
                                         closeMenuOnSelect={true}
                                     />
                                 </InputGroup>

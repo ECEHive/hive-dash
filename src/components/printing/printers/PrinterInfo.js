@@ -59,7 +59,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
         progressMessage,
         progress,
         progressCircleColor,
-        progressMessageColor,
+        timeLeft,
         timeLeftHumanized,
         timeLeftHumanizedDetailed
     } = usePrintProgress(activePrint);
@@ -287,7 +287,9 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                         color={progressCircleColor}
                                                         trackColor="chakra-subtle-bg"
                                                     />
-                                                    <Text fontWeight="medium">{progressMessage}</Text>
+                                                    <Text fontWeight="medium">
+                                                        {progressMessage === 'printing' ? timeLeft : progressMessage}
+                                                    </Text>
                                                 </HStack>
                                                 <Icon
                                                     fontSize="sm"

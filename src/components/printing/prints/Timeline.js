@@ -26,6 +26,7 @@ import { PrintStates } from '@/util/states';
 
 function TimelineEvent({ event }) {
     const avatarIncompleteColor = useColorModeValue('gray.200', 'gray.600');
+    const avatarCompleteColor = useColorModeValue('blue.500', 'blue.200');
 
     const rtl = useMemo(() => {
         return event.progress > 50;
@@ -48,7 +49,7 @@ function TimelineEvent({ event }) {
                         zIndex={event.happened ? 1 : 0}
                     >
                         <Avatar
-                            bgColor={event.happened ? 'blue.200' : avatarIncompleteColor}
+                            bgColor={event.happened ? avatarCompleteColor : avatarIncompleteColor}
                             size="xs"
                             icon={<Icon as={event.icon} />}
                         >

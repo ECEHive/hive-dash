@@ -23,7 +23,7 @@ export default function useRequest() {
                     })
                         .then((res) => {
                             if (res.status === 200) {
-                                return res.json();
+                                return res.json() || {};
                             } else if (res.status === 401) {
                                 return res.json().then((json) => {
                                     toast({
@@ -39,7 +39,7 @@ export default function useRequest() {
                             }
                         })
                         .catch((err) => {
-                            console.log('rejected');
+                            console.log('rejected', err);
                             reject(err);
                         })
                         .then((data) => {

@@ -20,7 +20,6 @@ struct = {
     "queuedBy": "some PI",
     "queuedAt": "",
     "state": 0,
-    "order": 0,
     "notes": "",
     "endUser": {
         "firstname": "",
@@ -42,7 +41,7 @@ printers = {
         "left-stratasys", "center-stratasys", "right-stratasys"
     ],
     "formlabs": [
-        "cloudypytilia", "wealthyacouchi"
+        "cloudypytilia", "wealthyacouchi", "machocapybara", "tidysitatunga"
     ]
 }
 
@@ -95,8 +94,6 @@ def main():
             "type": 0,
             "timestamp": date
         })
-
-        new_struct["order"] = i
 
         output.append(new_struct)
 
