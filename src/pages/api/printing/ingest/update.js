@@ -9,11 +9,11 @@ export default async function handler(req, res) {
     const body = req.body;
 
     if (req.method === 'PUT') {
-        const printerJobId = body.id;
+        const linkedPrintId = body.id;
         const action = body.action;
 
         const print = await mongoClient.db('printing').collection('print-log').findOne({
-            printerJobId: printerJobId
+            linkedPrintId: linkedPrintId
         });
 
         // if the print isnt found tell andrew to link it
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
                 .collection('print-log')
                 .findOneAndUpdate(
                     {
-                        printerJobId: printerJobId
+                        linkedPrintId: linkedPrintId
                     },
                     {
                         $set: {
@@ -120,7 +120,7 @@ export default async function handler(req, res) {
                 .collection('print-log')
                 .findOneAndUpdate(
                     {
-                        printerJobId: printerJobId
+                        linkedPrintId: linkedPrintId
                     },
                     {
                         $set: {
@@ -183,7 +183,7 @@ export default async function handler(req, res) {
                 .collection('print-log')
                 .findOneAndUpdate(
                     {
-                        printerJobId: printerJobId
+                        linkedPrintId: linkedPrintId
                     },
                     {
                         $set: {

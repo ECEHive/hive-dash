@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
         const trayName = body.trayName;
-        const printerJobId = body.printerJobId;
+        const linkedPrintId = body.id;
 
         const data = await mongoClient
             .db('printing')
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                 },
                 {
                     $set: {
-                        printerJobId: printerJobId
+                        linkedPrintId: linkedPrintId
                     }
                 }
             );

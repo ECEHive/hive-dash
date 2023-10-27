@@ -24,6 +24,7 @@ import {
     TabPanels,
     Tabs,
     Text,
+    Tooltip,
     VStack,
     useDisclosure
 } from '@chakra-ui/react';
@@ -201,12 +202,26 @@ export default function PrintInfo({ selectedPrintData }) {
                                     justify="start"
                                     spacing={2}
                                 >
-                                    <Heading
-                                        size="lg"
-                                        fontWeight="semibold"
+                                    <HStack
+                                        w="auto"
+                                        h="auto"
                                     >
-                                        {betterPrintData.trayName}
-                                    </Heading>
+                                        <Heading
+                                            size="lg"
+                                            fontWeight="semibold"
+                                        >
+                                            {betterPrintData.trayName}
+                                        </Heading>
+                                        {betterPrintData.linkedPrintId && (
+                                            <Tooltip label="Linked to live print job">
+                                                <Icon
+                                                    fontSize="lg"
+                                                    as={iconSet.link}
+                                                    textColor="secondaryTextAlt"
+                                                />
+                                            </Tooltip>
+                                        )}
+                                    </HStack>
                                     <HStack
                                         w="auto"
                                         h="auto"
