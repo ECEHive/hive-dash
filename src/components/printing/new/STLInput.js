@@ -54,7 +54,7 @@ export default function STLInput({ files, setFiles }) {
             position="relative"
             overflow="hidden"
         >
-            {showUpload ? (
+            {showUpload || files.length < 1 ? (
                 <>
                     <Box
                         w="full"
@@ -97,7 +97,7 @@ export default function STLInput({ files, setFiles }) {
                             justify="center"
                         >
                             <IconButton
-                                size="md"
+                                size="sm"
                                 position="absolute"
                                 bottom={0}
                                 right={0}
@@ -220,6 +220,7 @@ export default function STLInput({ files, setFiles }) {
                                                         variant="outline"
                                                         as={Button}
                                                         cursor="pointer"
+                                                        size="sm"
                                                         p={2}
                                                         border="1px solid"
                                                         borderColor="chakra-border-color"
@@ -256,7 +257,7 @@ export default function STLInput({ files, setFiles }) {
                                     onClick={() => {
                                         setShowUpload(true);
                                     }}
-                                    size="md"
+                                    size="sm"
                                     icon={<Icon as={iconSet.add} />}
                                 />
                             </Tooltip>
