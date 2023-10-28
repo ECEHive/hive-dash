@@ -441,7 +441,6 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                     {editedCopy &&
                                         editedCopy.map((printId) => {
                                             const print = queue.find((print) => print._id === printId);
-                                            console.log(print._id);
                                             return (
                                                 <QueueTableItem
                                                     key={print._id}

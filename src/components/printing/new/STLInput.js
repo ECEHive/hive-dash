@@ -1,8 +1,21 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Box, Button, HStack, Icon, IconButton, Text, VStack, chakra } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Code,
+    Flex,
+    HStack,
+    Icon,
+    IconButton,
+    Spacer,
+    Spinner,
+    Text,
+    Tooltip,
+    VStack,
+    chakra
+} from '@chakra-ui/react';
 
-import Image from 'next/image';
 import { useDropzone } from 'react-dropzone';
 import { StlViewer } from 'react-stl-viewer';
 
@@ -10,154 +23,244 @@ import iconSet from '@/util/icons';
 
 const ChakraStlViewer = chakra(StlViewer);
 
-export default function STLInput({ image, setImage }) {
-    const [file, setFile] = useState(null);
+export default function STLInput({ files, setFiles }) {
+    const [selectedFile, setSelectedFile] = useState(0);
+    const [stlLoading, setStlLoading] = useState(true);
+    const [showUpload, setShowUpload] = useState(true);
+
+    // i think this is a pretty good color that looks good on both light and dark backgrounds while maintaining shadow visibility for part recognizability
+    const modelColor = '#746D69';
 
     const onDrop = useCallback(
         (acceptedFiles) => {
-            console.log(acceptedFiles[0]);
-            setFile(acceptedFiles[0]);
+            setFiles([...files, ...acceptedFiles]);
+            setShowUpload(false);
         },
-        [setFile]
+        [setFiles, files]
     );
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+    useEffect(() => {
+        if (files.length > 0) {
+            setShowUpload(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Box
             w="full"
             h="auto"
             position="relative"
+            overflow="hidden"
         >
-            {!file && !image ? (
-                <Box
-                    w="full"
-                    h="300px"
-                    {...getRootProps()}
-                >
-                    <input
-                        {...getInputProps()}
-                        accept=".stl"
-                    />
-                    <HStack
-                        h="full"
-                        align="center"
-                        justify="center"
+            {showUpload ? (
+                <>
+                    <Box
+                        w="full"
+                        h="300px"
+                        {...getRootProps()}
+                        position="relative"
                     >
-                        {!isDragActive ? (
-                            <VStack>
-                                <Icon
-                                    fontSize="2xl"
-                                    as={iconSet.add}
-                                />
-                                <Text>Drag and drop your STL file here, or click to select a file</Text>
-                            </VStack>
-                        ) : (
-                            <Text>Drop file here!</Text>
-                        )}
-                    </HStack>
-                </Box>
+                        <input
+                            {...getInputProps()}
+                            accept=".stl"
+                            multiple
+                            zIndex={5}
+                        />
+                        <VStack
+                            h="full"
+                            align="center"
+                            justify="center"
+                            position="relative"
+                        >
+                            {!isDragActive ? (
+                                <>
+                                    <VStack>
+                                        <Icon
+                                            fontSize="2xl"
+                                            as={iconSet.add}
+                                        />
+                                        <Text textAlign="center">
+                                            Drag and drop STL files here, or click to open the select dialog
+                                        </Text>
+                                    </VStack>
+                                </>
+                            ) : (
+                                <Text>Drop file here!</Text>
+                            )}
+                        </VStack>
+                    </Box>
+                    {files.length > 0 && (
+                        <HStack
+                            w="full"
+                            justify="center"
+                        >
+                            <IconButton
+                                size="md"
+                                position="absolute"
+                                bottom={0}
+                                right={0}
+                                zIndex={10}
+                                onClick={() => {
+                                    setShowUpload(false);
+                                }}
+                                icon={<Icon as={iconSet.x} />}
+                            >
+                                Cancel
+                            </IconButton>
+                        </HStack>
+                    )}
+                </>
             ) : (
                 <>
                     <VStack
                         w="full"
-                        h="400px"
-                        p={3}
+                        minHeight="300px"
                         position="relative"
                         align="start"
+                        overflow="hidden"
                     >
                         <Box
                             w="full"
-                            position="relative"
+                            h="full"
+                            display="flex"
+                            flexDir="column"
                             flexGrow={1}
+                            position="relative"
                         >
-                            {!image ? (
-                                <ChakraStlViewer
-                                    zIndex={1}
-                                    url={URL.createObjectURL(file)}
+                            {stlLoading && (
+                                <Flex
+                                    position="absolute"
+                                    bgColor="blackAlpha.400"
                                     w="full"
                                     h="full"
-                                    modelProps={{
-                                        // set color to a pastel yellow
-                                        color: '#f5f5dc',
-                                        scale: 1
-                                    }}
-                                    shadows
-                                    orbitControls={true}
-                                    canvasId="stl-canvas"
-                                    border="1px solid"
-                                    borderColor="chakra-border-color"
+                                    align="center"
+                                    justify="center"
+                                    zIndex="tooltip"
                                     borderRadius={5}
-                                />
-                            ) : (
-                                <>
-                                    <Image
-                                        src={image}
-                                        alt="stl file"
-                                        layout="fill"
-                                        objectFit="contain"
-                                    />
-                                </>
+                                >
+                                    <Spinner />
+                                </Flex>
                             )}
-                            <IconButton
+                            <HStack
                                 position="absolute"
-                                top={3}
-                                right={3}
-                                zIndex={2}
-                                icon={<Icon as={iconSet.delete} />}
-                                onClick={() => {
-                                    setFile(null);
-                                    setImage(null);
+                                w="full"
+                                py={2}
+                                px={3}
+                                zIndex="tooltip"
+                            >
+                                <Code
+                                    bgColor="transparent"
+                                    fontWeight="bold"
+                                >
+                                    {files[selectedFile].name}
+                                </Code>
+                                <Spacer />
+                                <IconButton
+                                    size="sm"
+                                    colorScheme="red"
+                                    icon={<Icon as={iconSet.delete} />}
+                                    onClick={() => {
+                                        const newFiles = files;
+                                        newFiles.splice(selectedFile, 1);
+                                        setFiles(newFiles);
+                                        setSelectedFile(0);
+                                        if (newFiles.length === 0) {
+                                            setShowUpload(true);
+                                        }
+                                    }}
+                                />
+                            </HStack>
+                            <ChakraStlViewer
+                                zIndex={1}
+                                url={URL.createObjectURL(files[selectedFile])}
+                                style={{
+                                    width: '100%',
+                                    height: '250px'
                                 }}
-                                size="sm"
-                                colorScheme="red"
-                                alignSelf="flex-end"
+                                borderRadius={5}
+                                modelProps={{
+                                    color: modelColor,
+                                    scale: 1
+                                }}
+                                shadows
+                                orbitControls
+                                onFinishLoading={() => {
+                                    setStlLoading(false);
+                                }}
+                                canvasId="stl-canvas"
                             />
-                            {!image ? (
-                                <Button
-                                    position="absolute"
-                                    left="50%"
-                                    transform="translateX(-50%)"
-                                    zIndex={2}
-                                    bottom={3}
-                                    onClick={() => {
-                                        //take screenshot of canvas
-                                        const canvas = document.getElementById('stl-canvas').firstChild.firstChild;
-                                        const dataURL = canvas.toDataURL('image/png');
-
-                                        setImage(dataURL);
-                                    }}
-                                    size="sm"
-                                    colorScheme="blue"
-                                    leftIcon={<Icon as={iconSet.camera} />}
-                                    isDisabled={image}
-                                >
-                                    Save preview
-                                </Button>
-                            ) : (
-                                <Button
-                                    position="absolute"
-                                    left="50%"
-                                    transform="translateX(-50%)"
-                                    zIndex={2}
-                                    bottom={3}
-                                    onClick={() => {
-                                        setImage(null);
-                                    }}
-                                    size="sm"
-                                    colorScheme="yellow"
-                                    leftIcon={<Icon as={iconSet.refresh} />}
-                                >
-                                    Retake preview
-                                </Button>
-                            )}
                         </Box>
-                        <Text
-                            fontSize="sm"
-                            color="secondaryText"
+                        <HStack
+                            w="full"
+                            h="auto"
+                            spacing={3}
                         >
-                            Try to orient the model so it&apos;s recognizable to help PIs identify the print later. Use
-                            as much space within the outlined area as possible.
-                        </Text>
+                            <Box
+                                w="auto"
+                                h="auto"
+                                overflowX="auto"
+                            >
+                                <HStack
+                                    w="full"
+                                    h="full"
+                                    p={1}
+                                >
+                                    {files.map((f, index) => {
+                                        const file = f;
+                                        return (
+                                            <>
+                                                <Flex
+                                                    bg="transparent"
+                                                    w="auto"
+                                                    h="auto"
+                                                >
+                                                    <Box
+                                                        variant="outline"
+                                                        as={Button}
+                                                        cursor="pointer"
+                                                        p={2}
+                                                        border="1px solid"
+                                                        borderColor="chakra-border-color"
+                                                        borderRadius={5}
+                                                        isActive={selectedFile === index}
+                                                        onClick={() => {
+                                                            setSelectedFile(index);
+                                                            setStlLoading(true);
+                                                        }}
+                                                    >
+                                                        <HStack w="auto">
+                                                            <Code
+                                                                bgColor="transparent"
+                                                                w="auto"
+                                                                whiteSpace="nowrap"
+                                                                textOverflow="unset"
+                                                                overflow="hidden"
+                                                                fontSize="sm"
+                                                            >
+                                                                {file.name}
+                                                            </Code>
+                                                        </HStack>
+                                                    </Box>
+                                                </Flex>
+                                            </>
+                                        );
+                                    })}
+                                </HStack>
+                            </Box>
+                            <Spacer />
+                            <Tooltip label="Add more files">
+                                <IconButton
+                                    colorScheme="blue"
+                                    onClick={() => {
+                                        setShowUpload(true);
+                                    }}
+                                    size="md"
+                                    icon={<Icon as={iconSet.add} />}
+                                />
+                            </Tooltip>
+                        </HStack>
                     </VStack>
                 </>
             )}

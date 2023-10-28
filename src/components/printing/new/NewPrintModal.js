@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import {
     Alert,
@@ -67,7 +67,7 @@ function PrinterItem({ printer, ...props }) {
         let time = dayjs.duration(0, 'seconds');
 
         printerData.queue.forEach((job) => {
-            const p = queue.find((p) => p.id === job.id);
+            const p = queue.find((p) => p._id === job);
             time = time.add(dayjs.duration(p.estTime));
         });
 
@@ -154,32 +154,32 @@ export default function NewPrintModal({ isOpen, onClose }) {
             {
                 title: 'STL preview',
                 checkComplete: (values) => {
-                    return values?.STLPreview.length > 0;
+                    return values?.stlFiles?.length > 0;
                 }
             },
             {
                 title: "Who's queuing?",
                 checkComplete: (values) => {
-                    return values?.pi?.value.length > 0;
+                    return values?.pi?.value?.length > 0;
                 }
             },
             {
                 title: 'Printer type',
                 checkComplete: (values) => {
                     console.log(values);
-                    return values?.printerType?.id.length > 0;
+                    return values?.printerType?.id?.length > 0;
                 }
             },
             {
                 title: 'Printer',
                 checkComplete: (values) => {
-                    return values?.printer?.id.length > 0;
+                    return values?.printer?.id?.length > 0;
                 }
             },
             {
                 title: 'End user',
                 checkComplete: (values) => {
-                    return values?.firstName.length > 0 && values?.lastName.length > 0 && values?.email.length > 0;
+                    return values?.firstName?.length > 0 && values?.lastName?.length > 0 && values?.email?.length > 0;
                 }
             },
             {
@@ -248,7 +248,8 @@ export default function NewPrintModal({ isOpen, onClose }) {
     };
 
     const validate = useCallback(
-        (values) => {
+        (values, activeStep) => {
+            console.log(values?.stlFiles);
             if (steps[activeStep].checkComplete) {
                 if (steps[activeStep].checkComplete(values)) {
                     setCanContinue(true);
@@ -258,21 +259,17 @@ export default function NewPrintModal({ isOpen, onClose }) {
             }
             return {};
         },
-        [activeStep, steps]
+        [steps]
     );
-
-    useEffect(() => {
-        if (activeStep) {
-            setCanContinue(false);
-        }
-    }, [activeStep]);
 
     return (
         <Formik
-            validate={validate}
+            validate={(values) => {
+                return validate(values, activeStep);
+            }}
             initialValues={{
                 pi: {},
-                STLPreview: '',
+                stlFiles: [],
                 printerType: '',
                 printer: '',
                 firstName: '',
@@ -285,7 +282,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                 estTimeMinutes: ''
             }}
             onSubmit={(values, actions) => {
-                uploadPreview(values.STLPreview, values.printName)
+                uploadPreview(values.stlFiles, values.printName)
                     .then((url) => {
                         const timestamp = dayjs.utc();
 
@@ -411,11 +408,13 @@ export default function NewPrintModal({ isOpen, onClose }) {
 
                                 <VStack w="full">
                                     {activeStep === 0 && (
-                                        <Field name="STLPreview">
+                                        <Field name="stlFiles">
                                             {({ form, field }) => (
                                                 <STLInput
-                                                    setImage={(image) => form.setFieldValue('STLPreview', image)}
-                                                    image={field?.value}
+                                                    setFiles={(files) => {
+                                                        form.setFieldValue('stlFiles', files);
+                                                    }}
+                                                    files={field?.value}
                                                 />
                                             )}
                                         </Field>
@@ -725,6 +724,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                             colorScheme="blue"
                                             leftIcon={<Icon as={iconSet.leftArrow} />}
                                             onClick={() => {
+                                                validate(props.values, activeStep - 1);
                                                 setActiveStep((s) => s - 1);
                                             }}
                                             isDisabled={activeStep <= 0}
@@ -739,6 +739,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                 if (activeStep === steps.length - 3) {
                                                     props.handleSubmit();
                                                 }
+                                                validate(props.values, activeStep + 1);
                                                 setActiveStep((s) => s + 1);
                                             }}
                                             isDisabled={activeStep >= steps.length || !canContinue}
