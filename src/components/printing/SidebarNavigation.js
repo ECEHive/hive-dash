@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
 
-import { Icon } from '@chakra-ui/react';
-
 import usePrinting from '@/contexts/printing/PrintingContext';
 
 import iconSet from '@/util/icons';
@@ -17,7 +15,7 @@ export default function Navigation({}) {
             {
                 type: 'button',
                 name: 'New print',
-                icon: <Icon as={iconSet.add} />,
+                icon: iconSet.add,
                 onClick: () => {
                     onNewOpen();
                 },
@@ -33,27 +31,27 @@ export default function Navigation({}) {
             {
                 type: 'button',
                 name: 'Dashboard',
-                icon: <Icon as={iconSet.dashboard} />,
+                icon: iconSet.dashboard,
                 href: '/dashboard'
             },
 
             {
                 type: 'button',
                 name: 'Printers',
-                icon: <Icon as={iconSet.printer} />,
+                icon: iconSet.printer,
                 href: '/printers'
             },
 
             {
                 type: 'button',
                 name: 'Print logs',
-                icon: <Icon as={iconSet.table} />,
+                icon: iconSet.table,
                 href: '/logs'
             },
             {
                 type: 'button',
                 name: 'Find a print',
-                icon: <Icon as={iconSet.search} />,
+                icon: iconSet.search,
                 href: '/prints'
             },
 

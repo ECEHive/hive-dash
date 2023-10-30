@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
 
-import { Icon } from '@chakra-ui/react';
-
 import iconSet from '@/util/icons';
 
 import SidebarTemplate from '@/components/SidebarTemplate';
@@ -12,19 +10,19 @@ export default function Navigation(props) {
             {
                 type: 'button',
                 name: 'Printers',
-                icon: <Icon as={iconSet.printer} />,
+                icon: iconSet.printer,
                 href: '/printers'
             },
             {
                 type: 'button',
                 name: 'People',
-                icon: <Icon as={iconSet.person} />,
+                icon: iconSet.person,
                 href: '/people'
             },
             {
                 type: 'button',
                 name: 'Website',
-                icon: <Icon as={iconSet.site} />,
+                icon: iconSet.site,
                 href: '/website'
             }
         ],

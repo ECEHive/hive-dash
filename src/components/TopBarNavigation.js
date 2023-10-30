@@ -1,5 +1,4 @@
 import {
-    Button,
     Flex,
     HStack,
     Icon,
@@ -59,16 +58,14 @@ export default function TopBarNavigation(props) {
                 </IconButton>
             </HStack>
 
-            {/* intersection of sidebar/topbar */}
             <HStack
-                w="260px"
+                w="auto"
                 h="100%"
                 direction="row"
                 alignItems="center"
                 justifyContent={{ base: 'center', md: 'center' }}
                 spacing={2}
-                py={3}
-                px={5}
+                p={5}
                 // borderRight="1px solid"
                 borderColor="chakra-border-color"
             >
@@ -92,15 +89,15 @@ export default function TopBarNavigation(props) {
                 p={3}
                 display={{ base: 'none', md: 'flex' }}
             >
-                <Button
-                    variant="ghost"
+                {/* <Button
+                    variant="solid"
                     as={NextLink}
                     href="/printing"
                     size="md"
                     isActive={section === 'printing'}
                 >
                     3D Printing
-                </Button>
+                </Button> */}
                 <Spacer />
                 <IconButton onClick={toggleColorMode}>
                     {colorMode === 'dark' ? <Icon as={iconSet.sun} /> : <Icon as={iconSet.moon} />}

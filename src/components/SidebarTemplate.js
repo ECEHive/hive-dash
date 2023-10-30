@@ -1,5 +1,4 @@
 import {
-    Button,
     Divider,
     Drawer,
     DrawerBody,
@@ -7,7 +6,11 @@ import {
     DrawerHeader,
     DrawerOverlay,
     Flex,
+    HStack,
+    Icon,
+    IconButton,
     Spacer,
+    Tooltip,
     VStack,
     useColorModeValue
 } from '@chakra-ui/react';
@@ -35,33 +38,52 @@ function Navigation({ pageData, baseUrl, pathPage }) {
                         return (
                             <>
                                 {element.href ? (
-                                    <Button
-                                        variant={active ? 'solid' : 'ghost'}
-                                        w="100%"
-                                        size="md"
-                                        justifyContent="flex-start"
-                                        colorScheme={element?.colorScheme}
-                                        as={NextLink}
-                                        href={baseUrl + element.href}
-                                        isActive={active}
-                                        leftIcon={element.icon}
-                                        key={element.href}
-                                    >
-                                        {element.name}
-                                    </Button>
+                                    <>
+                                        <HStack
+                                            w="full"
+                                            justify="center"
+                                        >
+                                            <Tooltip
+                                                label={element.name}
+                                                placement="right"
+                                                hasArrow
+                                            >
+                                                <IconButton
+                                                    size="lg"
+                                                    icon={<Icon as={element.icon} />}
+                                                    variant={active ? 'solid' : 'ghost'}
+                                                    colorScheme={active ? 'twitter' : element?.colorScheme}
+                                                    as={NextLink}
+                                                    href={baseUrl + element.href}
+                                                    isActive={active}
+                                                    key={element.href}
+                                                />
+                                            </Tooltip>
+                                        </HStack>
+                                    </>
                                 ) : (
-                                    <Button
-                                        variant={active ? 'solid' : 'ghost'}
-                                        w="100%"
-                                        size="md"
-                                        justifyContent="flex-start"
-                                        colorScheme={element?.colorScheme}
-                                        onClick={element.onClick}
-                                        leftIcon={element.icon}
-                                        key={element.name}
-                                    >
-                                        {element.name}
-                                    </Button>
+                                    <>
+                                        <HStack
+                                            w="full"
+                                            justify="center"
+                                        >
+                                            <Tooltip
+                                                label={element.name}
+                                                placement="right"
+                                                hasArrow
+                                            >
+                                                <IconButton
+                                                    size="lg"
+                                                    icon={<Icon as={element.icon} />}
+                                                    variant="ghost"
+                                                    colorScheme={element?.colorScheme}
+                                                    isActive={active}
+                                                    key={element.href}
+                                                    onClick={element.onClick}
+                                                />
+                                            </Tooltip>
+                                        </HStack>
+                                    </>
                                 )}
                             </>
                         );

@@ -11,7 +11,7 @@ export default function PrintingLayout({ children }) {
             <PrintingProvider>
                 <Grid
                     templateAreas={{ base: `"main"`, md: `"nav main"` }}
-                    gridTemplateColumns={{ base: '1fr', md: '260px 1fr' }}
+                    gridTemplateColumns={{ base: '1fr', md: '70px 1fr' }}
                     gridTemplateRows="1fr"
                     h="full"
                     w="full"
