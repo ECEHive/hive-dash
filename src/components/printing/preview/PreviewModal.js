@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import {
-    Box,
-    Divider,
     HStack,
     Heading,
+    Icon,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -18,6 +17,9 @@ import {
 import { getMetadata, ref } from 'firebase/storage';
 
 import { storage } from '@/lib/firebase';
+import dayjs from '@/lib/time';
+
+import iconSet from '@/util/icons';
 
 import { STLViewer } from '@/components/STLViewer';
 
@@ -48,8 +50,10 @@ function FileInfo({ metadata }) {
         <>
             <VStack
                 align="start"
+                w="full"
                 spacing={0}
                 justify="start"
+                p={5}
             >
                 <Heading
                     size="lg"
@@ -57,7 +61,14 @@ function FileInfo({ metadata }) {
                 >
                     {metadata.name}
                 </Heading>
-                <Text>{shrinkBytes(metadata.size)}</Text>
+                <HStack
+                    fontSize="sm"
+                    spacing={1}
+                >
+                    <Text>{shrinkBytes(metadata.size)}</Text>
+                    <Icon as={iconSet.dot} />
+                    <Text>{dayjs(metadata.updated).toString()}</Text>
+                </HStack>
             </VStack>
         </>
     );
@@ -66,26 +77,37 @@ function FileInfo({ metadata }) {
 function FileList({ metadatas }) {
     return (
         <>
-            <VStack spacing={3}>
+            <HStack
+                spacing={3}
+                w="full"
+                overflow="auto"
+                p={1}
+            >
                 {metadatas.map((metadata) => (
                     <VStack
-                        w="full"
+                        w="auto"
+                        h="full"
                         key={metadata.fullPath}
                         align="start"
                         spacing={0}
+                        p={3}
+                        border="1px solid"
+                        borderRadius={5}
+                        borderColor="chakra-border-color"
                     >
                         <Text
                             fontSize="md"
-                            fontWeight="medium"
                             textOverflow="ellipsis"
                             whiteSpace="nowrap"
+                            fontFamily="mono"
+                            fontWeight="bold"
                         >
                             {metadata.name}
                         </Text>
                         <Text fontSize="xs">{shrinkBytes(metadata.size)}</Text>
                     </VStack>
                 ))}
-            </VStack>
+            </HStack>
         </>
     );
 }
@@ -142,48 +164,39 @@ export default function PreviewModal({ isOpen, onClose, printData, files }) {
                             w="full"
                             h="full"
                         >
-                            <Box
+                            <VStack
                                 w="full"
                                 minH="500px"
+                                align="start"
+                                position="relative"
+                                spacing={5}
                             >
-                                <HStack
+                                <VStack
                                     w="full"
-                                    minH="full"
-                                    align="start"
-                                    spacing={8}
+                                    h="full"
+                                    flexGrow={1}
+                                    bgColor="chakra-body-bg"
+                                    position="relative"
+                                    borderRadius={5}
                                 >
-                                    <VStack
-                                        maxW="1200px"
-                                        h="full"
-                                        align="start"
-                                        justify="center"
-                                    >
-                                        {metadatas && selectedMetadata && (
-                                            <>
-                                                <FileInfo metadata={selectedMetadata} />
-                                                <Divider />
-                                                <FileList metadatas={metadatas} />
-                                            </>
-                                        )}
-                                    </VStack>
-
-                                    <VStack
+                                    <FileInfo metadata={selectedMetadata} />
+                                    <STLViewer
+                                        url={files[selectedFile]}
                                         w="full"
-                                        minH="full"
-                                        flexGrow={1}
-                                        bgColor="chakra-body-bg"
-                                        borderRadius={5}
-                                    >
-                                        <STLViewer
-                                            url={files[selectedFile]}
-                                            style={{
-                                                width: '100%',
-                                                height: '100%'
-                                            }}
-                                        />
-                                    </VStack>
-                                </HStack>
-                            </Box>
+                                        h="full"
+                                    />
+                                </VStack>
+
+                                <VStack
+                                    w="full"
+                                    h="full"
+                                    align="start"
+                                    justify="center"
+                                    overflow="hidden"
+                                >
+                                    {metadatas && selectedMetadata && <FileList metadatas={metadatas} />}
+                                </VStack>
+                            </VStack>
                         </ModalBody>
                     </ModalContent>
                 </>

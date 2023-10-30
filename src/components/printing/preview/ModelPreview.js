@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
     Box,
@@ -6,7 +6,6 @@ import {
     Icon,
     IconButton,
     Spacer,
-    Spinner,
     Text,
     VStack,
     useColorModeValue,
@@ -28,18 +27,11 @@ export default function ModelPreview({ printData, ...props }) {
     }, [printData]);
 
     const [selectedFile, setSelectedFile] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
 
     const { isOpen: isPreviewOpen, onOpen: onPreviewOpen, onClose: onPreviewClose } = useDisclosure();
 
     const unselectedColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600');
     const selectedColor = useColorModeValue('gray', 'white');
-
-    useEffect(() => {
-        if (printData?.stlFiles?.length > 0) {
-            setIsLoading(true);
-        }
-    }, [printData]);
 
     return (
         <>
@@ -55,20 +47,6 @@ export default function ModelPreview({ printData, ...props }) {
                             printData={printData}
                             files={files}
                         />
-                        {isLoading && (
-                            <>
-                                <VStack
-                                    w="full"
-                                    h="full"
-                                    justify="center"
-                                    zIndex="modal"
-                                    bgColor="blackAlpha.400"
-                                    position="absolute"
-                                >
-                                    <Spinner />
-                                </VStack>
-                            </>
-                        )}
 
                         <VStack
                             zIndex="banner"
@@ -117,7 +95,6 @@ export default function ModelPreview({ printData, ...props }) {
                                         onClick={() => {
                                             if (index === selectedFile) return;
                                             setSelectedFile(index);
-                                            setIsLoading(true);
                                         }}
                                         cursor="pointer"
                                     />
@@ -126,15 +103,9 @@ export default function ModelPreview({ printData, ...props }) {
                         </VStack>
 
                         <STLViewer
-                            style={{
-                                width: '100%',
-                                height: 'auto'
-                            }}
-                            top={0}
-                            position="absolute"
                             url={files[selectedFile]}
-                            onFinishLoading={() => setIsLoading(false)}
-                            zIndex="base"
+                            w="full"
+                            h="full"
                         />
                     </>
                 ) : (
