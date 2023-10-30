@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 import clientPromise from '@/lib/mongodb';
 import dayjs from '@/lib/time';
 
@@ -12,11 +14,19 @@ export default async function handler(req, res) {
         const linkedPrintId = body.id;
         const action = body.action;
 
+        // try converting the id to an object id
+        let objectId;
+        try {
+            objectId = new ObjectId(linkedPrintId);
+        } catch (e) {
+            objectId = null;
+        }
+
         const print = await mongoClient
             .db('printing')
             .collection('print-log')
             .findOne({
-                $or: [{ linkedPrintId: linkedPrintId }, { _id: linkedPrintId }]
+                $or: [{ linkedPrintId: linkedPrintId }, { _id: objectId || '' }]
             });
 
         // if the print isnt found tell andrew to link it
