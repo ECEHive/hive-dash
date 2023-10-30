@@ -17,6 +17,7 @@ export function STLViewer({ url, viewerProps, ...props }) {
             setIsLoading(true);
             return url;
         }
+        setIsLoading(false);
         return null;
     }, [url]);
 
@@ -41,7 +42,7 @@ export function STLViewer({ url, viewerProps, ...props }) {
                     </VStack>
                 )}
                 <ChakraSTL
-                    // {...viewerProps}
+                    {...viewerProps}
                     modelProps={{
                         color: modelColor,
                         scale: 1
@@ -54,8 +55,7 @@ export function STLViewer({ url, viewerProps, ...props }) {
                     url={modelUrl}
                     zIndex="base"
                     position="absolute"
-                    w="full"
-                    h="full"
+                    top={0}
                     orbitControls
                     onFinishLoading={() => setIsLoading(false)}
                 />

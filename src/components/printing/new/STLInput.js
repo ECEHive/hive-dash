@@ -206,6 +206,7 @@ export default function STLInput({ files, setFiles }) {
                                                     bg="transparent"
                                                     w="auto"
                                                     h="auto"
+                                                    key={file.name}
                                                 >
                                                     <Box
                                                         variant="outline"

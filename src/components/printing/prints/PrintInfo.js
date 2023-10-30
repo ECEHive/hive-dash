@@ -30,7 +30,6 @@ import {
 } from '@chakra-ui/react';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
@@ -46,6 +45,8 @@ import { PrintStates } from '@/util/states';
 import PrintEditorModal from '@/components/printing/printEdit/PrintEditorModal';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 import Timeline from '@/components/printing/prints/Timeline';
+
+import BigPreview from '../preview/BigPreview';
 
 function DetailsPane({ title, icon, rowSpan, colSpan, children }) {
     return (
@@ -369,16 +370,15 @@ export default function PrintInfo({ selectedPrintData }) {
                                 >
                                     {/* notes */}
                                     <TabPanel px={0}>
-                                        <Image
-                                            src={betterPrintData.preview}
-                                            width={512}
-                                            height={512}
-                                            alt="preview"
-                                            style={{
-                                                height: 'full',
-                                                width: 'auto'
-                                            }}
-                                        />
+                                        <Box
+                                            w="full"
+                                            h="500px"
+                                        >
+                                            <BigPreview
+                                                files={selectedPrintData.stlFiles}
+                                                filesOnTop
+                                            />
+                                        </Box>
                                     </TabPanel>
 
                                     <TabPanel>
