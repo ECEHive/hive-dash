@@ -12,9 +12,12 @@ export default async function handler(req, res) {
         const linkedPrintId = body.id;
         const action = body.action;
 
-        const print = await mongoClient.db('printing').collection('print-log').findOne({
-            linkedPrintId: linkedPrintId
-        });
+        const print = await mongoClient
+            .db('printing')
+            .collection('print-log')
+            .findOne({
+                $or: [{ linkedPrintId: linkedPrintId }, { _id: linkedPrintId }]
+            });
 
         // if the print isnt found tell andrew to link it
         if (!print) {
@@ -60,7 +63,7 @@ export default async function handler(req, res) {
                 .collection('print-log')
                 .findOneAndUpdate(
                     {
-                        linkedPrintId: linkedPrintId
+                        _id: print._id
                     },
                     {
                         $set: {
@@ -121,7 +124,7 @@ export default async function handler(req, res) {
                 .collection('print-log')
                 .findOneAndUpdate(
                     {
-                        linkedPrintId: linkedPrintId
+                        _id: print._id
                     },
                     {
                         $set: {
@@ -184,7 +187,7 @@ export default async function handler(req, res) {
                 .collection('print-log')
                 .findOneAndUpdate(
                     {
-                        linkedPrintId: linkedPrintId
+                        _id: print._id
                     },
                     {
                         $set: {
