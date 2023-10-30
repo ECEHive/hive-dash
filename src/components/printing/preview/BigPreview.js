@@ -203,6 +203,7 @@ export default function BigPreview({ files, filesOnTop }) {
                 <Box
                     w="full"
                     h="full"
+                    minH="full"
                 >
                     <VStack
                         w="full"

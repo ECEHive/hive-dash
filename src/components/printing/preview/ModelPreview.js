@@ -113,6 +113,7 @@ export default function ModelPreview({ printData, ...props }) {
                         w="full"
                         h="full"
                         justify="center"
+                        color="secondaryText"
                     >
                         <Text>No preview</Text>
                     </VStack>

@@ -408,7 +408,10 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                         {editMode && (
                                             <Th>
                                                 <Checkbox
-                                                    isChecked={checkedPrints.length === checkablePrints.length}
+                                                    isChecked={
+                                                        checkedPrints.length === checkablePrints.length &&
+                                                        checkablePrints.length > 0
+                                                    }
                                                     onChange={() => {
                                                         if (checkedPrints.length > 0) {
                                                             setCheckedPrints([]);
@@ -416,6 +419,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
                                                             checkAll();
                                                         }
                                                     }}
+                                                    isDisabled={checkablePrints.length === 0}
                                                     isIndeterminate={
                                                         !(checkedPrints.length === checkablePrints.length) &&
                                                         checkedPrints.length > 0

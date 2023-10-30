@@ -65,14 +65,15 @@ export default function TopBarNavigation(props) {
                 alignItems="center"
                 justifyContent={{ base: 'center', md: 'center' }}
                 spacing={2}
-                p={5}
+                py={3}
+                px={5}
                 // borderRight="1px solid"
                 borderColor="chakra-border-color"
             >
                 <NextImage
                     alt="HIVE logo"
                     src={colorMode === 'dark' ? logoDark : logoLight}
-                    height={42}
+                    height={38}
                     placeholder="blur"
                     priority
                 />
@@ -86,7 +87,8 @@ export default function TopBarNavigation(props) {
                 alignItems="center"
                 justifyContent="flex-start"
                 spacing={3}
-                p={3}
+                px={5}
+                py={3}
                 display={{ base: 'none', md: 'flex' }}
             >
                 {/* <Button

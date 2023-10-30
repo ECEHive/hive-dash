@@ -11,7 +11,7 @@ export default function GlobalLayout({ children }) {
                         "main"
                         "footer"`}
                 gridTemplateColumns="1fr"
-                gridTemplateRows="80px 1fr 1.5rem"
+                gridTemplateRows="70px 1fr 1.5rem"
                 h="100vh"
                 maxH="100vh"
                 w="full"

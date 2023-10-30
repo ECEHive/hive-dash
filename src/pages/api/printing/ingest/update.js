@@ -38,7 +38,8 @@ export default async function handler(req, res) {
                 res.status(400).json({
                     success: false,
                     type: 'printerbusy',
-                    message: 'Printer still running a print'
+                    message: 'Printer still running a print',
+                    printId: runningPrint?.linkedPrintId || runningPrint._id.toString()
                 });
                 return;
             }
