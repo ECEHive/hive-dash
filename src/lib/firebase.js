@@ -23,6 +23,8 @@ const app = () => {
 const auth = getAuth(app());
 const storage = getStorage(app());
 
+// allow cors on the storage bucket
+
 export default app;
 
 export { auth, storage };

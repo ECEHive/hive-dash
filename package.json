@@ -29,6 +29,7 @@
         "eslint-config-next": "13.4.9",
         "firebase": "^10.1.0",
         "firebase-admin": "^11.11.0",
+        "formidable": "^3.5.1",
         "formik": "^2.4.5",
         "image-js": "^0.35.4",
         "js-sha256": "^0.10.1",

@@ -45,6 +45,21 @@ export default async function handler(req, res) {
                 _id: new ObjectId(printId)
             });
 
+        // also remove the print from printer's queue
+        await mongoClient
+            .db('printing')
+            .collection('printers')
+            .findOneAndUpdate(
+                {
+                    id: data.printer
+                },
+                {
+                    $pull: {
+                        queue: printId
+                    }
+                }
+            );
+
         res.status(200).json(data);
     }
 }

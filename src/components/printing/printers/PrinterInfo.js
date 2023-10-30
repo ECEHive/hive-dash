@@ -25,7 +25,6 @@ import {
 } from '@chakra-ui/react';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import Image from 'next/image';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 
@@ -42,6 +41,8 @@ import { PITypes } from '@/util/roles';
 
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import QueueTable from '@/components/printing/printers/QueueTable';
+
+import ModelPreview from '../preview/ModelPreview';
 
 export default function PrinterInfo({ selectedPrinterData }) {
     const { update: printUpdater } = usePrintUpdate();
@@ -303,14 +304,14 @@ export default function PrinterInfo({ selectedPrinterData }) {
 
                                         <Box
                                             w="auto"
-                                            h="150px"
+                                            minH="150px"
                                             bgColor="chakra-subtle-bg"
                                             borderRadius={5}
                                         >
-                                            <Image
+                                            {/* <Image
                                                 src={
                                                     betterPrintData?.preview ||
-                                                    'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/previews%2FPI_Colin_Hartigan_bruh10000?alt=media&token=21d28026-6320-4b9c-9d4a-f8ce304b7bb3'
+                                                    'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/stl%2Fuploadtest1_2023-10-29T23%3A27%3A54.556Z%2Fdorm_bed_shelf.stl?alt=media&token=d8bcdfd3-a971-4e96-8384-d4871c85c42a'
                                                 }
                                                 alt="preview"
                                                 width={512}
@@ -319,6 +320,11 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                     maxHeight: '150px',
                                                     width: 'auto'
                                                 }}
+                                            /> */}
+                                            <ModelPreview
+                                                printData={activePrint}
+                                                w="150px"
+                                                h="150px"
                                             />
                                         </Box>
                                     </HStack>

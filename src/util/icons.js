@@ -58,6 +58,7 @@ import {
     FaTableList,
     FaTimeline
 } from 'react-icons/fa6';
+import { GoDotFill } from 'react-icons/go';
 
 const iconSet = {
     wrench: FaWrench,
@@ -102,6 +103,7 @@ const iconSet = {
     leftArrow: ArrowBackIcon,
     camera: FaCamera,
     dot: BsDot,
+    paginateDot: GoDotFill,
     buzzCard: FaIdCard,
     link: FaLink,
     list: FaTableList,

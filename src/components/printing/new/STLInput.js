@@ -12,24 +12,19 @@ import {
     Spinner,
     Text,
     Tooltip,
-    VStack,
-    chakra
+    VStack
 } from '@chakra-ui/react';
 
 import { useDropzone } from 'react-dropzone';
-import { StlViewer } from 'react-stl-viewer';
 
 import iconSet from '@/util/icons';
 
-const ChakraStlViewer = chakra(StlViewer);
+import { STLViewer } from '@/components/STLViewer';
 
 export default function STLInput({ files, setFiles }) {
     const [selectedFile, setSelectedFile] = useState(0);
     const [stlLoading, setStlLoading] = useState(true);
     const [showUpload, setShowUpload] = useState(true);
-
-    // i think this is a pretty good color that looks good on both light and dark backgrounds while maintaining shadow visibility for part recognizability
-    const modelColor = '#746D69';
 
     const onDrop = useCallback(
         (acceptedFiles) => {
@@ -172,7 +167,7 @@ export default function STLInput({ files, setFiles }) {
                                     }}
                                 />
                             </HStack>
-                            <ChakraStlViewer
+                            <STLViewer
                                 zIndex={1}
                                 url={URL.createObjectURL(files[selectedFile])}
                                 style={{
@@ -180,16 +175,12 @@ export default function STLInput({ files, setFiles }) {
                                     height: '250px'
                                 }}
                                 borderRadius={5}
-                                modelProps={{
-                                    color: modelColor,
-                                    scale: 1
-                                }}
                                 shadows
                                 orbitControls
                                 onFinishLoading={() => {
                                     setStlLoading(false);
                                 }}
-                                canvasId="stl-canvas"
+                                canvasId="upload-canvas"
                             />
                         </Box>
                         <HStack

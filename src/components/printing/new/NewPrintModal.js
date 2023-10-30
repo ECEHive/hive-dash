@@ -6,12 +6,10 @@ import {
     AlertIcon,
     AlertTitle,
     Badge,
-    Box,
     Button,
     ButtonGroup,
     Card,
     CardBody,
-    Checkbox,
     Divider,
     FormControl,
     FormLabel,
@@ -37,12 +35,12 @@ import {
     StepStatus,
     Stepper,
     Text,
-    VStack
+    VStack,
+    useToast
 } from '@chakra-ui/react';
 
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { Field, Form, Formik } from 'formik';
-import { Image } from 'image-js';
 
 import { storage } from '@/lib/firebase';
 import dayjs from '@/lib/time';
@@ -52,7 +50,6 @@ import usePrinting from '@/contexts/printing/PrintingContext';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
 import useRequest from '@/hooks/useRequest';
 
-import dataUrlToBlob from '@/util/dataUrlToBlob';
 import iconSet from '@/util/icons';
 import { PrintStates, StateColors } from '@/util/states';
 
@@ -145,9 +142,11 @@ function PrinterItem({ printer, ...props }) {
 export default function NewPrintModal({ isOpen, onClose }) {
     const { printerTypes, printers, peerInstructors } = usePrinting();
     const request = useRequest();
+    const toast = useToast();
 
     const [activeStep, setActiveStep] = useState(0);
     const [canContinue, setCanContinue] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState('Submitting');
 
     const steps = useMemo(
         () => [
@@ -190,8 +189,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                         values?.printName.length > 0 &&
                         values?.material?.value?.length > 0 &&
                         values?.materialUsage > 0 &&
-                        values?.estTimeHours > 0 &&
-                        values?.estTimeMinutes > 0
+                        (values?.estTimeHours != 0 || values?.estTimeMinutes != 0)
                     );
                 }
             },
@@ -205,51 +203,51 @@ export default function NewPrintModal({ isOpen, onClose }) {
         []
     );
 
-    const uploadPreview = (inputImage, name) => {
+    const uploadFiles = (files, trayName) => {
+        console.log(files);
         return new Promise(async (resolve, reject) => {
-            const blob = dataUrlToBlob(inputImage);
-            const buffer = await blob.arrayBuffer();
+            setSubmitStatus('Uploading STL files');
 
-            const image = await Image.load(buffer);
+            // const formData = new FormData();
+            // for (let i = 0; i < files.length; i++) {
+            //     const file = files[i];
+            //     formData.append(`files`, file);
+            // }
+            // formData.append('name', trayName);
 
-            const resizedImage = image.resize({
-                height: 512,
-                width: null,
-                preserveAspectRatio: true
-            });
+            // console.log(formData.entries());
 
-            const croppedImage = resizedImage.crop({
-                x: (resizedImage.width - 512) / 2,
-                y: (resizedImage.height - 512) / 2,
-                width: image.width < 512 ? image.width : 512,
-                height: image.height < 512 ? image.height : 512
-            });
+            // request('/api/printing/upload', {
+            //     method: 'POST',
+            //     body: formData
+            // })
+            //     .then((res) => {
+            //         console.log(res.urls);
+            //         resolve(res.urls);
+            //     })
+            //     .catch((err) => {
+            //         console.log(err);
+            //         reject();
+            //     });
 
-            const imgBuffer = croppedImage.toBuffer();
+            // upload files with firebase client
+            const timestamp = dayjs().toISOString();
+            let urls = [];
+            for (const file of files) {
+                const storageRef = ref(storage, `stl/${trayName}_${timestamp}/${file.name}`);
+                const uploadTask = await uploadBytes(storageRef, file);
+                console.log(uploadTask);
+                // now get url
+                const url = await getDownloadURL(uploadTask.ref);
+                urls.push(url);
+            }
 
-            // convert to base64
-            const converted = Buffer.from(imgBuffer).toString('base64');
-
-            //upload photo to firestore
-            const storageRef = ref(storage, `/previews/${name}`);
-
-            // progress can be paused and resumed. It also exposes progress updates.
-            // Receives the storage reference and the file to upload.
-            uploadString(storageRef, converted, 'base64').then((snapshot) => {
-                getDownloadURL(snapshot.ref)
-                    .then((url) => {
-                        resolve(url);
-                    })
-                    .catch((err) => {
-                        reject(err);
-                    });
-            });
+            resolve(urls);
         });
     };
 
     const validate = useCallback(
         (values, activeStep) => {
-            console.log(values?.stlFiles);
             if (steps[activeStep].checkComplete) {
                 if (steps[activeStep].checkComplete(values)) {
                     setCanContinue(true);
@@ -268,22 +266,29 @@ export default function NewPrintModal({ isOpen, onClose }) {
                 return validate(values, activeStep);
             }}
             initialValues={{
-                pi: {},
+                pi: {
+                    label: '',
+                    value: 'Colin Hartigan'
+                },
                 stlFiles: [],
-                printerType: '',
-                printer: '',
-                firstName: '',
-                lastName: '',
-                email: '',
-                printName: '',
-                material: {},
-                materialUsage: '',
-                estTimeHours: '',
-                estTimeMinutes: ''
+                printerType: {},
+                printer: {},
+                firstName: 'Colin',
+                lastName: 'Hartigan',
+                email: 'chartigan6',
+                printName: 'uploadtest1',
+                material: {
+                    label: 'ABS',
+                    value: 'ABS'
+                },
+                materialUsage: '20',
+                estTimeHours: '2',
+                estTimeMinutes: '22'
             }}
             onSubmit={(values, actions) => {
-                uploadPreview(values.stlFiles, values.printName)
-                    .then((url) => {
+                uploadFiles(values.stlFiles, values.printName)
+                    .then((urls) => {
+                        setSubmitStatus('Adding print to queue');
                         const timestamp = dayjs.utc();
 
                         const payload = {
@@ -296,7 +301,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                             queuedAt: timestamp,
                             notes: '',
                             state: PrintStates.QUEUED,
-                            preview: url,
+                            stlFiles: urls,
                             endUser: {
                                 firstname: values.firstName,
                                 lastname: values.lastName,
@@ -334,7 +339,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                     .catch((err) => {
                         toast({
                             title: 'Error uploading preview',
-                            description: err.message,
+                            description: err,
                             status: 'error',
                             duration: 5000
                         });
@@ -655,7 +660,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                                 .format('HH:mm')}
                                                         </Text>
                                                     </HStack>
-                                                    {props.values.estTimeHours >= 8 &&
+                                                    {/* {props.values.estTimeHours >= 8 &&
                                                     props.values.estTimeMinutes >= 0 ? (
                                                         <Alert
                                                             status="error"
@@ -668,7 +673,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                                 </AlertDescription>
                                                             </HStack>
                                                         </Alert>
-                                                    ) : null}
+                                                    ) : null} */}
                                                 </VStack>
                                             </FormControl>
                                         </>
@@ -678,12 +683,25 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                         <>
                                             {props.isSubmitting ? (
                                                 <>
-                                                    <Box
+                                                    <VStack
                                                         w="full"
-                                                        h="auto"
+                                                        h="200px"
+                                                        justify="center"
                                                     >
-                                                        <Spinner colorScheme="blue" />
-                                                    </Box>
+                                                        <HStack
+                                                            w="full"
+                                                            justify="center"
+                                                            spacing={3}
+                                                        >
+                                                            <Spinner colorScheme="blue" />
+                                                            <Text
+                                                                fontSize="lg"
+                                                                fontWeight="medium"
+                                                            >
+                                                                {submitStatus}
+                                                            </Text>
+                                                        </HStack>
+                                                    </VStack>
                                                 </>
                                             ) : (
                                                 <>

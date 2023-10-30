@@ -1,5 +1,7 @@
 import admin from 'firebase-admin';
 
+import dayjs from '@/lib/time';
+
 const serviceAccount = {
     auth_provider_x509_cert_url: process.env.FIREBASE_ADMIN_auth_provider_x509_cert_url,
     auth_uri: process.env.FIREBASE_ADMIN_auth_uri,
@@ -11,7 +13,8 @@ const serviceAccount = {
     project_id: process.env.FIREBASE_ADMIN_project_id,
     token_uri: process.env.FIREBASE_ADMIN_token_uri,
     type: 'service_account',
-    universe_domain: 'googleapis.com'
+    universe_domain: 'googleapis.com',
+    storageBucket: 'hive-af57a.appspot.com'
 };
 
 const app = () => {
@@ -73,4 +76,32 @@ export async function deleteUser(uid) {
         });
 
     return success;
+}
+
+export async function uploadFiles(files, name) {
+    // upload the stl files to firebase storage and return the urls of each file in an array
+    const urls = [];
+    const timestamp = dayjs().toISOString();
+    for (const file of files[0]) {
+        console.log(file.filepath);
+        const bucket = admin.storage().bucket('hive-af57a.appspot.com');
+
+        const path = `STLS/${name}_${timestamp}/${file.originalFilename}`;
+
+        const options = {
+            destination: path,
+            gzip: true
+        };
+
+        await bucket.upload(file.filepath, options);
+
+        const storageRef = bucket.file(path);
+        storageRef.makePublic();
+        const url = storageRef.publicUrl();
+        urls.push(url);
+    }
+
+    console.log(urls);
+
+    return urls;
 }
