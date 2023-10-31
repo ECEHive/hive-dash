@@ -145,13 +145,13 @@ export default async function handler(req, res) {
                     }
                 );
 
-            // update printer and pop print from queue
+            // update printer and pull print from queue
             const printerPost = await mongoClient
                 .db('printing')
                 .collection('printers')
                 .findOneAndUpdate(
                     {
-                        id: print.printerx
+                        id: print.printer
                     },
                     {
                         $pull: {
