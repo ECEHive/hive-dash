@@ -65,6 +65,8 @@ export default function PrinterListItem({ data }) {
                                     fontSize="md"
                                     fontWeight="medium"
                                     lineHeight={1}
+                                    whiteSpace="normal"
+                                    overflowWrap="anywhere"
                                 >
                                     {betterPrintData.trayName}
                                 </Text>

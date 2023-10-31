@@ -268,22 +268,22 @@ export default function NewPrintModal({ isOpen, onClose }) {
             initialValues={{
                 pi: {
                     label: '',
-                    value: 'Colin Hartigan'
+                    value: ''
                 },
                 stlFiles: [],
                 printerType: {},
                 printer: {},
-                firstName: 'Colin',
-                lastName: 'Hartigan',
-                email: 'chartigan6',
-                printName: 'uploadtest1',
+                firstName: '',
+                lastName: '',
+                email: '',
+                printName: '',
                 material: {
-                    label: 'ABS',
-                    value: 'ABS'
+                    label: '',
+                    value: ''
                 },
-                materialUsage: '20',
-                estTimeHours: '2',
-                estTimeMinutes: '22'
+                materialUsage: '',
+                estTimeHours: '',
+                estTimeMinutes: ''
             }}
             onSubmit={(values, actions) => {
                 uploadFiles(values.stlFiles, values.printName)

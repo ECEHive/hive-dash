@@ -177,7 +177,7 @@ export default function PrintInfo({ selectedPrintData }) {
             <Box
                 h="full"
                 w="full"
-                maxW="4xl"
+                maxW="6xl"
                 overflow="auto"
                 p={5}
             >
@@ -210,6 +210,7 @@ export default function PrintInfo({ selectedPrintData }) {
                                         <Heading
                                             size="lg"
                                             fontWeight="semibold"
+                                            overflowWrap="anywhere"
                                         >
                                             {betterPrintData.trayName}
                                         </Heading>
@@ -370,15 +371,19 @@ export default function PrintInfo({ selectedPrintData }) {
                                 >
                                     {/* notes */}
                                     <TabPanel px={0}>
-                                        <Box
-                                            w="full"
-                                            h="500px"
-                                        >
-                                            <BigPreview
-                                                files={selectedPrintData.stlFiles}
-                                                filesOnTop
-                                            />
-                                        </Box>
+                                        {selectedPrintData?.stlFiles?.length > 0 ? (
+                                            <Box
+                                                w="full"
+                                                h="500px"
+                                            >
+                                                <BigPreview
+                                                    files={selectedPrintData.stlFiles}
+                                                    filesOnTop
+                                                />
+                                            </Box>
+                                        ) : (
+                                            <Text color="secondaryText">No preview available</Text>
+                                        )}
                                     </TabPanel>
 
                                     <TabPanel>

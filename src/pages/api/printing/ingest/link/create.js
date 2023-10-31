@@ -63,7 +63,10 @@ export default async function handler(req, res) {
                 { id: data.printer },
                 {
                     $push: {
-                        queue: print.insertedId.toString()
+                        queue: {
+                            $each: [print.insertedId.toString()],
+                            $position: 0
+                        }
                     }
                 }
             );

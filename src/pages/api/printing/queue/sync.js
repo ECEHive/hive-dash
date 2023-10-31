@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         // console.log(printsInQueue);
 
         printers.forEach(async (printer) => {
-            let queue = printer.queue;
+            let queue = [];
             const printsInQueueForPrinter = printsInQueue.filter((print) => print.printer === printer.id);
             printsInQueueForPrinter.forEach((print) => {
                 if (!queue.includes(print._id)) {

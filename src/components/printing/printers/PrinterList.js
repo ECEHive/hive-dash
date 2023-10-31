@@ -233,7 +233,8 @@ export default function PrinterList({ selectedPrinter }) {
                     w="100%"
                     alignItems="flex-start"
                     spacing={0}
-                    overflow="auto"
+                    overflowY="auto"
+                    overflowX="hidden"
                 >
                     {matches.map((printer) => {
                         return (
