@@ -151,7 +151,7 @@ export default async function handler(req, res) {
                 .collection('printers')
                 .findOneAndUpdate(
                     {
-                        id: print.printer
+                        id: print.printerx
                     },
                     {
                         $pull: {

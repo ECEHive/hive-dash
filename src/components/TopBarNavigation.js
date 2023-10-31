@@ -1,6 +1,8 @@
 import {
+    Divider,
     Flex,
     HStack,
+    Heading,
     Icon,
     IconButton,
     Menu,
@@ -64,7 +66,7 @@ export default function TopBarNavigation(props) {
                 direction="row"
                 alignItems="center"
                 justifyContent={{ base: 'center', md: 'center' }}
-                spacing={2}
+                spacing={4}
                 py={3}
                 px={5}
                 // borderRight="1px solid"
@@ -73,10 +75,32 @@ export default function TopBarNavigation(props) {
                 <NextImage
                     alt="HIVE logo"
                     src={colorMode === 'dark' ? logoDark : logoLight}
-                    height={38}
+                    height={36}
                     placeholder="blur"
                     priority
                 />
+
+                <Divider orientation="vertical" />
+
+                <Menu>
+                    <MenuButton>
+                        <HStack>
+                            <Heading size="md">3D Printing</Heading>
+                            {/* <Icon as={iconSet.hamburger} /> */}
+                        </HStack>
+                    </MenuButton>
+                    <MenuList>
+                        <MenuItem
+                            as={NextLink}
+                            href="/printing/dashboard"
+                            size="md"
+                            isActive={section === 'printing'}
+                            icon={<Icon as={iconSet.printer} />}
+                        >
+                            3D Printing
+                        </MenuItem>
+                    </MenuList>
+                </Menu>
             </HStack>
 
             <HStack
@@ -91,15 +115,6 @@ export default function TopBarNavigation(props) {
                 py={3}
                 display={{ base: 'none', md: 'flex' }}
             >
-                {/* <Button
-                    variant="solid"
-                    as={NextLink}
-                    href="/printing"
-                    size="md"
-                    isActive={section === 'printing'}
-                >
-                    3D Printing
-                </Button> */}
                 <Spacer />
                 <IconButton onClick={toggleColorMode}>
                     {colorMode === 'dark' ? <Icon as={iconSet.sun} /> : <Icon as={iconSet.moon} />}

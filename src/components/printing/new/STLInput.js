@@ -1,19 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-    Box,
-    Button,
-    Code,
-    Flex,
-    HStack,
-    Icon,
-    IconButton,
-    Spacer,
-    Spinner,
-    Text,
-    Tooltip,
-    VStack
-} from '@chakra-ui/react';
+import { Box, Button, Code, Flex, HStack, Icon, IconButton, Spacer, Text, Tooltip, VStack } from '@chakra-ui/react';
 
 import { useDropzone } from 'react-dropzone';
 
@@ -23,7 +10,6 @@ import { STLViewer } from '@/components/STLViewer';
 
 export default function STLInput({ files, setFiles }) {
     const [selectedFile, setSelectedFile] = useState(0);
-    const [stlLoading, setStlLoading] = useState(true);
     const [showUpload, setShowUpload] = useState(true);
 
     const onDrop = useCallback(
@@ -124,20 +110,6 @@ export default function STLInput({ files, setFiles }) {
                             flexGrow={1}
                             position="relative"
                         >
-                            {stlLoading && (
-                                <Flex
-                                    position="absolute"
-                                    bgColor="blackAlpha.400"
-                                    w="full"
-                                    h="full"
-                                    align="center"
-                                    justify="center"
-                                    zIndex="tooltip"
-                                    borderRadius={5}
-                                >
-                                    <Spinner />
-                                </Flex>
-                            )}
                             <HStack
                                 position="absolute"
                                 w="full"
@@ -177,10 +149,6 @@ export default function STLInput({ files, setFiles }) {
                                 borderRadius={5}
                                 shadows
                                 orbitControls
-                                onFinishLoading={() => {
-                                    setStlLoading(false);
-                                }}
-                                canvasId="upload-canvas"
                             />
                         </Box>
                         <HStack
@@ -220,7 +188,6 @@ export default function STLInput({ files, setFiles }) {
                                                         isActive={selectedFile === index}
                                                         onClick={() => {
                                                             setSelectedFile(index);
-                                                            setStlLoading(true);
                                                         }}
                                                     >
                                                         <HStack w="auto">

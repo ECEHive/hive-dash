@@ -186,7 +186,7 @@ export default function BigPreview({ files, filesOnTop }) {
     }, [fileRefs]);
 
     useEffect(() => {
-        setSelectedFile(files[0]);
+        setSelectedFile(files ? files[0] : null);
     }, [files]);
 
     const selectedMetadata = useMemo(() => {
