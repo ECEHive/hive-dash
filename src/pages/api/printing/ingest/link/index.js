@@ -14,7 +14,21 @@ export default async function handler(req, res) {
             .collection('print-log')
             .findOneAndUpdate(
                 {
-                    trayName: trayName
+                    trayName: trayName,
+                    $or: [
+                        // if prints have matching names, this allows us to find the one that hasn't been linked
+                        {
+                            linkedPrintId: ''
+                        },
+                        {
+                            linkedPrintId: {
+                                $exists: false
+                            }
+                        },
+                        {
+                            linkedPrintId: null
+                        }
+                    ]
                 },
                 {
                     $set: {
