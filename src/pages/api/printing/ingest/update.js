@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         const linkedPrintId = body.id;
         const action = body.action;
 
-        // try converting the id to an object id
+        // try converting the id to an object id to see if the id is a mognodb id or a printer job id
         let objectId;
         try {
             objectId = new ObjectId(linkedPrintId);

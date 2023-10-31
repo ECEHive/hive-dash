@@ -21,6 +21,19 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const data = body.printData;
 
+        // check if the print already exists
+        const existing = await mongoClient.db('printing').collection('print-log').findOne({
+            linkedPrintId: data.id
+        });
+
+        if (existing) {
+            res.status(400).json({
+                success: false,
+                message: 'Print with matching job id already exists'
+            });
+            return;
+        }
+
         // prints are in the format (PI)_firstname_lastname_partdescription
         // split it up into each part
         const parts = data.trayName.split('_');
