@@ -115,7 +115,7 @@ export default function PrintInfo({ selectedPrintData }) {
             let data = {
                 ...selectedPrintData,
                 state: PrintStates.CANCELED,
-                events: [event, ...selectedPrintData.events]
+                events: [...selectedPrintData.events, event]
             };
             printUpdater(selectedPrintData._id, data);
             onCancelClose();
@@ -124,7 +124,7 @@ export default function PrintInfo({ selectedPrintData }) {
     );
 
     const latestEvent = useMemo(() => {
-        return selectedPrintData?.events?.[0];
+        return selectedPrintData?.events?.[selectedPrintData.events.length - 1];
     }, [selectedPrintData]);
 
     const dataFields = useMemo(() => {

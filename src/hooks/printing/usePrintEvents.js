@@ -112,9 +112,10 @@ export default function usePrintEvents(print) {
         }
 
         // aggregate and organize progresses for each event such that they are padded and clamped to limit values
-        let progressedEvents = [...newEvents].sort((a, b) => {
-            return dayjs.utc(a.timestamp).diff(dayjs.utc(b.timestamp)); //sort so newest at top
-        });
+        let progressedEvents = [...newEvents];
+        // .sort((a, b) => {
+        //     return dayjs.utc(a.timestamp).diff(dayjs.utc(b.timestamp)); //sort so newest at top
+        // });
 
         let previousProgress = 0;
         for (let index = 0; index < progressedEvents.length; index++) {
@@ -149,26 +150,25 @@ export default function usePrintEvents(print) {
             event.progress = progress;
         }
 
-        return progressedEvents
-            .map((event, index) => {
-                return {
-                    ...event,
+        return progressedEvents.map((event, index) => {
+            return {
+                ...event,
 
-                    happened: print.events.includes(event),
-                    next: newEvents.find((e) => !print.events.includes(e)) === event,
-                    progress: event.progress,
-                    last: event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED,
+                happened: print.events.includes(event),
+                next: newEvents.find((e) => !print.events.includes(e)) === event,
+                progress: event.progress,
+                last: event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED,
 
-                    description: eventNames[event.type],
-                    formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
-                    humanizedTimestamp: dayjs.duration(dayjs.utc(event.timestamp).diff(dayjs().utc())).humanize(true),
-                    icon: eventIcons[event.type],
-                    color: eventColors[event.type]
-                };
-            })
-            .sort((a, b) => {
-                return dayjs.utc(a.timestamp).diff(dayjs.utc(b.timestamp)); //sort so newest at top
-            });
+                description: eventNames[event.type],
+                formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
+                humanizedTimestamp: dayjs.duration(dayjs.utc(event.timestamp).diff(dayjs().utc())).humanize(true),
+                icon: eventIcons[event.type],
+                color: eventColors[event.type]
+            };
+        });
+        // .sort((a, b) => {
+        //     return dayjs.utc(a.timestamp).diff(dayjs.utc(b.timestamp)); //sort so newest at top
+        // });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [print?.events]); //ignore this warning, this is a safe memoized value

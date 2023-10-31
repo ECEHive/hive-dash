@@ -237,11 +237,11 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
             ...printData,
             state: PrintStates.PRINTING,
             events: [
+                ...printData.events,
                 {
                     type: PrintStates.PRINTING,
                     timestamp: dayjs.utc()
-                },
-                ...printData.events
+                }
             ]
         };
 
@@ -278,7 +278,7 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
             let data = {
                 ...activePrint,
                 state: event.type,
-                events: [event, ...activePrint.events]
+                events: [...activePrint.events, event]
             };
             printUpdater(activePrint._id, data, event.type === PrintStates.COMPLETED)
                 .then(() => {

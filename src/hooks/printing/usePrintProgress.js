@@ -17,6 +17,7 @@ export default function usePrintProgress(printData) {
         return dayjs.utc(printData.events.find((e) => e.type === PrintStates.PRINTING)?.timestamp);
     }, [printData]);
 
+    // TODO THIS IS FLAWED. FIX ME
     const completedTime = useMemo(() => {
         if (!printData) return null;
         return dayjs.utc(printData.events.find((e) => e.type === PrintStates.COMPLETED)?.timestamp);

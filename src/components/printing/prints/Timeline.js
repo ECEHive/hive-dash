@@ -104,7 +104,7 @@ export default function Timeline({ print }) {
     const { detailedEvents } = usePrintEvents(print);
 
     const latest = useMemo(() => {
-        return [...detailedEvents].reverse().find((event) => event.happened);
+        return [...detailedEvents].find((event) => event.happened);
     }, [detailedEvents]);
 
     useEffect(() => {
@@ -112,12 +112,12 @@ export default function Timeline({ print }) {
     }, [detailedEvents]);
 
     const progress = useMemo(() => {
-        let reversed = [...detailedEvents].reverse();
+        let events = [...detailedEvents];
         // find latest event
-        const latestEvent = reversed.find((event) => event.happened);
+        const latestEvent = events.find((event) => event.happened);
 
         // find next event
-        const nextEvent = reversed.find((event) => event.next);
+        const nextEvent = events.find((event) => event.next);
 
         // find progress between them
         if (latestEvent && nextEvent) {

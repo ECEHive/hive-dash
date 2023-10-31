@@ -85,7 +85,13 @@ export default function TopBarNavigation(props) {
                 <Menu>
                     <MenuButton>
                         <HStack>
-                            <Heading size="md">3D Printing</Heading>
+                            <Heading
+                                size="md"
+                                fontFamily="Rubik"
+                                fontWeight="medium"
+                            >
+                                3D Printing
+                            </Heading>
                             {/* <Icon as={iconSet.hamburger} /> */}
                         </HStack>
                     </MenuButton>
