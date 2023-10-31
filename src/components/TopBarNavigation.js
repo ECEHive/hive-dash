@@ -29,7 +29,7 @@ import logoLight from '@/assets/logo_light.png';
 
 import AuthMenu from './auth/AuthMenu';
 
-export default function TopBarNavigation(props) {
+export default function TopBarNavigation({ pages }) {
     const { colorMode, toggleColorMode } = useColorMode();
 
     const { section } = useNav();
@@ -90,7 +90,7 @@ export default function TopBarNavigation(props) {
                                 fontFamily="Rubik"
                                 fontWeight="medium"
                             >
-                                3D Printing
+                                {pages[section]}
                             </Heading>
                             {/* <Icon as={iconSet.hamburger} /> */}
                         </HStack>

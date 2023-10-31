@@ -521,6 +521,15 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                                         />
                                                                     );
                                                                 })}
+                                                            <Text
+                                                                fontSize="xs"
+                                                                color="secondaryText"
+                                                                alignSelf="start"
+                                                            >
+                                                                Wait times do not account for The HIVE&apos;s closed
+                                                                hours. Prints are not guaranteed to be started during
+                                                                closed hours.
+                                                            </Text>
                                                         </>
                                                     );
                                                 }}

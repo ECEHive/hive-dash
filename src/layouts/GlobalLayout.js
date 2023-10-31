@@ -4,6 +4,11 @@ import Footer from '@/components/Footer';
 import TopBar from '@/components/TopBarNavigation';
 
 export default function GlobalLayout({ children }) {
+    const pages = {
+        printing: '3D Printing',
+        config: 'Configuration'
+    };
+
     return (
         <>
             <Grid
@@ -18,7 +23,7 @@ export default function GlobalLayout({ children }) {
                 overflow="hidden"
             >
                 <GridItem area="header">
-                    <TopBar />
+                    <TopBar pages={pages} />
                 </GridItem>
 
                 <GridItem
