@@ -12,7 +12,8 @@ import { PrintStates, StateColors } from '@/util/states';
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
     const { betterPrintData } = usePrintParser(currentPrintData);
-    const { progress, progressBarColor, progressMessage, complete } = usePrintProgress(currentPrintData);
+    const { progress, progressBarColor, progressMessage, complete, timeLeftHumanizedDetailed, timeLeftHumanized } =
+        usePrintProgress(currentPrintData);
 
     return (
         <>
@@ -112,7 +113,7 @@ export default function PrinterCard({ data }) {
                                                 spacing={1}
                                             >
                                                 <Icon as={iconSet.clock} />
-                                                <Text>{progressMessage}</Text>
+                                                <Text>{timeLeftHumanizedDetailed}</Text>
                                             </HStack>
                                         )}
                                         {/* </Tooltip> */}
