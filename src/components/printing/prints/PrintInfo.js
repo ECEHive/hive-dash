@@ -378,7 +378,7 @@ export default function PrintInfo({ selectedPrintData }) {
                                             >
                                                 <BigPreview
                                                     files={selectedPrintData.stlFiles}
-                                                    filesOnTop
+                                                    altBackground
                                                 />
                                             </Box>
                                         ) : (

@@ -152,12 +152,13 @@ function FileList({ metadatas, selectedFile, setSelectedFile }) {
     );
 }
 
-export default function BigPreview({ files, filesOnTop }) {
+export default function BigPreview({ files, filesOnTop, altBackground }) {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const [metadatas, setMetadatas] = useState({});
 
     const bgColor = useColorModeValue('chakra-subtle-bg', 'chakra-body-bg');
+    const bgColorAlt = useColorModeValue('chakra-subtle-bg', 'chakra-subtle-bg');
 
     const fileRefs = useMemo(() => {
         if (files) {
@@ -233,7 +234,7 @@ export default function BigPreview({ files, filesOnTop }) {
                             w="full"
                             h="full"
                             flexGrow={1}
-                            bgColor={bgColor}
+                            bgColor={altBackground ? bgColorAlt : bgColor}
                             position="relative"
                             borderRadius={5}
                         >

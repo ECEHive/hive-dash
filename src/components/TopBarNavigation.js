@@ -75,7 +75,7 @@ export default function TopBarNavigation(props) {
                 <NextImage
                     alt="HIVE logo"
                     src={colorMode === 'dark' ? logoDark : logoLight}
-                    height={36}
+                    height={34}
                     placeholder="blur"
                     priority
                 />
