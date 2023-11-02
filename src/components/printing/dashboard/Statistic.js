@@ -4,7 +4,7 @@ export default function Statistic({ name, value, icon }) {
     return (
         <Card
             variant="outline"
-            borderRadius={10}
+            // borderRadius={10}
             w="100%"
             // bgColor={useColorModeValue('gray.200', 'gray.600')}
             flexGrow={1}

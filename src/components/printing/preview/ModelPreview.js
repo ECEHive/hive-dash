@@ -27,6 +27,7 @@ export default function ModelPreview({ printData, ...props }) {
     }, [printData]);
 
     const [selectedFile, setSelectedFile] = useState(0);
+    const [mouseIn, setMouseIn] = useState(false);
 
     const { isOpen: isPreviewOpen, onOpen: onPreviewOpen, onClose: onPreviewClose } = useDisclosure();
 
@@ -38,6 +39,8 @@ export default function ModelPreview({ printData, ...props }) {
             <Box
                 position="relative"
                 {...props}
+                onMouseEnter={() => setMouseIn(true)}
+                onMouseLeave={() => setMouseIn(false)}
             >
                 {files?.length > 0 ? (
                     <>
@@ -48,59 +51,59 @@ export default function ModelPreview({ printData, ...props }) {
                             files={files}
                         />
 
-                        <VStack
-                            zIndex="banner"
-                            p={2}
-                            position="absolute"
-                            w="full"
-                            h="auto"
-                        >
-                            <HStack w="full">
-                                <Spacer />
-                                <IconButton
-                                    size="xs"
-                                    icon={<Icon as={iconSet.external} />}
-                                    variant="ghost"
-                                    onClick={onPreviewOpen}
-                                />
-                            </HStack>
-                        </VStack>
+                        {mouseIn && (
+                            <>
+                                <VStack
+                                    zIndex="banner"
+                                    p={2}
+                                    position="absolute"
+                                    w="full"
+                                    h="auto"
+                                >
+                                    <HStack w="full">
+                                        <Spacer />
+                                        <IconButton
+                                            size="xs"
+                                            icon={<Icon as={iconSet.external} />}
+                                            variant="ghost"
+                                            onClick={onPreviewOpen}
+                                        />
+                                    </HStack>
+                                </VStack>
 
-                        <VStack
-                            zIndex="banner"
-                            p={2}
-                            position="absolute"
-                            bottom={0}
-                            w="full"
-                            h="auto"
-                            align="center"
-                        >
-                            <IconButton
-                                size="xs"
-                                variant="unset"
-                            />
-                            <HStack
-                                w="full"
-                                justify="center"
-                                spacing={2}
-                                gap={0}
-                            >
-                                {files.map((file, index) => (
-                                    <Icon
-                                        as={iconSet.paginateDot}
-                                        key={file}
-                                        fontSize="sm"
-                                        variant="ghost"
-                                        color={index === selectedFile ? selectedColor : unselectedColor}
-                                        onClick={() => {
-                                            if (index === selectedFile) return;
-                                            setSelectedFile(index);
-                                        }}
-                                        cursor="pointer"
-                                    />
-                                ))}
-                            </HStack>
-                        </VStack>
+                                <VStack
+                                    zIndex="banner"
+                                    p={2}
+                                    position="absolute"
+                                    bottom={0}
+                                    w="full"
+                                    h="auto"
+                                    align="center"
+                                >
+                                    <HStack
+                                        w="full"
+                                        justify="center"
+                                        spacing={2}
+                                        gap={0}
+                                    >
+                                        {files.map((file, index) => (
+                                            <Icon
+                                                as={iconSet.paginateDot}
+                                                key={file}
+                                                fontSize="sm"
+                                                variant="ghost"
+                                                color={index === selectedFile ? selectedColor : unselectedColor}
+                                                onClick={() => {
+                                                    if (index === selectedFile) return;
+                                                    setSelectedFile(index);
+                                                }}
+                                                cursor="pointer"
+                                            />
+                                        ))}
+                                    </HStack>
+                                </VStack>
+                            </>
+                        )}
 
                         <STLViewer
                             url={files[selectedFile]}

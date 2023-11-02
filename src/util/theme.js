@@ -1,4 +1,4 @@
-import { Modal, extendTheme } from '@chakra-ui/react';
+import { Card, Modal, Progress, extendTheme } from '@chakra-ui/react';
 
 const config = {
     initialColorMode: 'dark', // 'dark' | 'light'
@@ -8,6 +8,14 @@ const config = {
 Modal.defaultProps = {
     motionPreset: 'slideInBottom'
     // bgColor: 'gray.900'
+};
+
+Progress.defaultProps = {
+    borderRadius: 'full'
+};
+
+Card.defaultProps = {
+    borderRadius: 10
 };
 
 const theme = extendTheme({

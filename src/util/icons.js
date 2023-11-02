@@ -18,7 +18,8 @@ import {
     SearchIcon,
     SettingsIcon,
     SunIcon,
-    TimeIcon
+    TimeIcon,
+    ViewIcon
 } from '@chakra-ui/icons';
 
 import { BsDot } from 'react-icons/bs';
@@ -73,6 +74,7 @@ const iconSet = {
     search: SearchIcon,
     settings: SettingsIcon,
     dashboard: FaTachometerAlt,
+    view: ViewIcon,
     add: AddIcon,
     table: FaTable,
     pencil: FaPencil,

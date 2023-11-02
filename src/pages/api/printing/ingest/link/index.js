@@ -1,5 +1,7 @@
 import clientPromise from '@/lib/mongodb';
 
+import { PrintStates } from '@/util/states';
+
 export default async function handler(req, res) {
     const mongoClient = await clientPromise;
 
@@ -15,20 +17,21 @@ export default async function handler(req, res) {
             .findOneAndUpdate(
                 {
                     trayName: trayName,
-                    $or: [
-                        // if prints have matching names, this allows us to find the one that hasn't been linked
-                        {
-                            linkedPrintId: ''
-                        },
-                        {
-                            linkedPrintId: {
-                                $exists: false
-                            }
-                        },
-                        {
-                            linkedPrintId: null
-                        }
-                    ]
+                    // $or: [
+                    //     // if prints have matching names, this allows us to find the one that hasn't been linked
+                    //     {
+                    //         linkedPrintId: ''
+                    //     },
+                    //     {
+                    //         linkedPrintId: {
+                    //             $exists: false
+                    //         }
+                    //     },
+                    //     {
+                    //         linkedPrintId: null
+                    //     }
+                    // ],
+                    $or: [{ state: PrintStates.FAILED }, { state: PrintStates.QUEUED }, { state: PrintStates.PRINTING }]
                 },
                 {
                     $set: {

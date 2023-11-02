@@ -194,6 +194,7 @@ export default function usePrintProgress(printData) {
         progressBarColor,
         progressCircleColor,
         progressMessage,
-        progressMessageColor
+        progressMessageColor,
+        startTime
     };
 }

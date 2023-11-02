@@ -52,7 +52,7 @@ function Navigation({ pageData, baseUrl, pathPage }) {
                                                     size="lg"
                                                     icon={<Icon as={element.icon} />}
                                                     variant={active ? 'solid' : 'ghost'}
-                                                    colorScheme={active ? 'twitter' : element?.colorScheme}
+                                                    colorScheme={active ? 'blue' : element?.colorScheme}
                                                     as={NextLink}
                                                     href={baseUrl + element.href}
                                                     isActive={active}
