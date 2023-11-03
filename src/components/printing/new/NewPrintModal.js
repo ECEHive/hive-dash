@@ -590,7 +590,7 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                         <FormControl>
                                                             <FormLabel>Material</FormLabel>
                                                             <Select
-                                                                options={form.values.printerType.materials.map(
+                                                                options={form.values.printerType?.materials.map(
                                                                     (material) => {
                                                                         return {
                                                                             label: material,
@@ -619,7 +619,9 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                                     {...field}
                                                                     type="number"
                                                                 />
-                                                                <InputRightAddon>in</InputRightAddon>
+                                                                <InputRightAddon>
+                                                                    {form.values.printerType.materialUnits.symbol}
+                                                                </InputRightAddon>
                                                             </InputGroup>
                                                         </FormControl>
                                                     )}

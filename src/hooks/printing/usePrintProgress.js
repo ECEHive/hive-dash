@@ -12,6 +12,11 @@ export default function usePrintProgress(printData) {
     const [timeLeftHumanized, setTimeLeftHumanized] = useState('');
     const [complete, setComplete] = useState(false);
 
+    const queueTime = useMemo(() => {
+        if (!printData) return null;
+        return dayjs.utc(printData.queuedAt);
+    }, [printData]);
+
     const startTime = useMemo(() => {
         if (!printData) return null;
         return dayjs.utc(printData.events.find((e) => e.type === PrintStates.PRINTING)?.timestamp);
@@ -195,6 +200,7 @@ export default function usePrintProgress(printData) {
         progressCircleColor,
         progressMessage,
         progressMessageColor,
-        startTime
+        startTime,
+        queueTime
     };
 }

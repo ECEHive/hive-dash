@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { Box, HStack } from '@chakra-ui/react';
+import { Box, Flex, HStack } from '@chakra-ui/react';
 
 import { useRouter } from 'next/router';
 
@@ -48,15 +48,15 @@ export default function FindPrint(props) {
                         setSelectedPrintId={setSelectedPrintId}
                     />
 
-                    <HStack
+                    <Flex
                         w="auto"
                         h="full"
                         flexGrow={1}
-                        overflow="auto"
+                        overflow="hidden"
                         justify="center"
                     >
                         <PrintInfo selectedPrintData={selectedPrintData} />
-                    </HStack>
+                    </Flex>
                 </HStack>
             </Box>
         </>

@@ -120,6 +120,9 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                     <Text
                                         fontSize="md"
                                         fontWeight="medium"
+                                        whiteSpace="normal"
+                                        overflowWrap="break-word"
+                                        textAlign="left"
                                     >
                                         {betterPrintData.trayName}
                                     </Text>

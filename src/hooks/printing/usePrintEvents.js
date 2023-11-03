@@ -161,7 +161,10 @@ export default function usePrintEvents(print) {
 
                 description: eventNames[event.type],
                 formattedTimestamp: dayjs.utc(event.timestamp).local().format('MM/DD h:mm A'),
-                humanizedTimestamp: dayjs.duration(dayjs.utc(event.timestamp).diff(dayjs().utc())).humanize(true),
+                humanizedTimestamp: dayjs.duration(dayjs.utc(event.timestamp).diff(dayjs().utc())).humanize(false),
+                humanizedDetailedTimestamp: dayjs
+                    .duration(dayjs.utc(event.timestamp).diff(dayjs().utc()))
+                    .humanize(true),
                 icon: eventIcons[event.type],
                 color: eventColors[event.type]
             };

@@ -8,15 +8,12 @@ import {
     Box,
     Button,
     ButtonGroup,
-    Card,
-    CardBody,
     Flex,
     FormControl,
     FormHelperText,
     FormLabel,
     HStack,
     Heading,
-    Icon,
     Input,
     InputGroup,
     Switch,
@@ -31,8 +28,6 @@ import { Field, Form, Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 
 import useRequest from '@/hooks/useRequest';
-
-import iconSet from '@/util/icons';
 
 import ConfigLayout from '@/layouts/ConfigLayout';
 import GlobalLayout from '@/layouts/GlobalLayout';
@@ -64,78 +59,84 @@ export default function WebsiteSettings(props) {
     }, [refresh]);
 
     return (
-        <Flex
+        <Box
             w="full"
             h="full"
-            p={5}
-            overflow="auto"
-            direction="column"
-            align="center"
+            overflow="hidden"
         >
-            <VStack
+            <Flex
                 w="full"
-                maxW="2xl"
-                h="auto"
-                spacing={3}
-                align="flex-start"
-                justify="start"
-                px={1}
+                h="full"
+                overflow="auto"
+                direction="column"
+                align="center"
             >
-                <Heading
-                    size="lg"
-                    fontFamily="body"
+                <VStack
+                    spacing={5}
+                    h="auto"
+                    w="6xl"
+                    align="start"
+                    justify="start"
+                    maxW="6xl"
+                    p={5}
                 >
-                    Website configuration
-                </Heading>
+                    <Heading
+                        size="lg"
+                        fontFamily="body"
+                    >
+                        Website configuration
+                    </Heading>
 
-                <Card
-                    variant="elevated"
-                    w="full"
-                >
-                    <CardBody p={0}>
-                        {config?.banner && (
-                            <Formik
-                                initialValues={{
-                                    enabled: config.banner.enabled,
-                                    type: config.banner.type,
-                                    title: config.banner.title,
-                                    description: config.banner.description
-                                }}
-                                onSubmit={(values, actions) => {
-                                    let config = {
-                                        banner: {
-                                            ...values
-                                        }
-                                    };
+                    {config?.banner && (
+                        <Formik
+                            initialValues={{
+                                enabled: config.banner.enabled,
+                                type: config.banner.type,
+                                title: config.banner.title,
+                                description: config.banner.description
+                            }}
+                            onSubmit={(values, actions) => {
+                                let config = {
+                                    banner: {
+                                        ...values
+                                    }
+                                };
 
-                                    request('/api/config/website', {
-                                        method: 'PUT',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify(config)
-                                    })
-                                        .then((data) => {
-                                            toast({
-                                                description: 'Saved banner',
-                                                status: 'success',
-                                                duration: 5000
-                                            });
-                                        })
-                                        .catch((err) => {})
-                                        .finally(() => {
-                                            actions.setSubmitting(false);
-                                            refresh();
+                                request('/api/config/website', {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(config)
+                                })
+                                    .then((data) => {
+                                        toast({
+                                            description: 'Saved banner',
+                                            status: 'success',
+                                            duration: 5000
                                         });
-                                }}
-                            >
-                                {(props) => (
-                                    <Form>
+                                    })
+                                    .catch((err) => {})
+                                    .finally(() => {
+                                        actions.setSubmitting(false);
+                                        refresh();
+                                    });
+                            }}
+                        >
+                            {(props) => (
+                                <Form
+                                    style={{
+                                        width: '100%'
+                                    }}
+                                >
+                                    <VStack
+                                        spacing={3}
+                                        w="full"
+                                    >
                                         <VStack
                                             spacing={3}
                                             align="start"
                                             w="full"
-                                            p={5}
                                         >
                                             <Text
                                                 fontSize="2xl"
@@ -214,14 +215,14 @@ export default function WebsiteSettings(props) {
                                             </Field>
 
                                             <VStack
-                                                w="100%"
+                                                w="full"
                                                 h="auto"
                                                 align="start"
                                             >
                                                 <Text>Banner preview</Text>
                                                 <Alert
                                                     status={props.values.type.value}
-                                                    w="100%"
+                                                    w="full"
                                                     h="auto"
                                                 >
                                                     <AlertIcon />
@@ -244,15 +245,10 @@ export default function WebsiteSettings(props) {
                                             w="full"
                                             h="auto"
                                             justify="end"
-                                            borderTop="1px"
-                                            borderColor="chakra-border-color"
-                                            py={3}
-                                            px={5}
                                         >
                                             <ButtonGroup w="auto">
                                                 <Button
                                                     colorScheme="blue"
-                                                    leftIcon={<Icon as={iconSet.save} />}
                                                     isLoading={props.isSubmitting}
                                                     type={'submit'}
                                                     onClick={() => {
@@ -266,14 +262,14 @@ export default function WebsiteSettings(props) {
                                                 </Button>
                                             </ButtonGroup>
                                         </HStack>
-                                    </Form>
-                                )}
-                            </Formik>
-                        )}
-                    </CardBody>
-                </Card>
-            </VStack>
-        </Flex>
+                                    </VStack>
+                                </Form>
+                            )}
+                        </Formik>
+                    )}
+                </VStack>
+            </Flex>
+        </Box>
     );
 }
 

@@ -2,14 +2,15 @@ import { useMemo } from 'react';
 
 import {
     Box,
-    Button,
     CircularProgress,
+    Divider,
+    Flex,
     HStack,
     Heading,
-    Icon,
     Table,
     TableContainer,
     Tag,
+    TagLabel,
     Tbody,
     Td,
     Text,
@@ -19,16 +20,31 @@ import {
     VStack
 } from '@chakra-ui/react';
 
+import Link from 'next/link';
+
 import usePrinting from '@/contexts/printing/PrintingContext';
 
+import usePrintEvents from '@/hooks/printing/usePrintEvents';
 import usePrintProgress from '@/hooks/printing/usePrintProgress';
 
-import iconSet from '@/util/icons';
+import { PrintStates } from '@/util/states';
 
 import GlobalLayout from '@/layouts/GlobalLayout';
 import Layout from '@/layouts/PrintingLayout';
 
-function PrintItem({ print, printer, printerType }) {
+function PrinterTag({ printer, printerType }) {
+    return (
+        <Tag
+            colorScheme={printerType.color}
+            as={Link}
+            href={`/printing/printers/${printer.id}`}
+        >
+            <TagLabel>{printer.displayName}</TagLabel>
+        </Tag>
+    );
+}
+
+function PrintingItem({ print, printer, printerType }) {
     const {
         startTime,
         progress,
@@ -45,13 +61,18 @@ function PrintItem({ print, printer, printerType }) {
                 <HStack>
                     <VStack align="start">
                         <Text
-                            fontWeight="medium"
+                            fontWeight="semibold"
                             fontSize="lg"
+                            as={Link}
+                            href={`/printing/prints/${print._id}`}
                         >
                             {print.trayName}
                         </Text>
 
-                        <Tag colorScheme={printerType.color}>{print.printer}</Tag>
+                        <PrinterTag
+                            printer={printer}
+                            printerType={printerType}
+                        />
                     </VStack>
                 </HStack>
             </Td>
@@ -92,19 +113,18 @@ function PrintItem({ print, printer, printerType }) {
                         fontWeight="medium"
                         fontSize="lg"
                     >
-                        {startTime.format('hh:mm A')}
+                        {startTime.local().format('hh:mm A')}
                     </Text>
                     <Text
                         fontWeight="normal"
                         color="secondaryText"
                         fontSize="sm"
-                        fontFamily="mono"
                     >
-                        {startTime.format('MM/DD/YYYY')}
+                        {startTime.local().format('MM/DD/YYYY')}
                     </Text>
                 </VStack>
             </Td>
-            <Td>
+            {/* <Td>
                 <Button
                     leftIcon={<Icon as={iconSet.view} />}
                     size="sm"
@@ -112,7 +132,104 @@ function PrintItem({ print, printer, printerType }) {
                 >
                     Preview
                 </Button>
+            </Td> */}
+        </Tr>
+    );
+}
+
+function QueuedItem({ print, printer, printerType }) {
+    const {
+        startTime,
+        progress,
+        timeLeft,
+        progressBarColor,
+        progressMessage,
+        queueTime,
+        timeLeftHumanized,
+        progressCircleColor
+    } = usePrintProgress(print);
+
+    const { detailedEvents } = usePrintEvents(print);
+
+    const estStart = useMemo(() => {
+        if (!detailedEvents) return null;
+        return detailedEvents.find((e) => e.type === PrintStates.PRINTING && !e.happened).humanizedTimestamp;
+    }, [detailedEvents]);
+
+    return (
+        <Tr>
+            <Td>
+                <HStack>
+                    <VStack align="start">
+                        <Text
+                            fontWeight="semibold"
+                            fontSize="lg"
+                            as={Link}
+                            href={`/printing/prints/${print._id}`}
+                        >
+                            {print.trayName}
+                        </Text>
+
+                        <PrinterTag
+                            printer={printer}
+                            printerType={printerType}
+                        />
+                    </VStack>
+                </HStack>
             </Td>
+            <Td>
+                <VStack align="start">
+                    <Text fontWeight="medium">{estStart}</Text>
+                </VStack>
+            </Td>
+            <Td>
+                <VStack
+                    spacing={1}
+                    align="start"
+                >
+                    <Tag
+                        colorScheme={progressBarColor}
+                        size="md"
+                    >
+                        <TagLabel>{progressMessage}</TagLabel>
+                    </Tag>
+                    <Text
+                        color="secondaryText"
+                        fontSize="sm"
+                    >
+                        {timeLeftHumanized}
+                    </Text>
+                </VStack>
+            </Td>
+            <Td>
+                <VStack
+                    align="start"
+                    spacing={0}
+                >
+                    <Text
+                        fontWeight="medium"
+                        fontSize="lg"
+                    >
+                        {queueTime.local().format('hh:mm A')}
+                    </Text>
+                    <Text
+                        fontWeight="normal"
+                        color="secondaryText"
+                        fontSize="sm"
+                    >
+                        {queueTime.local().format('MM/DD/YYYY')}
+                    </Text>
+                </VStack>
+            </Td>
+            {/* <Td>
+                <Button
+                    leftIcon={<Icon as={iconSet.view} />}
+                    size="sm"
+                    colorScheme="blue"
+                >
+                    Preview
+                </Button>
+            </Td> */}
         </Tr>
     );
 }
@@ -124,7 +241,9 @@ export default function Logs(props) {
         let printIds = [];
 
         printers.forEach((printer) => {
-            printIds = printIds.concat(printer.queue);
+            if (printer.currentTray && !printer.queue.includes(printer.currentTray)) {
+                printIds = printIds.concat(printer.queue);
+            }
         });
 
         return printIds;
@@ -144,59 +263,113 @@ export default function Logs(props) {
 
     return (
         <>
-            {/* <CompleteConfirm /> */}
             <Box
                 w="full"
                 h="full"
                 overflow="hidden"
             >
-                <VStack
-                    spacing={8}
-                    h="full"
+                <Flex
                     w="full"
+                    h="full"
                     overflow="auto"
-                    align="start"
-                    p={5}
+                    direction="column"
+                    align="center"
                 >
-                    <VStack w="full">
-                        <HStack w="full">
-                            <Heading size="lg">Prints currently printing</Heading>
-                        </HStack>
+                    <VStack
+                        spacing={8}
+                        h="auto"
+                        w="full"
+                        align="start"
+                        justify="start"
+                        maxW="6xl"
+                        p={5}
+                    >
+                        <VStack
+                            w="full"
+                            h="auto"
+                        >
+                            <HStack w="full">
+                                <Heading size="lg">Prints currently printing</Heading>
+                            </HStack>
 
-                        <TableContainer w="full">
-                            <Table
-                                size="md"
-                                w="full"
-                            >
-                                <Thead>
-                                    <Tr>
-                                        <Th>Print</Th>
-                                        <Th>Progress</Th>
-                                        <Th>Printing since</Th>
-                                        <Th>Actions</Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {printsPrinting.map((printId) => {
-                                        const print = queue.find((p) => p._id.toString() === printId);
+                            <TableContainer w="full">
+                                <Table
+                                    size="md"
+                                    w="full"
+                                >
+                                    <Thead>
+                                        <Tr>
+                                            <Th>Print</Th>
+                                            <Th>Progress</Th>
+                                            <Th>Printing since</Th>
+                                            {/* <Th>Actions</Th> */}
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        {printsPrinting.map((printId) => {
+                                            const print = queue.find((p) => p._id.toString() === printId);
+                                            const printer = printers.find((p) => p.id === print?.printer);
+                                            const printerType = printerTypes.find((t) => t.id === printer.type);
 
-                                        const printer = printers.find((p) => p.id === print.printer);
-                                        const printerType = printerTypes.find((t) => t.id === printer.type);
+                                            return (
+                                                <PrintingItem
+                                                    key={printId}
+                                                    print={print}
+                                                    printer={printer}
+                                                    printerType={printerType}
+                                                />
+                                            );
+                                        })}
+                                    </Tbody>
+                                </Table>
+                            </TableContainer>
+                        </VStack>
 
-                                        return (
-                                            <PrintItem
-                                                key={printId}
-                                                print={print}
-                                                printer={printer}
-                                                printerType={printerType}
-                                            />
-                                        );
-                                    })}
-                                </Tbody>
-                            </Table>
-                        </TableContainer>
+                        <Divider />
+
+                        <VStack
+                            w="full"
+                            h="auto"
+                        >
+                            <HStack w="full">
+                                <Heading size="lg">Prints in queue</Heading>
+                            </HStack>
+
+                            <TableContainer w="full">
+                                <Table
+                                    size="md"
+                                    w="full"
+                                >
+                                    <Thead>
+                                        <Tr>
+                                            <Th>Print</Th>
+                                            <Th>Est. time until start</Th>
+                                            <Th>Status</Th>
+                                            <Th>Queued</Th>
+                                            {/* <Th>Actions</Th> */}
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        {printsInQueue.map((printId) => {
+                                            const print = queue.find((p) => p._id.toString() === printId);
+                                            const printer = printers.find((p) => p.id === print?.printer);
+                                            const printerType = printerTypes.find((t) => t.id === printer.type);
+
+                                            return (
+                                                <QueuedItem
+                                                    key={printId}
+                                                    print={print}
+                                                    printer={printer}
+                                                    printerType={printerType}
+                                                />
+                                            );
+                                        })}
+                                    </Tbody>
+                                </Table>
+                            </TableContainer>
+                        </VStack>
                     </VStack>
-                </VStack>
+                </Flex>
             </Box>
         </>
     );

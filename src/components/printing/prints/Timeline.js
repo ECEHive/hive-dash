@@ -46,7 +46,7 @@ function TimelineEvent({ event }) {
                         top={0}
                         align={rtl ? 'end' : 'start'}
                         spacing={1}
-                        zIndex={event.happened ? 2 : 1}
+                        zIndex={event.happened ? 3 : 2}
                     >
                         <Avatar
                             bgColor={event.happened ? avatarCompleteColor : avatarIncompleteColor}
@@ -78,7 +78,7 @@ function TimelineEvent({ event }) {
                                     fontSize="xs"
                                     color="secondaryText"
                                 >
-                                    {!event.happened && 'expected '} {event.humanizedTimestamp}
+                                    {!event.happened && 'expected '} {event.humanizedDetailedTimestamp}
                                 </Text>
                             </VStack>
                         ) : null}
@@ -176,7 +176,7 @@ export default function Timeline({ print }) {
                             fontSize="sm"
                             color="secondaryText"
                         >
-                            {latest.humanizedTimestamp}
+                            {latest.humanizedDetailedTimestamp}
                         </Text>
                     </VStack>
                 </HStack>

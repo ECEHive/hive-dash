@@ -43,7 +43,7 @@ export default function PrinterListItem({ data }) {
                     <Badge colorScheme={StateColors[expandedPrinterData.state]}>{expandedPrinterData.state}</Badge>
                 </Td>
                 <Td>
-                    <Text>{expandedPrinterData.queueLength}</Text>
+                    <Text fontWeight="medium">{expandedPrinterData.queueLength}</Text>
                 </Td>
 
                 <Td>

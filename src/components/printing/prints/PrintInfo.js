@@ -8,6 +8,7 @@ import {
     Card,
     CardBody,
     Divider,
+    Flex,
     GridItem,
     HStack,
     Heading,
@@ -30,7 +31,6 @@ import {
 } from '@chakra-ui/react';
 
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
 
@@ -42,11 +42,11 @@ import usePrintUpdate from '@/hooks/printing/usePrintUpdate';
 import iconSet from '@/util/icons';
 import { PrintStates } from '@/util/states';
 
+import PrintInfoFields from '@/components/printing/PrintInfoFields';
+import BigPreview from '@/components/printing/preview/BigPreview';
 import PrintEditorModal from '@/components/printing/printEdit/PrintEditorModal';
 import UpdateModal from '@/components/printing/printers/UpdateModal';
 import Timeline from '@/components/printing/prints/Timeline';
-
-import BigPreview from '../preview/BigPreview';
 
 function DetailsPane({ title, icon, rowSpan, colSpan, children }) {
     return (
@@ -127,33 +127,6 @@ export default function PrintInfo({ selectedPrintData }) {
         return selectedPrintData?.events?.[selectedPrintData.events.length - 1];
     }, [selectedPrintData]);
 
-    const dataFields = useMemo(() => {
-        return [
-            {
-                label: 'Printer',
-                icon: iconSet.printer,
-                value: printerData?.displayName || betterPrintData?.printer,
-                link: `/printing/printers/${betterPrintData?.printer}`
-            },
-            {
-                label: 'Material',
-                icon: iconSet.material,
-                value: betterPrintData?.materialType
-            },
-            {
-                label: 'Est. material',
-                icon: iconSet.materialAmount,
-                value: betterPrintData?.materialUsage,
-                suffix: betterPrintData?.materialSymbol
-            },
-            {
-                label: 'Est. time',
-                icon: iconSet.clock,
-                value: betterPrintData?.estTimeFormatted
-            }
-        ];
-    }, [printerData, betterPrintData]);
-
     return (
         <>
             {selectedPrintData && (
@@ -174,12 +147,12 @@ export default function PrintInfo({ selectedPrintData }) {
                 </>
             )}
 
-            <Box
-                h="full"
+            <Flex
                 w="full"
-                maxW="6xl"
+                h="full"
                 overflow="auto"
-                p={5}
+                direction="column"
+                align="center"
             >
                 {selectedPrintData ? (
                     <>
@@ -190,7 +163,8 @@ export default function PrintInfo({ selectedPrintData }) {
                             justify="center"
                             align="start"
                             spacing={3}
-                            px={1}
+                            p={5}
+                            maxW="6xl"
                         >
                             <HStack
                                 w="full"
@@ -226,65 +200,10 @@ export default function PrintInfo({ selectedPrintData }) {
                                             </Tooltip>
                                         )}
                                     </HStack>
-                                    <HStack
-                                        w="auto"
-                                        h="auto"
-                                        align="center"
-                                        justify="start"
-                                        pb={2}
-                                        spacing={3}
-                                        overflow="auto"
-                                        whiteSpace="nowrap"
-                                        // borderRight={actions && '1px'}
-                                        // borderRightColor={actions && 'chakra-border-color'}
-                                    >
-                                        {dataFields.map((field, i) => {
-                                            return (
-                                                <>
-                                                    <VStack
-                                                        spacing={1}
-                                                        align="start"
-                                                    >
-                                                        <HStack
-                                                            alignItems="center"
-                                                            spacing={2}
-                                                            color="secondaryText"
-                                                        >
-                                                            <Icon
-                                                                fontSize="lg"
-                                                                as={field.icon}
-                                                            />
-                                                            <HStack
-                                                                align="end"
-                                                                spacing={1}
-                                                                height="full"
-                                                            >
-                                                                <Text
-                                                                    as={field.link ? Link : 'span'}
-                                                                    fontSize="xl"
-                                                                    fontWeight="medium"
-                                                                    lineHeight={1}
-                                                                    href={field?.link}
-                                                                >
-                                                                    {field.value}
-                                                                </Text>
-                                                                {field.suffix && (
-                                                                    <Text fontSize="sm">{field.suffix}</Text>
-                                                                )}
-                                                            </HStack>
-                                                        </HStack>
-                                                    </VStack>
-                                                    {i < dataFields.length - 1 && (
-                                                        <Icon
-                                                            color="secondaryText"
-                                                            fontSize="sm"
-                                                            as={iconSet.dot}
-                                                        />
-                                                    )}
-                                                </>
-                                            );
-                                        })}
-                                    </HStack>
+                                    <PrintInfoFields
+                                        fields={['printer', 'material', 'materialAmount', 'estTime']}
+                                        print={selectedPrintData}
+                                    />
                                 </VStack>
                                 <Spacer />
                                 <Menu strategy="fixed">
@@ -404,7 +323,7 @@ export default function PrintInfo({ selectedPrintData }) {
                         <Text color="gray.400">select a print</Text>
                     </VStack>
                 )}
-            </Box>
+            </Flex>
         </>
     );
 }
