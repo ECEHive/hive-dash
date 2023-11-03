@@ -55,7 +55,7 @@ function Navigation({ pageData, baseUrl, pathPage }) {
                                                     colorScheme={active ? 'blue' : element?.colorScheme}
                                                     as={NextLink}
                                                     href={baseUrl + element.href}
-                                                    isActive={active}
+                                                    // isActive={active}
                                                     key={element.href}
                                                 />
                                             </Tooltip>
