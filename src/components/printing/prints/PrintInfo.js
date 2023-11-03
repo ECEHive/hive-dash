@@ -117,7 +117,7 @@ export default function PrintInfo({ selectedPrintData }) {
                 state: PrintStates.CANCELED,
                 events: [...selectedPrintData.events, event]
             };
-            printUpdater(selectedPrintData._id, data);
+            printUpdater(selectedPrintData._id, data, true);
             onCancelClose();
         },
         [printUpdater, onCancelClose, selectedPrintData]

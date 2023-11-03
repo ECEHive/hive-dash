@@ -131,7 +131,11 @@ export default function usePrintEvents(print) {
             );
 
             // snap progress to MIN_INTERVAL% intervals
-            if (event.type !== PrintStates.QUEUED && event.type !== PrintStates.COMPLETED) {
+            if (
+                event.type !== PrintStates.QUEUED &&
+                event.type !== PrintStates.COMPLETED &&
+                event.type !== PrintStates.CANCELED
+            ) {
                 progress = Math.max(previousProgress + MIN_INTERVAL, progress);
                 if (progress > MAX_PROGRESS) {
                     // move preceeding events by MIN_INTERVAL% to make room for this one
@@ -143,7 +147,7 @@ export default function usePrintEvents(print) {
                     }
                     progress = MAX_PROGRESS;
                 }
-            } else if (event.type === PrintStates.COMPLETED) {
+            } else if (event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED) {
                 progress = 100;
             }
             previousProgress = progress;

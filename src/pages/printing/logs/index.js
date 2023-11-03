@@ -61,7 +61,7 @@ function PrintingItem({ print, printer, printerType }) {
                 <HStack>
                     <VStack align="start">
                         <Text
-                            fontWeight="semibold"
+                            fontWeight="medium"
                             fontSize="lg"
                             as={Link}
                             href={`/printing/prints/${print._id}`}
@@ -90,13 +90,13 @@ function PrintingItem({ print, printer, printerType }) {
                         spacing={0}
                     >
                         <Text
+                            fontSize="md"
                             fontWeight="medium"
-                            fontSize="lg"
                         >
                             {progressMessage}
                         </Text>
                         <Text
-                            fontSize="sm"
+                            fontSize="xs"
                             color="secondaryText"
                         >
                             {timeLeft} left
@@ -111,14 +111,14 @@ function PrintingItem({ print, printer, printerType }) {
                 >
                     <Text
                         fontWeight="medium"
-                        fontSize="lg"
+                        fontSize="md"
                     >
                         {startTime.local().format('hh:mm A')}
                     </Text>
                     <Text
                         fontWeight="normal"
                         color="secondaryText"
-                        fontSize="sm"
+                        fontSize="xs"
                     >
                         {startTime.local().format('MM/DD/YYYY')}
                     </Text>
@@ -179,23 +179,29 @@ function QueuedItem({ print, printer, printerType }) {
             </Td>
             <Td>
                 <VStack align="start">
-                    <Text fontWeight="medium">{estStart}</Text>
+                    <Text
+                        fontWeight="medium"
+                        fontSize="md"
+                    >
+                        {estStart}
+                    </Text>
                 </VStack>
             </Td>
             <Td>
                 <VStack
-                    spacing={1}
+                    spacing={0}
                     align="start"
                 >
                     <Tag
                         colorScheme={progressBarColor}
                         size="md"
+                        w="auto"
                     >
                         <TagLabel>{progressMessage}</TagLabel>
                     </Tag>
                     <Text
                         color="secondaryText"
-                        fontSize="sm"
+                        fontSize="xs"
                     >
                         {timeLeftHumanized}
                     </Text>
@@ -208,14 +214,14 @@ function QueuedItem({ print, printer, printerType }) {
                 >
                     <Text
                         fontWeight="medium"
-                        fontSize="lg"
+                        fontSize="md"
                     >
                         {queueTime.local().format('hh:mm A')}
                     </Text>
                     <Text
                         fontWeight="normal"
                         color="secondaryText"
-                        fontSize="sm"
+                        fontSize="xs"
                     >
                         {queueTime.local().format('MM/DD/YYYY')}
                     </Text>
