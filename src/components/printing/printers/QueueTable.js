@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
-    Badge,
     Box,
     Button,
     ButtonGroup,
@@ -13,6 +12,8 @@ import {
     Spacer,
     Table,
     TableContainer,
+    Tag,
+    TagLabel,
     Tbody,
     Td,
     Text,
@@ -86,12 +87,12 @@ function QueueTableItem({
                         >
                             {betterPrintData.trayName}
                         </Link>
-                        <Badge
-                            variant="subtle"
+                        <Tag
+                            size="sm"
                             colorScheme={progressMessageColor}
                         >
-                            {progressMessage}
-                        </Badge>
+                            <TagLabel>{progressMessage}</TagLabel>
+                        </Tag>
                     </HStack>
                     <HStack
                         color="secondaryText"
@@ -375,12 +376,12 @@ export default function QueueTable({ selectedPrinterData, activePrint }) {
 
                                 {editMode && (
                                     <>
-                                        <Badge
-                                            fontSize="sm"
-                                            colorScheme="yellow"
+                                        <Text
+                                            fontSize="md"
+                                            fontWeight="bold"
                                         >
                                             {checkedPrints.length} selected
-                                        </Badge>
+                                        </Text>
                                         <Spacer />
                                         <ButtonGroup size="sm">
                                             <Button

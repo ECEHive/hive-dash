@@ -57,14 +57,14 @@ export default function Navigation({}) {
 
             {
                 type: 'spacer'
-            }
+            },
 
-            // {
-            //     type: 'button',
-            //     name: 'Knowledge base',
-            //     icon: <Icon as={iconSet.search} />,
-            //     href: '/knowledge'
-            // }
+            {
+                type: 'ext_button',
+                name: 'HIVE Wiki',
+                icon: iconSet.lightbulb,
+                href: 'https://wiki.hive.ece.gatech.edu/doku.php?id=start#d_printing'
+            }
         ],
         [onNewOpen]
     );

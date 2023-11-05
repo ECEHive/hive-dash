@@ -151,13 +151,13 @@ export default function NewPrintModal({ isOpen, onClose }) {
     const steps = useMemo(
         () => [
             {
-                title: 'STL preview',
+                title: 'STL upload',
                 checkComplete: (values) => {
                     return values?.stlFiles?.length > 0;
                 }
             },
             {
-                title: "Who's queuing?",
+                title: 'PI',
                 checkComplete: (values) => {
                     return values?.pi?.value?.length > 0;
                 }

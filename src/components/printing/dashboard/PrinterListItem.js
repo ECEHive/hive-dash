@@ -31,7 +31,7 @@ export default function PrinterListItem({ data }) {
                         </Text>
                         <HStack
                             color="secondaryText"
-                            fontSize="sm"
+                            fontSize="xs"
                             spacing={1}
                         >
                             <Icon as={iconSet.refresh} />

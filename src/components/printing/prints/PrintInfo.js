@@ -253,7 +253,7 @@ export default function PrintInfo({ selectedPrintData }) {
                                     </Alert>
                                 </Box>
                             ) : null}
-                            {selectedPrintData.state === PrintStates.CANCELED && (
+                            {/* {selectedPrintData.state === PrintStates.CANCELED && (
                                 <Box
                                     w="100%"
                                     h="auto"
@@ -266,7 +266,7 @@ export default function PrintInfo({ selectedPrintData }) {
                                         <AlertDescription>This print has been canceled</AlertDescription>
                                     </Alert>
                                 </Box>
-                            )}
+                            )} */}
                             {/* --- */}
 
                             <Timeline print={selectedPrintData} />
@@ -316,11 +316,11 @@ export default function PrintInfo({ selectedPrintData }) {
                     </>
                 ) : (
                     <VStack
-                        minH="100%"
+                        minH="full"
                         w="100%"
                         justify="center"
                     >
-                        <Text color="gray.400">select a print</Text>
+                        <Text color="secondaryText">select a print</Text>
                     </VStack>
                 )}
             </Flex>

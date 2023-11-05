@@ -239,21 +239,23 @@ export default function PrinterList({ selectedPrinter }) {
                     overflowY="auto"
                     overflowX="hidden"
                 >
-                    {matches.map((printer) => {
-                        return (
-                            <PrinterListItem
-                                key={printer._id}
-                                data={printer}
-                                queue={queue}
-                                onClick={() => {
-                                    push('/printing/printers/' + printer.id, undefined, {
-                                        shallow: true
-                                    });
-                                }}
-                                isActive={printer.id === selectedPrinter?.id}
-                            />
-                        );
-                    })}
+                    {matches
+                        // .sort((a, b) => b.state - a.state)
+                        .map((printer) => {
+                            return (
+                                <PrinterListItem
+                                    key={printer._id}
+                                    data={printer}
+                                    queue={queue}
+                                    onClick={() => {
+                                        push('/printing/printers/' + printer.id, undefined, {
+                                            shallow: true
+                                        });
+                                    }}
+                                    isActive={printer.id === selectedPrinter?.id}
+                                />
+                            );
+                        })}
                 </VStack>
             </VStack>
         </>

@@ -1,9 +1,13 @@
 import { useMemo } from 'react';
 
 import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
     Box,
     CircularProgress,
-    Divider,
     Flex,
     HStack,
     Heading,
@@ -247,25 +251,33 @@ export default function Logs(props) {
         let printIds = [];
 
         printers.forEach((printer) => {
-            if (printer.currentTray && !printer.queue.includes(printer.currentTray)) {
-                printIds = printIds.concat(printer.queue);
-            }
+            printer.queue.forEach((printId) => {
+                const print = queue.find((p) => p._id.toString() === printId);
+                if (print.state !== PrintStates.PRINTING) {
+                    printIds.push(printId);
+                }
+            });
         });
 
         return printIds;
-    }, [printers]);
+    }, [printers, queue]);
 
     const printsPrinting = useMemo(() => {
         let printIds = [];
 
         printers.forEach((printer) => {
-            if (printer.currentTray && printer.queue.includes(printer.currentTray)) {
+            const print = queue.find((p) => p._id.toString() === printer.currentTray);
+            if (
+                printer.currentTray &&
+                printer.queue.includes(printer.currentTray) &&
+                print.state === PrintStates.PRINTING
+            ) {
                 printIds.push(printer.currentTray);
             }
         });
 
         return printIds;
-    }, [printers]);
+    }, [printers, queue]);
 
     return (
         <>
@@ -282,98 +294,105 @@ export default function Logs(props) {
                     align="center"
                 >
                     <VStack
-                        spacing={8}
                         h="auto"
                         w="full"
                         align="start"
                         justify="start"
-                        maxW="6xl"
+                        maxW="8xl"
                         p={5}
                     >
-                        <VStack
+                        <Accordion
                             w="full"
-                            h="auto"
+                            allowMultiple
+                            allowToggle
+                            defaultIndex={[0]}
                         >
-                            <HStack w="full">
-                                <Heading size="lg">Prints currently printing</Heading>
-                            </HStack>
+                            <AccordionItem border="none">
+                                <AccordionButton px={0}>
+                                    <HStack w="full">
+                                        <Heading size="lg">Prints currently printing</Heading>
+                                    </HStack>
+                                    <AccordionIcon />
+                                </AccordionButton>
 
-                            <TableContainer w="full">
-                                <Table
-                                    size="md"
-                                    w="full"
-                                >
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Print</Th>
-                                            <Th>Progress</Th>
-                                            <Th>Printing since</Th>
-                                            {/* <Th>Actions</Th> */}
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {printsPrinting.map((printId) => {
-                                            const print = queue.find((p) => p._id.toString() === printId);
-                                            const printer = printers.find((p) => p.id === print?.printer);
-                                            const printerType = printerTypes.find((t) => t.id === printer.type);
+                                <AccordionPanel>
+                                    <TableContainer w="full">
+                                        <Table
+                                            size="md"
+                                            w="full"
+                                        >
+                                            <Thead>
+                                                <Tr>
+                                                    <Th>Print</Th>
+                                                    <Th>Progress</Th>
+                                                    <Th>Printing since</Th>
+                                                    {/* <Th>Actions</Th> */}
+                                                </Tr>
+                                            </Thead>
+                                            <Tbody>
+                                                {printsPrinting.map((printId) => {
+                                                    const print = queue.find((p) => p._id.toString() === printId);
+                                                    const printer = printers.find((p) => p.id === print?.printer);
+                                                    const printerType = printerTypes.find((t) => t.id === printer.type);
 
-                                            return (
-                                                <PrintingItem
-                                                    key={printId}
-                                                    print={print}
-                                                    printer={printer}
-                                                    printerType={printerType}
-                                                />
-                                            );
-                                        })}
-                                    </Tbody>
-                                </Table>
-                            </TableContainer>
-                        </VStack>
+                                                    return (
+                                                        <PrintingItem
+                                                            key={printId}
+                                                            print={print}
+                                                            printer={printer}
+                                                            printerType={printerType}
+                                                        />
+                                                    );
+                                                })}
+                                            </Tbody>
+                                        </Table>
+                                    </TableContainer>
+                                </AccordionPanel>
+                            </AccordionItem>
 
-                        <Divider />
+                            <AccordionItem border="none">
+                                <AccordionButton px={0}>
+                                    <HStack w="full">
+                                        <Heading size="lg">Prints in queue</Heading>
+                                    </HStack>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                                <AccordionPanel>
+                                    <TableContainer w="full">
+                                        <Table
+                                            size="md"
+                                            w="full"
+                                        >
+                                            <Thead>
+                                                <Tr>
+                                                    <Th>Print</Th>
+                                                    <Th>Est. time until start</Th>
+                                                    <Th>Status</Th>
+                                                    <Th>Queued</Th>
+                                                    {/* <Th>Actions</Th> */}
+                                                </Tr>
+                                            </Thead>
+                                            <Tbody>
+                                                {printsInQueue.map((printId) => {
+                                                    const print = queue.find((p) => p._id.toString() === printId);
+                                                    const printer = printers.find((p) => p.id === print?.printer);
+                                                    const printerType = printerTypes.find((t) => t.id === printer.type);
 
-                        <VStack
-                            w="full"
-                            h="auto"
-                        >
-                            <HStack w="full">
-                                <Heading size="lg">Prints in queue</Heading>
-                            </HStack>
-
-                            <TableContainer w="full">
-                                <Table
-                                    size="md"
-                                    w="full"
-                                >
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Print</Th>
-                                            <Th>Est. time until start</Th>
-                                            <Th>Status</Th>
-                                            <Th>Queued</Th>
-                                            {/* <Th>Actions</Th> */}
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {printsInQueue.map((printId) => {
-                                            const print = queue.find((p) => p._id.toString() === printId);
-                                            const printer = printers.find((p) => p.id === print?.printer);
-                                            const printerType = printerTypes.find((t) => t.id === printer.type);
-
-                                            return (
-                                                <QueuedItem
-                                                    key={printId}
-                                                    print={print}
-                                                    printer={printer}
-                                                    printerType={printerType}
-                                                />
-                                            );
-                                        })}
-                                    </Tbody>
-                                </Table>
-                            </TableContainer>
-                        </VStack>
+                                                    return (
+                                                        <QueuedItem
+                                                            key={printId}
+                                                            print={print}
+                                                            printer={printer}
+                                                            printerType={printerType}
+                                                        />
+                                                    );
+                                                })}
+                                            </Tbody>
+                                        </Table>
+                                    </TableContainer>
+                                </AccordionPanel>
+                            </AccordionItem>
+                        </Accordion>
                     </VStack>
                 </Flex>
             </Box>

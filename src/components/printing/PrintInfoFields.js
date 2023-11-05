@@ -4,6 +4,8 @@ import { HStack, Icon, Tag, TagLabel, TagLeftIcon, Text, VStack } from '@chakra-
 
 import Link from 'next/link';
 
+import dayjs from '@/lib/time';
+
 import usePrintParser from '@/hooks/printing/usePrintParser';
 
 import iconSet from '@/util/icons';
@@ -18,7 +20,7 @@ export default function PrintInfoFields({ fields, print }) {
                 icon: iconSet.printer,
                 value: printerData?.displayName || betterPrintData?.printer,
                 link: `/printing/printers/${betterPrintData?.printer}`,
-                type: 'tag',
+                // type: 'tag',
                 color: printerTypeData?.color
             },
             {
@@ -36,6 +38,11 @@ export default function PrintInfoFields({ fields, print }) {
                 name: 'estTime',
                 icon: iconSet.clock,
                 value: betterPrintData?.estTimeFormatted
+            },
+            {
+                name: 'queuedAt',
+                icon: iconSet.calendarAdd,
+                value: dayjs(betterPrintData?.queuedAt).local().format('MM/DD h:mm A')
             }
         ];
     }, [printerData, betterPrintData, printerTypeData]);

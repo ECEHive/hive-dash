@@ -33,7 +33,7 @@ function Navigation({ pageData, baseUrl, pathPage }) {
                     if (roleId < element?.minRole) {
                         return null;
                     }
-                    if (element.type === 'button') {
+                    if (element.type === 'button' || element.type === 'ext_button') {
                         const active = pathPage === element?.href?.replace('/', '') || false;
                         return (
                             <>
@@ -54,7 +54,7 @@ function Navigation({ pageData, baseUrl, pathPage }) {
                                                     variant={active ? 'solid' : 'ghost'}
                                                     colorScheme={active ? 'blue' : element?.colorScheme}
                                                     as={NextLink}
-                                                    href={baseUrl + element.href}
+                                                    href={(element.type === 'button' ? baseUrl : '') + element.href}
                                                     // isActive={active}
                                                     key={element.href}
                                                 />

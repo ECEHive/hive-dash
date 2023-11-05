@@ -91,17 +91,17 @@ export default function PrinterInfo({ selectedPrinterData }) {
                 direction="column"
                 align="center"
             >
-                <VStack
-                    spacing={3}
-                    h="auto"
-                    w="full"
-                    align="start"
-                    justify="start"
-                    maxW="6xl"
-                    p={5}
-                >
-                    {selectedPrinterData ? (
-                        <>
+                {selectedPrinterData ? (
+                    <>
+                        <VStack
+                            spacing={3}
+                            h="auto"
+                            w="full"
+                            align="start"
+                            justify="start"
+                            maxW="6xl"
+                            p={5}
+                        >
                             <HStack
                                 w="full"
                                 h="auto"
@@ -241,7 +241,12 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                     <HStack>
                                                         <PrintInfoFields
                                                             print={betterPrintData}
-                                                            fields={['material', 'materialAmount', 'estTime']}
+                                                            fields={[
+                                                                'material',
+                                                                'materialAmount',
+                                                                'estTime',
+                                                                'queuedAt'
+                                                            ]}
                                                         />
                                                     </HStack>
                                                 </VStack>
@@ -348,20 +353,20 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                     </TabPanels>
                                 </Tabs>
                             </VStack>
-                        </>
-                    ) : (
-                        <VStack
-                            h="100%"
-                            w="100%"
-                            justify="center"
-                        >
-                            <Text color="secondaryText">select a printer</Text>
                         </VStack>
-                    )}
-                    {/* </Box> */}
-                    {/* </CardBody>
+                    </>
+                ) : (
+                    <VStack
+                        minH="full"
+                        w="100%"
+                        justify="center"
+                    >
+                        <Text color="secondaryText">select a printer</Text>
+                    </VStack>
+                )}
+                {/* </Box> */}
+                {/* </CardBody>
                 </Card> */}
-                </VStack>
             </Flex>
         </>
     );
