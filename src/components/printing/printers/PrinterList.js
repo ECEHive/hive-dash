@@ -116,8 +116,10 @@ function PrinterListItem({ data, onClick, isActive, queue }) {
                                     align="start"
                                     justify="start"
                                     spacing={1}
+                                    w="full"
                                 >
                                     <Text
+                                        w="full"
                                         fontSize="md"
                                         fontWeight="medium"
                                         whiteSpace="normal"

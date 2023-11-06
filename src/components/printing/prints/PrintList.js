@@ -15,7 +15,6 @@ import {
     ListItem,
     Spacer,
     Text,
-    Tooltip,
     UnorderedList,
     VStack,
     useColorModeValue
@@ -59,20 +58,20 @@ function PrintListItem({ data, isActive, onClick }) {
                 alignItems="flex-start"
                 w="full"
                 h="100%"
+                overflow="hidden"
             >
-                <HStack w="100%">
-                    <Tooltip label={betterPrintData.trayName}>
-                        <Heading
-                            size="md"
-                            fontWeight="medium"
-                            fontFamily="body"
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                            whiteSpace="nowrap"
-                        >
-                            {betterPrintData.trayName}
-                        </Heading>
-                    </Tooltip>
+                <HStack w="full">
+                    <Heading
+                        size="md"
+                        fontWeight="medium"
+                        fontFamily="body"
+                        textAlign="left"
+                        whiteSpace="normal"
+                        overflowWrap="break-word"
+                        overflow="hidden"
+                    >
+                        {betterPrintData.trayName}
+                    </Heading>
                     <Spacer />
                     <Badge
                         variant="subtle"

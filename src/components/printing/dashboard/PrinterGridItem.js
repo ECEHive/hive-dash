@@ -87,24 +87,23 @@ export default function PrinterCard({ data }) {
                                         align="start"
                                         spacing={0}
                                         justify="start"
+                                        w="full"
                                     >
                                         {/* <Tooltip
                                             label={betterPrintData.trayName}
                                             placement="top"
                                         > */}
                                         <Text
+                                            w="full"
                                             fontSize="md"
-                                            whiteSpace="nowrap"
-                                            textOverflow="ellipsis"
+                                            overflowWrap="break-word"
                                             overflow="hidden"
+                                            whiteSpace="normal"
                                             fontWeight="medium"
+                                            as={NextLink}
+                                            href={`/printing/prints/${betterPrintData._id}`}
                                         >
-                                            <Link
-                                                as={NextLink}
-                                                href={`/printing/prints/${betterPrintData._id}`}
-                                            >
-                                                {betterPrintData.trayName}
-                                            </Link>
+                                            {betterPrintData.trayName}
                                         </Text>
                                         {betterPrintData.state !== PrintStates.COMPLETED && (
                                             <HStack
