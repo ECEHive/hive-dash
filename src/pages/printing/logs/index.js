@@ -392,6 +392,23 @@ export default function Logs(props) {
                                     </TableContainer>
                                 </AccordionPanel>
                             </AccordionItem>
+
+                            <AccordionItem border="none">
+                                <AccordionButton px={0}>
+                                    <HStack w="full">
+                                        <Heading size="lg">Recently completed prints</Heading>
+                                    </HStack>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                                <AccordionPanel>
+                                    <TableContainer w="full">
+                                        <Table
+                                            size="md"
+                                            w="full"
+                                        ></Table>
+                                    </TableContainer>
+                                </AccordionPanel>
+                            </AccordionItem>
                         </Accordion>
                     </VStack>
                 </Flex>
