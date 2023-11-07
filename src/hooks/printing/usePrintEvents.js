@@ -52,7 +52,7 @@ export default function usePrintEvents(print) {
 
         const queuedTime = dayjs(print.queuedAt);
         let completedTime =
-            newEvents.find((event) => event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED)
+            [...newEvents].find((event) => event.type === PrintStates.COMPLETED || event.type === PrintStates.CANCELED)
                 ?.timestamp || dayjs().toISOString();
 
         // estimate when the print will start
@@ -99,7 +99,9 @@ export default function usePrintEvents(print) {
             print.state === PrintStates.FAILED
         ) {
             // estimate the time the print will complete based on when it started (or when it is estimated to start) printing and its duration
-            let startTime = dayjs([...newEvents].find((event) => event.type === PrintStates.PRINTING).timestamp);
+            let startTime = dayjs(
+                [...newEvents].reverse().find((event) => event.type === PrintStates.PRINTING).timestamp
+            );
             let endTime = startTime.add(dayjs.duration(betterPrintData.estTime));
 
             completedTime = endTime.toISOString();
@@ -173,9 +175,6 @@ export default function usePrintEvents(print) {
                 color: eventColors[event.type]
             };
         });
-        // .sort((a, b) => {
-        //     return dayjs.utc(a.timestamp).diff(dayjs.utc(b.timestamp)); //sort so newest at top
-        // });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [print?.events]); //ignore this warning, this is a safe memoized value

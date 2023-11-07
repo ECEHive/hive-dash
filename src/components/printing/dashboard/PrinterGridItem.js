@@ -100,10 +100,13 @@ export default function PrinterCard({ data }) {
                                             overflow="hidden"
                                             whiteSpace="normal"
                                             fontWeight="medium"
-                                            as={NextLink}
-                                            href={`/printing/prints/${betterPrintData._id}`}
                                         >
-                                            {betterPrintData.trayName}
+                                            <Link
+                                                as={NextLink}
+                                                href={`/printing/prints/${betterPrintData._id}`}
+                                            >
+                                                {betterPrintData.trayName}
+                                            </Link>
                                         </Text>
                                         {betterPrintData.state !== PrintStates.COMPLETED && (
                                             <HStack

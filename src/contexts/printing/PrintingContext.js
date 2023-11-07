@@ -54,8 +54,17 @@ function PrintingProvider({ children }) {
             method: 'GET'
         })
             .then((data) => {
+                const sorted = data.sort((a, b) => {
+                    if (a.type < b.type) {
+                        return 1;
+                    }
+                    if (a.type > b.type) {
+                        return -1;
+                    }
+                    return 0;
+                });
                 setPrinters((old) => {
-                    if (JSON.stringify(old) !== JSON.stringify(data)) {
+                    if (JSON.stringify(old) !== JSON.stringify(sorted)) {
                         console.log('updated printers');
                         return data;
                     } else {

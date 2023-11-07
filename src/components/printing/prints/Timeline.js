@@ -67,10 +67,12 @@ function TimelineEvent({ event }) {
                                 justify="start"
                                 spacing={0}
                                 w="full"
+                                pt={2}
                             >
                                 <Text
                                     fontSize="lg"
                                     fontWeight="medium"
+                                    lineHeight={1}
                                 >
                                     {event.description}
                                 </Text>

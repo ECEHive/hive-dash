@@ -236,7 +236,7 @@ export default function BigPreview({ files, filesOnTop, altBackground }) {
                             flexGrow={1}
                             bgColor={altBackground ? bgColorAlt : bgColor}
                             position="relative"
-                            borderRadius={5}
+                            borderRadius={10}
                         >
                             <Box
                                 position="absolute"

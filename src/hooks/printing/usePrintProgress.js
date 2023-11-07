@@ -12,6 +12,11 @@ export default function usePrintProgress(printData) {
     const [timeLeftHumanized, setTimeLeftHumanized] = useState('');
     const [complete, setComplete] = useState(false);
 
+    const eventsReversed = useMemo(() => {
+        if (!printData) return [];
+        return [...printData.events].reverse();
+    }, [printData]);
+
     const queueTime = useMemo(() => {
         if (!printData) return null;
         return dayjs.utc(printData.queuedAt);
@@ -19,26 +24,27 @@ export default function usePrintProgress(printData) {
 
     const startTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(printData.events.find((e) => e.type === PrintStates.PRINTING)?.timestamp);
-    }, [printData]);
+        return dayjs.utc(eventsReversed.find((e) => e.type === PrintStates.PRINTING)?.timestamp);
+    }, [printData, eventsReversed]);
 
     const completedTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(printData.events.find((e) => e.type === PrintStates.COMPLETED)?.timestamp);
-    }, [printData]);
+        return dayjs.utc(eventsReversed.find((e) => e.type === PrintStates.COMPLETED)?.timestamp);
+    }, [printData, eventsReversed]);
 
     const failTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(printData.events.find((e) => e.type === PrintStates.FAILED)?.timestamp);
-    }, [printData]);
+        return dayjs.utc(eventsReversed.find((e) => e.type === PrintStates.FAILED)?.timestamp);
+    }, [printData, eventsReversed]);
 
     const cancelTime = useMemo(() => {
         if (!printData) return null;
-        return dayjs.utc(printData.events.find((e) => e.type === PrintStates.CANCELED)?.timestamp);
-    }, [printData]);
+        return dayjs.utc(eventsReversed.find((e) => e.type === PrintStates.CANCELED)?.timestamp);
+    }, [printData, eventsReversed]);
 
     const endTime = useMemo(() => {
         if (!startTime) return null;
+        console.log(startTime);
         let end = startTime.add(dayjs.duration(printData.estTime));
         return end;
     }, [printData, startTime]);

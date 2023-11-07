@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import {
-    Badge,
     Button,
     ButtonGroup,
     Divider,
@@ -15,6 +14,8 @@ import {
     Spacer,
     Table,
     TableContainer,
+    Tag,
+    TagLabel,
     Tbody,
     Td,
     Text,
@@ -248,12 +249,13 @@ export default function People(props) {
                                                     </HStack>
                                                 </Td>
                                                 <Td>
-                                                    <Badge
-                                                        fontSize="xs"
-                                                        colorScheme="yellow"
-                                                    >
-                                                        {Object.keys(PITypes).find((key) => PITypes[key] === pi.type)}
-                                                    </Badge>
+                                                    <Tag colorScheme="yellow">
+                                                        <TagLabel>
+                                                            {Object.keys(PITypes).find(
+                                                                (key) => PITypes[key] === pi.type
+                                                            )}
+                                                        </TagLabel>
+                                                    </Tag>
                                                 </Td>
                                                 <Td>
                                                     <Text fontSize="md">{pi.email}</Text>

@@ -36,7 +36,7 @@ export function STLViewer({ url, viewerProps, ...props }) {
                         position="absolute"
                         zIndex="banner"
                         top={0}
-                        borderRadius={5}
+                        borderRadius={10}
                     >
                         <Spinner />
                     </VStack>

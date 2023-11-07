@@ -5,6 +5,7 @@ import {
     AlertDescription,
     AlertIcon,
     Box,
+    Button,
     ButtonGroup,
     CircularProgress,
     Divider,
@@ -39,6 +40,7 @@ import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
 
 import iconSet from '@/util/icons';
 import { PITypes } from '@/util/roles';
+import { PrintStates } from '@/util/states';
 
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import QueueTable from '@/components/printing/printers/QueueTable';
@@ -208,6 +210,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                             borderRadius={10}
                                         >
                                             <VStack
+                                                w="full"
                                                 align="start"
                                                 spacing={5}
                                                 minH="150px"
@@ -254,31 +257,56 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                 <Spacer />
 
                                                 <HStack
-                                                    w="auto"
+                                                    w="full"
                                                     h="full"
+                                                    align="end"
                                                 >
-                                                    <HStack
-                                                        w="auto"
-                                                        h="full"
-                                                    >
-                                                        <CircularProgress
-                                                            size={6}
-                                                            thickness={6}
-                                                            value={progress}
-                                                            color={progressCircleColor}
-                                                            trackColor="chakra-subtle-bg"
+                                                    <HStack align="center">
+                                                        <HStack
+                                                            w="auto"
+                                                            h="full"
+                                                        >
+                                                            <CircularProgress
+                                                                size={6}
+                                                                thickness={6}
+                                                                value={progress}
+                                                                color={progressCircleColor}
+                                                                trackColor="chakra-subtle-bg"
+                                                            />
+                                                            <Text fontWeight="medium">
+                                                                {progressMessage === 'printing'
+                                                                    ? timeLeft
+                                                                    : progressMessage}
+                                                            </Text>
+                                                        </HStack>
+                                                        <Icon
+                                                            fontSize="sm"
+                                                            as={iconSet.dot}
                                                         />
-                                                        <Text fontWeight="medium">
-                                                            {progressMessage === 'printing'
-                                                                ? timeLeft
-                                                                : progressMessage}
-                                                        </Text>
+                                                        <Text>Queued by {activePrint.queuedBy}</Text>
                                                     </HStack>
-                                                    <Icon
-                                                        fontSize="sm"
-                                                        as={iconSet.dot}
-                                                    />
-                                                    <Text>Queued by {activePrint.queuedBy}</Text>
+
+                                                    <Spacer />
+
+                                                    {betterPrintData.state === PrintStates.PRINTING && (
+                                                        <ButtonGroup
+                                                            size="sm"
+                                                            variant="solid"
+                                                        >
+                                                            <Button
+                                                                colorScheme="green"
+                                                                leftIcon={<Icon as={iconSet.check} />}
+                                                            >
+                                                                Completed
+                                                            </Button>
+                                                            <Button
+                                                                colorScheme="red"
+                                                                leftIcon={<Icon as={iconSet.x} />}
+                                                            >
+                                                                Failed
+                                                            </Button>
+                                                        </ButtonGroup>
+                                                    )}
                                                 </HStack>
                                             </VStack>
 
@@ -289,21 +317,8 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                     w="auto"
                                                     minH="150px"
                                                     bgColor="chakra-subtle-bg"
-                                                    borderRadius={5}
+                                                    borderRadius={10}
                                                 >
-                                                    {/* <Image
-                                                src={
-                                                    betterPrintData?.preview ||
-                                                    'https://firebasestorage.googleapis.com/v0/b/hive-af57a.appspot.com/o/stl%2Fuploadtest1_2023-10-29T23%3A27%3A54.556Z%2Fdorm_bed_shelf.stl?alt=media&token=d8bcdfd3-a971-4e96-8384-d4871c85c42a'
-                                                }
-                                                alt="preview"
-                                                width={512}
-                                                height={512}
-                                                style={{
-                                                    maxHeight: '150px',
-                                                    width: 'auto'
-                                                }}
-                                            /> */}
                                                     <ModelPreview
                                                         printData={activePrint}
                                                         w="150px"

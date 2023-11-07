@@ -117,7 +117,7 @@ function PrintingItem({ print, printer, printerType }) {
                         fontWeight="medium"
                         fontSize="md"
                     >
-                        {startTime.local().format('hh:mm A')}
+                        {startTime.local().format('h:mm A')}
                     </Text>
                     <Text
                         fontWeight="normal"
@@ -220,7 +220,7 @@ function QueuedItem({ print, printer, printerType }) {
                         fontWeight="medium"
                         fontSize="md"
                     >
-                        {queueTime.local().format('hh:mm A')}
+                        {queueTime.local().format('h:mm A')}
                     </Text>
                     <Text
                         fontWeight="normal"

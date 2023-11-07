@@ -208,28 +208,6 @@ export default function NewPrintModal({ isOpen, onClose }) {
         return new Promise(async (resolve, reject) => {
             setSubmitStatus('Uploading STL files');
 
-            // const formData = new FormData();
-            // for (let i = 0; i < files.length; i++) {
-            //     const file = files[i];
-            //     formData.append(`files`, file);
-            // }
-            // formData.append('name', trayName);
-
-            // console.log(formData.entries());
-
-            // request('/api/printing/upload', {
-            //     method: 'POST',
-            //     body: formData
-            // })
-            //     .then((res) => {
-            //         console.log(res.urls);
-            //         resolve(res.urls);
-            //     })
-            //     .catch((err) => {
-            //         console.log(err);
-            //         reject();
-            //     });
-
             // upload files with firebase client
             const timestamp = dayjs().toISOString();
             let urls = [];
@@ -737,7 +715,8 @@ export default function NewPrintModal({ isOpen, onClose }) {
                                                             Print submitted
                                                         </AlertTitle>
                                                         <AlertDescription maxWidth="sm">
-                                                            Maybe we can estimate when the print will be done...
+                                                            Make sure the tray has the same name when sending it to a
+                                                            printer!
                                                         </AlertDescription>
                                                     </Alert>
                                                 </>
