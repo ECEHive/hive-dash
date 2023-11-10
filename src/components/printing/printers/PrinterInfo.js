@@ -5,7 +5,6 @@ import {
     AlertDescription,
     AlertIcon,
     Box,
-    Button,
     ButtonGroup,
     CircularProgress,
     Divider,
@@ -40,7 +39,6 @@ import usePrinterUpdate from '@/hooks/printing/usePrinterUpdate';
 
 import iconSet from '@/util/icons';
 import { PITypes } from '@/util/roles';
-import { PrintStates } from '@/util/states';
 
 import MaintenanceModal from '@/components/printing/maintenance/MaintenanceModal';
 import QueueTable from '@/components/printing/printers/QueueTable';
@@ -288,7 +286,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
 
                                                     <Spacer />
 
-                                                    {betterPrintData.state === PrintStates.PRINTING && (
+                                                    {/* {betterPrintData.state === PrintStates.PRINTING && (
                                                         <ButtonGroup
                                                             size="sm"
                                                             variant="solid"
@@ -306,7 +304,7 @@ export default function PrinterInfo({ selectedPrinterData }) {
                                                                 Failed
                                                             </Button>
                                                         </ButtonGroup>
-                                                    )}
+                                                    )} */}
                                                 </HStack>
                                             </VStack>
 
