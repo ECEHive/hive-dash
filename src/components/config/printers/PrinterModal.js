@@ -45,6 +45,7 @@ export default function PrinterModal({ isOpen, onClose, initialData, printerType
             maintenance: {
                 notes: ''
             },
+            queue: [],
             updatedAt: dayjs().toISOString(),
             currentTray: ''
         }),

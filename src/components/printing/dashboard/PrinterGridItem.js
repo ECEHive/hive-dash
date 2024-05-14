@@ -1,4 +1,4 @@
-import { Badge, Card, CardBody, HStack, Heading, Icon, Link, Progress, Spacer, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Card, CardBody, HStack, Heading, Icon, Link, Progress, Spacer, Text, VStack } from '@chakra-ui/react';
 
 import NextLink from 'next/link';
 
@@ -7,7 +7,7 @@ import usePrintProgress from '@/hooks/printing/usePrintProgress';
 import usePrinterParser from '@/hooks/printing/usePrinterParser';
 
 import iconSet from '@/util/icons';
-import { PrintStates, StateColors } from '@/util/states';
+import { PrintStates, StateColorsExact } from '@/util/states';
 
 export default function PrinterCard({ data }) {
     const { expandedPrinterData, currentPrintData } = usePrinterParser(data);
@@ -26,6 +26,7 @@ export default function PrinterCard({ data }) {
                     // bgColor={useColorModeValue('gray.200', 'gray.600')}
                     flexGrow={1}
                     h="100%"
+                    minH="150px"
                     // h="115px"
                 >
                     <CardBody p={5}>
@@ -39,7 +40,10 @@ export default function PrinterCard({ data }) {
                                 align="start"
                                 w="full"
                             >
-                                <HStack w="100%">
+                                <HStack
+                                    w="100%"
+                                    align="center"
+                                >
                                     <Heading
                                         size="md"
                                         fontWeight="bold"
@@ -52,12 +56,16 @@ export default function PrinterCard({ data }) {
                                         </Link>
                                     </Heading>
                                     <Spacer />
-                                    <Badge
-                                        variant="subtle"
-                                        colorScheme={StateColors[expandedPrinterData.state]}
-                                    >
-                                        {expandedPrinterData.state}
-                                    </Badge>
+                                    {expandedPrinterData.state !== 'idle' && (
+                                        <Avatar
+                                            variant="subtle"
+                                            size="2xs"
+                                            name=""
+                                            icon={<Icon as={null} />}
+                                            bg={StateColorsExact[expandedPrinterData.state][1]}
+                                            // bg="green.200"
+                                        />
+                                    )}
                                 </HStack>
                                 <HStack
                                     spacing={2}
@@ -108,6 +116,7 @@ export default function PrinterCard({ data }) {
                                                 {betterPrintData.trayName}
                                             </Link>
                                         </Text>
+
                                         {betterPrintData.state !== PrintStates.COMPLETED && (
                                             <HStack
                                                 fontSize="xs"

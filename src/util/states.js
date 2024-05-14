@@ -6,6 +6,12 @@ const PrintStates = {
     CANCELED: 4
 };
 
+const StateColorsExact = {
+    down: ['red.500', 'red.200'],
+    idle: ['gray.500', 'gray.200'],
+    printing: ['green.500', 'green.200']
+};
+
 const StateColors = {
     [PrintStates.QUEUED]: 'gray',
     [PrintStates.PRINTING]: 'green',
@@ -17,4 +23,4 @@ const StateColors = {
     printing: 'green'
 };
 
-export { PrintStates, StateColors };
+export { PrintStates, StateColors, StateColorsExact };
